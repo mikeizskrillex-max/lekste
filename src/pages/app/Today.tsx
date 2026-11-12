@@ -47,7 +47,7 @@ export function Today() {
               <div className={`card flex items-center gap-3 p-2.5 transition ${isDone ? 'opacity-60' : ''}`}>
                 <DishPhoto id={m.recipe.id} alt={pick(m.recipe)} className="h-16 w-16 shrink-0 rounded-[14px]" />
                 <div className="min-w-0 flex-1">
-                  <div className="text-[11.5px] text-muted">{pick(MEAL_LABEL[m.recipe.meal])} · {m.recipe.minutes} {t('min')} · {formatEur(m.cost, lang)}</div>
+                  <div className="text-[11.5px] text-muted">{pick(MEAL_LABEL[m.meal])} · {m.recipe.minutes} {t('min')} · {formatEur(m.cost, lang)}</div>
                   <div className="font-bold leading-snug">{pick(m.recipe)}</div>
                   <div className="text-[12px] font-semibold text-accent tabular">{m.kcal} {t('kcal')}</div>
                 </div>

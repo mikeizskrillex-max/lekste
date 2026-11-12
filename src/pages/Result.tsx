@@ -36,7 +36,7 @@ export function Result() {
           {/* Basket first: this is the product */}
           <Rise>
             <section className="rounded-[24px] bg-deep p-6 text-white md:p-8">
-              <div className="text-[12px] font-bold uppercase tracking-[.1em] text-leaf">{t('yourBasket')}</div>
+              <div className="text-[12px] font-bold uppercase tracking-[.1em] text-[#8fe0b0]">{t('yourBasket')}</div>
               <div className="mt-2 flex items-end gap-3">
                 <span className="font-display text-[44px] font-extrabold leading-none"><CountUp value={b.mix.total} format={eur} /></span>
                 <span className={`mb-1 rounded-full px-2.5 py-1 text-[12px] font-bold ${fits ? 'bg-[#8fe0b0] text-[#0e2a1d]' : 'bg-warm text-[#4a3200]'}`}>
@@ -53,9 +53,9 @@ export function Result() {
                   </div>
                 ))}
                 <div className="flex items-center gap-3 text-[14px]">
-                  <span className="w-[120px] font-bold text-leaf">{t('mixBasket')}</span>
+                  <span className="w-[120px] font-bold text-[#8fe0b0]">{t('mixBasket')}</span>
                   <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/15"><motion.div className="h-full rounded-full bg-[#8fe0b0]" initial={{ width: 0 }} animate={{ width: `${(b.mix.total / worst.total) * 100}%` }} transition={{ duration: 1, delay: 0.2 }} /></div>
-                  <span className="w-[72px] text-right font-bold text-leaf tabular">{eur(b.mix.total)}</span>
+                  <span className="w-[72px] text-right font-bold text-[#8fe0b0] tabular">{eur(b.mix.total)}</span>
                 </div>
               </div>
               {worst.total > b.mix.total && (
@@ -91,7 +91,7 @@ export function Result() {
               <div className="card overflow-hidden">
                 <DishPhoto id={m.recipe.id} alt={pick(m.recipe)} className="aspect-[4/3]" />
                 <div className="p-4">
-                  <div className="text-[12px] text-muted">{pick(MEAL_LABEL[m.recipe.meal])} · {m.kcal} {t('kcal')}</div>
+                  <div className="text-[12px] text-muted">{pick(MEAL_LABEL[m.meal])} · {m.kcal} {t('kcal')}</div>
                   <div className="font-bold leading-snug">{pick(m.recipe)}</div>
                   <div className="mt-1.5 text-[13px] font-bold text-accent">{eur(m.cost * a.household)}</div>
                 </div>

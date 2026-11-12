@@ -82,7 +82,7 @@ function TrialCard({ days }: { days: number }) {
   const { t } = useI18n();
   return (
     <div className="rounded-2xl bg-deep p-4 text-white">
-      <div className="text-[12px] font-bold uppercase tracking-[.08em] text-leaf">{t('trialTitle')}</div>
+      <div className="text-[12px] font-bold uppercase tracking-[.08em] text-[#8fe0b0]">{t('trialTitle')}</div>
       <div className="mt-1 text-[13px] opacity-90">{days > 0 ? t('trialBanner', { n: days }) : t('trialEnded')}</div>
       <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/15"><div className="h-full rounded-full bg-[#8fe0b0]" style={{ width: `${(days / 7) * 100}%` }} /></div>
     </div>

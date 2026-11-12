@@ -59,7 +59,7 @@ export function Week() {
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-7">
         {DAY_SHORT[lang].map((d, i) => {
           const meals = dayMeals(plan!, swaps, i);
-          const main = meals.find((m) => m.recipe.meal === 'dinner') ?? meals[meals.length - 1];
+          const main = meals.find((m) => m.meal === 'dinner') ?? meals[meals.length - 1];
           return (
             <Rise key={d} i={i}>
               <Link to={`/app/menu?day=${i}`} className={`card block overflow-hidden transition hover:-translate-y-0.5 ${i === ti ? 'ring-2 ring-accent' : ''}`}>

@@ -50,7 +50,7 @@ export function Menu() {
                 transition={{ duration: 0.35, delay: i * 0.06 }} className="card flex flex-col overflow-hidden">
                 <button type="button" onClick={() => setOpen(m)} className="relative block text-left">
                   <DishPhoto id={m.recipe.id} alt={pick(m.recipe)} className="aspect-[4/3]" />
-                  <span className="absolute left-2 top-2 rounded-lg bg-white/92 px-2 py-1 text-[11.5px] font-bold text-[#11261b]">{pick(MEAL_LABEL[m.recipe.meal])}</span>
+                  <span className="absolute left-2 top-2 rounded-lg bg-white/90 px-2 py-1 text-[11.5px] font-bold text-[#11261b]">{pick(MEAL_LABEL[m.meal])}</span>
                 </button>
                 <div className="flex flex-1 flex-col p-4">
                   <button type="button" onClick={() => setOpen(m)} className="text-left font-bold leading-snug hover:text-accent">{pick(m.recipe)}</button>
@@ -112,7 +112,7 @@ function RecipeSheet({ meal, household, onClose }: { meal: DayMeal; household: n
           <button type="button" onClick={onClose} aria-label="×" className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-white/90 text-[18px] text-[#11261b]">×</button>
         </div>
         <div className="px-5 pt-4 md:px-7">
-          <div className="text-[12.5px] text-muted">{pick(MEAL_LABEL[r.meal])} · {r.minutes} {t('min')} · ×{meal.servings} {t('servings')}</div>
+          <div className="text-[12.5px] text-muted">{pick(MEAL_LABEL[meal.meal])} · {r.minutes} {t('min')} · ×{meal.servings} {t('servings')}</div>
           <h2 className="font-display text-[22px] font-extrabold">{pick(r)}</h2>
           <div className="mt-3 grid grid-cols-4 gap-1.5 text-center">
             {[[eur(meal.cost * household), '€'], [meal.kcal, t('kcal')], [`${meal.protein} g`, t('protein')], [`${meal.fat} g`, t('fat')]].map(([v, l], i) => (

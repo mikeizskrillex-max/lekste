@@ -87,8 +87,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       if (!p.plan) return p;
       const key = `${day}-${slot}`;
       const current = p.swaps[key] ?? p.plan.days[day].meals[slot].recipeId;
-      const meal = RECIPES.find((r) => r.id === current)!.meal;
-      const options = RECIPES.filter((r) => r.meal === meal && passesHardRules(r, p.answers)
+      const slotMeal = p.plan.days[day].meals[slot].meal;
+      const main = (m: string) => m === 'lunch' || m === 'dinner';
+      const options = RECIPES.filter((r) => (r.meal === slotMeal || (main(r.meal) && main(slotMeal))) && passesHardRules(r, p.answers)
         && !p.feedback.some((f) => f.recipeId === r.id && f.rating === 'down'));
       if (options.length < 2) return p;
       const idx = options.findIndex((r) => r.id === current);

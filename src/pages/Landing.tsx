@@ -59,7 +59,7 @@ export function Landing() {
                 <motion.div key={id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i, duration: 0.5 }}
                   className={`relative overflow-hidden rounded-[22px] shadow-[0_20px_40px_-24px_rgba(20,61,43,.6)] ${i % 2 ? 'translate-y-6' : ''}`}>
                   <DishPhoto id={id} alt={pick(RECIPE_BY_ID[id])} className="aspect-[4/3.3]" eager />
-                  <div className="absolute bottom-2 left-2 right-2 rounded-xl bg-white/92 px-2.5 py-1.5 text-[11.5px] font-semibold text-[#11261b] backdrop-blur">
+                  <div className="absolute bottom-2 left-2 right-2 rounded-xl bg-white/90 px-2.5 py-1.5 text-[11.5px] font-semibold text-[#11261b] backdrop-blur">
                     {pick(RECIPE_BY_ID[id])}
                   </div>
                 </motion.div>
@@ -69,7 +69,7 @@ export function Landing() {
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.6 }}
               className="relative z-10 -mt-10 ml-auto w-[92%] rounded-[22px] bg-deep p-5 text-white shadow-[0_30px_60px_-25px_rgba(20,61,43,.8)] sm:w-[78%]">
               <div className="flex items-center justify-between text-[12px]">
-                <span className="font-bold uppercase tracking-[.1em] text-leaf">{t('basketCardTitle')}</span>
+                <span className="font-bold uppercase tracking-[.1em] text-[#8fe0b0]">{t('basketCardTitle')}</span>
                 <span className="opacity-70">{t('realPrices', { date: dateLabel(lang) })}</span>
               </div>
               <div className="mt-3 grid gap-2">
@@ -83,11 +83,11 @@ export function Landing() {
                   </div>
                 ))}
                 <div className="flex items-center gap-3">
-                  <span className="w-[110px] shrink-0 text-[13px] font-bold text-leaf">{t('mixBasket')}</span>
+                  <span className="w-[110px] shrink-0 text-[13px] font-bold text-[#8fe0b0]">{t('mixBasket')}</span>
                   <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/15">
                     <motion.div className="h-full rounded-full bg-[#8fe0b0]" initial={{ width: 0 }} animate={{ width: `${(d.mix.total / worst) * 100}%` }} transition={{ duration: 1, delay: 1 }} />
                   </div>
-                  <span className="w-[70px] text-right font-display text-[18px] font-extrabold text-leaf tabular"><CountUp value={d.mix.total} format={eur} /></span>
+                  <span className="w-[70px] text-right font-display text-[18px] font-extrabold text-[#8fe0b0] tabular"><CountUp value={d.mix.total} format={eur} /></span>
                 </div>
               </div>
               <div className="mt-3 rounded-xl bg-white/10 px-3 py-2 text-[12.5px]">

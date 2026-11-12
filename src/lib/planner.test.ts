@@ -66,3 +66,26 @@ describe('planner', () => {
     expect(Math.max(...counts.values())).toBeLessThanOrEqual(2);
   });
 });
+
+describe('planner with tough constraints', () => {
+  it('never leaves a meal empty and keeps lunch and dinner as real main meals', () => {
+    const u = { ...base, goal: 'gain' as const, weightKg: 85, heightCm: 185, sex: 'm' as const, activity: 'high' as const,
+      allergens: ['nuts'] as QuizAnswers['allergens'], weeklyBudget: 40, mealsPerDay: 3 as const };
+    const t = calcTargets(u);
+    const plan = buildPlan(u, t);
+    for (const d of plan.days) {
+      expect(d.meals.filter((m) => m.meal !== 'snack').length).toBe(3);
+      for (const m of d.meals.filter((x) => x.meal === 'lunch' || x.meal === 'dinner')) {
+        expect(['lunch', 'dinner']).toContain(RECIPES.find((r) => r.id === m.recipeId)!.meal);
+      }
+      expect(Math.abs(d.kcal - t.kcal) / t.kcal).toBeLessThan(0.2);
+    }
+  });
+
+  it('has a big enough library for vegans and gluten-free users', () => {
+    const vegan = eligibleRecipes({ ...base, dietType: 'vegan' });
+    const gf = eligibleRecipes({ ...base, allergens: ['gluten'] });
+    expect(vegan.filter((r) => r.meal === 'lunch' || r.meal === 'dinner').length).toBeGreaterThanOrEqual(7);
+    expect(gf.filter((r) => r.meal === 'lunch' || r.meal === 'dinner').length).toBeGreaterThanOrEqual(20);
+  });
+});

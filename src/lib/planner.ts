@@ -51,63 +51,102 @@ export function eligibleRecipes(u: QuizAnswers): Recipe[] {
   return RECIPES.filter((r) => passesHardRules(r, u));
 }
 
-/**
- * Local planner used in demo mode and as a fallback when the AI step is
- * unavailable. Picks recipes by soft score with variety, then scales portions
- * so each day lands within ±10% of the calorie target.
- */
-export function buildPlan(u: QuizAnswers, t: Targets, seed = 7): Plan {
-  const pool = eligibleRecipes(u);
-  const slots = mealSlots(u);
+const MAIN = new Set<MealType>(['lunch', 'dinner']);
+
+/** Can this recipe fill this slot? Lunch and dinner are both "main meals". */
+function fits(r: Recipe, slot: MealType): boolean {
+  return r.meal === slot || (MAIN.has(slot) && MAIN.has(r.meal));
+}
+
+function buildOnce(u: QuizAnswers, t: Targets, pool: Recipe[], baseSlots: MealType[], seed: number): Plan {
   const rand = rng(seed);
   const used = new Map<string, number>();
   const issues: string[] = [];
   const days: PlanDay[] = [];
 
+  const pickFor = (slot: MealType, chosen: Recipe[]): Recipe | null => {
+    // relax the variety rule step by step instead of leaving a meal empty
+    for (const cap of [2, 3, Infinity]) {
+      const options = pool.filter((r) => fits(r, slot) && (used.get(r.id) ?? 0) < cap && !chosen.includes(r));
+      if (options.length === 0) continue;
+      if (cap > 2) issues.push(`not_enough_recipes:${slot}`);
+      const ranked = options
+        .map((r) => ({ r, s: score(r, u) + (r.meal === slot ? 1 : 0) + rand() * 2.5 }))
+        .sort((a, b) => b.s - a.s);
+      return ranked[0].r;
+    }
+    return null;
+  };
+
   for (let d = 0; d < 7; d++) {
     const chosen: Recipe[] = [];
-    for (const slot of slots) {
-      const options = pool.filter((r) => r.meal === slot && (used.get(r.id) ?? 0) < 2 && !chosen.includes(r));
-      if (options.length === 0) {
-        issues.push(`not_enough_recipes:${slot}`);
-        continue;
-      }
-      // batch cooking: repeat yesterday's lunch/dinner on odd days
+    const labels: MealType[] = [];
+    for (const slot of baseSlots) {
+      // batch cooking: repeat yesterday's main meal on odd days
       const prev = days[d - 1]?.meals.find((m) => m.meal === slot);
-      if (u.batchCooking && d % 2 === 1 && prev && (slot === 'lunch' || slot === 'dinner')) {
-        const r = pool.find((x) => x.id === prev.recipeId)!;
-        chosen.push(r);
+      if (u.batchCooking && d % 2 === 1 && prev && MAIN.has(slot)) {
+        chosen.push(pool.find((x) => x.id === prev.recipeId)!);
+        labels.push(slot);
         continue;
       }
-      const ranked = options
-        .map((r) => ({ r, s: score(r, u) + rand() * 2.5 }))
-        .sort((a, b) => b.s - a.s);
-      const pick = ranked[0].r;
+      const pick = pickFor(slot, chosen);
+      if (!pick) { issues.push(`no_recipe:${slot}`); continue; }
       chosen.push(pick);
+      labels.push(slot);
       used.set(pick.id, (used.get(pick.id) ?? 0) + 1);
     }
 
-    const base = chosen.reduce((s, r) => s + recipeFacts(r).kcal, 0) || 1;
-    const factor = Math.min(1.75, Math.max(0.75, t.kcal / base));
+    // high calorie targets: add snacks rather than serving huge portions
+    let base = chosen.reduce((s, r) => s + recipeFacts(r).kcal, 0) || 1;
+    while (t.kcal / base > 1.45 && chosen.length < 6) {
+      const extra = pickFor('snack', chosen);
+      if (!extra) break;
+      chosen.splice(chosen.length - 1, 0, extra);
+      labels.splice(labels.length - 1, 0, 'snack');
+      used.set(extra.id, (used.get(extra.id) ?? 0) + 1);
+      base += recipeFacts(extra).kcal;
+    }
+
+    const factor = Math.min(1.75, Math.max(0.6, t.kcal / base));
     const servings = Math.round(factor * 4) / 4;
-    const meals: PlanMeal[] = chosen.map((r) => {
+    const meals: PlanMeal[] = chosen.map((r, i) => {
       const f = recipeFacts(r);
-      return { recipeId: r.id, meal: r.meal === 'snack' ? 'snack' : r.meal, servings, kcal: Math.round(f.kcal * servings), protein: Math.round(f.protein * servings), cost: f.cost * servings };
+      return { recipeId: r.id, meal: labels[i], servings, kcal: Math.round(f.kcal * servings), protein: Math.round(f.protein * servings), cost: f.cost * servings };
     });
-    const day: PlanDay = {
+    days.push({
       meals,
       kcal: meals.reduce((s, m) => s + m.kcal, 0),
       protein: meals.reduce((s, m) => s + m.protein, 0),
       cost: meals.reduce((s, m) => s + m.cost, 0),
       vegGrams: chosen.reduce((s, r) => s + recipeFacts(r).vegGrams * servings, 0),
       fiber: chosen.reduce((s, r) => s + recipeFacts(r).fiber * servings, 0),
-    };
-    days.push(day);
+    });
   }
 
   const weeklyCost = days.reduce((s, d) => s + d.cost, 0) * u.household;
   if (weeklyCost > u.weeklyBudget) issues.push('over_budget');
   return { days, weeklyCost, issues: [...new Set(issues)] };
+}
+
+/**
+ * Local planner (demo mode, and fallback for the AI step). Tries several
+ * candidate weeks and keeps the one that best balances calories, protein,
+ * budget and the user's preferences. Never leaves a meal empty.
+ */
+export function buildPlan(u: QuizAnswers, t: Targets, seed = 7): Plan {
+  const pool = eligibleRecipes(u);
+  const slots = mealSlots(u);
+  let best: Plan | null = null;
+  let bestScore = Infinity;
+  for (let k = 0; k < 10; k++) {
+    const plan = buildOnce(u, t, pool, slots, seed + k * 101);
+    const kcalErr = plan.days.reduce((s, d) => s + Math.abs(d.kcal - t.kcal) / t.kcal, 0) / 7;
+    const protErr = plan.days.reduce((s, d) => s + Math.max(0, t.protein * 0.9 - d.protein) / t.protein, 0) / 7;
+    const over = Math.max(0, plan.weeklyCost - u.weeklyBudget) / u.weeklyBudget;
+    const total = kcalErr * 3 + protErr * 2 + over * 4 + plan.weeklyCost / u.weeklyBudget * 0.3;
+    if (total < bestScore) { bestScore = total; best = plan; }
+  }
+  return best!;
 }
 
 /** Grams of each ingredient needed for the whole household for the week. */

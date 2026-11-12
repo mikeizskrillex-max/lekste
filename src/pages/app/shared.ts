@@ -3,8 +3,9 @@ import type { Recipe } from '../../data/recipes';
 import { weeklyNeed, type Plan } from '../../lib/planner';
 import { basket } from '../../lib/pricing';
 import { recipeFacts } from '../../lib/recipes';
+import type { MealType } from '../../lib/types';
 
-export interface DayMeal { slot: number; recipe: Recipe; servings: number; kcal: number; protein: number; fat: number; carbs: number; cost: number }
+export interface DayMeal { slot: number; meal: MealType; recipe: Recipe; servings: number; kcal: number; protein: number; fat: number; carbs: number; cost: number }
 
 /** Meals of one day with the user's swaps applied. */
 export function dayMeals(plan: Plan, swaps: Record<string, string>, day: number): DayMeal[] {
@@ -12,7 +13,7 @@ export function dayMeals(plan: Plan, swaps: Record<string, string>, day: number)
     const recipe = RECIPE_BY_ID[swaps[`${day}-${slot}`] ?? m.recipeId];
     const f = recipeFacts(recipe);
     return {
-      slot, recipe, servings: m.servings,
+      slot, meal: m.meal, recipe, servings: m.servings,
       kcal: Math.round(f.kcal * m.servings), protein: Math.round(f.protein * m.servings),
       fat: Math.round(f.fat * m.servings), carbs: Math.round(f.carbs * m.servings), cost: f.cost * m.servings,
     };
