@@ -6,6 +6,7 @@ import { CountUp, Rise } from '../components/ui';
 import { INGREDIENT_BY_ID } from '../data/ingredients';
 import { PRICES, PRICES_DATE, STORE_LABEL } from '../data/prices';
 import { RECIPE_BY_ID } from '../data/recipeIndex';
+import { RECIPES } from '../data/recipes';
 import { formatEur, useI18n } from '../i18n/I18n';
 import type { StringKey } from '../i18n/strings';
 import { demo } from '../lib/demo';
@@ -48,7 +49,7 @@ export function Landing() {
             </div>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <button type="button" onClick={() => nav('/quiz')} className="btn-lg">{t('startTrial')}</button>
-              <span className="text-[13px] text-muted">✓ {t('heroNote')}</span>
+              <span className="text-[13px] text-muted">✓ {t('heroNote')} · 🍽️ {RECIPES.length.toLocaleString(lang === 'lt' ? 'lt-LT' : 'ru-RU')} {t('dishesInDb')}</span>
             </div>
           </div>
 

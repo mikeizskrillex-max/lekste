@@ -17,6 +17,14 @@ Without Supabase keys the site runs in **demo mode**: everything is stored in th
 - **Photos** (`public/img`): free photos from Unsplash (Unsplash License), used as illustrations of the dishes. Replace with photos of the real recipes (e.g. Higgsfield) before launch.
 - **Reviews** on the landing page are clearly marked samples and must be replaced with real ones.
 
+## Recipe database
+
+- **1 439 dishes** in total: 73 hand-written chef recipes (`src/data/recipes.ts`, steps in `src/data/recipeDetails.ts`) and ~1 370 generated dishes (`src/data/db/generator.ts`).
+- The generator builds dishes from the ingredients we have real Barbora (Maxima) and Rimi prices for, with cooking patterns: protein + side + vegetables × grill / bake / stew / wok, soups, bowls, pasta, porridges, omelettes, dairy bowls, snacks. Names and steps use grammatical forms written per ingredient (LT/RU). Nutrition, allergens and price are always computed from ingredients.
+- `npm run db:export` writes everything to **`data/recipes.json`** (names, ingredients, nutrition, allergens, price, steps, tip, photo) to review the library or seed Supabase.
+- The planner picks from the whole database using the user's hard rules (allergies, diet, "never" foods, equipment, time) and preferences, preferring chef recipes. Every day has a **"Generate other dishes for this day"** button; each dish has **Swap** and 👍/👎.
+- Generated dishes reuse photos of similar chef dishes; they need real photos (e.g. Higgsfield) and a cook's review before launch. Iki has no online shop with prices, so it is not included.
+
 ## What is built
 
 - Landing page with animations (LT / RU).

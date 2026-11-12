@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { calcTargets } from './nutrition';
-import { buildPlan, type Plan } from './planner';
+import { buildPlan, regenerateDay, type Plan } from './planner';
 import { RECIPES } from '../data/recipes';
 import { passesHardRules } from './recipes';
 import { load, save, clearAll } from './storage';
@@ -41,6 +41,7 @@ interface Ctx extends State {
   startTrial: () => void;
   trialDaysLeft: number | null;
   swap: (day: number, slot: number) => void;
+  regenerate: (day: number) => void;
   toggleEaten: (date: string, recipeId: string) => void;
   setWater: (date: string, n: number) => void;
   addWeight: (kg: number) => void;
@@ -95,6 +96,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const idx = options.findIndex((r) => r.id === current);
       const next = options[(idx + 1) % options.length];
       return { ...p, swaps: { ...p.swaps, [key]: next.id } };
+    }),
+    regenerate: (day) => setS((p) => {
+      if (!p.plan) return p;
+      const seed = Date.now() % 100000;
+      const disliked = p.feedback.filter((f) => f.rating === 'down').map((f) => f.recipeId);
+      const plan = regenerateDay(p.plan, p.answers, calcTargets(p.answers), day, seed, disliked);
+      const swaps = Object.fromEntries(Object.entries(p.swaps).filter(([k]) => !k.startsWith(`${day}-`)));
+      return { ...p, plan, swaps };
     }),
     toggleEaten: (date, id) => setS((p) => {
       const list = p.eaten[date] ?? [];

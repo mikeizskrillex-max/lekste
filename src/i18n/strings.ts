@@ -354,6 +354,11 @@ export const S = {
   openRecipe: { lt: 'Receptas', ru: 'Рецепт' },
   recipeNotFound: { lt: 'Receptas nerastas', ru: 'Рецепт не найден' },
   buyAt: { lt: 'Pirkti', ru: 'Купить' },
+  // ---- regenerate ----
+  regenDay: { lt: 'Sugeneruoti kitus patiekalus šiai dienai', ru: 'Сгенерировать другие блюда на этот день' },
+  regenShort: { lt: 'Kiti patiekalai', ru: 'Другие блюда' },
+  regenHint: { lt: 'Pagal jūsų tikslą, alergijas, skonį ir biudžetą', ru: 'С учётом вашей цели, аллергий, вкусов и бюджета' },
+  dishesInDb: { lt: 'patiekalų duomenų bazėje', ru: 'блюд в базе' },
 } as const;
 
 export type StringKey = keyof typeof S;

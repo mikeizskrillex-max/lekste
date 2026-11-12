@@ -442,3 +442,10 @@ export const DETAILS: Record<string, RecipeDetail> = {
   carrot_hummus: d(1, 7, 0, [[0, 'Пюрируйте нут с маслом, солью, лимонным соком и 2 ложками воды.', 'Avinžirnius sutrinkite su aliejumi, druska, citrinos sultimis ir 2 šaukštais vandens.'], [0, 'Нарежьте морковь и огурец палочками и подавайте с пастой.', 'Morkas ir agurką supjaustykite lazdelėmis ir patiekite su užtepėle.']], ['Добавьте зубчик чеснока — получится настоящий хумус.', 'Įdėkite česnako skiltelę — gausis tikras humusas.']),
   yogurt_nuts: d(1, 2, 0, [[0, 'Выложите йогурт в миску.', 'Jogurtą sudėkite į dubenėlį.'], [0, 'Сверху добавьте ягоды и орехи.', 'Ant viršaus sudėkite uogas ir riešutus.']], ['Ложка мёда сделает перекус десертом.', 'Šaukštas medaus užkandį pavers desertu.']),
 };
+
+import { GENERATED_DETAILS } from './db/generator';
+
+/** Instructions for any recipe in the database (chef or generated). */
+export function getDetail(id: string): RecipeDetail | undefined {
+  return DETAILS[id] ?? GENERATED_DETAILS[id];
+}

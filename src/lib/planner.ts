@@ -1,4 +1,4 @@
-import { RECIPES, type Recipe } from '../data/recipes';
+import { isChefRecipe, RECIPES, type Recipe } from '../data/recipes';
 import { passesHardRules, recipeFacts } from './recipes';
 import type { MealType, QuizAnswers, Targets } from './types';
 
@@ -35,6 +35,7 @@ function score(r: Recipe, u: QuizAnswers): number {
   if (r.meal === 'breakfast' && r.breakfastStyle && u.breakfastStyle === r.breakfastStyle) s += 2;
   if (r.spice > u.spice) s -= 3 * (r.spice - u.spice);
   if (u.dietType === 'low_carb') s -= recipeFacts(r).carbs / 30;
+  if (isChefRecipe(r.id)) s += 1.2; // curated recipes first, generated ones add variety
   // budget awareness: the tighter the budget per person per day, the more a recipe's price matters
   const perDay = u.weeklyBudget / Math.max(1, u.household) / 7;
   s -= recipeFacts(r).cost * Math.max(0.5, 10 / Math.max(perDay, 1));
@@ -56,6 +57,24 @@ const MAIN = new Set<MealType>(['lunch', 'dinner']);
 /** Can this recipe fill this slot? Lunch and dinner are both "main meals". */
 function fits(r: Recipe, slot: MealType): boolean {
   return r.meal === slot || (MAIN.has(slot) && MAIN.has(r.meal));
+}
+
+function makeDay(chosen: Recipe[], labels: MealType[], t: Targets): PlanDay {
+  const base = chosen.reduce((s, r) => s + recipeFacts(r).kcal, 0) || 1;
+  const factor = Math.min(1.75, Math.max(0.6, t.kcal / base));
+  const servings = Math.round(factor * 4) / 4;
+  const meals: PlanMeal[] = chosen.map((r, i) => {
+    const f = recipeFacts(r);
+    return { recipeId: r.id, meal: labels[i], servings, kcal: Math.round(f.kcal * servings), protein: Math.round(f.protein * servings), cost: f.cost * servings };
+  });
+  return {
+    meals,
+    kcal: meals.reduce((s, m) => s + m.kcal, 0),
+    protein: meals.reduce((s, m) => s + m.protein, 0),
+    cost: meals.reduce((s, m) => s + m.cost, 0),
+    vegGrams: chosen.reduce((s, r) => s + recipeFacts(r).vegGrams * servings, 0),
+    fiber: chosen.reduce((s, r) => s + recipeFacts(r).fiber * servings, 0),
+  };
 }
 
 function buildOnce(u: QuizAnswers, t: Targets, pool: Recipe[], baseSlots: MealType[], seed: number): Plan {
@@ -107,20 +126,7 @@ function buildOnce(u: QuizAnswers, t: Targets, pool: Recipe[], baseSlots: MealTy
       base += recipeFacts(extra).kcal;
     }
 
-    const factor = Math.min(1.75, Math.max(0.6, t.kcal / base));
-    const servings = Math.round(factor * 4) / 4;
-    const meals: PlanMeal[] = chosen.map((r, i) => {
-      const f = recipeFacts(r);
-      return { recipeId: r.id, meal: labels[i], servings, kcal: Math.round(f.kcal * servings), protein: Math.round(f.protein * servings), cost: f.cost * servings };
-    });
-    days.push({
-      meals,
-      kcal: meals.reduce((s, m) => s + m.kcal, 0),
-      protein: meals.reduce((s, m) => s + m.protein, 0),
-      cost: meals.reduce((s, m) => s + m.cost, 0),
-      vegGrams: chosen.reduce((s, r) => s + recipeFacts(r).vegGrams * servings, 0),
-      fiber: chosen.reduce((s, r) => s + recipeFacts(r).fiber * servings, 0),
-    });
+    days.push(makeDay(chosen, labels, t));
   }
 
   const weeklyCost = days.reduce((s, d) => s + d.cost, 0) * u.household;
@@ -161,4 +167,31 @@ export function weeklyNeed(plan: Plan, household: number): Map<string, number> {
     }
   }
   return grams;
+}
+
+/**
+ * "Generate other dishes for this day": replaces every meal of one day with
+ * different recipes that still pass all hard rules and fit the user's targets.
+ * Recipes the user rated 👎 are skipped.
+ */
+export function regenerateDay(plan: Plan, u: QuizAnswers, t: Targets, day: number, seed: number, disliked: string[] = []): Plan {
+  const pool = eligibleRecipes(u).filter((r) => !disliked.includes(r.id));
+  const rand = rng(seed * 7919 + day);
+  const current = new Set(plan.days[day].meals.map((m) => m.recipeId));
+  const usedElsewhere = new Map<string, number>();
+  plan.days.forEach((d, i) => { if (i !== day) d.meals.forEach((m) => usedElsewhere.set(m.recipeId, (usedElsewhere.get(m.recipeId) ?? 0) + 1)); });
+  const chosen: Recipe[] = [];
+  const labels: MealType[] = [];
+  for (const m of plan.days[day].meals) {
+    const options = pool.filter((r) => fits(r, m.meal) && !current.has(r.id) && !chosen.includes(r) && (usedElsewhere.get(r.id) ?? 0) < 2);
+    const fallback = pool.filter((r) => fits(r, m.meal) && !chosen.includes(r));
+    const list = options.length ? options : fallback;
+    if (!list.length) continue;
+    const pick = list.map((r) => ({ r, s: score(r, u) + rand() * 4 })).sort((a, b) => b.s - a.s)[0].r;
+    chosen.push(pick);
+    labels.push(m.meal);
+  }
+  const days = plan.days.map((d, i) => (i === day ? makeDay(chosen, labels, t) : d));
+  const weeklyCost = days.reduce((s, d) => s + d.cost, 0) * u.household;
+  return { ...plan, days, weeklyCost };
 }

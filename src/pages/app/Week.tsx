@@ -9,7 +9,7 @@ import { DAY_SHORT, dayMeals, weekBaskets } from './shared';
 
 export function Week() {
   const { t, lang, pick } = useI18n();
-  const { plan, swaps, answers } = useStore();
+  const { plan, swaps, answers, regenerate } = useStore();
   const eur = (n: number) => formatEur(n, lang);
   const b = weekBaskets(plan!, swaps, answers.household);
   const singles = [b.barbora, b.rimi].map((x, i) => ({ k: (['barbora', 'rimi'] as const)[i], total: x.total }));
@@ -62,7 +62,8 @@ export function Week() {
           const main = meals.find((m) => m.meal === 'dinner') ?? meals[meals.length - 1];
           return (
             <Rise key={d} i={i}>
-              <Link to={`/app/menu?day=${i}`} className={`card block overflow-hidden transition hover:-translate-y-0.5 ${i === ti ? 'ring-2 ring-accent' : ''}`}>
+              <div className="flex h-full flex-col gap-1.5">
+              <Link to={`/app/menu?day=${i}`} className={`card block flex-1 overflow-hidden transition hover:-translate-y-0.5 ${i === ti ? 'ring-2 ring-accent' : ''}`}>
                 <DishPhoto id={main.recipe.id} alt={pick(main.recipe)} className="aspect-[4/3]" />
                 <div className="p-3">
                   <div className="text-[12px] font-bold text-accent">{d}{i === ti ? ` · ${t('todayMenu')}` : ''}</div>
@@ -70,6 +71,9 @@ export function Week() {
                   <div className="mt-1 text-[11.5px] text-muted">{meals.length} · {eur(meals.reduce((s, m) => s + m.cost, 0) * answers.household)}</div>
                 </div>
               </Link>
+                <button type="button" onClick={() => regenerate(i)} title={t('regenDay')}
+                  className="rounded-xl border border-line bg-surface px-2 py-1.5 text-[12px] font-bold text-accent transition hover:bg-soft">🔄 {t('regenShort')}</button>
+              </div>
             </Rise>
           );
         })}

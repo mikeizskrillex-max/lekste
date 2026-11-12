@@ -10,7 +10,8 @@ import { DAY_SHORT, dayMeals, MEAL_LABEL, type DayMeal } from './shared';
 
 export function Menu() {
   const { t, lang, pick } = useI18n();
-  const { plan, swaps, swap, targets, answers, feedback, rate } = useStore();
+  const { plan, swaps, swap, targets, answers, feedback, rate, regenerate } = useStore();
+  const [spinning, setSpinning] = useState(false);
   const [params] = useSearchParams();
   const [day, setDay] = useState(() => { const d = Number(params.get('day')); return Number.isInteger(d) && d >= 0 && d < 7 && params.has('day') ? d : todayIndex(); });
   const nav = useNavigate();
@@ -74,6 +75,15 @@ export function Menu() {
             );
           })}
         </AnimatePresence>
+      </div>
+
+      <div className="mt-4 flex flex-col items-center gap-1.5">
+        <motion.button type="button" whileTap={{ scale: 0.96 }}
+          onClick={() => { setSpinning(true); regenerate(day); setTimeout(() => setSpinning(false), 600); }}
+          className="inline-flex items-center gap-2 rounded-2xl border-2 border-accent bg-surface px-5 py-3 font-bold text-accent transition hover:bg-soft">
+          <motion.span animate={{ rotate: spinning ? 360 : 0 }} transition={{ duration: 0.6 }} aria-hidden>🔄</motion.span>{t('regenDay')}
+        </motion.button>
+        <span className="text-[12px] text-muted">{t('regenHint')}</span>
       </div>
 
       <div className="mt-5 grid gap-3 rounded-[18px] bg-soft p-4 sm:grid-cols-2">

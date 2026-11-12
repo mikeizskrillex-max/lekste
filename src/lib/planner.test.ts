@@ -89,3 +89,23 @@ describe('planner with tough constraints', () => {
     expect(gf.filter((r) => r.meal === 'lunch' || r.meal === 'dinner').length).toBeGreaterThanOrEqual(20);
   });
 });
+
+describe('regenerate a day', () => {
+  it('replaces every meal of the day with other dishes that still pass hard rules', async () => {
+    const { regenerateDay } = await import('./planner');
+    const u = { ...base, allergens: ['gluten'] as QuizAnswers['allergens'] };
+    const t = calcTargets(u);
+    const plan = buildPlan(u, t);
+    const next = regenerateDay(plan, u, t, 2, 42);
+    const before = plan.days[2].meals.map((m) => m.recipeId);
+    const after = next.days[2].meals.map((m) => m.recipeId);
+    expect(after).toHaveLength(before.length);
+    after.forEach((id) => expect(before).not.toContain(id));
+    for (const id of after) expect(recipeFacts(RECIPES.find((r) => r.id === id)!).allergens).not.toContain('gluten');
+    expect(next.days[0]).toEqual(plan.days[0]);
+  });
+
+  it('has a database of more than 1000 dishes', () => {
+    expect(RECIPES.length).toBeGreaterThan(1000);
+  });
+});

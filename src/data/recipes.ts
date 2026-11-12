@@ -1,4 +1,5 @@
 import type { Equipment, MealType } from '../lib/types';
+import { GENERATED_PHOTOS, GENERATED_RECIPES } from './db/generator';
 
 /**
  * Starter recipe library (per ONE serving). Nutrition, allergens, diet flags
@@ -27,12 +28,15 @@ const PHOTO_ALIAS: Record<string, string> = {
   turkey_cauliflower: 'chicken_bulgur', turkey_buckwheat_cutlets: 'turkey_beet', pear_cottage: 'curd_honey',
   orange_yogurt: 'yogurt_nuts', egg_sandwich: 'omelette_veg', veg_sticks_feta: 'carrot_hummus', apple_pb: 'apple_walnuts',
 };
-export const recipeImage = (id: string) => `/img/dishes/${PHOTO_ALIAS[id] ?? id}.jpg`;
+export const recipeImage = (id: string) => `/img/dishes/${PHOTO_ALIAS[id] ?? GENERATED_PHOTOS[id] ?? id}.jpg`;
+
+/** Hand-written chef recipes (curated); preferred by the planner. */
+export const isChefRecipe = (id: string) => !id.startsWith('g_');
 
 type R = Recipe;
 const r = (x: R) => x;
 
-export const RECIPES: Recipe[] = [
+export const CHEF_RECIPES: Recipe[] = [
   // ---------- Breakfast ----------
   r({ id: 'oat_berries', lt: 'Avižinė košė su uogomis ir jogurtu', ru: 'Овсянка с ягодами и йогуртом', emoji: '🥣', meal: 'breakfast', cuisine: 'home', minutes: 10, equipment: ['stove'], spice: 0, breakfastStyle: 'sweet',
     items: [['oats', 60], ['milk', 200], ['berries', 80], ['greek_yogurt', 100]],
@@ -321,3 +325,6 @@ export const RECIPES: Recipe[] = [
     stepsLt: ['Brokolius sudėkite į formą.', 'Užpilkite kiaušiniais su pienu, pabarstykite sūriu.', 'Kepkite 190 °C 20 min., patiekite su pomidorais.'],
     stepsRu: ['Выложите брокколи в форму.', 'Залейте яйцами с молоком, посыпьте сыром.', 'Запекайте при 190 °C 20 минут, подавайте с помидорами.'] }),
 ];
+
+/** The whole recipe database: chef recipes + generated dishes (src/data/db/generator.ts). */
+export const RECIPES: Recipe[] = [...CHEF_RECIPES, ...GENERATED_RECIPES];

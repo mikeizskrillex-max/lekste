@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { DishPhoto, SiteFooter, SiteHeader } from '../components/site';
 import { INGREDIENT_BY_ID } from '../data/ingredients';
 import { PRICES, STORE_LABEL } from '../data/prices';
-import { DETAILS, type Step } from '../data/recipeDetails';
+import { getDetail, type Step } from '../data/recipeDetails';
 import { RECIPE_BY_ID } from '../data/recipeIndex';
 import { formatEur, useI18n } from '../i18n/I18n';
 import { ALLERGEN_LABEL, type StringKey } from '../i18n/strings';
@@ -32,7 +32,7 @@ export function RecipeView() {
   const { answers, quizDone } = useStore();
   const nav = useNavigate();
   const r = RECIPE_BY_ID[id];
-  const det = DETAILS[id];
+  const det = getDetail(id);
   const portion = Number(params.get('s')) > 0 ? Number(params.get('s')) : 1;
   const [people, setPeople] = useState(quizDone ? answers.household : 2);
   const [have, setHave] = useState<string[]>([]);
