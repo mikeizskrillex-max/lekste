@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Color tokens as RGB triplets so Tailwind opacity modifiers work. */
+:root {
+  --field: 228 238 231;
+  --bg: 251 250 246;
+  --surface: 255 255 255;
+  --ink: 17 38 27;
+  --muted: 93 111 100;
+  --line: 230 232 225;
+  --accent: 42 140 87;
+  --on-accent: 255 255 255;
+  --deep: 20 61 43;
+  --soft: 229 244 234;
+  --warm: 246 196 106;
+  --peach: 255 210 181;
+  --rose: 242 201 220;
+  --leaf: 205 235 214;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --field: 11 22 17;
+    --bg: 18 32 26;
+    --surface: 25 43 34;
+    --ink: 238 245 240;
+    --muted: 156 179 166;
+    --line: 39 64 47;
+    --accent: 92 201 139;
+    --on-accent: 11 22 17;
+    --deep: 14 42 29;
+    --soft: 30 58 42;
+    --warm: 217 169 72;
+    --peach: 107 74 54;
+    --rose: 92 59 75;
+    --leaf: 43 74 54;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --field: 11 22 17;
+  --bg: 18 32 26;
+  --surface: 25 43 34;
+  --ink: 238 245 240;
+  --muted: 156 179 166;
+  --line: 39 64 47;
+  --accent: 92 201 139;
+  --on-accent: 11 22 17;
+  --deep: 14 42 29;
+  --soft: 30 58 42;
+  --warm: 217 169 72;
+  --peach: 107 74 54;
+  --rose: 92 59 75;
+  --leaf: 43 74 54;
+  color-scheme: dark;
+}
+
+html, body, #root { min-height: 100%; }
+body {
+  @apply bg-bg text-ink font-body antialiased;
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-tap-highlight-color: transparent;
+}
+h1, h2, h3 { text-wrap: balance; }
+.tabular { font-variant-numeric: tabular-nums; }
+
+@layer components {
+  .container-app { @apply mx-auto w-full max-w-[480px]; padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
+  .btn { @apply flex w-full items-center justify-center gap-2 rounded-btn bg-accent px-4 py-[15px] text-[15px] font-bold text-onaccent transition active:scale-[.97] disabled:opacity-50; }
+  .btn-ghost { @apply flex w-full items-center justify-center gap-2 rounded-btn bg-soft px-4 py-[15px] text-[15px] font-bold text-ink transition active:scale-[.97]; }
+  .card { @apply rounded-card border border-line bg-surface; }
+  .eyebrow { @apply mb-2 text-[11px] font-bold uppercase tracking-[.12em] text-accent; }
+  .h1 { @apply font-display text-[29px] font-extrabold leading-[1.08] tracking-tight; }
+  .h2 { @apply font-display text-[21px] font-extrabold leading-tight tracking-tight; }
+  .opt { @apply flex w-full items-center gap-3 rounded-btn border-2 border-line bg-surface px-4 py-[13px] text-left text-[15px] font-semibold transition active:scale-[.98]; }
+  .opt[aria-pressed='true'] { @apply border-accent bg-soft; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-line bg-surface px-3 py-2 text-[13px] font-semibold transition; }
+  .chip[aria-pressed='true'] { @apply border-accent bg-soft text-accent; }
+}
+
+:focus-visible { outline: 3px solid rgb(var(--warm)); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

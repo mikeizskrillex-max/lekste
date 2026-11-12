@@ -1,0 +1,95 @@
+import type { Allergen, DietFlag } from '../lib/types';
+
+/**
+ * Starter ingredient catalogue. Nutrition is per 100 g (typical values for the
+ * raw / dry product). Prices are DEMO estimates per kg and must be replaced by
+ * real weekly promotion data before launch.
+ */
+export interface Ingredient {
+  id: string;
+  lt: string;
+  ru: string;
+  emoji: string;
+  kcal: number;
+  protein: number;
+  fat: number;
+  carbs: number;
+  fiber: number;
+  sugar: number;
+  allergens: Allergen[];
+  flags: DietFlag[];
+  /** counts towards the daily vegetables & fruit target */
+  veg?: boolean;
+  /** demo price per kg in EUR */
+  pricePerKg: number;
+  /** demo: cheapest store this week and whether it is on promotion */
+  store: 'Barbora' | 'Rimi' | 'Lidl' | 'Maxima';
+  promo?: number;
+}
+
+const I = (
+  id: string, lt: string, ru: string, emoji: string,
+  n: [number, number, number, number, number, number],
+  allergens: Allergen[], flags: DietFlag[], pricePerKg: number,
+  store: Ingredient['store'], extra: Partial<Ingredient> = {},
+): Ingredient => ({
+  id, lt, ru, emoji, kcal: n[0], protein: n[1], fat: n[2], carbs: n[3], fiber: n[4], sugar: n[5],
+  allergens, flags, pricePerKg, store, ...extra,
+});
+
+const POULTRY: DietFlag[] = ['meat', 'poultry', 'animal'];
+
+export const INGREDIENTS: Ingredient[] = [
+  I('chicken_breast', 'Vištienos krūtinėlė', 'Куриное филе', '🍗', [110, 23, 1.5, 0, 0, 0], [], POULTRY, 6.99, 'Maxima', { promo: 1.5 }),
+  I('turkey_mince', 'Kalakutienos faršas', 'Фарш индейки', '🦃', [150, 19, 8, 0, 0, 0], [], POULTRY, 7.5, 'Rimi'),
+  I('beef_mince', 'Jautienos faršas', 'Говяжий фарш', '🥩', [250, 17, 20, 0, 0, 0], [], ['meat', 'beef', 'animal'], 8.5, 'Lidl'),
+  I('pork_loin', 'Kiaulienos nugarinė', 'Свиная корейка', '🥩', [200, 21, 13, 0, 0, 0], [], ['meat', 'pork', 'animal'], 6.5, 'Maxima'),
+  I('cod', 'Menkės filė', 'Филе трески', '🐟', [82, 18, 0.7, 0, 0, 0], ['fish'], ['fish', 'animal'], 11, 'Rimi', { promo: 1.8 }),
+  I('salmon', 'Lašiša', 'Лосось', '🐟', [208, 20, 13, 0, 0, 0], ['fish'], ['fish', 'animal'], 16.9, 'Maxima'),
+  I('tuna_can', 'Tunas savo sultyse', 'Тунец в собственном соку', '🥫', [116, 26, 1, 0, 0, 0], ['fish'], ['fish', 'animal'], 9, 'Lidl'),
+  I('shrimp', 'Krevetės', 'Креветки', '🦐', [85, 20, 0.5, 0, 0, 0], ['crustaceans'], ['seafood', 'animal'], 14, 'Lidl'),
+  I('eggs', 'Kiaušiniai', 'Яйца', '🥚', [143, 12.6, 9.5, 0.7, 0, 0.4], ['eggs'], ['egg', 'animal'], 3.8, 'Lidl'),
+  I('cottage_cheese', 'Varškė 5%', 'Творог 5%', '🧀', [121, 17, 5, 1.8, 0, 1.8], ['milk'], ['dairy', 'animal'], 5, 'Rimi', { promo: 0.6 }),
+  I('greek_yogurt', 'Graikiškas jogurtas 2%', 'Греческий йогурт 2%', '🥛', [66, 9, 2, 3.6, 0, 3.6], ['milk'], ['dairy', 'animal'], 3.5, 'Barbora', { promo: 0.4 }),
+  I('kefir', 'Kefyras', 'Кефир', '🥛', [50, 3, 2.5, 4, 0, 4], ['milk'], ['dairy', 'animal'], 1.6, 'Maxima'),
+  I('milk', 'Pienas 1,5%', 'Молоко 1,5%', '🥛', [46, 3.2, 1.5, 4.8, 0, 4.8], ['milk'], ['dairy', 'animal'], 1.2, 'Lidl'),
+  I('cheese', 'Kietasis sūris', 'Твёрдый сыр', '🧀', [350, 25, 27, 1, 0, 0.5], ['milk'], ['dairy', 'animal'], 10, 'Lidl'),
+  I('tofu', 'Tofu', 'Тофу', '⬜', [120, 13, 7, 2, 1, 0.5], ['soy'], [], 6, 'Rimi'),
+  I('lentils', 'Raudonieji lęšiai', 'Красная чечевица', '🫘', [340, 24, 1.5, 52, 11, 2], [], [], 2.5, 'Maxima'),
+  I('chickpeas', 'Avinžirniai (konservuoti)', 'Нут консервированный', '🫘', [120, 7, 2.5, 18, 6, 0.5], [], [], 2.8, 'Lidl'),
+  I('beans', 'Raudonosios pupelės (konservuotos)', 'Красная фасоль консервированная', '🫘', [100, 7, 0.5, 15, 6, 0.3], [], [], 2.5, 'Lidl'),
+  I('buckwheat', 'Grikiai', 'Гречка', '🌾', [343, 13, 3.4, 62, 10, 0], [], [], 2, 'Barbora'),
+  I('oats', 'Avižiniai dribsniai', 'Овсяные хлопья', '🌾', [370, 13, 7, 58, 10, 1], ['gluten'], [], 1.6, 'Barbora', { promo: 0.3 }),
+  I('rice', 'Ryžiai', 'Рис', '🍚', [350, 7, 0.6, 78, 1, 0], [], [], 2, 'Lidl'),
+  I('pasta', 'Pilno grūdo makaronai', 'Цельнозерновая паста', '🍝', [350, 13, 2.5, 64, 9, 3], ['gluten'], [], 3, 'Rimi'),
+  I('rye_bread', 'Ruginė duona', 'Ржаной хлеб', '🍞', [220, 6, 1.5, 42, 7, 3], ['gluten'], [], 3, 'Maxima'),
+  I('lavash', 'Lavašas', 'Лаваш', '🫓', [290, 9, 2, 58, 2, 1], ['gluten'], [], 4, 'Maxima'),
+  I('potatoes', 'Bulvės', 'Картофель', '🥔', [77, 2, 0.1, 17, 2.2, 0.8], [], [], 0.9, 'Lidl'),
+  I('broccoli', 'Brokoliai', 'Брокколи', '🥦', [34, 2.8, 0.4, 7, 2.6, 1.7], [], [], 3, 'Rimi', { veg: true }),
+  I('mixed_veg', 'Daržovių mišinys (šaldytas)', 'Овощная смесь (заморож.)', '🥕', [50, 2.5, 0.5, 8, 3, 3], [], [], 2.5, 'Rimi', { veg: true, promo: 0.7 }),
+  I('tomato', 'Pomidorai', 'Помидоры', '🍅', [18, 0.9, 0.2, 3.9, 1.2, 2.6], [], [], 2.8, 'Lidl', { veg: true }),
+  I('cucumber', 'Agurkai', 'Огурцы', '🥒', [15, 0.7, 0.1, 3.6, 0.5, 1.7], [], [], 2.5, 'Lidl', { veg: true }),
+  I('carrot', 'Morkos', 'Морковь', '🥕', [41, 0.9, 0.2, 10, 2.8, 4.7], [], [], 0.9, 'Maxima', { veg: true }),
+  I('onion', 'Svogūnai', 'Лук', '🧅', [40, 1.1, 0.1, 9, 1.7, 4.2], [], [], 1, 'Maxima', { veg: true }),
+  I('mushrooms', 'Pievagrybiai', 'Шампиньоны', '🍄', [22, 3.1, 0.3, 3.3, 1, 2], [], [], 4, 'Rimi', { veg: true }),
+  I('spinach', 'Špinatai', 'Шпинат', '🥬', [23, 2.9, 0.4, 3.6, 2.2, 0.4], [], [], 6, 'Barbora', { veg: true }),
+  I('beetroot', 'Burokėliai', 'Свёкла', '🟣', [43, 1.6, 0.2, 10, 2.8, 7], [], [], 1, 'Maxima', { veg: true }),
+  I('apple', 'Obuoliai', 'Яблоки', '🍎', [52, 0.3, 0.2, 14, 2.4, 10], [], [], 1.5, 'Lidl', { veg: true }),
+  I('banana', 'Bananai', 'Бананы', '🍌', [89, 1.1, 0.3, 23, 2.6, 12], [], [], 1.4, 'Lidl', { veg: true }),
+  I('berries', 'Uogų mišinys (šaldytas)', 'Ягодная смесь (заморож.)', '🫐', [50, 1, 0.3, 12, 5, 7], [], [], 5, 'Barbora', { veg: true }),
+  I('avocado', 'Avokadas', 'Авокадо', '🥑', [160, 2, 15, 9, 7, 0.7], [], [], 8, 'Rimi', { veg: true }),
+  I('walnuts', 'Graikiniai riešutai', 'Грецкие орехи', '🌰', [654, 15, 65, 14, 7, 2.6], ['nuts'], [], 14, 'Lidl'),
+  I('peanut_butter', 'Žemės riešutų sviestas', 'Арахисовая паста', '🥜', [588, 25, 50, 20, 6, 9], ['peanuts'], [], 8, 'Lidl'),
+  I('sesame', 'Sezamo sėklos', 'Кунжут', '⚪', [573, 18, 50, 23, 12, 0.3], ['sesame'], [], 8, 'Rimi'),
+  I('soy_sauce', 'Sojų padažas', 'Соевый соус', '🫙', [53, 8, 0.6, 5, 0.8, 0.4], ['soy', 'gluten'], [], 6, 'Maxima'),
+  I('olive_oil', 'Alyvuogių aliejus', 'Оливковое масло', '🫒', [884, 0, 100, 0, 0, 0], [], [], 10, 'Lidl'),
+  I('honey', 'Medus', 'Мёд', '🍯', [304, 0.3, 0, 82, 0, 82], [], ['animal'], 8, 'Maxima'),
+];
+
+export const INGREDIENT_BY_ID: Record<string, Ingredient> = Object.fromEntries(INGREDIENTS.map((i) => [i.id, i]));
+
+/** Ingredients a user can mark as disliked in the quiz. */
+export const DISLIKE_OPTIONS = [
+  'mushrooms', 'cottage_cheese', 'cod', 'salmon', 'shrimp', 'broccoli', 'beetroot',
+  'avocado', 'beans', 'chickpeas', 'lentils', 'tofu', 'onion', 'kefir', 'buckwheat',
+];
