@@ -1,55 +1,68 @@
-# Lėkštė
+# Lėkštė — Valgyk geriau. Išleisk mažiau.
 
-Web service (no native app) for personal healthy-eating menus in Lithuania: goal + preferences + allergies + budget → a weekly menu from products on promotion, a shopping list by store, a food diary and progress.
+AI-powered nutrition planner and smart grocery basket for Lithuania. A user answers
+9 questions, gets a personal weekly menu that fits their calorie/macro targets,
+allergies and budget, and a consolidated shopping list priced across Maxima,
+Lidl, Rimi, Iki and Barbora.
 
-## Run locally
+**Stack:** Next.js 14 (App Router) · TypeScript · Tailwind CSS · Framer Motion · Recharts ·
+Supabase (Auth magic link, Postgres + RLS) · Stripe (Checkout, Billing, webhooks) ·
+Resend (email) · provider-independent AI layer (Anthropic Claude or local rules) · Vercel.
+
+## Quick start
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173
-npm test         # nutrition and planner tests
-npm run build
+cp .env.example .env.local     # optional: leave empty for development mode
+npm run dev                    # http://localhost:3000
 ```
 
-Without Supabase keys the site runs in **demo mode**: everything is stored in the browser and there is no payment: every user gets a 7-day free trial with all features open.
+With **no keys** the app runs in a clearly labelled *development mode*:
 
-- **Prices** (`src/data/prices.ts`): real shelf prices from the public Barbora (Maxima) and Rimi e-shop search pages, collected 2026-11-12, with product names and links. They change weekly and must be refreshed.
-- **Photos** (`public/img`): free photos from Unsplash (Unsplash License), used as illustrations of the dishes. Replace with photos of the real recipes (e.g. Higgsfield) before launch.
-- **Reviews** on the landing page are clearly marked samples and must be replaced with real ones.
+| Integration | Without keys | With keys |
+|---|---|---|
+| Supabase | data in browser localStorage, signed dev-session cookie (`/api/dev/login`) | magic-link auth, Postgres with RLS |
+| Stripe | “test mode” checkout, no money moves, banner on every page | Stripe Checkout + webhooks + Billing Portal |
+| AI | local rules parser (LT/RU/EN) | Claude via `AI_PROVIDER=anthropic` + `ANTHROPIC_API_KEY`, rules as fallback |
+| Resend | email preview on `/success`, subjects logged in Settings | real transactional email |
 
-## Recipe database
+Admin panel in development mode: `/login?admin=1&next=/admin`, passphrase from
+`DEV_ADMIN_PASSPHRASE` (default `lekste-admin` only when `NODE_ENV !== production`).
+`next start` is production mode: set `SESSION_SECRET` (and `DEV_ADMIN_PASSPHRASE`) or configure Supabase.
 
-- **1 439 dishes** in total: 73 hand-written chef recipes (`src/data/recipes.ts`, steps in `src/data/recipeDetails.ts`) and ~1 370 generated dishes (`src/data/db/generator.ts`).
-- The generator builds dishes from the ingredients we have real Barbora (Maxima) and Rimi prices for, with cooking patterns: protein + side + vegetables × grill / bake / stew / wok, soups, bowls, pasta, porridges, omelettes, dairy bowls, snacks. Names and steps use grammatical forms written per ingredient (LT/RU). Nutrition, allergens and price are always computed from ingredients.
-- `npm run db:export` writes everything to **`data/recipes.json`** (names, ingredients, nutrition, allergens, price, steps, tip, photo) to review the library or seed Supabase.
-- The planner picks from the whole database using the user's hard rules (allergies, diet, "never" foods, equipment, time) and preferences, preferring chef recipes. Every day has a **"Generate other dishes for this day"** button; each dish has **Swap** and 👍/👎.
-- Generated dishes reuse photos of similar chef dishes; they need real photos (e.g. Higgsfield) and a cook's review before launch. Iki has no online shop with prices, so it is not included.
+## Scripts
 
-## What is built
-
-- Landing page with animations (LT / RU).
-- Quiz, 15 steps: goal, body, activity, budget, allergies (14 EU allergens), lactose, diet type, dislikes ("less often" / "never"), liked proteins and cuisines, meals per day, breakfast style, cooking time and equipment, batch cooking, spice, health screen (pregnancy, diabetes, etc. → no plan, see a doctor), consents.
-- Result page: calorie target (Mifflin–St Jeor), macros, pace, blurred example day, plans.
-- Cabinet: Today (calorie ring, meals with "eaten", water), Menu (days, swap, 👍/👎 with reason, recipe sheet), Shopping list (by store, promo savings, copy), Progress (weight chart), Settings (language, data export, delete).
-- Safety: allergens, diet type, "never" ingredients, equipment and time are **hard rules checked in code** (`src/lib/recipes.ts`); nutrition, allergens and cost are computed from ingredients, never invented.
-
-## Key files
-
-| File | What |
+| | |
 |---|---|
-| `src/lib/nutrition.ts` | calorie and macro targets |
-| `src/lib/recipes.ts` | recipe facts + hard rules (allergies etc.) |
-| `src/lib/planner.ts` | weekly plan + shopping list (local fallback for the AI step) |
-| `src/data/ingredients.ts` | ingredient catalogue (nutrition, allergens, DEMO prices) |
-| `src/data/recipes.ts` | starter recipe library (needs to grow to 80–120) |
-| `src/i18n/strings.ts` | all LT / RU copy |
-| `supabase/migrations/0001_init.sql` | database schema with Row Level Security |
+| `npm run dev` / `build` / `start` | Next.js |
+| `npm run lint` / `typecheck` | ESLint, `tsc --noEmit` |
+| `npm test` | Vitest unit tests (nutrition, planner, retail, CSV, assistant parser, photos) |
+| `npm run e2e` | Playwright scenarios A–J against a running server (`E2E_URL`, default :3000) |
+| `npm run db:export` | export the recipe database to `data/recipes.json` |
 
-## Next steps
+## Production setup
 
-1. Supabase project → run the migration → add `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` → magic-link login and sync.
-2. Stripe subscriptions (Checkout, webhook, Customer Portal).
-3. Admin: weekly promotions import, recipe library, AI recipe generator, Higgsfield photos, AI menu generation with code checks and manual review.
-4. PWA install prompt and offline menu, emails (Resend).
+1. **Supabase:** create a project, run `supabase/migrations/0001_schema.sql`, enable Email (magic link)
+   auth with redirect `https://<domain>/auth/callback`. Make an admin by setting
+   `app_metadata.role = "admin"` on the user (SQL: `update auth.users set raw_app_meta_data = raw_app_meta_data || '{"role":"admin"}' where email = '…'`).
+2. **Stripe:** create three recurring Prices (intro €9.99 first 14 days → €12.99/month is best modelled as a
+   €12.99/month price with a €3 off first-invoice coupon or a 14-day intro price; monthly €12.99; quarterly €29.99),
+   put the IDs in `STRIPE_PRICE_*`, add a webhook to `/api/stripe/webhook` for `checkout.session.completed`,
+   `customer.subscription.*`, `invoice.payment_failed`, `charge.refunded`. Enable Apple Pay / Google Pay in the dashboard.
+3. **Resend:** verify the sending domain, set `RESEND_API_KEY` and `EMAIL_FROM`.
+4. **AI:** `AI_PROVIDER=anthropic`, `ANTHROPIC_API_KEY`. Only the user's message and non-health preferences are sent.
+5. Deploy on Vercel with the variables from `.env.example`.
 
-Before launch: a native speaker proof-reads Lithuanian copy; a lawyer reviews privacy policy, terms and the immediate-start consent.
+## Price data — honesty rules
+
+* Barbora and Rimi prices are a **snapshot of their public e-shop catalogues** (date shown everywhere). Not real-time.
+* Maxima (in-store), Lidl and Iki have **no verified source** yet → CSV import in `/admin/prices` only.
+* Every price carries `source`, `retrievedAt` and `verification`; demo records are never shown as real prices.
+* We never order on the user's behalf; links open the retailer's page.
+* Before automated collection: review each retailer's Terms of Service and robots.txt, rate-limit, identify the client.
+
+## Documentation
+
+* [ARCHITECTURE.md](ARCHITECTURE.md) — modules, data flow, security
+* [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) — what is done, what needs keys or review
+* Lithuanian copy must be proof-read by a native speaker; legal pages are drafts for a lawyer.

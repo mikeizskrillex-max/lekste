@@ -1,9 +1,0 @@
-{
-  "name": "Lėkštė",
-  "short_name": "Lėkštė",
-  "start_url": "/app",
-  "display": "standalone",
-  "background_color": "#FBFAF6",
-  "theme_color": "#143D2B",
-  "icons": []
-}

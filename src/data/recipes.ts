@@ -1,4 +1,4 @@
-import type { Equipment, MealType } from '../lib/types';
+import type { Equipment, MealType } from '../domain/types';
 import { GENERATED_PHOTOS, GENERATED_RECIPES } from './db/generator';
 
 /**

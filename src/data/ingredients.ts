@@ -1,4 +1,4 @@
-import type { Allergen, DietFlag } from '../lib/types';
+import type { Allergen, DietFlag } from '../domain/types';
 
 /**
  * Ingredient catalogue. Nutrition is per 100 g (typical values for the raw / dry

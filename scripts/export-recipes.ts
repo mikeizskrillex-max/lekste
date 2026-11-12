@@ -8,7 +8,7 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import { RECIPES, recipeImage, isChefRecipe } from '../src/data/recipes';
 import { getDetail } from '../src/data/recipeDetails';
 import { PRICES_DATE } from '../src/data/prices';
-import { recipeFacts } from '../src/lib/recipes';
+import { recipeFacts } from '../src/domain/recipeFacts';
 
 const round = (n: number, d = 1) => Math.round(n * 10 ** d) / 10 ** d;
 const out = RECIPES.map((r) => {

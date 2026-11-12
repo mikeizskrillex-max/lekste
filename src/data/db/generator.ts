@@ -14,7 +14,7 @@
  */
 import type { Recipe } from '../recipes';
 import type { RecipeDetail, Step } from '../recipeDetails';
-import type { Equipment, MealType } from '../../lib/types';
+import type { Equipment, MealType } from '../../domain/types';
 
 type L = [ru: string, lt: string];
 interface Gen { recipe: Recipe; detail: RecipeDetail; photo: string }
