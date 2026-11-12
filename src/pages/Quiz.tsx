@@ -187,20 +187,20 @@ export function Quiz() {
 
   const progress = (i + 1) / STEPS.length;
   return (
-    <div className="flex min-h-screen flex-col bg-bg">
-      <header className="container-app flex items-center justify-between pb-2 pt-4">
+    <div className="flex min-h-screen flex-col bg-bg md:bg-field">
+      <header className="container-app flex items-center justify-between pb-2 pt-4 md:max-w-[640px]">
         <button type="button" onClick={() => (i === 0 ? nav('/') : go(-1))} className="text-[14px] font-semibold text-muted">← {t('back')}</button>
         <Logo />
         <LangSwitch />
       </header>
-      <div className="container-app">
+      <div className="container-app md:max-w-[640px]">
         <div className="flex items-center justify-between text-[11px] text-muted"><span>{i + 1} / {STEPS.length}</span><span>{t('quizTime')}</span></div>
         <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-line">
           <motion.div className="h-full rounded-full bg-accent" animate={{ width: `${progress * 100}%` }} transition={{ duration: 0.4 }} />
         </div>
       </div>
 
-      <main className="container-app flex-1 overflow-x-hidden pb-32">
+      <main className="container-app flex-1 overflow-x-hidden pb-32 md:my-6 md:max-w-[640px] md:flex-none md:rounded-[28px] md:bg-bg md:px-10 md:pb-10 md:shadow-[0_30px_80px_-40px_rgba(20,61,43,.4)]">
         <AnimatePresence mode="wait" custom={dir}>
           <motion.div key={step} custom={dir}
             initial={{ opacity: 0, x: dir * 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: dir * -40 }}
@@ -211,7 +211,7 @@ export function Quiz() {
       </main>
 
       <div className="fixed inset-x-0 bottom-0 border-t border-line bg-bg/95 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 backdrop-blur">
-        <div className="container-app grid gap-2">
+        <div className="container-app grid gap-2 md:max-w-[640px]">
           {step === 'summary'
             ? <button type="button" className="btn" disabled={!canNext} onClick={finish}>{t('seeResult')}</button>
             : <button type="button" className="btn" disabled={!canNext} onClick={() => go(1)}>{t('next')}</button>}

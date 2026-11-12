@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { CountUp, Rise, Ring, Thumb } from '../../components/ui';
+import { DishPhoto } from '../../components/site';
+import { CountUp, Rise, Ring } from '../../components/ui';
 import { formatEur, formatNum, useI18n } from '../../i18n/I18n';
 import { today, todayIndex, useStore } from '../../lib/store';
 import { dayMeals, MEAL_LABEL } from './shared';
@@ -17,9 +18,9 @@ export function Today() {
 
   return (
     <div className="pt-2">
-      <h1 className="font-display text-[22px] font-extrabold">{t('hello')}</h1>
+      <h1 className="font-display text-[26px] font-extrabold md:text-[32px]">{t('tabDiary')}</h1>
 
-      <section className="mt-4 flex items-center gap-5 rounded-card bg-deep p-5 text-white">
+      <div className="grid gap-4 lg:grid-cols-[380px_1fr] lg:items-start"><section className="mt-4 flex items-center gap-5 rounded-card bg-deep p-5 text-white">
         <Ring frac={sum('kcal') / targets.kcal} size={120} stroke={11} color="#8fe0b0">
           <div className="text-center leading-tight">
             <div className="font-display text-[24px] font-extrabold"><CountUp value={left} format={(n) => formatNum(n, lang)} /></div>
@@ -44,7 +45,7 @@ export function Today() {
           return (
             <Rise key={m.slot} i={i}>
               <div className={`card flex items-center gap-3 p-2.5 transition ${isDone ? 'opacity-60' : ''}`}>
-                <Thumb emoji={m.recipe.emoji} i={i} />
+                <DishPhoto id={m.recipe.id} alt={pick(m.recipe)} className="h-16 w-16 shrink-0 rounded-[14px]" />
                 <div className="min-w-0 flex-1">
                   <div className="text-[11.5px] text-muted">{pick(MEAL_LABEL[m.recipe.meal])} · {m.recipe.minutes} {t('min')} · {formatEur(m.cost, lang)}</div>
                   <div className="font-bold leading-snug">{pick(m.recipe)}</div>
@@ -60,6 +61,7 @@ export function Today() {
         })}
       </section>
 
+      </div>
       <section className="card mt-4 p-4">
         <div className="mb-2 flex justify-between font-bold"><span>💧 {t('water')}</span><span className="text-muted tabular">{glasses} / 8</span></div>
         <div className="grid grid-cols-8 gap-1.5">

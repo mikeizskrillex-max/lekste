@@ -13,9 +13,10 @@ export function Settings() {
 
   return (
     <div className="pt-2">
-      <h1 className="font-display text-[22px] font-extrabold">{t('settingsTitle')}</h1>
-      <div className="mt-3 grid gap-2">
+      <h1 className="font-display text-[26px] font-extrabold md:text-[32px]">{t('settingsTitle')}</h1>
+      <div className="mt-4 grid max-w-[640px] gap-2">
         <Link to="/quiz" className="card flex justify-between p-4 font-semibold"><span>🎯 {t('redoQuiz')}</span><span>›</span></Link>
+        <Link to="/app/progress" className="card flex justify-between p-4 font-semibold lg:hidden"><span>📈 {t('tabProgress')}</span><span>›</span></Link>
         <div className="card flex items-center justify-between p-4 font-semibold"><span>🌐 {t('language')}</span><LangSwitch /></div>
         <button type="button" className="card flex justify-between p-4 text-left font-semibold" onClick={() => alertNotReady(setExported)}>
           <span>💳 {t('manageSub')}</span><span>›</span>

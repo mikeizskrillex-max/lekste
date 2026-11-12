@@ -1,5 +1,6 @@
 import { INGREDIENT_BY_ID } from '../data/ingredients';
 import type { Recipe } from '../data/recipes';
+import { portionCost } from './pricing';
 import type { Allergen, DietFlag, QuizAnswers } from './types';
 
 export interface RecipeFacts {
@@ -36,7 +37,7 @@ export function recipeFacts(r: Recipe): RecipeFacts {
     f.fiber += ing.fiber * k;
     f.sugar += ing.sugar * k;
     if (ing.veg) f.vegGrams += grams;
-    f.cost += (ing.pricePerKg * grams) / 1000;
+    f.cost += portionCost(id, grams);
     ing.allergens.forEach((a) => allergens.add(a));
     ing.flags.forEach((x) => flags.add(x));
   }

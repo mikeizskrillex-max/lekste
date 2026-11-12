@@ -11,7 +11,8 @@ import { Legal } from './pages/Legal';
 import { AppLayout } from './pages/app/AppLayout';
 import { Today } from './pages/app/Today';
 import { Menu } from './pages/app/Menu';
-import { Shop } from './pages/app/Shop';
+import { Basket } from './pages/app/Basket';
+import { Week } from './pages/app/Week';
 import { Progress } from './pages/app/Progress';
 import { Settings } from './pages/app/Settings';
 import './index.css';
@@ -29,9 +30,10 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/privacy" element={<Legal kind="privacy" />} />
             <Route path="/terms" element={<Legal kind="terms" />} />
             <Route path="/app" element={<AppLayout />}>
-              <Route index element={<Today />} />
+              <Route index element={<Week />} />
               <Route path="menu" element={<Menu />} />
-              <Route path="shop" element={<Shop />} />
+              <Route path="basket" element={<Basket />} />
+              <Route path="diary" element={<Today />} />
               <Route path="progress" element={<Progress />} />
               <Route path="settings" element={<Settings />} />
             </Route>

@@ -11,7 +11,11 @@ npm test         # nutrition and planner tests
 npm run build
 ```
 
-Without Supabase keys the site runs in **demo mode**: everything is stored in the browser, payment is skipped, prices and promotions are sample data.
+Without Supabase keys the site runs in **demo mode**: everything is stored in the browser and there is no payment: every user gets a 7-day free trial with all features open.
+
+- **Prices** (`src/data/prices.ts`): real shelf prices from the public Barbora (Maxima) and Rimi e-shop search pages, collected 2026-11-12, with product names and links. They change weekly and must be refreshed.
+- **Photos** (`public/img`): free photos from Unsplash (Unsplash License), used as illustrations of the dishes. Replace with photos of the real recipes (e.g. Higgsfield) before launch.
+- **Reviews** on the landing page are clearly marked samples and must be replaced with real ones.
 
 ## What is built
 

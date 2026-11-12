@@ -20,8 +20,8 @@ export function Progress() {
   const xy = pts.map((p, i) => [12 + (i / (pts.length - 1)) * (W - 24), 10 + (1 - (p.kg - min) / (max - min)) * (H - 30)]);
 
   return (
-    <div className="pt-2">
-      <h1 className="font-display text-[22px] font-extrabold">{t('progressTitle')}</h1>
+    <div className="max-w-[720px]">
+      <h1 className="font-display text-[26px] font-extrabold md:text-[32px]">{t('progressTitle')}</h1>
       <section className="card mt-3 p-4">
         <div className="flex justify-between font-bold"><span>{t('weight')}</span><span className="text-accent tabular">{diff > 0 ? '+' : ''}{diff} kg <span className="text-[12px] font-normal text-muted">{t('sinceStart')}</span></span></div>
         <svg viewBox={`0 0 ${W} ${H}`} className="mt-2 w-full" role="img" aria-label={t('weight')}>

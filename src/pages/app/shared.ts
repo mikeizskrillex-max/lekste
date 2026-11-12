@@ -1,6 +1,7 @@
 import { RECIPE_BY_ID } from '../../data/recipeIndex';
 import type { Recipe } from '../../data/recipes';
-import type { Plan } from '../../lib/planner';
+import { weeklyNeed, type Plan } from '../../lib/planner';
+import { basket } from '../../lib/pricing';
 import { recipeFacts } from '../../lib/recipes';
 
 export interface DayMeal { slot: number; recipe: Recipe; servings: number; kcal: number; protein: number; fat: number; carbs: number; cost: number }
@@ -24,6 +25,12 @@ export function effectivePlan(plan: Plan, swaps: Record<string, string>): Plan {
     ...plan,
     days: plan.days.map((d, di) => ({ ...d, meals: d.meals.map((m, si) => ({ ...m, recipeId: swaps[`${di}-${si}`] ?? m.recipeId })) })),
   };
+}
+
+/** Real-price baskets for the week: each store alone, and the cheapest mix. */
+export function weekBaskets(plan: Plan, swaps: Record<string, string>, household: number) {
+  const need = weeklyNeed(effectivePlan(plan, swaps), household);
+  return { need, barbora: basket(need, 'barbora'), rimi: basket(need, 'rimi'), mix: basket(need, 'mix') };
 }
 
 export const MEAL_LABEL: Record<string, { lt: string; ru: string }> = {

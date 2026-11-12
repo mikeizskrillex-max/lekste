@@ -8,18 +8,21 @@ import type { QuizAnswers, Targets } from './types';
 
 export const DEFAULT_ANSWERS: QuizAnswers = {
   goal: 'lose', sex: 'f', age: 30, heightCm: 168, weightKg: 72, targetWeightKg: 67, activity: 'light',
-  household: 1, weeklyBudget: 50, allergens: [], lactoseIntolerant: false, dietType: 'any', never: [], avoid: [],
+  household: 1, weeklyBudget: 60, allergens: [], lactoseIntolerant: false, dietType: 'any', never: [], avoid: [],
   likedProteins: [], likedCuisines: [], mealsPerDay: 4, breakfastStyle: 'sweet', cookingTimeMax: 30,
   equipment: ['oven'], batchCooking: false, spice: 1, stores: ['Barbora'], health: [], email: '',
   consentHealth: false, consentTerms: false,
 };
+
+export const TRIAL_DAYS = 7;
 
 export interface Feedback { recipeId: string; rating: 'up' | 'down'; reason?: string }
 
 interface State {
   answers: QuizAnswers;
   quizDone: boolean;
-  subscribed: boolean;
+  /** ISO date the free trial started; null = not started */
+  trialStart: string | null;
   plan: Plan | null;
   /** "day-slotIndex" -> replacement recipe id */
   swaps: Record<string, string>;
@@ -35,7 +38,8 @@ interface Ctx extends State {
   targets: Targets;
   setAnswers: (a: Partial<QuizAnswers>) => void;
   finishQuiz: () => void;
-  subscribe: () => void;
+  startTrial: () => void;
+  trialDaysLeft: number | null;
   swap: (day: number, slot: number) => void;
   toggleEaten: (date: string, recipeId: string) => void;
   setWater: (date: string, n: number) => void;
@@ -50,7 +54,7 @@ const StoreCtx = createContext<Ctx | null>(null);
 const initial = (): State => ({
   answers: DEFAULT_ANSWERS,
   quizDone: false,
-  subscribed: false,
+  trialStart: null,
   plan: null,
   swaps: {},
   eaten: {},
@@ -77,7 +81,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         weights: p.weights.length ? p.weights : [{ date: today(), kg: p.answers.weightKg }],
       };
     }),
-    subscribe: () => setS((p) => ({ ...p, subscribed: true })),
+    startTrial: () => setS((p) => ({ ...p, trialStart: p.trialStart ?? today() })),
+    trialDaysLeft: s.trialStart ? Math.max(0, TRIAL_DAYS - Math.floor((Date.now() - Date.parse(s.trialStart)) / 86400000)) : null,
     swap: (day, slot) => setS((p) => {
       if (!p.plan) return p;
       const key = `${day}-${slot}`;
@@ -98,7 +103,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     addWeight: (kg) => setS((p) => ({ ...p, weights: [...p.weights.filter((w) => w.date !== today()), { date: today(), kg }] })),
     toggleChecked: (id) => setS((p) => ({ ...p, checked: p.checked.includes(id) ? p.checked.filter((x) => x !== id) : [...p.checked, id] })),
     rate: (f) => setS((p) => ({ ...p, feedback: [...p.feedback.filter((x) => x.recipeId !== f.recipeId), f] })),
-    reset: () => { clearAll(); setS({ ...initial(), answers: DEFAULT_ANSWERS, quizDone: false, subscribed: false, plan: null }); },
+    reset: () => { clearAll(); setS({ ...initial(), answers: DEFAULT_ANSWERS, quizDone: false, trialStart: null, plan: null }); },
   }), [s, targets]);
 
   return <StoreCtx.Provider value={value}>{children}</StoreCtx.Provider>;

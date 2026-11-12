@@ -1,4 +1,3 @@
-import { INGREDIENT_BY_ID } from '../data/ingredients';
 import { RECIPES, type Recipe } from '../data/recipes';
 import { passesHardRules, recipeFacts } from './recipes';
 import type { MealType, QuizAnswers, Targets } from './types';
@@ -36,6 +35,9 @@ function score(r: Recipe, u: QuizAnswers): number {
   if (r.meal === 'breakfast' && r.breakfastStyle && u.breakfastStyle === r.breakfastStyle) s += 2;
   if (r.spice > u.spice) s -= 3 * (r.spice - u.spice);
   if (u.dietType === 'low_carb') s -= recipeFacts(r).carbs / 30;
+  // budget awareness: the tighter the budget per person per day, the more a recipe's price matters
+  const perDay = u.weeklyBudget / Math.max(1, u.household) / 7;
+  s -= recipeFacts(r).cost * Math.max(0.5, 10 / Math.max(perDay, 1));
   return s;
 }
 
@@ -108,10 +110,8 @@ export function buildPlan(u: QuizAnswers, t: Targets, seed = 7): Plan {
   return { days, weeklyCost, issues: [...new Set(issues)] };
 }
 
-export interface ShopItem { ingredientId: string; grams: number; cost: number; saving: number; store: string }
-
-/** Aggregate a plan into a shopping list grouped by the cheapest store. */
-export function shoppingList(plan: Plan, household: number): ShopItem[] {
+/** Grams of each ingredient needed for the whole household for the week. */
+export function weeklyNeed(plan: Plan, household: number): Map<string, number> {
   const recipes = Object.fromEntries(RECIPES.map((r) => [r.id, r]));
   const grams = new Map<string, number>();
   for (const day of plan.days) {
@@ -121,10 +121,5 @@ export function shoppingList(plan: Plan, household: number): ShopItem[] {
       }
     }
   }
-  return [...grams.entries()].map(([id, g]) => {
-    const ing = INGREDIENT_BY_ID[id];
-    const cost = (ing.pricePerKg * g) / 1000;
-    const saving = ing.promo ? Math.min(cost * 0.3, ing.promo * Math.ceil(g / 1000)) : 0;
-    return { ingredientId: id, grams: Math.round(g), cost, saving, store: ing.store };
-  }).sort((a, b) => a.store.localeCompare(b.store) || b.cost - a.cost);
+  return grams;
 }
