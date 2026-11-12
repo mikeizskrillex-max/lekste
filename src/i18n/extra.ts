@@ -120,6 +120,10 @@ export const X = {
   passphrase: { lt: 'Slaptafrazė', ru: 'Пароль-фраза' },
   wrongPass: { lt: 'Neteisinga slaptafrazė', ru: 'Неверная пароль-фраза' },
   devBanner: { lt: '{list} neprijungta — duomenys saugomi tik šioje naršyklėje', ru: '{list} не подключено — данные хранятся только в этом браузере' },
+  whatToBuy: { lt: 'Ką nupirkti šiam receptui', ru: 'Что купить для этого рецепта' },
+  whatToBuyDay: { lt: 'Ką nupirkti šiai dienai', ru: 'Что купить на этот день' },
+  dayBuyNote: { lt: 'Pilnos pakuotės pigiausiose parduotuvėse; likučiai lieka kitoms dienoms.', ru: 'Целые упаковки в самых дешёвых магазинах; остатки пойдут на другие дни.' },
+  openRecipeCta: { lt: 'Receptas: kaip gaminti', ru: 'Рецепт: как готовить' },
   notFound: { lt: 'Puslapis nerastas', ru: 'Страница не найдена' },
   toHome: { lt: 'Į pradžią', ru: 'На главную' },
 } as const;

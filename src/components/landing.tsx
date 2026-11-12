@@ -106,14 +106,15 @@ export function WeekPreview() {
         </div>
         <motion.div key={day} initial={{ opacity: 0.4, y: 6 }} animate={{ opacity: 1, y: 0 }} className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {d.meals.map((m) => (
-            <Card key={m.recipeId + m.meal} className="overflow-hidden">
+            <Link key={m.recipeId + m.meal} href={`/recipe/${m.recipeId}?back=/`} className="group"><Card className="h-full overflow-hidden transition group-hover:ring-leaf">
               <DishImage id={m.recipeId} alt={recipeName(m.recipeId, lang)} className="aspect-[4/3]" sizes="(max-width: 640px) 100vw, 300px" />
               <div className="p-4">
                 <div className="text-[11.5px] font-bold uppercase tracking-wide text-leaf">{t(`meal_${m.meal}` as MessageKey)}</div>
                 <div className="mt-1 line-clamp-2 min-h-[44px] text-[15.5px] font-bold leading-snug">{recipeName(m.recipeId, lang)}</div>
                 <div className="mt-2 flex justify-between text-[13px] text-muted"><span>{num(m.kcal)} kcal · {num(m.protein)} g</span><span className="font-semibold text-ink">{eur(m.cost)}</span></div>
+                <div className="mt-2 text-[12.5px] font-bold text-leaf">{t('openRecipeCta')} →</div>
               </div>
-            </Card>
+            </Card></Link>
           ))}
         </motion.div>
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-[14px]">

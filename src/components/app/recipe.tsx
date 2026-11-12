@@ -3,13 +3,14 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { getDetail } from '@/data/recipeDetails';
-import { cheapest } from '@/domain/pricing';
+import type { RetailerId } from '@/config/markets';
+import { cheapest, strategies } from '@/domain/pricing';
 import { recipeFacts } from '@/domain/recipeFacts';
 import { kitchenMeasure } from '@/domain/units';
 import { ALLERGEN_LABEL, type MessageKey } from '@/i18n/messages';
 import { useI18n } from '@/i18n/I18nProvider';
 import { fmtGrams, ingEmoji, ingName, recipeById } from '@/lib/view';
-import { RETAILERS } from '@/retail/retailers';
+import { RETAILER_ORDER, RETAILERS } from '@/retail/retailers';
 import { useStore } from '@/state/store';
 import { Badge, Button, Card, DishImage, cx } from '../ui';
 
@@ -32,13 +33,39 @@ function Timer({ minutes }: { minutes: number }) {
   );
 }
 
-export function RecipePage({ id }: { id: string }) {
+function BuyBlock({ id, servings }: { id: string; servings: number }) {
+  const { t, lang, eur } = useI18n();
+  const { answers, catalog } = useStore();
+  const r = recipeById(id)!;
+  const need = new Map(r.items.map(([ing, g]) => [ing, g * servings] as [string, number]));
+  const st = strategies(need, RETAILER_ORDER, answers.stores as RetailerId[], answers.travelCost ?? 0, catalog);
+  const b = st.multi;
+  if (!b) return null;
+  return (
+    <div className="mt-5 rounded-2xl bg-sage/70 p-4">
+      <div className="flex items-baseline justify-between"><b className="text-[15px]">🛒 {t('whatToBuy')}</b><span className="font-display text-[18px] font-extrabold">{eur(b.total)}</span></div>
+      <ul className="mt-2 space-y-1.5 text-[13px]">
+        {b.lines.map((l) => (
+          <li key={l.ingredientId} className="flex items-start justify-between gap-3">
+            <span className="min-w-0"><span className="mr-1 inline-block rounded px-1.5 text-[10.5px] font-bold text-white" style={{ background: RETAILERS[l.record.retailer].color }}>{RETAILERS[l.record.retailer].name}</span>
+              {l.record.url ? <a href={l.record.url} target="_blank" rel="noopener noreferrer" className="hover:underline">{l.record.name}</a> : l.record.name}</span>
+            <span className="shrink-0 tabular-nums">{l.pantry ? t('pantry') : `${l.packs} × ${eur(l.record.price)}`}</span>
+          </li>
+        ))}
+      </ul>
+      {b.missing.length > 0 && <p className="mt-2 text-[12px] text-muted">{t('missingItems', { n: b.missing.length })}: {b.missing.map((x) => ingName(x, lang)).join(', ')}</p>}
+      <p className="mt-2 text-[11.5px] text-muted">{t('snapshotNote')}</p>
+    </div>
+  );
+}
+
+export function RecipePage({ id, backHref = '/app/menu' }: { id: string; backHref?: string }) {
   const { t, lang, pick, eur, num } = useI18n();
   const { answers, catalog } = useStore();
   const r = recipeById(id);
   const [servings, setServings] = useState(Math.max(1, answers.household));
   const [cook, setCook] = useState<number | null>(null);
-  if (!r) return <Card className="p-8 text-center">{t('recipeNotFound')} <Link href="/app/menu" className="text-leaf">{t('back2')}</Link></Card>;
+  if (!r) return <Card className="p-8 text-center">{t('recipeNotFound')} <Link href={backHref} className="text-leaf">{t('back2')}</Link></Card>;
   const f = recipeFacts(r);
   const d = getDetail(id);
   const steps: [number, string][] = d ? d.steps.map(([m, ru, lt]) => [m, lang === 'lt' ? lt : ru]) : (lang === 'lt' ? r.stepsLt : r.stepsRu).map((s) => [0, s]);
@@ -46,7 +73,7 @@ export function RecipePage({ id }: { id: string }) {
 
   return (
     <article>
-      <Link href="/app/menu" className="text-[14px] font-semibold text-leaf">{t('back2')}</Link>
+      <Link href={backHref} className="text-[14px] font-semibold text-leaf">{t('back2')}</Link>
       <div className="mt-3 grid gap-6 md:grid-cols-[1.1fr_1fr]">
         <div className="relative">
           <DishImage id={id} alt={r[lang]} className="aspect-[4/3] rounded-xl3" priority sizes="(max-width: 768px) 100vw, 560px" />
@@ -96,6 +123,7 @@ export function RecipePage({ id }: { id: string }) {
               );
             })}
           </ul>
+          <BuyBlock id={id} servings={servings} />
         </Card>
         <div>
           <h2 className="text-[19px] font-extrabold">{t('stepsTitle2')}</h2>
