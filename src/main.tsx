@@ -8,6 +8,7 @@ import { Quiz } from './pages/Quiz';
 import { Result } from './pages/Result';
 import { Welcome } from './pages/Welcome';
 import { Legal } from './pages/Legal';
+import { PublicRecipe, RecipeView } from './pages/RecipePage';
 import { AppLayout } from './pages/app/AppLayout';
 import { Today } from './pages/app/Today';
 import { Menu } from './pages/app/Menu';
@@ -29,6 +30,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/privacy" element={<Legal kind="privacy" />} />
             <Route path="/terms" element={<Legal kind="terms" />} />
+            <Route path="/recipe/:id" element={<PublicRecipe />} />
             <Route path="/app" element={<AppLayout />}>
               <Route index element={<Week />} />
               <Route path="menu" element={<Menu />} />
@@ -36,6 +38,7 @@ createRoot(document.getElementById('root')!).render(
               <Route path="diary" element={<Today />} />
               <Route path="progress" element={<Progress />} />
               <Route path="settings" element={<Settings />} />
+              <Route path="recipe/:id" element={<RecipeView />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

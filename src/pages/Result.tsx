@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { DishPhoto, SiteFooter, SiteHeader } from '../components/site';
 import { CountUp, Rise, Ring } from '../components/ui';
 import { STORE_LABEL } from '../data/prices';
@@ -88,14 +88,14 @@ export function Result() {
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {meals.map((m, i) => (
             <Rise key={i} i={i}>
-              <div className="card overflow-hidden">
+              <Link to={`/recipe/${m.recipe.id}?s=${m.servings}`} className="card block overflow-hidden transition hover:-translate-y-0.5">
                 <DishPhoto id={m.recipe.id} alt={pick(m.recipe)} className="aspect-[4/3]" />
                 <div className="p-4">
                   <div className="text-[12px] text-muted">{pick(MEAL_LABEL[m.meal])} · {m.kcal} {t('kcal')}</div>
                   <div className="font-bold leading-snug">{pick(m.recipe)}</div>
-                  <div className="mt-1.5 text-[13px] font-bold text-accent">{eur(m.cost * a.household)}</div>
+                  <div className="mt-1.5 text-[13px] font-bold text-accent">{eur(m.cost * a.household)} · {t('openRecipe')} →</div>
                 </div>
-              </div>
+              </Link>
             </Rise>
           ))}
         </div>

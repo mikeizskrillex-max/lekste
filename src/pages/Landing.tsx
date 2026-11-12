@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { DishPhoto, SiteFooter, SiteHeader } from '../components/site';
 import { CountUp, Rise } from '../components/ui';
 import { INGREDIENT_BY_ID } from '../data/ingredients';
@@ -232,13 +232,16 @@ function WeekPreview() {
           {meals.map((m, i) => {
             const r = RECIPE_BY_ID[m.recipeId];
             return (
-              <motion.div key={`${day}-${i}`} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }} className="card overflow-hidden">
+              <motion.div key={`${day}-${i}`} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}>
+               <Link to={`/recipe/${r.id}?s=${m.servings}`} className="card block h-full overflow-hidden transition hover:-translate-y-0.5">
                 <DishPhoto id={r.id} alt={pick(r)} className="aspect-[4/3]" />
                 <div className="p-4">
                   <div className="text-[12px] text-muted">{r.minutes} {t('min')} · {m.kcal} {t('kcal')}</div>
                   <div className="mt-0.5 font-bold leading-snug">{pick(r)}</div>
                   <div className="mt-2 inline-block rounded-lg bg-soft px-2 py-1 text-[12.5px] font-bold text-accent">{formatEur(m.cost, lang)} / {t('servings')}</div>
+                  <div className="mt-2 text-[13px] font-bold text-accent">{t('openRecipe')} →</div>
                 </div>
+               </Link>
               </motion.div>
             );
           })}

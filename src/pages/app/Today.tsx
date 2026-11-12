@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { DishPhoto } from '../../components/site';
 import { CountUp, Rise, Ring } from '../../components/ui';
@@ -48,7 +49,7 @@ export function Today() {
                 <DishPhoto id={m.recipe.id} alt={pick(m.recipe)} className="h-16 w-16 shrink-0 rounded-[14px]" />
                 <div className="min-w-0 flex-1">
                   <div className="text-[11.5px] text-muted">{pick(MEAL_LABEL[m.meal])} · {m.recipe.minutes} {t('min')} · {formatEur(m.cost, lang)}</div>
-                  <div className="font-bold leading-snug">{pick(m.recipe)}</div>
+                  <Link to={`/app/recipe/${m.recipe.id}?s=${m.servings}`} className="font-bold leading-snug hover:text-accent">{pick(m.recipe)} ›</Link>
                   <div className="text-[12px] font-semibold text-accent tabular">{m.kcal} {t('kcal')}</div>
                 </div>
                 <motion.button type="button" whileTap={{ scale: 0.9 }} onClick={() => toggleEaten(date, m.recipe.id)} aria-pressed={isDone}
