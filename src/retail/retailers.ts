@@ -23,11 +23,11 @@ export interface RetailerInfo {
 export const RETAILERS: Record<RetailerId, RetailerInfo> = {
   barbora: {
     id: 'barbora', name: 'Barbora', color: '#C8102E', method: 'public_catalog', status: 'snapshot', website: 'https://barbora.lt',
-    note: { lt: 'Maxima grupės e. parduotuvė. Kainos iš viešo katalogo (momentinė kopija).', ru: 'Интернет-магазин группы Maxima. Цены из публичного каталога (снимок).' },
+    note: { lt: 'Maxima grupės e. parduotuvė. Kainos ir akcijos nuskaitomos iš prekių puslapių (data rodoma).', ru: 'Интернет-магазин группы Maxima. Цены и акции считываются со страниц товаров (дата указана).' },
   },
   rimi: {
     id: 'rimi', name: 'Rimi', color: '#E5002B', method: 'public_catalog', status: 'snapshot', website: 'https://www.rimi.lt/e-parduotuve',
-    note: { lt: 'Rimi e. parduotuvė. Kainos iš viešo katalogo (momentinė kopija).', ru: 'Интернет-магазин Rimi. Цены из публичного каталога (снимок).' },
+    note: { lt: 'Rimi e. parduotuvė. Kainos ir akcijos nuskaitomos iš prekių puslapių (data rodoma).', ru: 'Интернет-магазин Rimi. Цены и акции считываются со страниц товаров (дата указана).' },
   },
   maxima: {
     id: 'maxima', name: 'Maxima', color: '#E30613', method: null, status: 'csv_only', website: 'https://www.maxima.lt',

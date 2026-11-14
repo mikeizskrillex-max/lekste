@@ -9,6 +9,7 @@ import type { MessageKey } from '@/i18n/messages';
 import { download } from '@/lib/view';
 import { useStore } from '@/state/store';
 import { PageTitle } from '../appshell';
+import { InstallApp } from '../install';
 import { LangSwitch } from '../site';
 import { Badge, Button, ButtonLink, Card, inputCls } from '../ui';
 
@@ -73,6 +74,7 @@ export function SettingsPage() {
             <ul className="mt-3 space-y-1.5 text-[13.5px]">{s.emails.map((e, i) => <li key={i} className="flex justify-between gap-3"><span>{e.subject}</span><span className="shrink-0 text-muted">{date(e.date, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</span></li>)}</ul>
           ) : <p className="mt-2 text-[13.5px] text-muted">{t('noEmails')}</p>}
         </Card>
+        <div className="lg:col-span-2"><InstallApp /></div>
         <p className="text-[12px] text-muted lg:col-span-2">{t('medicalDisclaimer')} <Link href="/privacy" className="text-leaf underline">{t('privacy')}</Link></p>
       </div>
     </>

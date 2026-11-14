@@ -51,6 +51,8 @@ export interface QuizAnswers {
   batchCooking: boolean;
   spice: 0 | 1 | 2;
   stores: string[];
+  /** recipes the user saved with ♥ — the planner includes them more often */
+  favorites?: string[];
   /** the one supermarket the user shops at: menu, prices and lists are built for it */
   homeStore?: 'maxima' | 'barbora' | 'rimi' | 'lidl' | 'iki';
   health: HealthFlag[];

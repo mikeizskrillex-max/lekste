@@ -1,5 +1,5 @@
 {
- "pricesDate": "2026-11-12",
+ "pricesDate": "2026-11-14",
  "count": 1837,
  "recipes": [
   {
@@ -812,7 +812,7 @@
     "carbs": 57.8,
     "fiber": 11.8,
     "sugar": 4.9,
-    "costEur": 1.7
+    "costEur": 1.68
    },
    "allergens": [],
    "dietFlags": [
@@ -991,7 +991,7 @@
     "carbs": 73.8,
     "fiber": 15.5,
     "sugar": 11.4,
-    "costEur": 0.66
+    "costEur": 0.64
    },
    "allergens": [
     "gluten"
@@ -1166,7 +1166,7 @@
     "carbs": 58.4,
     "fiber": 8.9,
     "sugar": 8.1,
-    "costEur": 1.86
+    "costEur": 2.01
    },
    "allergens": [
     "gluten"
@@ -1257,7 +1257,7 @@
     "carbs": 90.8,
     "fiber": 15.7,
     "sugar": 5.1,
-    "costEur": 1.48
+    "costEur": 1.43
    },
    "allergens": [],
    "dietFlags": [],
@@ -1605,7 +1605,7 @@
     "carbs": 65.1,
     "fiber": 10.3,
     "sugar": 7.1,
-    "costEur": 1.05
+    "costEur": 1.04
    },
    "allergens": [
     "gluten"
@@ -1717,7 +1717,7 @@
     "carbs": 63.2,
     "fiber": 13.6,
     "sugar": 20.3,
-    "costEur": 1.44
+    "costEur": 1.54
    },
    "allergens": [
     "milk",
@@ -1819,7 +1819,7 @@
     "carbs": 54.3,
     "fiber": 10.6,
     "sugar": 9.7,
-    "costEur": 0.88
+    "costEur": 0.87
    },
    "allergens": [
     "gluten"
@@ -1915,7 +1915,7 @@
     "carbs": 68.9,
     "fiber": 14.9,
     "sugar": 12.3,
-    "costEur": 0.85
+    "costEur": 0.81
    },
    "allergens": [
     "gluten"
@@ -2101,7 +2101,7 @@
     "carbs": 72.9,
     "fiber": 13.9,
     "sugar": 8.5,
-    "costEur": 0.75
+    "costEur": 0.74
    },
    "allergens": [
     "gluten",
@@ -2203,7 +2203,7 @@
     "carbs": 39.4,
     "fiber": 6.9,
     "sugar": 4.3,
-    "costEur": 1.47
+    "costEur": 1.45
    },
    "allergens": [
     "gluten",
@@ -2301,7 +2301,7 @@
     "carbs": 74,
     "fiber": 4.2,
     "sugar": 6.4,
-    "costEur": 0.88
+    "costEur": 0.86
    },
    "allergens": [],
    "dietFlags": [
@@ -2491,7 +2491,7 @@
     "carbs": 68.1,
     "fiber": 5.1,
     "sugar": 4.6,
-    "costEur": 1.51
+    "costEur": 1.5
    },
    "allergens": [
     "soy",
@@ -2957,7 +2957,7 @@
     "carbs": 63.9,
     "fiber": 10.3,
     "sugar": 10,
-    "costEur": 1.8
+    "costEur": 1.92
    },
    "allergens": [
     "gluten"
@@ -3143,7 +3143,7 @@
     "carbs": 66.2,
     "fiber": 4.2,
     "sugar": 4.3,
-    "costEur": 1.67
+    "costEur": 1.76
    },
    "allergens": [
     "eggs",
@@ -3416,7 +3416,7 @@
     "carbs": 96,
     "fiber": 22.5,
     "sugar": 10.4,
-    "costEur": 1.27
+    "costEur": 1.22
    },
    "allergens": [],
    "dietFlags": [],
@@ -3496,7 +3496,7 @@
     "carbs": 50.8,
     "fiber": 9.8,
     "sugar": 8.9,
-    "costEur": 1.83
+    "costEur": 1.98
    },
    "allergens": [],
    "dietFlags": [
@@ -3589,7 +3589,7 @@
     "carbs": 46.9,
     "fiber": 11.9,
     "sugar": 15.3,
-    "costEur": 1.17
+    "costEur": 1.15
    },
    "allergens": [],
    "dietFlags": [
@@ -3960,7 +3960,7 @@
     "carbs": 65.2,
     "fiber": 7.7,
     "sugar": 10.1,
-    "costEur": 1.49
+    "costEur": 1.47
    },
    "allergens": [],
    "dietFlags": [
@@ -4128,7 +4128,7 @@
     "carbs": 39.6,
     "fiber": 5.6,
     "sugar": 3.7,
-    "costEur": 1.63
+    "costEur": 1.62
    },
    "allergens": [
     "fish"
@@ -4299,7 +4299,7 @@
     "carbs": 36.7,
     "fiber": 5.8,
     "sugar": 0.8,
-    "costEur": 2.75
+    "costEur": 2.63
    },
    "allergens": [
     "fish"
@@ -4384,7 +4384,7 @@
     "carbs": 56.6,
     "fiber": 3.3,
     "sugar": 5.9,
-    "costEur": 2.43
+    "costEur": 2.32
    },
    "allergens": [
     "fish"
@@ -4751,7 +4751,7 @@
     "carbs": 48.5,
     "fiber": 9.4,
     "sugar": 6.2,
-    "costEur": 1.31
+    "costEur": 1.3
    },
    "allergens": [
     "soy",
@@ -5069,7 +5069,7 @@
     "carbs": 27.1,
     "fiber": 4.5,
     "sugar": 20.8,
-    "costEur": 0.46
+    "costEur": 0.42
    },
    "allergens": [
     "milk"
@@ -5206,7 +5206,7 @@
     "carbs": 16.9,
     "fiber": 4.3,
     "sugar": 9.7,
-    "costEur": 0.92
+    "costEur": 0.9
    },
    "allergens": [
     "milk"
@@ -5527,7 +5527,7 @@
     "carbs": 30.9,
     "fiber": 9.2,
     "sugar": 6.6,
-    "costEur": 0.59
+    "costEur": 0.54
    },
    "allergens": [],
    "dietFlags": [],
@@ -5826,7 +5826,7 @@
     "carbs": 60.2,
     "fiber": 5.1,
     "sugar": 4.4,
-    "costEur": 2.38
+    "costEur": 2.24
    },
    "allergens": [
     "fish"
@@ -6077,7 +6077,7 @@
     "carbs": 66.4,
     "fiber": 22.9,
     "sugar": 10.9,
-    "costEur": 1.03
+    "costEur": 0.98
    },
    "allergens": [],
    "dietFlags": [],
@@ -6432,7 +6432,7 @@
     "carbs": 57.3,
     "fiber": 14.4,
     "sugar": 8.1,
-    "costEur": 1.27
+    "costEur": 1.26
    },
    "allergens": [
     "gluten"
@@ -6608,7 +6608,7 @@
     "carbs": 59.3,
     "fiber": 12.9,
     "sugar": 8.1,
-    "costEur": 1.45
+    "costEur": 1.44
    },
    "allergens": [],
    "dietFlags": [
@@ -6697,7 +6697,7 @@
     "carbs": 69.7,
     "fiber": 7.1,
     "sugar": 8.1,
-    "costEur": 1.42
+    "costEur": 1.41
    },
    "allergens": [],
    "dietFlags": [
@@ -6786,7 +6786,7 @@
     "carbs": 58.4,
     "fiber": 12.2,
     "sugar": 16.9,
-    "costEur": 1.73
+    "costEur": 1.72
    },
    "allergens": [],
    "dietFlags": [
@@ -7132,7 +7132,7 @@
     "carbs": 61.9,
     "fiber": 15.2,
     "sugar": 8.5,
-    "costEur": 1.39
+    "costEur": 1.38
    },
    "allergens": [
     "gluten"
@@ -7223,7 +7223,7 @@
     "carbs": 68.4,
     "fiber": 18.1,
     "sugar": 8.3,
-    "costEur": 1.51
+    "costEur": 1.5
    },
    "allergens": [
     "gluten"
@@ -7395,7 +7395,7 @@
     "carbs": 55.9,
     "fiber": 12.4,
     "sugar": 6.6,
-    "costEur": 1.2
+    "costEur": 1.17
    },
    "allergens": [
     "gluten"
@@ -7482,7 +7482,7 @@
     "carbs": 53.3,
     "fiber": 10.1,
     "sugar": 6.1,
-    "costEur": 1.26
+    "costEur": 1.23
    },
    "allergens": [],
    "dietFlags": [
@@ -7571,7 +7571,7 @@
     "carbs": 54.7,
     "fiber": 12.1,
     "sugar": 7.6,
-    "costEur": 1.33
+    "costEur": 1.32
    },
    "allergens": [],
    "dietFlags": [
@@ -8181,7 +8181,7 @@
     "carbs": 57,
     "fiber": 10.2,
     "sugar": 15.4,
-    "costEur": 1.66
+    "costEur": 1.63
    },
    "allergens": [],
    "dietFlags": [
@@ -9346,7 +9346,7 @@
     "carbs": 50.4,
     "fiber": 8.5,
     "sugar": 7.9,
-    "costEur": 1.24
+    "costEur": 1.21
    },
    "allergens": [],
    "dietFlags": [
@@ -9889,7 +9889,7 @@
     "carbs": 77.9,
     "fiber": 15.4,
     "sugar": 16.5,
-    "costEur": 2.13
+    "costEur": 2.12
    },
    "allergens": [
     "gluten"
@@ -10289,7 +10289,7 @@
     "carbs": 71.9,
     "fiber": 12.7,
     "sugar": 14.6,
-    "costEur": 1.94
+    "costEur": 1.91
    },
    "allergens": [
     "gluten"
@@ -10493,7 +10493,7 @@
     "carbs": 73.3,
     "fiber": 17.6,
     "sugar": 12.6,
-    "costEur": 1.88
+    "costEur": 1.84
    },
    "allergens": [
     "gluten"
@@ -10597,7 +10597,7 @@
     "carbs": 73.4,
     "fiber": 14.6,
     "sugar": 16.1,
-    "costEur": 2.01
+    "costEur": 2
    },
    "allergens": [
     "gluten"
@@ -12299,7 +12299,7 @@
     "carbs": 54.7,
     "fiber": 10,
     "sugar": 7.7,
-    "costEur": 1.69
+    "costEur": 1.68
    },
    "allergens": [
     "soy",
@@ -12602,7 +12602,7 @@
     "carbs": 53.2,
     "fiber": 8,
     "sugar": 6.2,
-    "costEur": 1.62
+    "costEur": 1.59
    },
    "allergens": [
     "soy",
@@ -12905,7 +12905,7 @@
     "carbs": 55.1,
     "fiber": 10.3,
     "sugar": 6.2,
-    "costEur": 1.3
+    "costEur": 1.27
    },
    "allergens": [
     "soy",
@@ -13212,7 +13212,7 @@
     "carbs": 71.5,
     "fiber": 7.2,
     "sugar": 8.1,
-    "costEur": 1.46
+    "costEur": 1.45
    },
    "allergens": [
     "soy",
@@ -13317,7 +13317,7 @@
     "carbs": 56.6,
     "fiber": 12.3,
     "sugar": 7.7,
-    "costEur": 1.37
+    "costEur": 1.36
    },
    "allergens": [
     "soy",
@@ -13418,7 +13418,7 @@
     "carbs": 65.5,
     "fiber": 4.5,
     "sugar": 6.2,
-    "costEur": 1.27
+    "costEur": 1.24
    },
    "allergens": [
     "soy",
@@ -13624,7 +13624,7 @@
     "carbs": 67,
     "fiber": 6.4,
     "sugar": 7.7,
-    "costEur": 1.34
+    "costEur": 1.33
    },
    "allergens": [
     "soy",
@@ -14265,7 +14265,7 @@
     "carbs": 63.7,
     "fiber": 4.3,
     "sugar": 6.1,
-    "costEur": 0.9
+    "costEur": 0.87
    },
    "allergens": [],
    "dietFlags": [
@@ -14698,7 +14698,7 @@
     "carbs": 63.8,
     "fiber": 17.3,
     "sugar": 7.9,
-    "costEur": 1.06
+    "costEur": 1.05
    },
    "allergens": [
     "gluten"
@@ -14789,7 +14789,7 @@
     "carbs": 58.4,
     "fiber": 12.2,
     "sugar": 16.9,
-    "costEur": 1.4
+    "costEur": 1.39
    },
    "allergens": [],
    "dietFlags": [
@@ -14874,7 +14874,7 @@
     "carbs": 57,
     "fiber": 10.2,
     "sugar": 15.4,
-    "costEur": 1.33
+    "costEur": 1.3
    },
    "allergens": [],
    "dietFlags": [
@@ -15224,7 +15224,7 @@
     "carbs": 57.4,
     "fiber": 10.6,
     "sugar": 8.1,
-    "costEur": 1.45
+    "costEur": 1.43
    },
    "allergens": [],
    "dietFlags": [
@@ -15309,7 +15309,7 @@
     "carbs": 62.4,
     "fiber": 15.3,
     "sugar": 6.4,
-    "costEur": 0.99
+    "costEur": 0.96
    },
    "allergens": [
     "gluten"
@@ -16992,7 +16992,7 @@
     "carbs": 63.7,
     "fiber": 4.3,
     "sugar": 6.1,
-    "costEur": 0.9
+    "costEur": 0.87
    },
    "allergens": [],
    "dietFlags": [
@@ -17176,7 +17176,7 @@
     "carbs": 62.4,
     "fiber": 15.3,
     "sugar": 6.4,
-    "costEur": 0.99
+    "costEur": 0.96
    },
    "allergens": [
     "gluten"
@@ -17460,7 +17460,7 @@
     "carbs": 68.3,
     "fiber": 12.9,
     "sugar": 14.3,
-    "costEur": 2
+    "costEur": 1.99
    },
    "allergens": [],
    "dietFlags": [
@@ -18550,7 +18550,7 @@
     "carbs": 68.3,
     "fiber": 16.7,
     "sugar": 14.3,
-    "costEur": 1.5
+    "costEur": 1.49
    },
    "allergens": [
     "gluten"
@@ -19254,7 +19254,7 @@
     "carbs": 70.2,
     "fiber": 15.2,
     "sugar": 14.3,
-    "costEur": 1.68
+    "costEur": 1.67
    },
    "allergens": [],
    "dietFlags": [
@@ -19759,7 +19759,7 @@
     "carbs": 59.2,
     "fiber": 10.8,
     "sugar": 8.1,
-    "costEur": 1.48
+    "costEur": 1.47
    },
    "allergens": [
     "soy",
@@ -19965,7 +19965,7 @@
     "carbs": 56.6,
     "fiber": 12.3,
     "sugar": 7.7,
-    "costEur": 1.04
+    "costEur": 1.03
    },
    "allergens": [
     "soy",
@@ -20373,7 +20373,7 @@
     "carbs": 67,
     "fiber": 6.4,
     "sugar": 7.7,
-    "costEur": 1.01
+    "costEur": 1
    },
    "allergens": [
     "soy",
@@ -20579,7 +20579,7 @@
     "carbs": 61.1,
     "fiber": 13.1,
     "sugar": 8.1,
-    "costEur": 1.16
+    "costEur": 1.15
    },
    "allergens": [
     "soy",
@@ -20781,7 +20781,7 @@
     "carbs": 53.2,
     "fiber": 8,
     "sugar": 6.2,
-    "costEur": 1.29
+    "costEur": 1.26
    },
    "allergens": [
     "soy",
@@ -21084,7 +21084,7 @@
     "carbs": 55.1,
     "fiber": 10.3,
     "sugar": 6.2,
-    "costEur": 0.97
+    "costEur": 0.94
    },
    "allergens": [
     "soy",
@@ -21290,7 +21290,7 @@
     "carbs": 71.5,
     "fiber": 7.2,
     "sugar": 8.1,
-    "costEur": 1.13
+    "costEur": 1.12
    },
    "allergens": [
     "soy",
@@ -21395,7 +21395,7 @@
     "carbs": 54.7,
     "fiber": 10,
     "sugar": 7.7,
-    "costEur": 1.36
+    "costEur": 1.35
    },
    "allergens": [
     "soy",
@@ -21488,7 +21488,7 @@
     "carbs": 62.4,
     "fiber": 15.3,
     "sugar": 6.4,
-    "costEur": 2.22
+    "costEur": 2.19
    },
    "allergens": [
     "gluten"
@@ -21749,7 +21749,7 @@
     "carbs": 68.4,
     "fiber": 18.1,
     "sugar": 8.3,
-    "costEur": 2.41
+    "costEur": 2.4
    },
    "allergens": [
     "gluten"
@@ -21925,7 +21925,7 @@
     "carbs": 52.8,
     "fiber": 9.8,
     "sugar": 7.6,
-    "costEur": 2.56
+    "costEur": 2.55
    },
    "allergens": [],
    "dietFlags": [
@@ -22105,7 +22105,7 @@
     "carbs": 65.1,
     "fiber": 6.3,
     "sugar": 7.6,
-    "costEur": 2.2
+    "costEur": 2.19
    },
    "allergens": [],
    "dietFlags": [
@@ -23853,7 +23853,7 @@
     "carbs": 50.4,
     "fiber": 8.5,
     "sugar": 7.9,
-    "costEur": 2.15
+    "costEur": 2.11
    },
    "allergens": [],
    "dietFlags": [
@@ -24032,7 +24032,7 @@
     "carbs": 62.4,
     "fiber": 15.3,
     "sugar": 6.4,
-    "costEur": 2.22
+    "costEur": 2.19
    },
    "allergens": [
     "gluten"
@@ -25314,7 +25314,7 @@
     "carbs": 61.3,
     "fiber": 10.7,
     "sugar": 14.1,
-    "costEur": 2.7
+    "costEur": 2.67
    },
    "allergens": [],
    "dietFlags": [
@@ -25412,7 +25412,7 @@
     "carbs": 74.6,
     "fiber": 6.6,
     "sugar": 12.3,
-    "costEur": 2.69
+    "costEur": 2.66
    },
    "allergens": [],
    "dietFlags": [
@@ -25910,7 +25910,7 @@
     "carbs": 68.3,
     "fiber": 12.9,
     "sugar": 14.3,
-    "costEur": 3.23
+    "costEur": 3.22
    },
    "allergens": [],
    "dietFlags": [
@@ -26012,7 +26012,7 @@
     "carbs": 79.3,
     "fiber": 20.4,
     "sugar": 14.5,
-    "costEur": 2.97
+    "costEur": 2.96
    },
    "allergens": [
     "gluten"
@@ -26216,7 +26216,7 @@
     "carbs": 62.8,
     "fiber": 12.7,
     "sugar": 15.6,
-    "costEur": 2.77
+    "costEur": 2.76
    },
    "allergens": [],
    "dietFlags": [
@@ -26416,7 +26416,7 @@
     "carbs": 80.6,
     "fiber": 9.3,
     "sugar": 14.3,
-    "costEur": 2.88
+    "costEur": 2.87
    },
    "allergens": [],
    "dietFlags": [
@@ -26616,7 +26616,7 @@
     "carbs": 70.2,
     "fiber": 15.2,
     "sugar": 14.3,
-    "costEur": 2.91
+    "costEur": 2.9
    },
    "allergens": [],
    "dietFlags": [
@@ -26714,7 +26714,7 @@
     "carbs": 66.8,
     "fiber": 14.7,
     "sugar": 12.8,
-    "costEur": 2.66
+    "costEur": 2.63
    },
    "allergens": [
     "gluten"
@@ -26818,7 +26818,7 @@
     "carbs": 73.4,
     "fiber": 14.6,
     "sugar": 16.1,
-    "costEur": 2.91
+    "costEur": 2.9
    },
    "allergens": [
     "gluten"
@@ -27323,7 +27323,7 @@
     "carbs": 67,
     "fiber": 6.4,
     "sugar": 7.7,
-    "costEur": 2.24
+    "costEur": 2.23
    },
    "allergens": [
     "soy",
@@ -27731,7 +27731,7 @@
     "carbs": 56.6,
     "fiber": 12.3,
     "sugar": 7.7,
-    "costEur": 2.27
+    "costEur": 2.26
    },
    "allergens": [
     "soy",
@@ -27832,7 +27832,7 @@
     "carbs": 55.1,
     "fiber": 10.3,
     "sugar": 6.2,
-    "costEur": 2.2
+    "costEur": 2.17
    },
    "allergens": [
     "soy",
@@ -28139,7 +28139,7 @@
     "carbs": 59.2,
     "fiber": 10.8,
     "sugar": 8.1,
-    "costEur": 2.72
+    "costEur": 2.7
    },
    "allergens": [
     "soy",
@@ -28345,7 +28345,7 @@
     "carbs": 54.7,
     "fiber": 10,
     "sugar": 7.7,
-    "costEur": 2.6
+    "costEur": 2.59
    },
    "allergens": [
     "soy",
@@ -28450,7 +28450,7 @@
     "carbs": 61.1,
     "fiber": 13.1,
     "sugar": 8.1,
-    "costEur": 2.39
+    "costEur": 2.38
    },
    "allergens": [
     "soy",
@@ -28656,7 +28656,7 @@
     "carbs": 71.5,
     "fiber": 7.2,
     "sugar": 8.1,
-    "costEur": 2.36
+    "costEur": 2.35
    },
    "allergens": [
     "soy",
@@ -29056,7 +29056,7 @@
     "carbs": 54.7,
     "fiber": 12.1,
     "sugar": 7.6,
-    "costEur": 0.79
+    "costEur": 0.78
    },
    "allergens": [],
    "dietFlags": [
@@ -29319,7 +29319,7 @@
     "carbs": 57.4,
     "fiber": 10.6,
     "sugar": 8.1,
-    "costEur": 1.24
+    "costEur": 1.22
    },
    "allergens": [],
    "dietFlags": [
@@ -29584,7 +29584,7 @@
     "carbs": 52.8,
     "fiber": 9.8,
     "sugar": 7.6,
-    "costEur": 1.12
+    "costEur": 1.11
    },
    "allergens": [],
    "dietFlags": [
@@ -29673,7 +29673,7 @@
     "carbs": 61.9,
     "fiber": 15.2,
     "sugar": 8.5,
-    "costEur": 0.85
+    "costEur": 0.84
    },
    "allergens": [
     "gluten"
@@ -31240,7 +31240,7 @@
     "carbs": 50.4,
     "fiber": 8.5,
     "sugar": 7.9,
-    "costEur": 0.7
+    "costEur": 0.67
    },
    "allergens": [],
    "dietFlags": [
@@ -31325,7 +31325,7 @@
     "carbs": 62.4,
     "fiber": 15.3,
     "sugar": 6.4,
-    "costEur": 0.78
+    "costEur": 0.75
    },
    "allergens": [
     "gluten"
@@ -31417,7 +31417,7 @@
     "carbs": 51.4,
     "fiber": 7.8,
     "sugar": 6.1,
-    "costEur": 1.04
+    "costEur": 1.01
    },
    "allergens": [],
    "dietFlags": [
@@ -31681,7 +31681,7 @@
     "carbs": 57,
     "fiber": 10.2,
     "sugar": 15.4,
-    "costEur": 1.12
+    "costEur": 1.09
    },
    "allergens": [],
    "dietFlags": [
@@ -32033,7 +32033,7 @@
     "carbs": 63.7,
     "fiber": 4.3,
     "sugar": 6.1,
-    "costEur": 0.69
+    "costEur": 0.66
    },
    "allergens": [],
    "dietFlags": [
@@ -32679,7 +32679,7 @@
     "carbs": 65.7,
     "fiber": 14.4,
     "sugar": 13.9,
-    "costEur": 1.35
+    "costEur": 1.34
    },
    "allergens": [],
    "dietFlags": [
@@ -32973,7 +32973,7 @@
     "carbs": 66.8,
     "fiber": 14.7,
     "sugar": 12.8,
-    "costEur": 1.22
+    "costEur": 1.19
    },
    "allergens": [
     "gluten"
@@ -33273,7 +33273,7 @@
     "carbs": 67.3,
     "fiber": 13.5,
     "sugar": 16,
-    "costEur": 1.45
+    "costEur": 1.44
    },
    "allergens": [],
    "dietFlags": [
@@ -33473,7 +33473,7 @@
     "carbs": 63.8,
     "fiber": 12.1,
     "sugar": 13.9,
-    "costEur": 1.67
+    "costEur": 1.66
    },
    "allergens": [],
    "dietFlags": [
@@ -33675,7 +33675,7 @@
     "carbs": 77.9,
     "fiber": 15.4,
     "sugar": 16.5,
-    "costEur": 1.59
+    "costEur": 1.58
    },
    "allergens": [
     "gluten"
@@ -33873,7 +33873,7 @@
     "carbs": 74.6,
     "fiber": 6.6,
     "sugar": 12.3,
-    "costEur": 1.24
+    "costEur": 1.21
    },
    "allergens": [],
    "dietFlags": [
@@ -34075,7 +34075,7 @@
     "carbs": 80.6,
     "fiber": 9.3,
     "sugar": 14.3,
-    "costEur": 1.44
+    "costEur": 1.42
    },
    "allergens": [],
    "dietFlags": [
@@ -34473,7 +34473,7 @@
     "carbs": 79.3,
     "fiber": 20.4,
     "sugar": 14.5,
-    "costEur": 1.53
+    "costEur": 1.51
    },
    "allergens": [
     "gluten"
@@ -34577,7 +34577,7 @@
     "carbs": 67,
     "fiber": 6.4,
     "sugar": 7.7,
-    "costEur": 0.8
+    "costEur": 0.79
    },
    "allergens": [
     "soy",
@@ -34682,7 +34682,7 @@
     "carbs": 59.2,
     "fiber": 10.8,
     "sugar": 8.1,
-    "costEur": 1.27
+    "costEur": 1.26
    },
    "allergens": [
     "soy",
@@ -34787,7 +34787,7 @@
     "carbs": 71.5,
     "fiber": 7.2,
     "sugar": 8.1,
-    "costEur": 0.92
+    "costEur": 0.9
    },
    "allergens": [
     "soy",
@@ -34993,7 +34993,7 @@
     "carbs": 54.7,
     "fiber": 10,
     "sugar": 7.7,
-    "costEur": 1.15
+    "costEur": 1.14
    },
    "allergens": [
     "soy",
@@ -35300,7 +35300,7 @@
     "carbs": 56.6,
     "fiber": 12.3,
     "sugar": 7.7,
-    "costEur": 0.83
+    "costEur": 0.82
    },
    "allergens": [
     "soy",
@@ -35603,7 +35603,7 @@
     "carbs": 55.1,
     "fiber": 10.3,
     "sugar": 6.2,
-    "costEur": 0.76
+    "costEur": 0.73
    },
    "allergens": [
     "soy",
@@ -36108,7 +36108,7 @@
     "carbs": 65.5,
     "fiber": 4.5,
     "sugar": 6.2,
-    "costEur": 0.73
+    "costEur": 0.69
    },
    "allergens": [
     "soy",
@@ -36213,7 +36213,7 @@
     "carbs": 61.1,
     "fiber": 13.1,
     "sugar": 8.1,
-    "costEur": 0.95
+    "costEur": 0.94
    },
    "allergens": [
     "soy",
@@ -36516,7 +36516,7 @@
     "carbs": 53.2,
     "fiber": 8,
     "sugar": 6.2,
-    "costEur": 1.08
+    "costEur": 1.05
    },
    "allergens": [
     "soy",
@@ -37617,7 +37617,7 @@
     "carbs": 57.4,
     "fiber": 10.6,
     "sugar": 8.1,
-    "costEur": 1.43
+    "costEur": 1.41
    },
    "allergens": [],
    "dietFlags": [
@@ -37893,7 +37893,7 @@
     "carbs": 52.8,
     "fiber": 9.8,
     "sugar": 7.6,
-    "costEur": 1.31
+    "costEur": 1.3
    },
    "allergens": [],
    "dietFlags": [
@@ -38073,7 +38073,7 @@
     "carbs": 62.4,
     "fiber": 15.3,
     "sugar": 6.4,
-    "costEur": 0.97
+    "costEur": 0.94
    },
    "allergens": [
     "gluten"
@@ -38169,7 +38169,7 @@
     "carbs": 59.3,
     "fiber": 12.9,
     "sugar": 8.1,
-    "costEur": 1.1
+    "costEur": 1.09
    },
    "allergens": [],
    "dietFlags": [
@@ -39744,7 +39744,7 @@
     "carbs": 62.4,
     "fiber": 15.3,
     "sugar": 6.4,
-    "costEur": 0.97
+    "costEur": 0.94
    },
    "allergens": [
     "gluten"
@@ -40318,7 +40318,7 @@
     "carbs": 73.3,
     "fiber": 17.6,
     "sugar": 12.6,
-    "costEur": 1.53
+    "costEur": 1.49
    },
    "allergens": [
     "gluten"
@@ -40530,7 +40530,7 @@
     "carbs": 67.3,
     "fiber": 13.5,
     "sugar": 16,
-    "costEur": 1.64
+    "costEur": 1.63
    },
    "allergens": [],
    "dietFlags": [
@@ -40839,7 +40839,7 @@
     "carbs": 74.6,
     "fiber": 6.6,
     "sugar": 12.3,
-    "costEur": 1.44
+    "costEur": 1.4
    },
    "allergens": [],
    "dietFlags": [
@@ -41154,7 +41154,7 @@
     "carbs": 70.2,
     "fiber": 15.2,
     "sugar": 14.3,
-    "costEur": 1.66
+    "costEur": 1.65
    },
    "allergens": [],
    "dietFlags": [
@@ -41574,7 +41574,7 @@
     "carbs": 63.8,
     "fiber": 12.1,
     "sugar": 13.9,
-    "costEur": 1.86
+    "costEur": 1.85
    },
    "allergens": [],
    "dietFlags": [
@@ -41786,7 +41786,7 @@
     "carbs": 64.2,
     "fiber": 12.4,
     "sugar": 12.3,
-    "costEur": 1.47
+    "costEur": 1.44
    },
    "allergens": [],
    "dietFlags": [
@@ -42103,7 +42103,7 @@
     "carbs": 66.8,
     "fiber": 14.7,
     "sugar": 12.8,
-    "costEur": 1.41
+    "costEur": 1.38
    },
    "allergens": [
     "gluten"
@@ -42212,7 +42212,7 @@
     "carbs": 65.7,
     "fiber": 14.4,
     "sugar": 13.9,
-    "costEur": 1.54
+    "costEur": 1.53
    },
    "allergens": [],
    "dietFlags": [
@@ -42414,7 +42414,7 @@
     "carbs": 52.8,
     "fiber": 9.8,
     "sugar": 7.6,
-    "costEur": 1.66
+    "costEur": 1.8
    },
    "allergens": [],
    "dietFlags": [
@@ -42504,7 +42504,7 @@
     "carbs": 45.9,
     "fiber": 7.2,
     "sugar": 2.8,
-    "costEur": 1.88
+    "costEur": 2.03
    },
    "allergens": [],
    "dietFlags": [
@@ -42594,7 +42594,7 @@
     "carbs": 57,
     "fiber": 10.2,
     "sugar": 15.4,
-    "costEur": 1.66
+    "costEur": 1.78
    },
    "allergens": [],
    "dietFlags": [
@@ -42688,7 +42688,7 @@
     "carbs": 45.9,
     "fiber": 5.9,
     "sugar": 4.3,
-    "costEur": 2.08
+    "costEur": 2.22
    },
    "allergens": [],
    "dietFlags": [
@@ -42778,7 +42778,7 @@
     "carbs": 48.9,
     "fiber": 8.1,
     "sugar": 2.6,
-    "costEur": 2.09
+    "costEur": 2.24
    },
    "allergens": [],
    "dietFlags": [
@@ -42868,7 +42868,7 @@
     "carbs": 51.9,
     "fiber": 12,
     "sugar": 6.7,
-    "costEur": 1.58
+    "costEur": 1.72
    },
    "allergens": [
     "gluten"
@@ -42960,7 +42960,7 @@
     "carbs": 53.1,
     "fiber": 11.3,
     "sugar": 4.8,
-    "costEur": 1.53
+    "costEur": 1.68
    },
    "allergens": [],
    "dietFlags": [
@@ -43050,7 +43050,7 @@
     "carbs": 54.4,
     "fiber": 13.3,
     "sugar": 4.3,
-    "costEur": 2.3
+    "costEur": 2.45
    },
    "allergens": [
     "gluten"
@@ -43142,7 +43142,7 @@
     "carbs": 55.7,
     "fiber": 13.6,
     "sugar": 5.2,
-    "costEur": 1.47
+    "costEur": 1.62
    },
    "allergens": [
     "gluten"
@@ -43234,7 +43234,7 @@
     "carbs": 61.1,
     "fiber": 12.6,
     "sugar": 5.3,
-    "costEur": 1.42
+    "costEur": 1.57
    },
    "allergens": [
     "gluten"
@@ -43326,7 +43326,7 @@
     "carbs": 62.4,
     "fiber": 1.6,
     "sugar": 5,
-    "costEur": 1.33
+    "costEur": 1.48
    },
    "allergens": [],
    "dietFlags": [
@@ -43416,7 +43416,7 @@
     "carbs": 59.9,
     "fiber": 15.6,
     "sugar": 2.8,
-    "costEur": 1.83
+    "costEur": 1.97
    },
    "allergens": [
     "gluten"
@@ -43512,7 +43512,7 @@
     "carbs": 51.5,
     "fiber": 8.3,
     "sugar": 13.5,
-    "costEur": 2.15
+    "costEur": 2.3
    },
    "allergens": [],
    "dietFlags": [
@@ -43606,7 +43606,7 @@
     "carbs": 56.9,
     "fiber": 13.4,
     "sugar": 4.6,
-    "costEur": 1.81
+    "costEur": 1.96
    },
    "allergens": [
     "gluten"
@@ -43702,7 +43702,7 @@
     "carbs": 63,
     "fiber": 13,
     "sugar": 17.3,
-    "costEur": 1.85
+    "costEur": 1.99
    },
    "allergens": [],
    "dietFlags": [
@@ -43796,7 +43796,7 @@
     "carbs": 59.3,
     "fiber": 12.9,
     "sugar": 8.1,
-    "costEur": 1.45
+    "costEur": 1.59
    },
    "allergens": [],
    "dietFlags": [
@@ -43886,7 +43886,7 @@
     "carbs": 63.5,
     "fiber": 5.5,
     "sugar": 4.8,
-    "costEur": 1.49
+    "costEur": 1.64
    },
    "allergens": [],
    "dietFlags": [
@@ -43980,7 +43980,7 @@
     "carbs": 58.4,
     "fiber": 12.2,
     "sugar": 16.9,
-    "costEur": 1.73
+    "costEur": 1.87
    },
    "allergens": [],
    "dietFlags": [
@@ -44074,7 +44074,7 @@
     "carbs": 46.3,
     "fiber": 9.2,
     "sugar": 2.4,
-    "costEur": 2.06
+    "costEur": 2.21
    },
    "allergens": [],
    "dietFlags": [
@@ -44164,7 +44164,7 @@
     "carbs": 54.5,
     "fiber": 10.5,
     "sugar": 11.8,
-    "costEur": 2.17
+    "costEur": 2.32
    },
    "allergens": [],
    "dietFlags": [
@@ -44254,7 +44254,7 @@
     "carbs": 46.4,
     "fiber": 8,
     "sugar": 8.1,
-    "costEur": 1.62
+    "costEur": 1.77
    },
    "allergens": [],
    "dietFlags": [
@@ -44344,7 +44344,7 @@
     "carbs": 61.2,
     "fiber": 4.6,
     "sugar": 2.6,
-    "costEur": 1.74
+    "costEur": 1.88
    },
    "allergens": [],
    "dietFlags": [
@@ -44443,7 +44443,7 @@
     "carbs": 47.8,
     "fiber": 8.2,
     "sugar": 4.3,
-    "costEur": 1.75
+    "costEur": 1.9
    },
    "allergens": [],
    "dietFlags": [
@@ -44538,7 +44538,7 @@
     "carbs": 50.1,
     "fiber": 5.1,
     "sugar": 5,
-    "costEur": 1.69
+    "costEur": 1.84
    },
    "allergens": [],
    "dietFlags": [
@@ -44633,7 +44633,7 @@
     "carbs": 58.2,
     "fiber": 3.7,
     "sugar": 2.8,
-    "costEur": 1.53
+    "costEur": 1.67
    },
    "allergens": [],
    "dietFlags": [
@@ -44732,7 +44732,7 @@
     "carbs": 44.9,
     "fiber": 6.5,
     "sugar": 6.1,
-    "costEur": 1.73
+    "costEur": 1.88
    },
    "allergens": [],
    "dietFlags": [
@@ -44822,7 +44822,7 @@
     "carbs": 44.9,
     "fiber": 7.8,
     "sugar": 4.6,
-    "costEur": 1.54
+    "costEur": 1.69
    },
    "allergens": [],
    "dietFlags": [
@@ -44912,7 +44912,7 @@
     "carbs": 44.6,
     "fiber": 7.8,
     "sugar": 2.6,
-    "costEur": 1.61
+    "costEur": 1.76
    },
    "allergens": [],
    "dietFlags": [
@@ -45007,7 +45007,7 @@
     "carbs": 49,
     "fiber": 8.2,
     "sugar": 13.2,
-    "costEur": 2.65
+    "costEur": 2.8
    },
    "allergens": [],
    "dietFlags": [
@@ -45097,7 +45097,7 @@
     "carbs": 54.5,
     "fiber": 10.5,
     "sugar": 11.8,
-    "costEur": 2.17
+    "costEur": 2.32
    },
    "allergens": [],
    "dietFlags": [
@@ -45187,7 +45187,7 @@
     "carbs": 57,
     "fiber": 10.2,
     "sugar": 15.4,
-    "costEur": 1.66
+    "costEur": 1.78
    },
    "allergens": [],
    "dietFlags": [
@@ -45277,7 +45277,7 @@
     "carbs": 59.7,
     "fiber": 3.8,
     "sugar": 6.3,
-    "costEur": 1.6
+    "costEur": 1.75
    },
    "allergens": [],
    "dietFlags": [
@@ -45372,7 +45372,7 @@
     "carbs": 45.3,
     "fiber": 8.1,
     "sugar": 4,
-    "costEur": 2.25
+    "costEur": 2.4
    },
    "allergens": [],
    "dietFlags": [
@@ -45467,7 +45467,7 @@
     "carbs": 59.9,
     "fiber": 15.6,
     "sugar": 2.8,
-    "costEur": 1.83
+    "costEur": 1.97
    },
    "allergens": [
     "gluten"
@@ -45564,7 +45564,7 @@
     "carbs": 47.8,
     "fiber": 9.5,
     "sugar": 2.8,
-    "costEur": 1.56
+    "costEur": 1.71
    },
    "allergens": [],
    "dietFlags": [
@@ -45659,7 +45659,7 @@
     "carbs": 52,
     "fiber": 7.4,
     "sugar": 5,
-    "costEur": 1.37
+    "costEur": 1.51
    },
    "allergens": [],
    "dietFlags": [
@@ -45754,7 +45754,7 @@
     "carbs": 41.7,
     "fiber": 6.1,
     "sugar": 4.4,
-    "costEur": 1.6
+    "costEur": 1.74
    },
    "allergens": [],
    "dietFlags": [
@@ -45844,7 +45844,7 @@
     "carbs": 54.4,
     "fiber": 13.3,
     "sugar": 4.3,
-    "costEur": 2.3
+    "costEur": 2.45
    },
    "allergens": [
     "gluten"
@@ -45941,7 +45941,7 @@
     "carbs": 55,
     "fiber": 2,
     "sugar": 2.6,
-    "costEur": 1.58
+    "costEur": 1.73
    },
    "allergens": [],
    "dietFlags": [
@@ -46036,7 +46036,7 @@
     "carbs": 53.7,
     "fiber": 13,
     "sugar": 2.9,
-    "costEur": 1.67
+    "costEur": 1.82
    },
    "allergens": [
     "gluten"
@@ -46141,7 +46141,7 @@
     "carbs": 72,
     "fiber": 14.9,
     "sugar": 11.5,
-    "costEur": 1.98
+    "costEur": 2.13
    },
    "allergens": [
     "gluten"
@@ -46246,7 +46246,7 @@
     "carbs": 54.3,
     "fiber": 8.1,
     "sugar": 10.2,
-    "costEur": 3.13
+    "costEur": 3.28
    },
    "allergens": [],
    "dietFlags": [
@@ -46349,7 +46349,7 @@
     "carbs": 64.3,
     "fiber": 15,
     "sugar": 9.2,
-    "costEur": 2.27
+    "costEur": 2.41
    },
    "allergens": [
     "gluten"
@@ -46458,7 +46458,7 @@
     "carbs": 59.8,
     "fiber": 13.8,
     "sugar": 9.1,
-    "costEur": 2.56
+    "costEur": 2.71
    },
    "allergens": [
     "gluten"
@@ -46563,7 +46563,7 @@
     "carbs": 64.2,
     "fiber": 12.4,
     "sugar": 12.3,
-    "costEur": 1.82
+    "costEur": 1.94
    },
    "allergens": [],
    "dietFlags": [
@@ -46670,7 +46670,7 @@
     "carbs": 67.6,
     "fiber": 5.6,
     "sugar": 8.6,
-    "costEur": 2.58
+    "costEur": 2.73
    },
    "allergens": [],
    "dietFlags": [
@@ -46777,7 +46777,7 @@
     "carbs": 64.9,
     "fiber": 11.7,
     "sugar": 10.9,
-    "costEur": 2.74
+    "costEur": 2.89
    },
    "allergens": [
     "gluten"
@@ -46886,7 +46886,7 @@
     "carbs": 62.8,
     "fiber": 12.7,
     "sugar": 15.6,
-    "costEur": 1.87
+    "costEur": 2.01
    },
    "allergens": [],
    "dietFlags": [
@@ -46989,7 +46989,7 @@
     "carbs": 66.6,
     "fiber": 4.5,
     "sugar": 10.2,
-    "costEur": 2.77
+    "costEur": 2.92
    },
    "allergens": [],
    "dietFlags": [
@@ -47092,7 +47092,7 @@
     "carbs": 69.1,
     "fiber": 5.9,
     "sugar": 9.1,
-    "costEur": 2.08
+    "costEur": 2.23
    },
    "allergens": [],
    "dietFlags": [
@@ -47195,7 +47195,7 @@
     "carbs": 66.8,
     "fiber": 14.7,
     "sugar": 12.8,
-    "costEur": 1.76
+    "costEur": 1.88
    },
    "allergens": [
     "gluten"
@@ -47300,7 +47300,7 @@
     "carbs": 61.1,
     "fiber": 11.9,
     "sugar": 12.8,
-    "costEur": 2.07
+    "costEur": 2.21
    },
    "allergens": [],
    "dietFlags": [
@@ -47403,7 +47403,7 @@
     "carbs": 61.7,
     "fiber": 12.7,
     "sugar": 8.8,
-    "costEur": 2.33
+    "costEur": 2.47
    },
    "allergens": [],
    "dietFlags": [
@@ -47506,7 +47506,7 @@
     "carbs": 56.8,
     "fiber": 9.5,
     "sugar": 9.1,
-    "costEur": 2.44
+    "costEur": 2.59
    },
    "allergens": [],
    "dietFlags": [
@@ -47609,7 +47609,7 @@
     "carbs": 69.3,
     "fiber": 17.1,
     "sugar": 12.8,
-    "costEur": 2.25
+    "costEur": 2.4
    },
    "allergens": [
     "gluten"
@@ -47714,7 +47714,7 @@
     "carbs": 66.4,
     "fiber": 12,
     "sugar": 11.3,
-    "costEur": 2.23
+    "costEur": 2.38
    },
    "allergens": [
     "gluten"
@@ -47823,7 +47823,7 @@
     "carbs": 80.6,
     "fiber": 9.3,
     "sugar": 14.3,
-    "costEur": 1.98
+    "costEur": 2.11
    },
    "allergens": [],
    "dietFlags": [
@@ -47930,7 +47930,7 @@
     "carbs": 66.3,
     "fiber": 16.7,
     "sugar": 8.9,
-    "costEur": 2.67
+    "costEur": 2.82
    },
    "allergens": [
     "gluten"
@@ -48039,7 +48039,7 @@
     "carbs": 77.9,
     "fiber": 15.4,
     "sugar": 16.5,
-    "costEur": 2.13
+    "costEur": 2.27
    },
    "allergens": [
     "gluten"
@@ -48144,7 +48144,7 @@
     "carbs": 65.3,
     "fiber": 15.6,
     "sugar": 10.5,
-    "costEur": 2.86
+    "costEur": 3.01
    },
    "allergens": [
     "gluten"
@@ -48249,7 +48249,7 @@
     "carbs": 50.7,
     "fiber": 8.3,
     "sugar": 2.6,
-    "costEur": 2.13
+    "costEur": 2.28
    },
    "allergens": [
     "soy",
@@ -48350,7 +48350,7 @@
     "carbs": 53.2,
     "fiber": 8,
     "sugar": 6.2,
-    "costEur": 1.62
+    "costEur": 1.74
    },
    "allergens": [
     "soy",
@@ -48451,7 +48451,7 @@
     "carbs": 44.5,
     "fiber": 5.7,
     "sugar": 2.7,
-    "costEur": 1.97
+    "costEur": 2.12
    },
    "allergens": [
     "soy",
@@ -48556,7 +48556,7 @@
     "carbs": 56.6,
     "fiber": 12.3,
     "sugar": 7.7,
-    "costEur": 1.37
+    "costEur": 1.51
    },
    "allergens": [
     "soy",
@@ -48657,7 +48657,7 @@
     "carbs": 47.1,
     "fiber": 8.3,
     "sugar": 4.1,
-    "costEur": 2.29
+    "costEur": 2.43
    },
    "allergens": [
     "soy",
@@ -48758,7 +48758,7 @@
     "carbs": 46.4,
     "fiber": 8,
     "sugar": 2.7,
-    "costEur": 1.65
+    "costEur": 1.8
    },
    "allergens": [
     "soy",
@@ -48863,7 +48863,7 @@
     "carbs": 67,
     "fiber": 6.4,
     "sugar": 7.7,
-    "costEur": 1.34
+    "costEur": 1.48
    },
    "allergens": [
     "soy",
@@ -48964,7 +48964,7 @@
     "carbs": 65.5,
     "fiber": 4.5,
     "sugar": 6.2,
-    "costEur": 1.27
+    "costEur": 1.38
    },
    "allergens": [
     "soy",
@@ -49065,7 +49065,7 @@
     "carbs": 49.2,
     "fiber": 7.5,
     "sugar": 6.4,
-    "costEur": 2
+    "costEur": 2.14
    },
    "allergens": [
     "soy",
@@ -49166,7 +49166,7 @@
     "carbs": 65.3,
     "fiber": 5.6,
     "sugar": 4.9,
-    "costEur": 1.53
+    "costEur": 1.68
    },
    "allergens": [
     "soy",
@@ -49271,7 +49271,7 @@
     "carbs": 71.5,
     "fiber": 7.2,
     "sugar": 8.1,
-    "costEur": 1.46
+    "costEur": 1.59
    },
    "allergens": [
     "soy",
@@ -49372,7 +49372,7 @@
     "carbs": 63,
     "fiber": 4.7,
     "sugar": 2.6,
-    "costEur": 1.77
+    "costEur": 1.92
    },
    "allergens": [
     "soy",
@@ -49473,7 +49473,7 @@
     "carbs": 54.9,
     "fiber": 11.5,
     "sugar": 4.9,
-    "costEur": 1.57
+    "costEur": 1.71
    },
    "allergens": [
     "soy",
@@ -49574,7 +49574,7 @@
     "carbs": 51.1,
     "fiber": 9.8,
     "sugar": 6.4,
-    "costEur": 1.67
+    "costEur": 1.82
    },
    "allergens": [
     "soy",
@@ -49675,7 +49675,7 @@
     "carbs": 53,
     "fiber": 9.2,
     "sugar": 4.9,
-    "costEur": 1.89
+    "costEur": 2.04
    },
    "allergens": [
     "soy",
@@ -49776,7 +49776,7 @@
     "carbs": 52.6,
     "fiber": 10.6,
     "sugar": 2.6,
-    "costEur": 1.81
+    "costEur": 1.96
    },
    "allergens": [
     "soy",
@@ -49877,7 +49877,7 @@
     "carbs": 61.5,
     "fiber": 4,
     "sugar": 6.4,
-    "costEur": 1.64
+    "costEur": 1.79
    },
    "allergens": [
     "soy",
@@ -49982,7 +49982,7 @@
     "carbs": 59.2,
     "fiber": 10.8,
     "sugar": 8.1,
-    "costEur": 1.81
+    "costEur": 1.95
    },
    "allergens": [
     "soy",
@@ -50083,7 +50083,7 @@
     "carbs": 57.5,
     "fiber": 2.4,
     "sugar": 4.1,
-    "costEur": 2.25
+    "costEur": 2.4
    },
    "allergens": [
     "soy",
@@ -50184,7 +50184,7 @@
     "carbs": 56.8,
     "fiber": 2.1,
     "sugar": 2.7,
-    "costEur": 1.62
+    "costEur": 1.77
    },
    "allergens": [
     "soy",
@@ -50285,7 +50285,7 @@
     "carbs": 51.3,
     "fiber": 10.8,
     "sugar": 5,
-    "costEur": 1.74
+    "costEur": 1.73
    },
    "allergens": [
     "fish",
@@ -50470,7 +50470,7 @@
     "carbs": 47.2,
     "fiber": 9.5,
     "sugar": 2.7,
-    "costEur": 2.11
+    "costEur": 2.1
    },
    "allergens": [
     "fish"
@@ -50560,7 +50560,7 @@
     "carbs": 48.1,
     "fiber": 10.4,
     "sugar": 3.3,
-    "costEur": 1.6
+    "costEur": 1.59
    },
    "allergens": [
     "fish",
@@ -50745,7 +50745,7 @@
     "carbs": 63.9,
     "fiber": 13.3,
     "sugar": 17.5,
-    "costEur": 1.9
+    "costEur": 1.88
    },
    "allergens": [
     "fish"
@@ -51019,7 +51019,7 @@
     "carbs": 45.8,
     "fiber": 6.8,
     "sugar": 6.3,
-    "costEur": 1.78
+    "costEur": 1.77
    },
    "allergens": [
     "fish"
@@ -51475,7 +51475,7 @@
     "carbs": 49.8,
     "fiber": 11.8,
     "sugar": 3.1,
-    "costEur": 2.05
+    "costEur": 2.04
    },
    "allergens": [
     "fish",
@@ -51566,7 +51566,7 @@
     "carbs": 52.3,
     "fiber": 8.1,
     "sugar": 6.4,
-    "costEur": 1.63
+    "costEur": 1.6
    },
    "allergens": [
     "fish"
@@ -51927,7 +51927,7 @@
     "carbs": 56.6,
     "fiber": 7.8,
     "sugar": 14.5,
-    "costEur": 1.81
+    "costEur": 1.8
    },
    "allergens": [
     "fish"
@@ -52299,7 +52299,7 @@
     "carbs": 52.3,
     "fiber": 8.1,
     "sugar": 6.4,
-    "costEur": 1.63
+    "costEur": 1.6
    },
    "allergens": [
     "fish"
@@ -52394,7 +52394,7 @@
     "carbs": 59.3,
     "fiber": 15.1,
     "sugar": 6.8,
-    "costEur": 1.74
+    "costEur": 1.73
    },
    "allergens": [
     "fish",
@@ -52490,7 +52490,7 @@
     "carbs": 51.3,
     "fiber": 8.8,
     "sugar": 8.1,
-    "costEur": 1.29
+    "costEur": 1.25
    },
    "allergens": [
     "fish"
@@ -52580,7 +52580,7 @@
     "carbs": 49.2,
     "fiber": 8.2,
     "sugar": 12.1,
-    "costEur": 2.06
+    "costEur": 2.05
    },
    "allergens": [
     "fish"
@@ -52670,7 +52670,7 @@
     "carbs": 56.6,
     "fiber": 7.8,
     "sugar": 14.5,
-    "costEur": 1.81
+    "costEur": 1.8
    },
    "allergens": [
     "fish"
@@ -53518,7 +53518,7 @@
     "carbs": 63.3,
     "fiber": 15.6,
     "sugar": 6.6,
-    "costEur": 1.36
+    "costEur": 1.33
    },
    "allergens": [
     "fish",
@@ -53618,7 +53618,7 @@
     "carbs": 52.4,
     "fiber": 8.6,
     "sugar": 13.8,
-    "costEur": 2.2
+    "costEur": 2.19
    },
    "allergens": [
     "fish"
@@ -53708,7 +53708,7 @@
     "carbs": 60.6,
     "fiber": 4.1,
     "sugar": 6.6,
-    "costEur": 1.65
+    "costEur": 1.64
    },
    "allergens": [
     "fish"
@@ -54394,7 +54394,7 @@
     "carbs": 80.6,
     "fiber": 9.3,
     "sugar": 14.3,
-    "costEur": 2
+    "costEur": 1.99
    },
    "allergens": [
     "fish"
@@ -54994,7 +54994,7 @@
     "carbs": 70.2,
     "fiber": 15.2,
     "sugar": 14.3,
-    "costEur": 2.03
+    "costEur": 2.02
    },
    "allergens": [
     "fish"
@@ -55093,7 +55093,7 @@
     "carbs": 66.8,
     "fiber": 14.7,
     "sugar": 12.8,
-    "costEur": 1.78
+    "costEur": 1.75
    },
    "allergens": [
     "fish",
@@ -55396,7 +55396,7 @@
     "carbs": 72.8,
     "fiber": 17.5,
     "sugar": 14.7,
-    "costEur": 1.97
+    "costEur": 1.96
    },
    "allergens": [
     "fish",
@@ -55696,7 +55696,7 @@
     "carbs": 61.3,
     "fiber": 10.7,
     "sugar": 14.1,
-    "costEur": 1.82
+    "costEur": 1.79
    },
    "allergens": [
     "fish"
@@ -55993,7 +55993,7 @@
     "carbs": 54.2,
     "fiber": 10.4,
     "sugar": 6.4,
-    "costEur": 1.92
+    "costEur": 1.76
    },
    "allergens": [
     "fish"
@@ -56083,7 +56083,7 @@
     "carbs": 44.3,
     "fiber": 6.1,
     "sugar": 4.3,
-    "costEur": 3.22
+    "costEur": 3.1
    },
    "allergens": [
     "fish"
@@ -56173,7 +56173,7 @@
     "carbs": 57.7,
     "fiber": 11.7,
     "sugar": 14.3,
-    "costEur": 2.58
+    "costEur": 2.46
    },
    "allergens": [
     "fish"
@@ -56263,7 +56263,7 @@
     "carbs": 55.9,
     "fiber": 2.2,
     "sugar": 2.9,
-    "costEur": 2.23
+    "costEur": 2.11
    },
    "allergens": [
     "fish"
@@ -56353,7 +56353,7 @@
     "carbs": 63.1,
     "fiber": 16.8,
     "sugar": 5.3,
-    "costEur": 2.24
+    "costEur": 2.11
    },
    "allergens": [
     "fish",
@@ -56444,7 +56444,7 @@
     "carbs": 56.8,
     "fiber": 12.7,
     "sugar": 6.8,
-    "costEur": 1.86
+    "costEur": 1.7
    },
    "allergens": [
     "fish",
@@ -56539,7 +56539,7 @@
     "carbs": 57.3,
     "fiber": 11.5,
     "sugar": 10.1,
-    "costEur": 2.09
+    "costEur": 1.95
    },
    "allergens": [
     "fish"
@@ -56629,7 +56629,7 @@
     "carbs": 56.6,
     "fiber": 13.9,
     "sugar": 5.5,
-    "costEur": 2.12
+    "costEur": 2
    },
    "allergens": [
     "fish",
@@ -56720,7 +56720,7 @@
     "carbs": 62,
     "fiber": 12.9,
     "sugar": 5.6,
-    "costEur": 2.07
+    "costEur": 1.95
    },
    "allergens": [
     "fish",
@@ -56811,7 +56811,7 @@
     "carbs": 51.7,
     "fiber": 10.7,
     "sugar": 2.8,
-    "costEur": 2.42
+    "costEur": 2.3
    },
    "allergens": [
     "fish"
@@ -56905,7 +56905,7 @@
     "carbs": 69.3,
     "fiber": 18.4,
     "sugar": 8.6,
-    "costEur": 2.16
+    "costEur": 2.03
    },
    "allergens": [
     "fish",
@@ -56996,7 +56996,7 @@
     "carbs": 49.2,
     "fiber": 8.2,
     "sugar": 12.1,
-    "costEur": 2.67
+    "costEur": 2.54
    },
    "allergens": [
     "fish"
@@ -57086,7 +57086,7 @@
     "carbs": 53.9,
     "fiber": 10,
     "sugar": 15.8,
-    "costEur": 2.69
+    "costEur": 2.56
    },
    "allergens": [
     "fish"
@@ -57176,7 +57176,7 @@
     "carbs": 54,
     "fiber": 11.6,
     "sugar": 5.1,
-    "costEur": 2.18
+    "costEur": 2.06
    },
    "allergens": [
     "fish"
@@ -57266,7 +57266,7 @@
     "carbs": 56.6,
     "fiber": 2.5,
     "sugar": 4.3,
-    "costEur": 2.87
+    "costEur": 2.74
    },
    "allergens": [
     "fish"
@@ -57356,7 +57356,7 @@
     "carbs": 48.1,
     "fiber": 10.4,
     "sugar": 3.3,
-    "costEur": 2.21
+    "costEur": 2.08
    },
    "allergens": [
     "fish",
@@ -57447,7 +57447,7 @@
     "carbs": 48.3,
     "fiber": 7.6,
     "sugar": 6.6,
-    "costEur": 2.61
+    "costEur": 2.49
    },
    "allergens": [
     "fish"
@@ -57537,7 +57537,7 @@
     "carbs": 56.6,
     "fiber": 7.8,
     "sugar": 14.5,
-    "costEur": 2.42
+    "costEur": 2.29
    },
    "allergens": [
     "fish"
@@ -57627,7 +57627,7 @@
     "carbs": 48.8,
     "fiber": 9,
     "sugar": 4.6,
-    "costEur": 2.4
+    "costEur": 2.28
    },
    "allergens": [
     "fish"
@@ -57717,7 +57717,7 @@
     "carbs": 63.3,
     "fiber": 15.6,
     "sugar": 6.6,
-    "costEur": 1.97
+    "costEur": 1.82
    },
    "allergens": [
     "fish",
@@ -57808,7 +57808,7 @@
     "carbs": 62.1,
     "fiber": 4.8,
     "sugar": 2.8,
-    "costEur": 2.39
+    "costEur": 2.26
    },
    "allergens": [
     "fish"
@@ -57907,7 +57907,7 @@
     "carbs": 46.8,
     "fiber": 6.2,
     "sugar": 4.6,
-    "costEur": 2.73
+    "costEur": 2.61
    },
    "allergens": [
     "fish"
@@ -58002,7 +58002,7 @@
     "carbs": 62,
     "fiber": 12.9,
     "sugar": 5.6,
-    "costEur": 2.07
+    "costEur": 1.95
    },
    "allergens": [
     "fish",
@@ -58098,7 +58098,7 @@
     "carbs": 56.6,
     "fiber": 7.8,
     "sugar": 14.5,
-    "costEur": 2.42
+    "costEur": 2.29
    },
    "allergens": [
     "fish"
@@ -58188,7 +58188,7 @@
     "carbs": 43.6,
     "fiber": 5.8,
     "sugar": 2.9,
-    "costEur": 2.59
+    "costEur": 2.47
    },
    "allergens": [
     "fish"
@@ -58283,7 +58283,7 @@
     "carbs": 52.9,
     "fiber": 7.7,
     "sugar": 5.3,
-    "costEur": 2.02
+    "costEur": 1.89
    },
    "allergens": [
     "fish"
@@ -58378,7 +58378,7 @@
     "carbs": 46.2,
     "fiber": 8.4,
     "sugar": 4.3,
-    "costEur": 2.9
+    "costEur": 2.78
    },
    "allergens": [
     "fish"
@@ -58473,7 +58473,7 @@
     "carbs": 57.9,
     "fiber": 10.5,
     "sugar": 15.6,
-    "costEur": 2.32
+    "costEur": 2.16
    },
    "allergens": [
     "fish"
@@ -58567,7 +58567,7 @@
     "carbs": 59.1,
     "fiber": 2.6,
     "sugar": 4.6,
-    "costEur": 2.37
+    "costEur": 2.25
    },
    "allergens": [
     "fish"
@@ -58662,7 +58662,7 @@
     "carbs": 45.8,
     "fiber": 8.1,
     "sugar": 4.9,
-    "costEur": 2.19
+    "costEur": 2.07
    },
    "allergens": [
     "fish"
@@ -58752,7 +58752,7 @@
     "carbs": 60.8,
     "fiber": 15.9,
     "sugar": 3.1,
-    "costEur": 2.48
+    "costEur": 2.35
    },
    "allergens": [
     "fish",
@@ -58848,7 +58848,7 @@
     "carbs": 54.6,
     "fiber": 13.3,
     "sugar": 3.1,
-    "costEur": 2.32
+    "costEur": 2.2
    },
    "allergens": [
     "fish",
@@ -58944,7 +58944,7 @@
     "carbs": 46.8,
     "fiber": 7.5,
     "sugar": 3.1,
-    "costEur": 2.53
+    "costEur": 2.41
    },
    "allergens": [
     "fish"
@@ -59039,7 +59039,7 @@
     "carbs": 47.3,
     "fiber": 8.3,
     "sugar": 8.3,
-    "costEur": 2.27
+    "costEur": 2.15
    },
    "allergens": [
     "fish"
@@ -59129,7 +59129,7 @@
     "carbs": 53.9,
     "fiber": 10,
     "sugar": 15.8,
-    "costEur": 2.69
+    "costEur": 2.56
    },
    "allergens": [
     "fish"
@@ -59219,7 +59219,7 @@
     "carbs": 56.6,
     "fiber": 2.5,
     "sugar": 4.3,
-    "costEur": 2.87
+    "costEur": 2.74
    },
    "allergens": [
     "fish"
@@ -59314,7 +59314,7 @@
     "carbs": 60.6,
     "fiber": 4.1,
     "sugar": 6.6,
-    "costEur": 2.25
+    "costEur": 2.13
    },
    "allergens": [
     "fish"
@@ -59409,7 +59409,7 @@
     "carbs": 51.3,
     "fiber": 8.8,
     "sugar": 8.1,
-    "costEur": 1.9
+    "costEur": 1.74
    },
    "allergens": [
     "fish"
@@ -59499,7 +59499,7 @@
     "carbs": 55.4,
     "fiber": 10.8,
     "sugar": 12,
-    "costEur": 2.82
+    "costEur": 2.7
    },
    "allergens": [
     "fish"
@@ -59589,7 +59589,7 @@
     "carbs": 48.7,
     "fiber": 9.8,
     "sugar": 3.1,
-    "costEur": 2.21
+    "costEur": 2.09
    },
    "allergens": [
     "fish"
@@ -59684,7 +59684,7 @@
     "carbs": 57.7,
     "fiber": 11.7,
     "sugar": 14.3,
-    "costEur": 2.17
+    "costEur": 2.16
    },
    "allergens": [
     "crustaceans"
@@ -59869,7 +59869,7 @@
     "carbs": 57.8,
     "fiber": 15,
     "sugar": 3.4,
-    "costEur": 1.86
+    "costEur": 1.85
    },
    "allergens": [
     "crustaceans",
@@ -59960,7 +59960,7 @@
     "carbs": 57.9,
     "fiber": 10.5,
     "sugar": 15.6,
-    "costEur": 1.9
+    "costEur": 1.87
    },
    "allergens": [
     "crustaceans"
@@ -60145,7 +60145,7 @@
     "carbs": 70.6,
     "fiber": 7.3,
     "sugar": 8.3,
-    "costEur": 1.66
+    "costEur": 1.65
    },
    "allergens": [
     "crustaceans"
@@ -60507,7 +60507,7 @@
     "carbs": 62.1,
     "fiber": 4.8,
     "sugar": 2.8,
-    "costEur": 1.98
+    "costEur": 1.97
    },
    "allergens": [
     "crustaceans"
@@ -60601,7 +60601,7 @@
     "carbs": 57.3,
     "fiber": 11.5,
     "sugar": 10.1,
-    "costEur": 1.68
+    "costEur": 1.66
    },
    "allergens": [
     "crustaceans"
@@ -60691,7 +60691,7 @@
     "carbs": 45.5,
     "fiber": 8.1,
     "sugar": 2.9,
-    "costEur": 1.86
+    "costEur": 1.85
    },
    "allergens": [
     "crustaceans"
@@ -60785,7 +60785,7 @@
     "carbs": 58.3,
     "fiber": 10.9,
     "sugar": 8.3,
-    "costEur": 2.02
+    "costEur": 2
    },
    "allergens": [
     "crustaceans"
@@ -60875,7 +60875,7 @@
     "carbs": 52.3,
     "fiber": 8.1,
     "sugar": 6.4,
-    "costEur": 1.83
+    "costEur": 1.79
    },
    "allergens": [
     "crustaceans"
@@ -61145,7 +61145,7 @@
     "carbs": 54,
     "fiber": 11.6,
     "sugar": 5.1,
-    "costEur": 1.77
+    "costEur": 1.76
    },
    "allergens": [
     "crustaceans"
@@ -61235,7 +61235,7 @@
     "carbs": 55.5,
     "fiber": 10,
     "sugar": 5.7,
-    "costEur": 1.55
+    "costEur": 1.54
    },
    "allergens": [
     "crustaceans",
@@ -61620,7 +61620,7 @@
     "carbs": 61.1,
     "fiber": 13.1,
     "sugar": 8.1,
-    "costEur": 1.71
+    "costEur": 1.7
    },
    "allergens": [
     "crustaceans",
@@ -62226,7 +62226,7 @@
     "carbs": 55.1,
     "fiber": 10.3,
     "sugar": 6.2,
-    "costEur": 1.52
+    "costEur": 1.49
    },
    "allergens": [
     "crustaceans",
@@ -62327,7 +62327,7 @@
     "carbs": 65.5,
     "fiber": 4.5,
     "sugar": 6.2,
-    "costEur": 1.49
+    "costEur": 1.45
    },
    "allergens": [
     "crustaceans",
@@ -62432,7 +62432,7 @@
     "carbs": 59.2,
     "fiber": 10.8,
     "sugar": 8.1,
-    "costEur": 2.03
+    "costEur": 2.02
    },
    "allergens": [
     "crustaceans",
@@ -62735,7 +62735,7 @@
     "carbs": 53.2,
     "fiber": 8,
     "sugar": 6.2,
-    "costEur": 1.84
+    "costEur": 1.81
    },
    "allergens": [
     "crustaceans",
@@ -63143,7 +63143,7 @@
     "carbs": 71.5,
     "fiber": 7.2,
     "sugar": 8.1,
-    "costEur": 1.68
+    "costEur": 1.66
    },
    "allergens": [
     "crustaceans",
@@ -64047,7 +64047,7 @@
     "carbs": 60,
     "fiber": 13,
     "sugar": 10.7,
-    "costEur": 1.68
+    "costEur": 1.67
    },
    "allergens": [
     "soy"
@@ -64217,7 +64217,7 @@
     "carbs": 65.5,
     "fiber": 17,
     "sugar": 9.4,
-    "costEur": 1.64
+    "costEur": 1.62
    },
    "allergens": [
     "soy",
@@ -64305,7 +64305,7 @@
     "carbs": 62,
     "fiber": 14,
     "sugar": 17.8,
-    "costEur": 1.98
+    "costEur": 1.97
    },
    "allergens": [
     "soy"
@@ -64479,7 +64479,7 @@
     "carbs": 73.3,
     "fiber": 8.9,
     "sugar": 9,
-    "costEur": 1.66
+    "costEur": 1.65
    },
    "allergens": [
     "soy"
@@ -64566,7 +64566,7 @@
     "carbs": 62.9,
     "fiber": 14.7,
     "sugar": 9,
-    "costEur": 1.7
+    "costEur": 1.68
    },
    "allergens": [
     "soy"
@@ -64991,7 +64991,7 @@
     "carbs": 55.4,
     "fiber": 12.3,
     "sugar": 10.3,
-    "costEur": 1.56
+    "costEur": 1.55
    },
    "allergens": [
     "soy"
@@ -66192,7 +66192,7 @@
     "carbs": 55,
     "fiber": 9.6,
     "sugar": 7,
-    "costEur": 1.83
+    "costEur": 1.8
    },
    "allergens": [
     "soy"
@@ -66363,7 +66363,7 @@
     "carbs": 67.3,
     "fiber": 6.1,
     "sugar": 7,
-    "costEur": 1.47
+    "costEur": 1.44
    },
    "allergens": [
     "soy"
@@ -66896,7 +66896,7 @@
     "carbs": 66,
     "fiber": 17.1,
     "sugar": 7.3,
-    "costEur": 1.56
+    "costEur": 1.53
    },
    "allergens": [
     "soy",
@@ -67764,7 +67764,7 @@
     "carbs": 76.9,
     "fiber": 19.4,
     "sugar": 13.5,
-    "costEur": 2.12
+    "costEur": 2.09
    },
    "allergens": [
     "soy",
@@ -68252,7 +68252,7 @@
     "carbs": 76.4,
     "fiber": 19.3,
     "sugar": 15.6,
-    "costEur": 2.19
+    "costEur": 2.18
    },
    "allergens": [
     "soy",
@@ -68838,7 +68838,7 @@
     "carbs": 69.3,
     "fiber": 16.2,
     "sugar": 14.8,
-    "costEur": 2.13
+    "costEur": 2.12
    },
    "allergens": [
     "soy"
@@ -69035,7 +69035,7 @@
     "carbs": 62.8,
     "fiber": 12.6,
     "sugar": 9,
-    "costEur": 2.06
+    "costEur": 2.04
    },
    "allergens": [
     "soy",
@@ -69520,7 +69520,7 @@
     "carbs": 69.1,
     "fiber": 6.3,
     "sugar": 7.1,
-    "costEur": 1.51
+    "costEur": 1.48
    },
    "allergens": [
     "soy",
@@ -70106,7 +70106,7 @@
     "carbs": 70.6,
     "fiber": 8.2,
     "sugar": 8.6,
-    "costEur": 1.58
+    "costEur": 1.57
    },
    "allergens": [
     "soy",
@@ -70207,7 +70207,7 @@
     "carbs": 75.1,
     "fiber": 9,
     "sugar": 9,
-    "costEur": 1.7
+    "costEur": 1.69
    },
    "allergens": [
     "soy",
@@ -70308,7 +70308,7 @@
     "carbs": 60.2,
     "fiber": 14.1,
     "sugar": 8.6,
-    "costEur": 1.61
+    "costEur": 1.6
    },
    "allergens": [
     "soy",
@@ -70409,7 +70409,7 @@
     "carbs": 58.3,
     "fiber": 11.8,
     "sugar": 8.6,
-    "costEur": 1.94
+    "costEur": 1.93
    },
    "allergens": [
     "soy",
@@ -70797,7 +70797,7 @@
     "carbs": 56.8,
     "fiber": 9.8,
     "sugar": 7.1,
-    "costEur": 1.86
+    "costEur": 1.83
    },
    "allergens": [
     "soy",
@@ -70886,7 +70886,7 @@
     "carbs": 93.6,
     "fiber": 15.4,
     "sugar": 3.5,
-    "costEur": 1.13
+    "costEur": 1.09
    },
    "allergens": [],
    "dietFlags": [],
@@ -70972,7 +70972,7 @@
     "carbs": 93.5,
     "fiber": 23.4,
     "sugar": 6.2,
-    "costEur": 0.82
+    "costEur": 0.78
    },
    "allergens": [
     "gluten"
@@ -71060,7 +71060,7 @@
     "carbs": 88.1,
     "fiber": 18.3,
     "sugar": 15.2,
-    "costEur": 1.16
+    "costEur": 1.12
    },
    "allergens": [],
    "dietFlags": [],
@@ -71141,7 +71141,7 @@
     "carbs": 89.3,
     "fiber": 25.5,
     "sugar": 4,
-    "costEur": 1.01
+    "costEur": 0.97
    },
    "allergens": [
     "gluten"
@@ -71233,7 +71233,7 @@
     "carbs": 83.9,
     "fiber": 19.1,
     "sugar": 14.4,
-    "costEur": 1.55
+    "costEur": 1.51
    },
    "allergens": [],
    "dietFlags": [],
@@ -71314,7 +71314,7 @@
     "carbs": 80.7,
     "fiber": 18.7,
     "sugar": 12.7,
-    "costEur": 1.41
+    "costEur": 1.37
    },
    "allergens": [],
    "dietFlags": [],
@@ -71395,7 +71395,7 @@
     "carbs": 86.1,
     "fiber": 23.8,
     "sugar": 3.8,
-    "costEur": 1.07
+    "costEur": 1.02
    },
    "allergens": [
     "gluten"
@@ -71483,7 +71483,7 @@
     "carbs": 86.9,
     "fiber": 21.3,
     "sugar": 12.7,
-    "costEur": 1.57
+    "costEur": 1.52
    },
    "allergens": [],
    "dietFlags": [],
@@ -71564,7 +71564,7 @@
     "carbs": 82.5,
     "fiber": 15.9,
     "sugar": 5.9,
-    "costEur": 1.09
+    "costEur": 1.04
    },
    "allergens": [],
    "dietFlags": [],
@@ -71650,7 +71650,7 @@
     "carbs": 78.8,
     "fiber": 18.8,
     "sugar": 9,
-    "costEur": 1.02
+    "costEur": 0.97
    },
    "allergens": [],
    "dietFlags": [],
@@ -71731,7 +71731,7 @@
     "carbs": 74.1,
     "fiber": 16.9,
     "sugar": 5.3,
-    "costEur": 0.99
+    "costEur": 0.95
    },
    "allergens": [],
    "dietFlags": [],
@@ -71816,7 +71816,7 @@
     "carbs": 77.3,
     "fiber": 17.3,
     "sugar": 7,
-    "costEur": 1.13
+    "costEur": 1.09
    },
    "allergens": [],
    "dietFlags": [],
@@ -71897,7 +71897,7 @@
     "carbs": 82.8,
     "fiber": 19.3,
     "sugar": 8.8,
-    "costEur": 0.64
+    "costEur": 0.57
    },
    "allergens": [],
    "dietFlags": [],
@@ -71978,7 +71978,7 @@
     "carbs": 85.7,
     "fiber": 20.9,
     "sugar": 7,
-    "costEur": 0.66
+    "costEur": 0.59
    },
    "allergens": [],
    "dietFlags": [],
@@ -72064,7 +72064,7 @@
     "carbs": 94.8,
     "fiber": 26.1,
     "sugar": 7.3,
-    "costEur": 0.72
+    "costEur": 0.64
    },
    "allergens": [
     "gluten"
@@ -72152,7 +72152,7 @@
     "carbs": 77.7,
     "fiber": 18.9,
     "sugar": 4.9,
-    "costEur": 1.65
+    "costEur": 1.6
    },
    "allergens": [],
    "dietFlags": [],
@@ -72242,7 +72242,7 @@
     "carbs": 78.3,
     "fiber": 16.7,
     "sugar": 5.2,
-    "costEur": 1.47
+    "costEur": 1.43
    },
    "allergens": [],
    "dietFlags": [],
@@ -72328,7 +72328,7 @@
     "carbs": 84.4,
     "fiber": 18.2,
     "sugar": 5.9,
-    "costEur": 0.76
+    "costEur": 0.72
    },
    "allergens": [],
    "dietFlags": [],
@@ -72414,7 +72414,7 @@
     "carbs": 89.4,
     "fiber": 21,
     "sugar": 16.3,
-    "costEur": 1.06
+    "costEur": 0.99
    },
    "allergens": [],
    "dietFlags": [],
@@ -72495,7 +72495,7 @@
     "carbs": 81.7,
     "fiber": 20.5,
     "sugar": 7.2,
-    "costEur": 1.03
+    "costEur": 0.99
    },
    "allergens": [],
    "dietFlags": [],
@@ -72589,7 +72589,7 @@
     "carbs": 106.8,
     "fiber": 18.5,
     "sugar": 11.9,
-    "costEur": 1.45
+    "costEur": 1.4
    },
    "allergens": [],
    "dietFlags": [],
@@ -72683,7 +72683,7 @@
     "carbs": 104.5,
     "fiber": 17.6,
     "sugar": 9.7,
-    "costEur": 1.69
+    "costEur": 1.65
    },
    "allergens": [],
    "dietFlags": [],
@@ -72777,7 +72777,7 @@
     "carbs": 96.7,
     "fiber": 25.8,
     "sugar": 10.1,
-    "costEur": 1.66
+    "costEur": 1.62
    },
    "allergens": [
     "gluten"
@@ -72873,7 +72873,7 @@
     "carbs": 88.6,
     "fiber": 21.2,
     "sugar": 11.1,
-    "costEur": 2.2
+    "costEur": 2.16
    },
    "allergens": [],
    "dietFlags": [],
@@ -72967,7 +72967,7 @@
     "carbs": 88.2,
     "fiber": 20.9,
     "sugar": 11.7,
-    "costEur": 1.5
+    "costEur": 1.45
    },
    "allergens": [],
    "dietFlags": [],
@@ -73061,7 +73061,7 @@
     "carbs": 91.2,
     "fiber": 23.5,
     "sugar": 11.6,
-    "costEur": 2.14
+    "costEur": 2.1
    },
    "allergens": [
     "gluten"
@@ -73161,7 +73161,7 @@
     "carbs": 89.6,
     "fiber": 22.3,
     "sugar": 9.5,
-    "costEur": 2.02
+    "costEur": 1.97
    },
    "allergens": [],
    "dietFlags": [],
@@ -73255,7 +73255,7 @@
     "carbs": 86.7,
     "fiber": 18.9,
     "sugar": 11.1,
-    "costEur": 2.53
+    "costEur": 2.48
    },
    "allergens": [],
    "dietFlags": [],
@@ -73353,7 +73353,7 @@
     "carbs": 99.7,
     "fiber": 24.3,
     "sugar": 16.9,
-    "costEur": 1.39
+    "costEur": 1.33
    },
    "allergens": [],
    "dietFlags": [],
@@ -73451,7 +73451,7 @@
     "carbs": 111.7,
     "fiber": 31.2,
     "sugar": 15.4,
-    "costEur": 1.47
+    "costEur": 1.41
    },
    "allergens": [
     "gluten"
@@ -73551,7 +73551,7 @@
     "carbs": 108.5,
     "fiber": 19.3,
     "sugar": 14.8,
-    "costEur": 1.26
+    "costEur": 1.2
    },
    "allergens": [],
    "dietFlags": [],
@@ -73645,7 +73645,7 @@
     "carbs": 92.6,
     "fiber": 22.7,
     "sugar": 13.4,
-    "costEur": 1.59
+    "costEur": 1.55
    },
    "allergens": [],
    "dietFlags": [],
@@ -73739,7 +73739,7 @@
     "carbs": 94.7,
     "fiber": 20.9,
     "sugar": 13.2,
-    "costEur": 1.54
+    "costEur": 1.47
    },
    "allergens": [],
    "dietFlags": [],
@@ -73833,7 +73833,7 @@
     "carbs": 93.7,
     "fiber": 21.5,
     "sugar": 15,
-    "costEur": 1.2
+    "costEur": 1.12
    },
    "allergens": [],
    "dietFlags": [],
@@ -73927,7 +73927,7 @@
     "carbs": 93.5,
     "fiber": 22.7,
     "sugar": 13.7,
-    "costEur": 1.46
+    "costEur": 1.42
    },
    "allergens": [],
    "dietFlags": [],
@@ -74021,7 +74021,7 @@
     "carbs": 99,
     "fiber": 15.3,
     "sugar": 11.1,
-    "costEur": 2.17
+    "costEur": 2.12
    },
    "allergens": [],
    "dietFlags": [],
@@ -74115,7 +74115,7 @@
     "carbs": 99,
     "fiber": 26.7,
     "sugar": 12.4,
-    "costEur": 1.42
+    "costEur": 1.38
    },
    "allergens": [
     "gluten"
@@ -74211,7 +74211,7 @@
     "carbs": 90.7,
     "fiber": 20.4,
     "sugar": 13.4,
-    "costEur": 1.91
+    "costEur": 1.87
    },
    "allergens": [],
    "dietFlags": [],
@@ -74309,7 +74309,7 @@
     "carbs": 98.7,
     "fiber": 27.5,
     "sugar": 9.8,
-    "costEur": 2.07
+    "costEur": 2.03
    },
    "allergens": [
     "gluten"
@@ -74409,7 +74409,7 @@
     "carbs": 100.7,
     "fiber": 27.5,
     "sugar": 15.2,
-    "costEur": 1.23
+    "costEur": 1.18
    },
    "allergens": [
     "gluten"
@@ -74505,7 +74505,7 @@
     "carbs": 101.6,
     "fiber": 17.4,
     "sugar": 12.9,
-    "costEur": 1.04
+    "costEur": 1.01
    },
    "allergens": [],
    "dietFlags": [],
@@ -74793,7 +74793,7 @@
     "carbs": 106.3,
     "fiber": 31.2,
     "sugar": 15.1,
-    "costEur": 1.32
+    "costEur": 1.31
    },
    "allergens": [
     "gluten"
@@ -75081,7 +75081,7 @@
     "carbs": 93.8,
     "fiber": 25.5,
     "sugar": 13.3,
-    "costEur": 1.01
+    "costEur": 0.98
    },
    "allergens": [
     "gluten"
@@ -75371,7 +75371,7 @@
     "carbs": 88.3,
     "fiber": 21.5,
     "sugar": 14.6,
-    "costEur": 1.06
+    "costEur": 1.03
    },
    "allergens": [],
    "dietFlags": [],
@@ -76037,7 +76037,7 @@
     "carbs": 94.3,
     "fiber": 24.3,
     "sugar": 16.6,
-    "costEur": 1.25
+    "costEur": 1.24
    },
    "allergens": [],
    "dietFlags": [],
@@ -76135,7 +76135,7 @@
     "carbs": 92.7,
     "fiber": 25.2,
     "sugar": 14.4,
-    "costEur": 1.15
+    "costEur": 1.14
    },
    "allergens": [],
    "dietFlags": [],
@@ -77177,7 +77177,7 @@
     "carbs": 103.7,
     "fiber": 21.2,
     "sugar": 17.4,
-    "costEur": 1.13
+    "costEur": 1.11
    },
    "allergens": [],
    "dietFlags": [],
@@ -77271,7 +77271,7 @@
     "carbs": 100.6,
     "fiber": 20.1,
     "sugar": 13.7,
-    "costEur": 0.95
+    "costEur": 0.92
    },
    "allergens": [],
    "dietFlags": [],
@@ -77655,7 +77655,7 @@
     "carbs": 104.7,
     "fiber": 24.4,
     "sugar": 15.7,
-    "costEur": 0.96
+    "costEur": 0.95
    },
    "allergens": [
     "gluten"
@@ -77949,7 +77949,7 @@
     "carbs": 109.2,
     "fiber": 25.2,
     "sugar": 16.1,
-    "costEur": 1.08
+    "costEur": 1.07
    },
    "allergens": [
     "gluten"
@@ -78341,7 +78341,7 @@
     "carbs": 99.5,
     "fiber": 18.6,
     "sugar": 8.2,
-    "costEur": 1.2
+    "costEur": 1.16
    },
    "allergens": [
     "gluten"
@@ -78445,7 +78445,7 @@
     "carbs": 67.7,
     "fiber": 12.3,
     "sugar": 7.5,
-    "costEur": 1.35
+    "costEur": 1.33
    },
    "allergens": [
     "gluten"
@@ -78553,7 +78553,7 @@
     "carbs": 76.4,
     "fiber": 14.9,
     "sugar": 7.7,
-    "costEur": 1.53
+    "costEur": 1.51
    },
    "allergens": [
     "gluten"
@@ -78657,7 +78657,7 @@
     "carbs": 68.7,
     "fiber": 12.5,
     "sugar": 7.8,
-    "costEur": 0.99
+    "costEur": 0.98
    },
    "allergens": [
     "gluten"
@@ -78757,7 +78757,7 @@
     "carbs": 84.3,
     "fiber": 14.6,
     "sugar": 10.5,
-    "costEur": 0.47
+    "costEur": 0.45
    },
    "allergens": [
     "gluten"
@@ -78857,7 +78857,7 @@
     "carbs": 79.6,
     "fiber": 15.7,
     "sugar": 7.8,
-    "costEur": 1.32
+    "costEur": 1.41
    },
    "allergens": [
     "gluten"
@@ -78961,7 +78961,7 @@
     "carbs": 70.9,
     "fiber": 13.1,
     "sugar": 7.6,
-    "costEur": 1.34
+    "costEur": 1.33
    },
    "allergens": [
     "gluten"
@@ -79061,7 +79061,7 @@
     "carbs": 51.2,
     "fiber": 9.6,
     "sugar": 10.2,
-    "costEur": 1.2
+    "costEur": 1.29
    },
    "allergens": [
     "gluten"
@@ -79169,7 +79169,7 @@
     "carbs": 77.4,
     "fiber": 14.5,
     "sugar": 12.3,
-    "costEur": 0.96
+    "costEur": 0.94
    },
    "allergens": [
     "gluten"
@@ -79277,7 +79277,7 @@
     "carbs": 81.6,
     "fiber": 12.1,
     "sugar": 11.4,
-    "costEur": 1.11
+    "costEur": 1.08
    },
    "allergens": [
     "gluten"
@@ -79385,7 +79385,7 @@
     "carbs": 95,
     "fiber": 18.6,
     "sugar": 7.9,
-    "costEur": 1.08
+    "costEur": 1.07
    },
    "allergens": [
     "gluten"
@@ -79489,7 +79489,7 @@
     "carbs": 72.5,
     "fiber": 9.6,
     "sugar": 7.5,
-    "costEur": 1.53
+    "costEur": 1.52
    },
    "allergens": [
     "gluten"
@@ -79593,7 +79593,7 @@
     "carbs": 80.3,
     "fiber": 15.9,
     "sugar": 8.7,
-    "costEur": 0.95
+    "costEur": 0.94
    },
    "allergens": [
     "gluten"
@@ -79693,7 +79693,7 @@
     "carbs": 78.5,
     "fiber": 15.2,
     "sugar": 10.5,
-    "costEur": 1.03
+    "costEur": 1.02
    },
    "allergens": [
     "gluten"
@@ -79801,7 +79801,7 @@
     "carbs": 103.8,
     "fiber": 23.8,
     "sugar": 12.2,
-    "costEur": 0.79
+    "costEur": 0.74
    },
    "allergens": [
     "gluten"
@@ -79905,7 +79905,7 @@
     "carbs": 112.5,
     "fiber": 26.4,
     "sugar": 12.4,
-    "costEur": 0.78
+    "costEur": 0.72
    },
    "allergens": [
     "gluten"
@@ -80005,7 +80005,7 @@
     "carbs": 93.4,
     "fiber": 22.1,
     "sugar": 8,
-    "costEur": 0.9
+    "costEur": 0.88
    },
    "allergens": [
     "gluten"
@@ -80101,7 +80101,7 @@
     "carbs": 75.4,
     "fiber": 17.5,
     "sugar": 9.3,
-    "costEur": 1.3
+    "costEur": 1.25
    },
    "allergens": [
     "gluten"
@@ -80201,7 +80201,7 @@
     "carbs": 76.5,
     "fiber": 8.3,
     "sugar": 9.3,
-    "costEur": 0.84
+    "costEur": 0.83
    },
    "allergens": [
     "gluten"
@@ -80301,7 +80301,7 @@
     "carbs": 53.1,
     "fiber": 8,
     "sugar": 9.3,
-    "costEur": 0.81
+    "costEur": 0.8
    },
    "allergens": [
     "gluten"
@@ -80405,7 +80405,7 @@
     "carbs": 55,
     "fiber": 11.3,
     "sugar": 11.1,
-    "costEur": 0.79
+    "costEur": 0.77
    },
    "allergens": [
     "gluten"
@@ -80509,7 +80509,7 @@
     "carbs": 74.6,
     "fiber": 9.9,
     "sugar": 10.2,
-    "costEur": 1.23
+    "costEur": 1.32
    },
    "allergens": [
     "gluten"
@@ -80609,7 +80609,7 @@
     "carbs": 57.2,
     "fiber": 11.6,
     "sugar": 10.6,
-    "costEur": 1.09
+    "costEur": 1.08
    },
    "allergens": [
     "gluten"
@@ -80709,7 +80709,7 @@
     "carbs": 75.7,
     "fiber": 14.1,
     "sugar": 8.9,
-    "costEur": 1.46
+    "costEur": 1.44
    },
    "allergens": [
     "gluten"
@@ -80817,7 +80817,7 @@
     "carbs": 104.8,
     "fiber": 25.9,
     "sugar": 11.8,
-    "costEur": 0.57
+    "costEur": 0.55
    },
    "allergens": [
     "gluten"
@@ -80917,7 +80917,7 @@
     "carbs": 69.4,
     "fiber": 12.2,
     "sugar": 8.7,
-    "costEur": 1.24
+    "costEur": 1.32
    },
    "allergens": [
     "gluten"
@@ -81017,7 +81017,7 @@
     "carbs": 82.4,
     "fiber": 16.2,
     "sugar": 11.4,
-    "costEur": 0.66
+    "costEur": 0.64
    },
    "allergens": [
     "gluten"
@@ -81117,7 +81117,7 @@
     "carbs": 77.4,
     "fiber": 15.1,
     "sugar": 8,
-    "costEur": 1.17
+    "costEur": 1.26
    },
    "allergens": [
     "gluten"
@@ -81221,7 +81221,7 @@
     "carbs": 101,
     "fiber": 24.2,
     "sugar": 10.9,
-    "costEur": 0.78
+    "costEur": 0.77
    },
    "allergens": [
     "gluten"
@@ -81321,7 +81321,7 @@
     "carbs": 96.1,
     "fiber": 18.8,
     "sugar": 8.2,
-    "costEur": 0.73
+    "costEur": 0.72
    },
    "allergens": [
     "gluten"
@@ -81425,7 +81425,7 @@
     "carbs": 82.4,
     "fiber": 16,
     "sugar": 15.3,
-    "costEur": 0.96
+    "costEur": 0.94
    },
    "allergens": [
     "gluten"
@@ -81529,7 +81529,7 @@
     "carbs": 68.3,
     "fiber": 12,
     "sugar": 8.4,
-    "costEur": 1.59
+    "costEur": 1.68
    },
    "allergens": [
     "gluten"
@@ -81629,7 +81629,7 @@
     "carbs": 78.2,
     "fiber": 18.6,
     "sugar": 10.9,
-    "costEur": 0.87
+    "costEur": 0.82
    },
    "allergens": [
     "gluten"
@@ -81729,7 +81729,7 @@
     "carbs": 76.1,
     "fiber": 18.3,
     "sugar": 8.2,
-    "costEur": 1.17
+    "costEur": 1.12
    },
    "allergens": [
     "gluten"
@@ -81829,7 +81829,7 @@
     "carbs": 78.5,
     "fiber": 15.2,
     "sugar": 10.5,
-    "costEur": 1.23
+    "costEur": 1.22
    },
    "allergens": [
     "gluten"
@@ -81929,7 +81929,7 @@
     "carbs": 74.8,
     "fiber": 19.1,
     "sugar": 8,
-    "costEur": 0.85
+    "costEur": 0.83
    },
    "allergens": [
     "gluten"
@@ -82033,7 +82033,7 @@
     "carbs": 82.3,
     "fiber": 16.9,
     "sugar": 11.4,
-    "costEur": 0.82
+    "costEur": 0.8
    },
    "allergens": [
     "gluten"
@@ -82137,7 +82137,7 @@
     "carbs": 58.2,
     "fiber": 11.8,
     "sugar": 11.4,
-    "costEur": 1.07
+    "costEur": 1.15
    },
    "allergens": [
     "gluten"
@@ -82241,7 +82241,7 @@
     "carbs": 79.5,
     "fiber": 11.4,
     "sugar": 13.2,
-    "costEur": 1.03
+    "costEur": 1.02
    },
    "allergens": [
     "gluten"
@@ -82337,7 +82337,7 @@
     "carbs": 48.4,
     "fiber": 8.5,
     "sugar": 8.6,
-    "costEur": 1.43
+    "costEur": 1.42
    },
    "allergens": [
     "gluten"
@@ -82441,7 +82441,7 @@
     "carbs": 73.5,
     "fiber": 9.8,
     "sugar": 7.8,
-    "costEur": 1.18
+    "costEur": 1.17
    },
    "allergens": [
     "gluten"
@@ -82545,7 +82545,7 @@
     "carbs": 82,
     "fiber": 20.3,
     "sugar": 11.9,
-    "costEur": 0.66
+    "costEur": 0.61
    },
    "allergens": [
     "gluten"
@@ -82649,7 +82649,7 @@
     "carbs": 109.3,
     "fiber": 25.9,
     "sugar": 12.1,
-    "costEur": 0.69
+    "costEur": 0.63
    },
    "allergens": [
     "gluten"
@@ -82753,7 +82753,7 @@
     "carbs": 85.5,
     "fiber": 17.4,
     "sugar": 11.7,
-    "costEur": 1.1
+    "costEur": 1.18
    },
    "allergens": [
     "gluten"
@@ -82857,7 +82857,7 @@
     "carbs": 101.6,
     "fiber": 18.9,
     "sugar": 10.9,
-    "costEur": 0.91
+    "costEur": 0.86
    },
    "allergens": [
     "gluten"
@@ -82957,7 +82957,7 @@
     "carbs": 74.6,
     "fiber": 9.9,
     "sugar": 10.2,
-    "costEur": 1.03
+    "costEur": 1.02
    },
    "allergens": [
     "gluten"
@@ -83061,7 +83061,7 @@
     "carbs": 73.5,
     "fiber": 9.8,
     "sugar": 7.8,
-    "costEur": 0.98
+    "costEur": 0.97
    },
    "allergens": [
     "gluten"
@@ -83165,7 +83165,7 @@
     "carbs": 68.7,
     "fiber": 12.5,
     "sugar": 7.8,
-    "costEur": 1.19
+    "costEur": 1.18
    },
    "allergens": [
     "gluten"
@@ -83273,7 +83273,7 @@
     "carbs": 85.5,
     "fiber": 17.4,
     "sugar": 11.7,
-    "costEur": 0.9
+    "costEur": 0.88
    },
    "allergens": [
     "gluten"
@@ -83377,7 +83377,7 @@
     "carbs": 80.4,
     "fiber": 13.6,
     "sugar": 9.6,
-    "costEur": 1.04
+    "costEur": 1.03
    },
    "allergens": [
     "gluten"
@@ -83477,7 +83477,7 @@
     "carbs": 48.4,
     "fiber": 8.5,
     "sugar": 8.6,
-    "costEur": 1.63
+    "costEur": 1.72
    },
    "allergens": [
     "gluten"
@@ -83581,7 +83581,7 @@
     "carbs": 73.5,
     "fiber": 9.8,
     "sugar": 7.8,
-    "costEur": 1.18
+    "costEur": 1.27
    },
    "allergens": [
     "gluten"
@@ -83685,7 +83685,7 @@
     "carbs": 95.8,
     "fiber": 21.5,
     "sugar": 8.5,
-    "costEur": 0.87
+    "costEur": 0.82
    },
    "allergens": [
     "gluten"
@@ -83785,7 +83785,7 @@
     "carbs": 70.9,
     "fiber": 13.1,
     "sugar": 7.6,
-    "costEur": 1.14
+    "costEur": 1.13
    },
    "allergens": [
     "gluten"
@@ -83889,7 +83889,7 @@
     "carbs": 98.7,
     "fiber": 20,
     "sugar": 10,
-    "costEur": 0.73
+    "costEur": 0.68
    },
    "allergens": [
     "gluten"
@@ -83993,7 +83993,7 @@
     "carbs": 105.4,
     "fiber": 20.6,
     "sugar": 11.9,
-    "costEur": 0.7
+    "costEur": 0.64
    },
    "allergens": [
     "gluten"
@@ -84097,7 +84097,7 @@
     "carbs": 78.6,
     "fiber": 15.8,
     "sugar": 14.1,
-    "costEur": 0.83
+    "costEur": 0.81
    },
    "allergens": [
     "gluten"
@@ -84197,7 +84197,7 @@
     "carbs": 97.9,
     "fiber": 22.1,
     "sugar": 8.3,
-    "costEur": 1.02
+    "costEur": 0.97
    },
    "allergens": [
     "gluten"
@@ -84301,7 +84301,7 @@
     "carbs": 76.8,
     "fiber": 14.8,
     "sugar": 11.4,
-    "costEur": 1.12
+    "costEur": 1.1
    },
    "allergens": [
     "gluten"
@@ -84409,7 +84409,7 @@
     "carbs": 77.4,
     "fiber": 14.5,
     "sugar": 12.3,
-    "costEur": 1.16
+    "costEur": 1.24
    },
    "allergens": [
     "gluten"
@@ -84513,7 +84513,7 @@
     "carbs": 75.7,
     "fiber": 14.1,
     "sugar": 8.9,
-    "costEur": 1.66
+    "costEur": 1.74
    },
    "allergens": [
     "gluten"
@@ -84621,7 +84621,7 @@
     "carbs": 73.3,
     "fiber": 13.5,
     "sugar": 11.4,
-    "costEur": 1.38
+    "costEur": 1.37
    },
    "allergens": [
     "gluten"
@@ -84721,7 +84721,7 @@
     "carbs": 92.3,
     "fiber": 21.6,
     "sugar": 10.6,
-    "costEur": 0.8
+    "costEur": 0.79
    },
    "allergens": [
     "gluten"
@@ -84825,7 +84825,7 @@
     "carbs": 96.1,
     "fiber": 23.3,
     "sugar": 11.6,
-    "costEur": 0.59
+    "costEur": 0.57
    },
    "allergens": [
     "gluten"
@@ -84925,7 +84925,7 @@
     "carbs": 63.1,
     "fiber": 13.3,
     "sugar": 14.4,
-    "costEur": 0.87
+    "costEur": 0.85
    },
    "allergens": [
     "gluten"
@@ -85025,7 +85025,7 @@
     "carbs": 94.2,
     "fiber": 20,
     "sugar": 9.7,
-    "costEur": 0.61
+    "costEur": 0.6
    },
    "allergens": [
     "gluten"
@@ -85125,7 +85125,7 @@
     "carbs": 98.8,
     "fiber": 17.8,
     "sugar": 9.3,
-    "costEur": 1.33
+    "costEur": 1.29
    },
    "allergens": [
     "gluten"
@@ -85229,7 +85229,7 @@
     "carbs": 108,
     "fiber": 26.4,
     "sugar": 12.1,
-    "costEur": 0.66
+    "costEur": 0.63
    },
    "allergens": [
     "gluten"
@@ -85329,7 +85329,7 @@
     "carbs": 49.1,
     "fiber": 9.3,
     "sugar": 7.5,
-    "costEur": 1.5
+    "costEur": 1.49
    },
    "allergens": [
     "gluten"
@@ -85433,7 +85433,7 @@
     "carbs": 100.6,
     "fiber": 18.8,
     "sugar": 8.5,
-    "costEur": 0.85
+    "costEur": 0.8
    },
    "allergens": [
     "gluten"
@@ -85529,7 +85529,7 @@
     "carbs": 56.1,
     "fiber": 11.1,
     "sugar": 13.2,
-    "costEur": 0.99
+    "costEur": 0.98
    },
    "allergens": [
     "gluten"
@@ -85633,7 +85633,7 @@
     "carbs": 81.6,
     "fiber": 12.1,
     "sugar": 11.4,
-    "costEur": 0.91
+    "costEur": 0.88
    },
    "allergens": [
     "gluten"
@@ -85737,7 +85737,7 @@
     "carbs": 69.8,
     "fiber": 12.6,
     "sugar": 10.2,
-    "costEur": 1.05
+    "costEur": 1.04
    },
    "allergens": [
     "gluten"
@@ -85841,7 +85841,7 @@
     "carbs": 74.6,
     "fiber": 9.9,
     "sugar": 10.2,
-    "costEur": 1.23
+    "costEur": 1.22
    },
    "allergens": [
     "gluten"
@@ -85945,7 +85945,7 @@
     "carbs": 71.7,
     "fiber": 11,
     "sugar": 9.3,
-    "costEur": 0.86
+    "costEur": 0.85
    },
    "allergens": [
     "gluten"
@@ -86049,7 +86049,7 @@
     "carbs": 76.6,
     "fiber": 12.5,
     "sugar": 12.3,
-    "costEur": 0.85
+    "costEur": 0.84
    },
    "allergens": [
     "gluten"
@@ -86149,7 +86149,7 @@
     "carbs": 71.5,
     "fiber": 12.8,
     "sugar": 8.5,
-    "costEur": 1.18
+    "costEur": 1.17
    },
    "allergens": [
     "gluten"
@@ -86253,7 +86253,7 @@
     "carbs": 104.5,
     "fiber": 24,
     "sugar": 8.8,
-    "costEur": 0.85
+    "costEur": 0.8
    },
    "allergens": [
     "gluten"
@@ -86357,7 +86357,7 @@
     "carbs": 90.4,
     "fiber": 18.9,
     "sugar": 14.7,
-    "costEur": 0.9
+    "costEur": 0.88
    },
    "allergens": [
     "gluten"
@@ -86461,7 +86461,7 @@
     "carbs": 76.8,
     "fiber": 14.8,
     "sugar": 11.4,
-    "costEur": 1.12
+    "costEur": 1.2
    },
    "allergens": [
     "gluten"
@@ -86565,7 +86565,7 @@
     "carbs": 99.3,
     "fiber": 19.7,
     "sugar": 10.9,
-    "costEur": 0.77
+    "costEur": 0.72
    },
    "allergens": [
     "gluten"
@@ -86665,7 +86665,7 @@
     "carbs": 76.4,
     "fiber": 14.3,
     "sugar": 11.5,
-    "costEur": 1.18
+    "costEur": 1.17
    },
    "allergens": [
     "gluten"
@@ -86765,7 +86765,7 @@
     "carbs": 90.1,
     "fiber": 20.2,
     "sugar": 9.9,
-    "costEur": 1.27
+    "costEur": 1.26
    },
    "allergens": [
     "gluten"
@@ -86865,7 +86865,7 @@
     "carbs": 96.8,
     "fiber": 21.6,
     "sugar": 10.9,
-    "costEur": 0.92
+    "costEur": 0.87
    },
    "allergens": [
     "gluten"
@@ -86965,7 +86965,7 @@
     "carbs": 70.9,
     "fiber": 13.1,
     "sugar": 7.6,
-    "costEur": 1.34
+    "costEur": 1.43
    },
    "allergens": [
     "gluten"
@@ -87069,7 +87069,7 @@
     "carbs": 91.3,
     "fiber": 21.5,
     "sugar": 8.2,
-    "costEur": 0.75
+    "costEur": 0.74
    },
    "allergens": [
     "gluten"
@@ -87173,7 +87173,7 @@
     "carbs": 73.6,
     "fiber": 14.3,
     "sugar": 11.1,
-    "costEur": 1.04
+    "costEur": 1.02
    },
    "allergens": [
     "gluten"
@@ -87277,7 +87277,7 @@
     "carbs": 58.2,
     "fiber": 11.8,
     "sugar": 11.4,
-    "costEur": 1.07
+    "costEur": 1.05
    },
    "allergens": [
     "gluten"
@@ -87381,7 +87381,7 @@
     "carbs": 89.4,
     "fiber": 18.4,
     "sugar": 12.6,
-    "costEur": 0.53
+    "costEur": 0.51
    },
    "allergens": [
     "gluten"
@@ -87481,7 +87481,7 @@
     "carbs": 71.9,
     "fiber": 13,
     "sugar": 11.6,
-    "costEur": 1.47
+    "costEur": 1.46
    },
    "allergens": [
     "gluten"
@@ -87581,7 +87581,7 @@
     "carbs": 85.3,
     "fiber": 15.1,
     "sugar": 12.6,
-    "costEur": 0.83
+    "costEur": 0.82
    },
    "allergens": [
     "gluten"
@@ -87681,7 +87681,7 @@
     "carbs": 80.7,
     "fiber": 20.8,
     "sugar": 11.9,
-    "costEur": 0.63
+    "costEur": 0.61
    },
    "allergens": [
     "gluten"
@@ -87781,7 +87781,7 @@
     "carbs": 105.5,
     "fiber": 24.2,
     "sugar": 11.2,
-    "costEur": 0.9
+    "costEur": 0.85
    },
    "allergens": [
     "gluten"
@@ -87881,7 +87881,7 @@
     "carbs": 86.2,
     "fiber": 17.9,
     "sugar": 12.3,
-    "costEur": 0.45
+    "costEur": 0.43
    },
    "allergens": [
     "gluten"
@@ -87981,7 +87981,7 @@
     "carbs": 83.4,
     "fiber": 16.7,
     "sugar": 13.5,
-    "costEur": 1.02
+    "costEur": 1.01
    },
    "allergens": [
     "gluten"
@@ -88081,7 +88081,7 @@
     "carbs": 102.7,
     "fiber": 23.1,
     "sugar": 9.6,
-    "costEur": 1.33
+    "costEur": 1.28
    },
    "allergens": [
     "gluten"
@@ -88181,7 +88181,7 @@
     "carbs": 74.3,
     "fiber": 13.7,
     "sugar": 11.7,
-    "costEur": 1.03
+    "costEur": 1.02
    },
    "allergens": [
     "gluten"
@@ -88277,7 +88277,7 @@
     "carbs": 50.1,
     "fiber": 9.5,
     "sugar": 7.8,
-    "costEur": 1.15
+    "costEur": 1.13
    },
    "allergens": [
     "gluten"
@@ -88385,7 +88385,7 @@
     "carbs": 103.4,
     "fiber": 23.9,
     "sugar": 8.5,
-    "costEur": 1.2
+    "costEur": 1.15
    },
    "allergens": [
     "gluten"
@@ -88481,7 +88481,7 @@
     "carbs": 51.2,
     "fiber": 9.6,
     "sugar": 10.2,
-    "costEur": 1.2
+    "costEur": 1.19
    },
    "allergens": [
     "gluten"
@@ -88581,7 +88581,7 @@
     "carbs": 73.7,
     "fiber": 18.6,
     "sugar": 10.6,
-    "costEur": 0.75
+    "costEur": 0.74
    },
    "allergens": [
     "gluten"
@@ -88685,7 +88685,7 @@
     "carbs": 76.4,
     "fiber": 14.9,
     "sugar": 7.7,
-    "costEur": 1.33
+    "costEur": 1.31
    },
    "allergens": [
     "gluten"
@@ -88789,7 +88789,7 @@
     "carbs": 77.5,
     "fiber": 20.3,
     "sugar": 11.6,
-    "costEur": 0.54
+    "costEur": 0.52
    },
    "allergens": [
     "gluten"
@@ -88889,7 +88889,7 @@
     "carbs": 58.2,
     "fiber": 11.8,
     "sugar": 11.4,
-    "costEur": 0.87
+    "costEur": 0.85
    },
    "allergens": [
     "gluten"
@@ -88993,7 +88993,7 @@
     "carbs": 92.9,
     "fiber": 21.3,
     "sugar": 11.5,
-    "costEur": 0.84
+    "costEur": 0.83
    },
    "allergens": [
     "gluten"
@@ -89093,7 +89093,7 @@
     "carbs": 84.5,
     "fiber": 17.2,
     "sugar": 10.8,
-    "costEur": 1.12
+    "costEur": 1.1
    },
    "allergens": [
     "gluten"
@@ -89197,7 +89197,7 @@
     "carbs": 73.6,
     "fiber": 14.3,
     "sugar": 11.1,
-    "costEur": 0.84
+    "costEur": 0.82
    },
    "allergens": [
     "gluten"
@@ -89297,7 +89297,7 @@
     "carbs": 53.1,
     "fiber": 8,
     "sugar": 9.3,
-    "costEur": 1.01
+    "costEur": 1
    },
    "allergens": [
     "gluten"
@@ -89405,7 +89405,7 @@
     "carbs": 77.4,
     "fiber": 14.5,
     "sugar": 12.3,
-    "costEur": 1.16
+    "costEur": 1.14
    },
    "allergens": [
     "gluten"
@@ -89509,7 +89509,7 @@
     "carbs": 49.1,
     "fiber": 9.3,
     "sugar": 7.5,
-    "costEur": 1.3
+    "costEur": 1.29
    },
    "allergens": [
     "gluten"
@@ -89609,7 +89609,7 @@
     "carbs": 50.1,
     "fiber": 9.5,
     "sugar": 7.8,
-    "costEur": 1.15
+    "costEur": 1.23
    },
    "allergens": [
     "gluten"
@@ -89709,7 +89709,7 @@
     "carbs": 50.1,
     "fiber": 9.5,
     "sugar": 7.8,
-    "costEur": 0.95
+    "costEur": 0.93
    },
    "allergens": [
     "gluten"
@@ -89817,7 +89817,7 @@
     "carbs": 77.4,
     "fiber": 11.1,
     "sugar": 10.5,
-    "costEur": 1.33
+    "costEur": 1.31
    },
    "allergens": [
     "gluten"
@@ -89917,7 +89917,7 @@
     "carbs": 80.6,
     "fiber": 11.9,
     "sugar": 10.6,
-    "costEur": 1.12
+    "costEur": 1.11
    },
    "allergens": [
     "gluten"
@@ -90013,7 +90013,7 @@
     "carbs": 72.7,
     "fiber": 18.5,
     "sugar": 8.2,
-    "costEur": 0.7
+    "costEur": 0.69
    },
    "allergens": [
     "gluten"
@@ -90113,7 +90113,7 @@
     "carbs": 94.3,
     "fiber": 17.8,
     "sugar": 9,
-    "costEur": 1.21
+    "costEur": 1.2
    },
    "allergens": [
     "gluten"
@@ -90213,7 +90213,7 @@
     "carbs": 69.8,
     "fiber": 12.6,
     "sugar": 10.2,
-    "costEur": 1.25
+    "costEur": 1.34
    },
    "allergens": [
     "gluten"
@@ -90317,7 +90317,7 @@
     "carbs": 81.4,
     "fiber": 9.8,
     "sugar": 12.3,
-    "costEur": 0.84
+    "costEur": 0.83
    },
    "allergens": [
     "gluten"
@@ -90421,7 +90421,7 @@
     "carbs": 67.7,
     "fiber": 12.3,
     "sugar": 7.5,
-    "costEur": 1.55
+    "costEur": 1.63
    },
    "allergens": [
     "gluten"
@@ -90525,7 +90525,7 @@
     "carbs": 106.6,
     "fiber": 24.7,
     "sugar": 8.6,
-    "costEur": 1
+    "costEur": 0.95
    },
    "allergens": [
     "gluten"
@@ -90625,7 +90625,7 @@
     "carbs": 94,
     "fiber": 20.5,
     "sugar": 9.3,
-    "costEur": 1.35
+    "costEur": 1.3
    },
    "allergens": [
     "gluten"
@@ -90725,7 +90725,7 @@
     "carbs": 67,
     "fiber": 11.5,
     "sugar": 8.6,
-    "costEur": 1.68
+    "costEur": 1.76
    },
    "allergens": [
     "gluten"
@@ -90833,7 +90833,7 @@
     "carbs": 99.3,
     "fiber": 23.8,
     "sugar": 11.9,
-    "costEur": 0.67
+    "costEur": 0.65
    },
    "allergens": [
     "gluten"
@@ -90933,7 +90933,7 @@
     "carbs": 98.2,
     "fiber": 19.4,
     "sugar": 8,
-    "costEur": 0.88
+    "costEur": 0.87
    },
    "allergens": [
     "gluten"
@@ -91033,7 +91033,7 @@
     "carbs": 72.3,
     "fiber": 10.7,
     "sugar": 10.2,
-    "costEur": 0.9
+    "costEur": 0.89
    },
    "allergens": [
     "gluten"
@@ -91137,7 +91137,7 @@
     "carbs": 107.4,
     "fiber": 22.6,
     "sugar": 10.3,
-    "costEur": 0.71
+    "costEur": 0.66
    },
    "allergens": [
     "gluten"
@@ -91233,7 +91233,7 @@
     "carbs": 51.2,
     "fiber": 9.6,
     "sugar": 10.2,
-    "costEur": 1
+    "costEur": 0.99
    },
    "allergens": [
     "gluten"
@@ -91337,7 +91337,7 @@
     "carbs": 76.5,
     "fiber": 8.3,
     "sugar": 9.3,
-    "costEur": 1.04
+    "costEur": 1.03
    },
    "allergens": [
     "gluten"
@@ -91445,7 +91445,7 @@
     "carbs": 68.3,
     "fiber": 12,
     "sugar": 8.4,
-    "costEur": 1.59
+    "costEur": 1.58
    },
    "allergens": [
     "gluten"
@@ -91553,7 +91553,7 @@
     "carbs": 90.8,
     "fiber": 21,
     "sugar": 8.8,
-    "costEur": 1.14
+    "costEur": 1.13
    },
    "allergens": [
     "gluten"
@@ -91653,7 +91653,7 @@
     "carbs": 77.4,
     "fiber": 15.1,
     "sugar": 8,
-    "costEur": 0.97
+    "costEur": 0.96
    },
    "allergens": [
     "gluten"
@@ -91757,7 +91757,7 @@
     "carbs": 75.4,
     "fiber": 13.8,
     "sugar": 14.1,
-    "costEur": 1.08
+    "costEur": 1.07
    },
    "allergens": [
     "gluten"
@@ -91857,7 +91857,7 @@
     "carbs": 60,
     "fiber": 12.8,
     "sugar": 14.1,
-    "costEur": 0.78
+    "costEur": 0.77
    },
    "allergens": [
     "gluten"
@@ -91961,7 +91961,7 @@
     "carbs": 87.3,
     "fiber": 18.4,
     "sugar": 14.4,
-    "costEur": 0.81
+    "costEur": 0.79
    },
    "allergens": [
     "gluten"
@@ -92061,7 +92061,7 @@
     "carbs": 102.1,
     "fiber": 24.7,
     "sugar": 8.3,
-    "costEur": 0.88
+    "costEur": 0.86
    },
    "allergens": [
     "gluten"
@@ -92161,7 +92161,7 @@
     "carbs": 71.8,
     "fiber": 8.8,
     "sugar": 8.6,
-    "costEur": 1.46
+    "costEur": 1.45
    },
    "allergens": [
     "gluten"
@@ -92269,7 +92269,7 @@
     "carbs": 99.9,
     "fiber": 23.5,
     "sugar": 12.8,
-    "costEur": 0.72
+    "costEur": 0.7
    },
    "allergens": [
     "gluten"
@@ -92369,7 +92369,7 @@
     "carbs": 103.5,
     "fiber": 17.3,
     "sugar": 10,
-    "costEur": 0.72
+    "costEur": 0.67
    },
    "allergens": [
     "gluten"
@@ -92473,7 +92473,7 @@
     "carbs": 76.4,
     "fiber": 14.9,
     "sugar": 7.7,
-    "costEur": 1.53
+    "costEur": 1.61
    },
    "allergens": [
     "gluten"
@@ -92577,7 +92577,7 @@
     "carbs": 82.4,
     "fiber": 16.6,
     "sugar": 11,
-    "costEur": 0.97
+    "costEur": 0.96
    },
    "allergens": [
     "gluten"
@@ -92681,7 +92681,7 @@
     "carbs": 81.7,
     "fiber": 16.3,
     "sugar": 14.4,
-    "costEur": 0.92
+    "costEur": 0.9
    },
    "allergens": [
     "gluten"
@@ -92785,7 +92785,7 @@
     "carbs": 96.7,
     "fiber": 23,
     "sugar": 12.5,
-    "costEur": 0.63
+    "costEur": 0.61
    },
    "allergens": [
     "gluten"
@@ -92885,7 +92885,7 @@
     "carbs": 71.5,
     "fiber": 12.8,
     "sugar": 8.5,
-    "costEur": 1.38
+    "costEur": 1.37
    },
    "allergens": [
     "gluten"
@@ -92989,7 +92989,7 @@
     "carbs": 74.7,
     "fiber": 14.1,
     "sugar": 13.2,
-    "costEur": 1.04
+    "costEur": 1.03
    },
    "allergens": [
     "gluten"
@@ -93085,7 +93085,7 @@
     "carbs": 79.6,
     "fiber": 15.1,
     "sugar": 9.8,
-    "costEur": 1.08
+    "costEur": 1.07
    },
    "allergens": [
     "gluten"
@@ -93185,7 +93185,7 @@
     "carbs": 94.8,
     "fiber": 19.7,
     "sugar": 10.6,
-    "costEur": 0.65
+    "costEur": 0.64
    },
    "allergens": [
     "gluten"
@@ -93285,7 +93285,7 @@
     "carbs": 102.9,
     "fiber": 22.6,
     "sugar": 10,
-    "costEur": 0.59
+    "costEur": 0.58
    },
    "allergens": [
     "gluten"
@@ -93381,7 +93381,7 @@
     "carbs": 77.2,
     "fiber": 18.5,
     "sugar": 8.5,
-    "costEur": 0.82
+    "costEur": 0.77
    },
    "allergens": [
     "gluten"
@@ -93481,7 +93481,7 @@
     "carbs": 91.9,
     "fiber": 21.2,
     "sugar": 9.1,
-    "costEur": 0.79
+    "costEur": 0.78
    },
    "allergens": [
     "gluten"
@@ -93581,7 +93581,7 @@
     "carbs": 71.6,
     "fiber": 18.3,
     "sugar": 7.9,
-    "costEur": 1.05
+    "costEur": 1.04
    },
    "allergens": [
     "gluten"
@@ -93685,7 +93685,7 @@
     "carbs": 86.5,
     "fiber": 13.6,
     "sugar": 14.4,
-    "costEur": 0.9
+    "costEur": 0.88
    },
    "allergens": [
     "gluten"
@@ -93785,7 +93785,7 @@
     "carbs": 72.3,
     "fiber": 10.7,
     "sugar": 10.2,
-    "costEur": 1.1
+    "costEur": 1.19
    },
    "allergens": [
     "gluten"
@@ -93893,7 +93893,7 @@
     "carbs": 98.9,
     "fiber": 23.9,
     "sugar": 8.2,
-    "costEur": 1.08
+    "costEur": 1.07
    },
    "allergens": [
     "gluten"
@@ -93993,7 +93993,7 @@
     "carbs": 80.6,
     "fiber": 15.6,
     "sugar": 11.9,
-    "costEur": 1.45
+    "costEur": 1.44
    },
    "allergens": [
     "gluten"
@@ -94089,7 +94089,7 @@
     "carbs": 53.3,
     "fiber": 10,
     "sugar": 11.6,
-    "costEur": 1.42
+    "costEur": 1.41
    },
    "allergens": [
     "gluten"
@@ -94189,7 +94189,7 @@
     "carbs": 76.7,
     "fiber": 10.3,
     "sugar": 11.6,
-    "costEur": 1.46
+    "costEur": 1.44
    },
    "allergens": [
     "gluten"
@@ -94293,7 +94293,7 @@
     "carbs": 74.2,
     "fiber": 14,
     "sugar": 12,
-    "costEur": 0.88
+    "costEur": 0.86
    },
    "allergens": [
     "gluten"
@@ -94397,7 +94397,7 @@
     "carbs": 75.8,
     "fiber": 14.6,
     "sugar": 10.6,
-    "costEur": 1.14
+    "costEur": 1.12
    },
    "allergens": [
     "gluten"
@@ -94501,7 +94501,7 @@
     "carbs": 81.6,
     "fiber": 12.1,
     "sugar": 11.4,
-    "costEur": 1.11
+    "costEur": 1.18
    },
    "allergens": [
     "gluten"
@@ -94609,7 +94609,7 @@
     "carbs": 100.9,
     "fiber": 20.6,
     "sugar": 11.6,
-    "costEur": 0.58
+    "costEur": 0.56
    },
    "allergens": [
     "gluten"
@@ -94713,7 +94713,7 @@
     "carbs": 82.3,
     "fiber": 16.9,
     "sugar": 11.4,
-    "costEur": 1.02
+    "costEur": 1
    },
    "allergens": [
     "gluten"
@@ -94817,7 +94817,7 @@
     "carbs": 55,
     "fiber": 11.3,
     "sugar": 11.1,
-    "costEur": 0.99
+    "costEur": 0.97
    },
    "allergens": [
     "gluten"
@@ -94925,7 +94925,7 @@
     "carbs": 67.7,
     "fiber": 12.3,
     "sugar": 7.5,
-    "costEur": 1.55
+    "costEur": 1.53
    },
    "allergens": [
     "gluten"
@@ -95033,7 +95033,7 @@
     "carbs": 81.4,
     "fiber": 16.4,
     "sugar": 10.7,
-    "costEur": 1.32
+    "costEur": 1.31
    },
    "allergens": [
     "gluten"
@@ -95133,7 +95133,7 @@
     "carbs": 67.6,
     "fiber": 11.2,
     "sugar": 9.5,
-    "costEur": 1.72
+    "costEur": 1.8
    },
    "allergens": [
     "gluten"
@@ -95241,7 +95241,7 @@
     "carbs": 74.2,
     "fiber": 14,
     "sugar": 12,
-    "costEur": 1.08
+    "costEur": 1.06
    },
    "allergens": [
     "gluten"
@@ -95345,7 +95345,7 @@
     "carbs": 69.4,
     "fiber": 12.2,
     "sugar": 8.7,
-    "costEur": 1.24
+    "costEur": 1.22
    },
    "allergens": [
     "gluten"
@@ -95449,7 +95449,7 @@
     "carbs": 71.8,
     "fiber": 8.8,
     "sugar": 8.6,
-    "costEur": 1.66
+    "costEur": 1.75
    },
    "allergens": [
     "gluten"
@@ -95553,7 +95553,7 @@
     "carbs": 75.7,
     "fiber": 10.4,
     "sugar": 7.6,
-    "costEur": 1.13
+    "costEur": 1.11
    },
    "allergens": [
     "gluten"
@@ -95657,7 +95657,7 @@
     "carbs": 71.7,
     "fiber": 11,
     "sugar": 9.3,
-    "costEur": 1.06
+    "costEur": 1.15
    },
    "allergens": [
     "gluten"
@@ -95757,7 +95757,7 @@
     "carbs": 47.9,
     "fiber": 7.4,
     "sugar": 7.2,
-    "costEur": 2.34
+    "costEur": 2.23
    },
    "allergens": [
     "fish"
@@ -95851,7 +95851,7 @@
     "carbs": 47.5,
     "fiber": 6.3,
     "sugar": 0.9,
-    "costEur": 2.39
+    "costEur": 2.28
    },
    "allergens": [
     "fish"
@@ -96038,7 +96038,7 @@
     "carbs": 36.3,
     "fiber": 9.1,
     "sugar": 4.5,
-    "costEur": 1.52
+    "costEur": 1.51
    },
    "allergens": [
     "fish",
@@ -96226,7 +96226,7 @@
     "carbs": 50.3,
     "fiber": 7.4,
     "sugar": 9.5,
-    "costEur": 2.53
+    "costEur": 2.52
    },
    "allergens": [
     "milk"
@@ -96322,7 +96322,7 @@
     "carbs": 46.5,
     "fiber": 14.8,
     "sugar": 1.1,
-    "costEur": 2.46
+    "costEur": 2.35
    },
    "allergens": [
     "fish",
@@ -96417,7 +96417,7 @@
     "carbs": 51.7,
     "fiber": 5,
     "sugar": 6.3,
-    "costEur": 1.9
+    "costEur": 1.89
    },
    "allergens": [],
    "dietFlags": [
@@ -96791,7 +96791,7 @@
     "carbs": 40.6,
     "fiber": 7.8,
     "sugar": 9.8,
-    "costEur": 1.16
+    "costEur": 1.14
    },
    "allergens": [
     "milk"
@@ -97266,7 +97266,7 @@
     "carbs": 41.8,
     "fiber": 7,
     "sugar": 6.9,
-    "costEur": 2.28
+    "costEur": 2.16
    },
    "allergens": [
     "fish",
@@ -97366,7 +97366,7 @@
     "carbs": 49.5,
     "fiber": 8,
     "sugar": 10.9,
-    "costEur": 1.4
+    "costEur": 1.38
    },
    "allergens": [
     "milk",
@@ -97556,7 +97556,7 @@
     "carbs": 39,
     "fiber": 7.8,
     "sugar": 8,
-    "costEur": 0.66
+    "costEur": 0.64
    },
    "allergens": [
     "eggs"
@@ -97942,7 +97942,7 @@
     "carbs": 46.4,
     "fiber": 11,
     "sugar": 4.8,
-    "costEur": 2.29
+    "costEur": 2.17
    },
    "allergens": [
     "fish",
@@ -98133,7 +98133,7 @@
     "carbs": 53.1,
     "fiber": 13.5,
     "sugar": 8.8,
-    "costEur": 2.01
+    "costEur": 1.99
    },
    "allergens": [
     "gluten",
@@ -98230,7 +98230,7 @@
     "carbs": 68.3,
     "fiber": 20.4,
     "sugar": 1.7,
-    "costEur": 1.28
+    "costEur": 1.23
    },
    "allergens": [],
    "dietFlags": [],
@@ -98415,7 +98415,7 @@
     "carbs": 62.7,
     "fiber": 14.9,
     "sugar": 6.6,
-    "costEur": 1.08
+    "costEur": 1.03
    },
    "allergens": [],
    "dietFlags": [],
@@ -98601,7 +98601,7 @@
     "carbs": 81.9,
     "fiber": 23.1,
     "sugar": 9.6,
-    "costEur": 0.72
+    "costEur": 0.66
    },
    "allergens": [
     "gluten",
@@ -98696,7 +98696,7 @@
     "carbs": 38.2,
     "fiber": 7.8,
     "sugar": 7.5,
-    "costEur": 0.84
+    "costEur": 0.83
    },
    "allergens": [
     "fish"
@@ -98883,7 +98883,7 @@
     "carbs": 57.3,
     "fiber": 4.4,
     "sugar": 9.5,
-    "costEur": 2.08
+    "costEur": 1.96
    },
    "allergens": [
     "fish",
@@ -98979,7 +98979,7 @@
     "carbs": 40.5,
     "fiber": 9.3,
     "sugar": 0.9,
-    "costEur": 2.7
+    "costEur": 2.58
    },
    "allergens": [
     "fish"
@@ -99169,7 +99169,7 @@
     "carbs": 62.8,
     "fiber": 18.7,
     "sugar": 2.9,
-    "costEur": 1.26
+    "costEur": 1.21
    },
    "allergens": [],
    "dietFlags": [],
@@ -99258,7 +99258,7 @@
     "carbs": 54.1,
     "fiber": 5,
     "sugar": 8.6,
-    "costEur": 0.87
+    "costEur": 0.86
    },
    "allergens": [
     "fish",
@@ -99547,7 +99547,7 @@
     "carbs": 47,
     "fiber": 8.8,
     "sugar": 11.5,
-    "costEur": 1.69
+    "costEur": 1.68
    },
    "allergens": [
     "soy",
@@ -99826,7 +99826,7 @@
     "carbs": 44.7,
     "fiber": 8,
     "sugar": 6.3,
-    "costEur": 1.14
+    "costEur": 1.12
    },
    "allergens": [
     "fish"
@@ -99920,7 +99920,7 @@
     "carbs": 46.9,
     "fiber": 11.1,
     "sugar": 7.1,
-    "costEur": 1.39
+    "costEur": 1.37
    },
    "allergens": [
     "soy"
@@ -100011,7 +100011,7 @@
     "carbs": 78.1,
     "fiber": 18.5,
     "sugar": 10.3,
-    "costEur": 0.96
+    "costEur": 0.92
    },
    "allergens": [
     "milk"
@@ -100109,7 +100109,7 @@
     "carbs": 46.1,
     "fiber": 9.5,
     "sugar": 8.5,
-    "costEur": 1.09
+    "costEur": 1.07
    },
    "allergens": [
     "milk",
@@ -100301,7 +100301,7 @@
     "carbs": 43.7,
     "fiber": 9.5,
     "sugar": 6.3,
-    "costEur": 1.78
+    "costEur": 1.65
    },
    "allergens": [
     "fish"
@@ -100395,7 +100395,7 @@
     "carbs": 53.1,
     "fiber": 13.5,
     "sugar": 8.8,
-    "costEur": 1.23
+    "costEur": 1.21
    },
    "allergens": [
     "gluten",
@@ -100584,7 +100584,7 @@
     "carbs": 40.4,
     "fiber": 5.5,
     "sugar": 4.6,
-    "costEur": 2.67
+    "costEur": 2.66
    },
    "allergens": [],
    "dietFlags": [
@@ -100677,7 +100677,7 @@
     "carbs": 78.6,
     "fiber": 15.9,
     "sugar": 4.1,
-    "costEur": 1.29
+    "costEur": 1.24
    },
    "allergens": [
     "milk"
@@ -100771,7 +100771,7 @@
     "carbs": 53,
     "fiber": 4.1,
     "sugar": 7.7,
-    "costEur": 1.86
+    "costEur": 1.85
    },
    "allergens": [
     "soy",
@@ -100967,7 +100967,7 @@
     "carbs": 52.5,
     "fiber": 10.5,
     "sugar": 10.3,
-    "costEur": 1.71
+    "costEur": 1.7
    },
    "allergens": [
     "soy",
@@ -101062,7 +101062,7 @@
     "carbs": 41.2,
     "fiber": 5.5,
     "sugar": 5,
-    "costEur": 1.42
+    "costEur": 1.41
    },
    "allergens": [
     "eggs"
@@ -101250,7 +101250,7 @@
     "carbs": 54.9,
     "fiber": 6.6,
     "sugar": 7.1,
-    "costEur": 1.36
+    "costEur": 1.34
    },
    "allergens": [
     "soy"
@@ -101341,7 +101341,7 @@
     "carbs": 42.8,
     "fiber": 9.3,
     "sugar": 3.3,
-    "costEur": 1.82
+    "costEur": 1.81
    },
    "allergens": [
     "fish",
@@ -101537,7 +101537,7 @@
     "carbs": 40.4,
     "fiber": 5.5,
     "sugar": 4.6,
-    "costEur": 1.89
+    "costEur": 1.88
    },
    "allergens": [],
    "dietFlags": [
@@ -101725,7 +101725,7 @@
     "carbs": 49.3,
     "fiber": 8.9,
     "sugar": 9.5,
-    "costEur": 2.1
+    "costEur": 1.99
    },
    "allergens": [
     "fish",
@@ -102107,7 +102107,7 @@
     "carbs": 38.2,
     "fiber": 7.8,
     "sugar": 7.5,
-    "costEur": 1.91
+    "costEur": 1.89
    },
    "allergens": [],
    "dietFlags": [
@@ -102200,7 +102200,7 @@
     "carbs": 62.2,
     "fiber": 17.4,
     "sugar": 8,
-    "costEur": 0.49
+    "costEur": 0.47
    },
    "allergens": [],
    "dietFlags": [],
@@ -102289,7 +102289,7 @@
     "carbs": 81.3,
     "fiber": 14,
     "sugar": 10,
-    "costEur": 0.81
+    "costEur": 0.8
    },
    "allergens": [
     "milk"
@@ -102383,7 +102383,7 @@
     "carbs": 47.9,
     "fiber": 8,
     "sugar": 9.1,
-    "costEur": 0.99
+    "costEur": 0.97
    },
    "allergens": [
     "eggs",
@@ -102479,7 +102479,7 @@
     "carbs": 47.9,
     "fiber": 7.4,
     "sugar": 7.2,
-    "costEur": 1.43
+    "costEur": 1.42
    },
    "allergens": [
     "fish"
@@ -102668,7 +102668,7 @@
     "carbs": 86.1,
     "fiber": 14,
     "sugar": 10.3,
-    "costEur": 0.93
+    "costEur": 0.89
    },
    "allergens": [
     "milk"
@@ -102762,7 +102762,7 @@
     "carbs": 70.9,
     "fiber": 18.5,
     "sugar": 7.6,
-    "costEur": 0.8
+    "costEur": 0.79
    },
    "allergens": [],
    "dietFlags": [],
@@ -102851,7 +102851,7 @@
     "carbs": 46.9,
     "fiber": 8.9,
     "sugar": 7.2,
-    "costEur": 2.22
+    "costEur": 2.21
    },
    "allergens": [],
    "dietFlags": [
@@ -102948,7 +102948,7 @@
     "carbs": 40.6,
     "fiber": 7.8,
     "sugar": 9.7,
-    "costEur": 1.07
+    "costEur": 1.05
    },
    "allergens": [
     "milk",
@@ -103044,7 +103044,7 @@
     "carbs": 77.1,
     "fiber": 23.1,
     "sugar": 9.3,
-    "costEur": 0.59
+    "costEur": 0.57
    },
    "allergens": [
     "gluten",
@@ -103139,7 +103139,7 @@
     "carbs": 39.4,
     "fiber": 7,
     "sugar": 4.6,
-    "costEur": 1.33
+    "costEur": 1.32
    },
    "allergens": [
     "fish"
@@ -103237,7 +103237,7 @@
     "carbs": 42.8,
     "fiber": 5.5,
     "sugar": 6.8,
-    "costEur": 1.83
+    "costEur": 1.82
    },
    "allergens": [
     "milk",
@@ -103433,7 +103433,7 @@
     "carbs": 46,
     "fiber": 7.1,
     "sugar": 7.7,
-    "costEur": 2.16
+    "costEur": 2.15
    },
    "allergens": [
     "soy",
@@ -103528,7 +103528,7 @@
     "carbs": 50.7,
     "fiber": 13.5,
     "sugar": 6.5,
-    "costEur": 1.82
+    "costEur": 1.7
    },
    "allergens": [
     "fish",
@@ -103623,7 +103623,7 @@
     "carbs": 51.5,
     "fiber": 13.5,
     "sugar": 7,
-    "costEur": 0.72
+    "costEur": 0.7
    },
    "allergens": [
     "eggs",
@@ -103818,7 +103818,7 @@
     "carbs": 73.8,
     "fiber": 15.9,
     "sugar": 3.7,
-    "costEur": 1.16
+    "costEur": 1.15
    },
    "allergens": [
     "milk"
@@ -103912,7 +103912,7 @@
     "carbs": 72.5,
     "fiber": 19.1,
     "sugar": 7.1,
-    "costEur": 0.64
+    "costEur": 0.58
    },
    "allergens": [],
    "dietFlags": [],
@@ -104096,7 +104096,7 @@
     "carbs": 54.1,
     "fiber": 5,
     "sugar": 8.6,
-    "costEur": 1.16
+    "costEur": 1.14
    },
    "allergens": [
     "milk"
@@ -104192,7 +104192,7 @@
     "carbs": 75.3,
     "fiber": 24.4,
     "sugar": 1.9,
-    "costEur": 1.32
+    "costEur": 1.28
    },
    "allergens": [
     "gluten"
@@ -104472,7 +104472,7 @@
     "carbs": 44.7,
     "fiber": 8,
     "sugar": 6.3,
-    "costEur": 1.42
+    "costEur": 1.41
    },
    "allergens": [],
    "dietFlags": [
@@ -104753,7 +104753,7 @@
     "carbs": 51.1,
     "fiber": 7.4,
     "sugar": 10,
-    "costEur": 1.28
+    "costEur": 1.27
    },
    "allergens": [
     "eggs",
@@ -104849,7 +104849,7 @@
     "carbs": 68.2,
     "fiber": 16.6,
     "sugar": 5.4,
-    "costEur": 1.1
+    "costEur": 1.06
    },
    "allergens": [],
    "dietFlags": [],
@@ -105232,7 +105232,7 @@
     "carbs": 53.9,
     "fiber": 15.1,
     "sugar": 7.3,
-    "costEur": 1.43
+    "costEur": 1.41
    },
    "allergens": [
     "soy",
@@ -105424,7 +105424,7 @@
     "carbs": 49.8,
     "fiber": 2.5,
     "sugar": 6.9,
-    "costEur": 2.25
+    "costEur": 2.14
    },
    "allergens": [
     "fish",
@@ -105520,7 +105520,7 @@
     "carbs": 33.9,
     "fiber": 5.3,
     "sugar": 5.8,
-    "costEur": 2.22
+    "costEur": 2.11
    },
    "allergens": [
     "fish"
@@ -105708,7 +105708,7 @@
     "carbs": 47.9,
     "fiber": 9.6,
     "sugar": 7.1,
-    "costEur": 1.66
+    "costEur": 1.64
    },
    "allergens": [
     "soy"
@@ -105803,7 +105803,7 @@
     "carbs": 54.1,
     "fiber": 5,
     "sugar": 8.5,
-    "costEur": 1.06
+    "costEur": 1.05
    },
    "allergens": [
     "milk",
@@ -105899,7 +105899,7 @@
     "carbs": 34,
     "fiber": 9.1,
     "sugar": 2.1,
-    "costEur": 2.55
+    "costEur": 2.54
    },
    "allergens": [],
    "dietFlags": [
@@ -105992,7 +105992,7 @@
     "carbs": 71.6,
     "fiber": 15.1,
     "sugar": 7.7,
-    "costEur": 1.41
+    "costEur": 1.37
    },
    "allergens": [
     "milk"
@@ -106275,7 +106275,7 @@
     "carbs": 46.4,
     "fiber": 11,
     "sugar": 4.8,
-    "costEur": 2.44
+    "costEur": 2.43
    },
    "allergens": [
     "gluten"
@@ -106654,7 +106654,7 @@
     "carbs": 44.5,
     "fiber": 9.5,
     "sugar": 6.8,
-    "costEur": 0.68
+    "costEur": 0.66
    },
    "allergens": [
     "eggs"
@@ -106748,7 +106748,7 @@
     "carbs": 46.1,
     "fiber": 9.5,
     "sugar": 8.6,
-    "costEur": 1.96
+    "costEur": 1.95
    },
    "allergens": [
     "milk"
@@ -106844,7 +106844,7 @@
     "carbs": 53.9,
     "fiber": 12.9,
     "sugar": 7.4,
-    "costEur": 1.48
+    "costEur": 1.47
    },
    "allergens": [
     "gluten"
@@ -106943,7 +106943,7 @@
     "carbs": 48.8,
     "fiber": 11,
     "sugar": 7,
-    "costEur": 1.6
+    "costEur": 1.59
    },
    "allergens": [
     "milk",
@@ -107040,7 +107040,7 @@
     "carbs": 38.2,
     "fiber": 7.8,
     "sugar": 7.5,
-    "costEur": 1.76
+    "costEur": 1.63
    },
    "allergens": [
     "fish"
@@ -107134,7 +107134,7 @@
     "carbs": 46.9,
     "fiber": 8.9,
     "sugar": 7.2,
-    "costEur": 1.44
+    "costEur": 1.43
    },
    "allergens": [],
    "dietFlags": [
@@ -107321,7 +107321,7 @@
     "carbs": 75.7,
     "fiber": 14.6,
     "sugar": 6.8,
-    "costEur": 0.48
+    "costEur": 0.47
    },
    "allergens": [],
    "dietFlags": [],
@@ -107410,7 +107410,7 @@
     "carbs": 51.7,
     "fiber": 5,
     "sugar": 6.3,
-    "costEur": 1.75
+    "costEur": 1.63
    },
    "allergens": [
     "fish"
@@ -107504,7 +107504,7 @@
     "carbs": 41.4,
     "fiber": 7.2,
     "sugar": 8.4,
-    "costEur": 2.05
+    "costEur": 1.93
    },
    "allergens": [
     "fish"
@@ -107693,7 +107693,7 @@
     "carbs": 49.8,
     "fiber": 6.3,
     "sugar": 3.3,
-    "costEur": 2.58
+    "costEur": 2.57
    },
    "allergens": [
     "milk"
@@ -107971,7 +107971,7 @@
     "carbs": 80.5,
     "fiber": 14.6,
     "sugar": 7.1,
-    "costEur": 0.61
+    "costEur": 0.55
    },
    "allergens": [],
    "dietFlags": [],
@@ -108060,7 +108060,7 @@
     "carbs": 68.7,
     "fiber": 17.6,
     "sugar": 6.8,
-    "costEur": 0.79
+    "costEur": 0.77
    },
    "allergens": [],
    "dietFlags": [],
@@ -108149,7 +108149,7 @@
     "carbs": 37.1,
     "fiber": 6.9,
     "sugar": 6.6,
-    "costEur": 1.83
+    "costEur": 1.82
    },
    "allergens": [
     "soy"
@@ -108240,7 +108240,7 @@
     "carbs": 72.8,
     "fiber": 24.4,
     "sugar": 3.9,
-    "costEur": 1.23
+    "costEur": 1.22
    },
    "allergens": [
     "gluten",
@@ -108335,7 +108335,7 @@
     "carbs": 75.2,
     "fiber": 20.6,
     "sugar": 5.6,
-    "costEur": 1.14
+    "costEur": 1.1
    },
    "allergens": [
     "gluten"
@@ -108426,7 +108426,7 @@
     "carbs": 53.9,
     "fiber": 12.9,
     "sugar": 7.4,
-    "costEur": 2.11
+    "costEur": 2
    },
    "allergens": [
     "fish",
@@ -108616,7 +108616,7 @@
     "carbs": 34,
     "fiber": 9.1,
     "sugar": 2.1,
-    "costEur": 2.4
+    "costEur": 2.28
    },
    "allergens": [
     "fish"
@@ -108899,7 +108899,7 @@
     "carbs": 43.7,
     "fiber": 9.5,
     "sugar": 6.3,
-    "costEur": 0.87
+    "costEur": 0.85
    },
    "allergens": [
     "fish"
@@ -108993,7 +108993,7 @@
     "carbs": 82.7,
     "fiber": 22.5,
     "sugar": 8.2,
-    "costEur": 0.97
+    "costEur": 0.92
    },
    "allergens": [
     "gluten"
@@ -109177,7 +109177,7 @@
     "carbs": 42.7,
     "fiber": 12.4,
     "sugar": 1.7,
-    "costEur": 2.03
+    "costEur": 2.02
    },
    "allergens": [
     "soy"
@@ -109268,7 +109268,7 @@
     "carbs": 41.8,
     "fiber": 10.8,
     "sugar": 3.3,
-    "costEur": 2.45
+    "costEur": 2.34
    },
    "allergens": [
     "fish",
@@ -109364,7 +109364,7 @@
     "carbs": 70.2,
     "fiber": 16.8,
     "sugar": 9.2,
-    "costEur": 0.9
+    "costEur": 0.86
    },
    "allergens": [],
    "dietFlags": [],
@@ -109457,7 +109457,7 @@
     "carbs": 44.2,
     "fiber": 7,
     "sugar": 9.1,
-    "costEur": 1.59
+    "costEur": 1.58
    },
    "allergens": [
     "milk",
@@ -109648,7 +109648,7 @@
     "carbs": 34.8,
     "fiber": 9.1,
     "sugar": 2.6,
-    "costEur": 1.3
+    "costEur": 1.29
    },
    "allergens": [
     "eggs"
@@ -109742,7 +109742,7 @@
     "carbs": 42.8,
     "fiber": 5.5,
     "sugar": 6.9,
-    "costEur": 2.55
+    "costEur": 2.44
    },
    "allergens": [
     "fish",
@@ -109842,7 +109842,7 @@
     "carbs": 55.5,
     "fiber": 13.5,
     "sugar": 11.1,
-    "costEur": 1.17
+    "costEur": 1.15
    },
    "allergens": [
     "milk",
@@ -110519,7 +110519,7 @@
     "carbs": 73.7,
     "fiber": 13.9,
     "sugar": 13.4,
-    "costEur": 1.82
+    "costEur": 1.81
    },
    "allergens": [
     "gluten"
@@ -110618,7 +110618,7 @@
     "carbs": 71.5,
     "fiber": 12.4,
     "sugar": 12.6,
-    "costEur": 1.37
+    "costEur": 1.36
    },
    "allergens": [
     "gluten",
@@ -111879,7 +111879,7 @@
     "carbs": 73.7,
     "fiber": 13.9,
     "sugar": 13.4,
-    "costEur": 1.6
+    "costEur": 1.59
    },
    "allergens": [
     "gluten"
@@ -111978,7 +111978,7 @@
     "carbs": 71.5,
     "fiber": 12.4,
     "sugar": 12.6,
-    "costEur": 1.15
+    "costEur": 1.14
    },
    "allergens": [
     "gluten",
@@ -112659,7 +112659,7 @@
     "carbs": 66.9,
     "fiber": 11.9,
     "sugar": 9,
-    "costEur": 2.18
+    "costEur": 2.3
    },
    "allergens": [
     "gluten"
@@ -112754,7 +112754,7 @@
     "carbs": 64.7,
     "fiber": 10.4,
     "sugar": 8.2,
-    "costEur": 1.73
+    "costEur": 1.85
    },
    "allergens": [
     "gluten",
@@ -112851,7 +112851,7 @@
     "carbs": 62.5,
     "fiber": 10.1,
     "sugar": 10.1,
-    "costEur": 2.56
+    "costEur": 2.68
    },
    "allergens": [
     "gluten"
@@ -112946,7 +112946,7 @@
     "carbs": 60.2,
     "fiber": 8.6,
     "sugar": 9.4,
-    "costEur": 2.11
+    "costEur": 2.23
    },
    "allergens": [
     "gluten",
@@ -113043,7 +113043,7 @@
     "carbs": 65.7,
     "fiber": 11.3,
     "sugar": 12,
-    "costEur": 2.07
+    "costEur": 2.19
    },
    "allergens": [
     "gluten"
@@ -113138,7 +113138,7 @@
     "carbs": 63.5,
     "fiber": 9.8,
     "sugar": 11.2,
-    "costEur": 1.62
+    "costEur": 1.74
    },
    "allergens": [
     "gluten",
@@ -113239,7 +113239,7 @@
     "carbs": 73.7,
     "fiber": 13.9,
     "sugar": 13.4,
-    "costEur": 1.92
+    "costEur": 2.04
    },
    "allergens": [
     "gluten"
@@ -113338,7 +113338,7 @@
     "carbs": 71.5,
     "fiber": 12.4,
     "sugar": 12.6,
-    "costEur": 1.47
+    "costEur": 1.59
    },
    "allergens": [
     "gluten",
@@ -113439,7 +113439,7 @@
     "carbs": 63.3,
     "fiber": 11,
     "sugar": 8.9,
-    "costEur": 2.41
+    "costEur": 2.53
    },
    "allergens": [
     "gluten"
@@ -113538,7 +113538,7 @@
     "carbs": 61.1,
     "fiber": 9.5,
     "sugar": 8.1,
-    "costEur": 1.96
+    "costEur": 2.08
    },
    "allergens": [
     "gluten",
@@ -113635,7 +113635,7 @@
     "carbs": 67.9,
     "fiber": 9.5,
     "sugar": 11,
-    "costEur": 1.85
+    "costEur": 1.98
    },
    "allergens": [
     "gluten"
@@ -113730,7 +113730,7 @@
     "carbs": 65.6,
     "fiber": 8,
     "sugar": 10.2,
-    "costEur": 1.4
+    "costEur": 1.53
    },
    "allergens": [
     "gluten",
@@ -113827,7 +113827,7 @@
     "carbs": 62,
     "fiber": 9.8,
     "sugar": 9,
-    "costEur": 2.05
+    "costEur": 2.18
    },
    "allergens": [
     "gluten"
@@ -113922,7 +113922,7 @@
     "carbs": 59.7,
     "fiber": 8.3,
     "sugar": 8.3,
-    "costEur": 1.6
+    "costEur": 1.73
    },
    "allergens": [
     "gluten",
@@ -114599,7 +114599,7 @@
     "carbs": 73.7,
     "fiber": 13.9,
     "sugar": 13.4,
-    "costEur": 2.22
+    "costEur": 2.21
    },
    "allergens": [
     "gluten",
@@ -114698,7 +114698,7 @@
     "carbs": 71.5,
     "fiber": 12.4,
     "sugar": 12.6,
-    "costEur": 1.77
+    "costEur": 1.76
    },
    "allergens": [
     "gluten",
@@ -115959,7 +115959,7 @@
     "carbs": 73.7,
     "fiber": 13.9,
     "sugar": 13.4,
-    "costEur": 1.62
+    "costEur": 1.61
    },
    "allergens": [
     "gluten",
@@ -116058,7 +116058,7 @@
     "carbs": 71.5,
     "fiber": 12.4,
     "sugar": 12.6,
-    "costEur": 1.17
+    "costEur": 1.16
    },
    "allergens": [
     "gluten",
@@ -116739,7 +116739,7 @@
     "carbs": 88.5,
     "fiber": 19.1,
     "sugar": 9.6,
-    "costEur": 1.6
+    "costEur": 1.57
    },
    "allergens": [
     "gluten"
@@ -116830,7 +116830,7 @@
     "carbs": 86.3,
     "fiber": 17.6,
     "sugar": 8.8,
-    "costEur": 1.15
+    "costEur": 1.12
    },
    "allergens": [
     "gluten",
@@ -116925,7 +116925,7 @@
     "carbs": 84.1,
     "fiber": 17.3,
     "sugar": 10.7,
-    "costEur": 1.98
+    "costEur": 1.95
    },
    "allergens": [
     "gluten"
@@ -117016,7 +117016,7 @@
     "carbs": 81.8,
     "fiber": 15.8,
     "sugar": 10,
-    "costEur": 1.53
+    "costEur": 1.5
    },
    "allergens": [
     "gluten",
@@ -117111,7 +117111,7 @@
     "carbs": 87.3,
     "fiber": 18.5,
     "sugar": 12.6,
-    "costEur": 1.49
+    "costEur": 1.46
    },
    "allergens": [
     "gluten"
@@ -117202,7 +117202,7 @@
     "carbs": 85.1,
     "fiber": 17,
     "sugar": 11.8,
-    "costEur": 1.04
+    "costEur": 1.01
    },
    "allergens": [
     "gluten",
@@ -117301,7 +117301,7 @@
     "carbs": 95.3,
     "fiber": 21.1,
     "sugar": 14,
-    "costEur": 1.35
+    "costEur": 1.31
    },
    "allergens": [
     "gluten"
@@ -117396,7 +117396,7 @@
     "carbs": 93.1,
     "fiber": 19.6,
     "sugar": 13.2,
-    "costEur": 0.9
+    "costEur": 0.86
    },
    "allergens": [
     "gluten",
@@ -117495,7 +117495,7 @@
     "carbs": 84.9,
     "fiber": 18.2,
     "sugar": 9.5,
-    "costEur": 1.83
+    "costEur": 1.8
    },
    "allergens": [
     "gluten"
@@ -117590,7 +117590,7 @@
     "carbs": 82.7,
     "fiber": 16.7,
     "sugar": 8.7,
-    "costEur": 1.39
+    "costEur": 1.36
    },
    "allergens": [
     "gluten",
@@ -117685,7 +117685,7 @@
     "carbs": 89.5,
     "fiber": 16.7,
     "sugar": 11.6,
-    "costEur": 1.28
+    "costEur": 1.25
    },
    "allergens": [
     "gluten"
@@ -117776,7 +117776,7 @@
     "carbs": 87.2,
     "fiber": 15.2,
     "sugar": 10.8,
-    "costEur": 0.83
+    "costEur": 0.8
    },
    "allergens": [
     "gluten",
@@ -117871,7 +117871,7 @@
     "carbs": 83.6,
     "fiber": 17,
     "sugar": 9.6,
-    "costEur": 1.48
+    "costEur": 1.45
    },
    "allergens": [
     "gluten"
@@ -117962,7 +117962,7 @@
     "carbs": 81.3,
     "fiber": 15.5,
     "sugar": 8.9,
-    "costEur": 1.03
+    "costEur": 1
    },
    "allergens": [
     "gluten",
@@ -118730,7 +118730,7 @@
     "carbs": 73.1,
     "fiber": 12.4,
     "sugar": 14.2,
-    "costEur": 1.11
+    "costEur": 1.1
    },
    "allergens": [
     "gluten",
@@ -119885,7 +119885,7 @@
     "carbs": 65.4,
     "fiber": 8.9,
     "sugar": 27.6,
-    "costEur": 0.44
+    "costEur": 0.4
    },
    "allergens": [
     "gluten",
@@ -120411,7 +120411,7 @@
     "carbs": 55.8,
     "fiber": 8.9,
     "sugar": 18,
-    "costEur": 0.27
+    "costEur": 0.24
    },
    "allergens": [
     "gluten"
@@ -120975,7 +120975,7 @@
     "carbs": 67.8,
     "fiber": 8.9,
     "sugar": 27,
-    "costEur": 0.48
+    "costEur": 0.45
    },
    "allergens": [
     "milk"
@@ -121491,7 +121491,7 @@
     "carbs": 58.2,
     "fiber": 8.9,
     "sugar": 17.4,
-    "costEur": 0.32
+    "costEur": 0.28
    },
    "allergens": [],
    "dietFlags": [
@@ -122053,7 +122053,7 @@
     "carbs": 77.4,
     "fiber": 3.5,
     "sugar": 27,
-    "costEur": 0.45
+    "costEur": 0.41
    },
    "allergens": [
     "milk"
@@ -122569,7 +122569,7 @@
     "carbs": 67.8,
     "fiber": 3.5,
     "sugar": 17.4,
-    "costEur": 0.28
+    "costEur": 0.25
    },
    "allergens": [],
    "dietFlags": [
@@ -123131,7 +123131,7 @@
     "carbs": 69,
     "fiber": 7.1,
     "sugar": 27,
-    "costEur": 0.81
+    "costEur": 0.78
    },
    "allergens": [
     "milk"
@@ -123647,7 +123647,7 @@
     "carbs": 59.4,
     "fiber": 7.1,
     "sugar": 17.4,
-    "costEur": 0.65
+    "costEur": 0.61
    },
    "allergens": [],
    "dietFlags": [
@@ -128676,7 +128676,7 @@
     "carbs": 35,
     "fiber": 5.9,
     "sugar": 14.3,
-    "costEur": 0.85
+    "costEur": 0.81
    },
    "allergens": [
     "milk",
@@ -128747,7 +128747,7 @@
     "carbs": 19.7,
     "fiber": 3.9,
     "sugar": 14.4,
-    "costEur": 0.94
+    "costEur": 0.9
    },
    "allergens": [
     "milk",
@@ -128818,7 +128818,7 @@
     "carbs": 20,
     "fiber": 4,
     "sugar": 14.4,
-    "costEur": 0.86
+    "costEur": 0.82
    },
    "allergens": [
     "milk"
@@ -128888,7 +128888,7 @@
     "carbs": 25.8,
     "fiber": 2.9,
     "sugar": 22.2,
-    "costEur": 0.87
+    "costEur": 0.84
    },
    "allergens": [
     "milk"
@@ -130015,7 +130015,7 @@
     "carbs": 39,
     "fiber": 5.9,
     "sugar": 18.3,
-    "costEur": 0.47
+    "costEur": 0.43
    },
    "allergens": [
     "milk",
@@ -130086,7 +130086,7 @@
     "carbs": 23.7,
     "fiber": 3.9,
     "sugar": 18.4,
-    "costEur": 0.55
+    "costEur": 0.52
    },
    "allergens": [
     "milk",
@@ -130157,7 +130157,7 @@
     "carbs": 24,
     "fiber": 4,
     "sugar": 18.3,
-    "costEur": 0.47
+    "costEur": 0.44
    },
    "allergens": [
     "milk"
@@ -130227,7 +130227,7 @@
     "carbs": 29.8,
     "fiber": 2.9,
     "sugar": 26.2,
-    "costEur": 0.49
+    "costEur": 0.45
    },
    "allergens": [
     "milk"
@@ -131425,7 +131425,7 @@
     "carbs": 41.2,
     "fiber": 5.9,
     "sugar": 20.5,
-    "costEur": 0.48
+    "costEur": 0.45
    },
    "allergens": [
     "milk",
@@ -131496,7 +131496,7 @@
     "carbs": 25.9,
     "fiber": 3.9,
     "sugar": 20.6,
-    "costEur": 0.57
+    "costEur": 0.53
    },
    "allergens": [
     "milk",
@@ -131567,7 +131567,7 @@
     "carbs": 26.2,
     "fiber": 4,
     "sugar": 20.5,
-    "costEur": 0.49
+    "costEur": 0.45
    },
    "allergens": [
     "milk"
@@ -131637,7 +131637,7 @@
     "carbs": 32,
     "fiber": 2.9,
     "sugar": 28.4,
-    "costEur": 0.5
+    "costEur": 0.47
    },
    "allergens": [
     "milk"
@@ -132768,7 +132768,7 @@
     "carbs": 27.2,
     "fiber": 3.8,
     "sugar": 22.4,
-    "costEur": 0.39
+    "costEur": 0.34
    },
    "allergens": [
     "milk"
@@ -132829,7 +132829,7 @@
     "carbs": 26.3,
     "fiber": 3.8,
     "sugar": 21.5,
-    "costEur": 0.45
+    "costEur": 0.4
    },
    "allergens": [
     "milk"
@@ -132890,7 +132890,7 @@
     "carbs": 21,
     "fiber": 3.8,
     "sugar": 16.2,
-    "costEur": 0.6
+    "costEur": 0.55
    },
    "allergens": [
     "milk"
@@ -132951,7 +132951,7 @@
     "carbs": 21.3,
     "fiber": 4.9,
     "sugar": 14.8,
-    "costEur": 0.35
+    "costEur": 0.3
    },
    "allergens": [
     "nuts"
@@ -133009,7 +133009,7 @@
     "carbs": 22.2,
     "fiber": 4.7,
     "sugar": 15.8,
-    "costEur": 0.34
+    "costEur": 0.29
    },
    "allergens": [
     "peanuts"
@@ -133067,7 +133067,7 @@
     "carbs": 22.2,
     "fiber": 5.2,
     "sugar": 14.8,
-    "costEur": 0.28
+    "costEur": 0.24
    },
    "allergens": [],
    "dietFlags": [],
@@ -133496,7 +133496,7 @@
     "carbs": 53.3,
     "fiber": 3.2,
     "sugar": 4.5,
-    "costEur": 1.97
+    "costEur": 1.96
    },
    "allergens": [
     "gluten"
@@ -133779,7 +133779,7 @@
     "carbs": 60.4,
     "fiber": 5.3,
     "sugar": 8.6,
-    "costEur": 1.62
+    "costEur": 1.61
    },
    "allergens": [
     "gluten",
@@ -134349,7 +134349,7 @@
     "carbs": 58.5,
     "fiber": 5.3,
     "sugar": 7.6,
-    "costEur": 2.42
+    "costEur": 2.41
    },
    "allergens": [
     "gluten",
@@ -134905,7 +134905,7 @@
     "carbs": 58.5,
     "fiber": 5.3,
     "sugar": 7.6,
-    "costEur": 1.3
+    "costEur": 1.29
    },
    "allergens": [
     "gluten",
@@ -135471,7 +135471,7 @@
     "carbs": 58.8,
     "fiber": 5.6,
     "sugar": 6.9,
-    "costEur": 1.13
+    "costEur": 1.12
    },
    "allergens": [
     "gluten",
@@ -135750,7 +135750,7 @@
     "carbs": 82.7,
     "fiber": 12,
     "sugar": 7.4,
-    "costEur": 1.45
+    "costEur": 1.41
    },
    "allergens": [
     "gluten",
@@ -135843,7 +135843,7 @@
     "carbs": 82.6,
     "fiber": 14.1,
     "sugar": 7,
-    "costEur": 1.23
+    "costEur": 1.19
    },
    "allergens": [
     "gluten"
@@ -135928,7 +135928,7 @@
     "carbs": 79.4,
     "fiber": 12.4,
     "sugar": 5.2,
-    "costEur": 1.55
+    "costEur": 1.51
    },
    "allergens": [
     "gluten",
@@ -136017,7 +136017,7 @@
     "carbs": 85.5,
     "fiber": 14.3,
     "sugar": 8.4,
-    "costEur": 1.11
+    "costEur": 1.05
    },
    "allergens": [
     "gluten",
@@ -136110,7 +136110,7 @@
     "carbs": 84.9,
     "fiber": 15.7,
     "sugar": 6.2,
-    "costEur": 1.41
+    "costEur": 1.37
    },
    "allergens": [
     "gluten",
@@ -136199,7 +136199,7 @@
     "carbs": 88,
     "fiber": 13.6,
     "sugar": 8.6,
-    "costEur": 1.32
+    "costEur": 1.28
    },
    "allergens": [
     "gluten",
@@ -136390,7 +136390,7 @@
     "carbs": 58.8,
     "fiber": 6.7,
     "sugar": 7,
-    "costEur": 2.01
+    "costEur": 2
    },
    "allergens": [
     "gluten",
@@ -136482,7 +136482,7 @@
     "carbs": 55.1,
     "fiber": 5.3,
     "sugar": 4.1,
-    "costEur": 2.29
+    "costEur": 2.28
    },
    "allergens": [
     "gluten",
@@ -136574,7 +136574,7 @@
     "carbs": 63.6,
     "fiber": 6.9,
     "sugar": 9.4,
-    "costEur": 1.86
+    "costEur": 1.84
    },
    "allergens": [
     "gluten",
@@ -137038,7 +137038,7 @@
     "carbs": 54.3,
     "fiber": 3.7,
     "sugar": 5.7,
-    "costEur": 1.9
+    "costEur": 1.89
    },
    "allergens": [
     "gluten",
@@ -137131,7 +137131,7 @@
     "carbs": 60.3,
     "fiber": 5.6,
     "sugar": 8.8,
-    "costEur": 1.45
+    "costEur": 1.43
    },
    "allergens": [
     "gluten",
@@ -137769,7 +137769,7 @@
     "carbs": 17.1,
     "fiber": 5.4,
     "sugar": 10,
-    "costEur": 0.78
+    "costEur": 0.76
    },
    "allergens": [
     "fish",
@@ -138318,7 +138318,7 @@
     "carbs": 18.4,
     "fiber": 5.8,
     "sugar": 10,
-    "costEur": 0.66
+    "costEur": 0.65
    },
    "allergens": [
     "eggs",
@@ -138870,7 +138870,7 @@
     "carbs": 17.6,
     "fiber": 5.8,
     "sugar": 9.5,
-    "costEur": 1.13
+    "costEur": 1.12
    },
    "allergens": [
     "milk"
@@ -139403,7 +139403,7 @@
     "carbs": 19.5,
     "fiber": 5.4,
     "sugar": 12.4,
-    "costEur": 0.96
+    "costEur": 0.95
    },
    "allergens": [
     "milk"
@@ -139936,7 +139936,7 @@
     "carbs": 40.1,
     "fiber": 14.8,
     "sugar": 10,
-    "costEur": 0.47
+    "costEur": 0.46
    },
    "allergens": [
     "milk"
@@ -140103,7 +140103,7 @@
     "carbs": 69,
     "fiber": 14.6,
     "sugar": 7.9,
-    "costEur": 0.95
+    "costEur": 0.91
    },
    "allergens": [
     "milk"
@@ -140193,7 +140193,7 @@
     "carbs": 72.2,
     "fiber": 16.2,
     "sugar": 6.3,
-    "costEur": 0.97
+    "costEur": 0.93
    },
    "allergens": [
     "milk"
@@ -140287,7 +140287,7 @@
     "carbs": 68.7,
     "fiber": 14.4,
     "sugar": 4.2,
-    "costEur": 1.26
+    "costEur": 1.22
    },
    "allergens": [],
    "dietFlags": [],
@@ -140376,7 +140376,7 @@
     "carbs": 79.1,
     "fiber": 21.3,
     "sugar": 4.4,
-    "costEur": 1.02
+    "costEur": 0.98
    },
    "allergens": [
     "gluten"
@@ -140461,7 +140461,7 @@
     "carbs": 42.6,
     "fiber": 14.7,
     "sugar": 8.6,
-    "costEur": 0.58
+    "costEur": 0.53
    },
    "allergens": [],
    "dietFlags": [],
@@ -140543,7 +140543,7 @@
     "carbs": 38.5,
     "fiber": 11.7,
     "sugar": 7.1,
-    "costEur": 1.27
+    "costEur": 1.24
    },
    "allergens": [
     "milk"
@@ -140628,7 +140628,7 @@
     "carbs": 42,
     "fiber": 5.6,
     "sugar": 7.1,
-    "costEur": 2.11
+    "costEur": 2
    },
    "allergens": [
     "fish",
@@ -140724,7 +140724,7 @@
     "carbs": 45.7,
     "fiber": 7.6,
     "sugar": 5.1,
-    "costEur": 2.15
+    "costEur": 2.04
    },
    "allergens": [
     "fish",
@@ -140816,7 +140816,7 @@
     "carbs": 43.2,
     "fiber": 5.1,
     "sugar": 5.5,
-    "costEur": 2.43
+    "costEur": 2.32
    },
    "allergens": [
     "fish",
@@ -140912,7 +140912,7 @@
     "carbs": 52.1,
     "fiber": 12.3,
     "sugar": 3.7,
-    "costEur": 2.19
+    "costEur": 2.07
    },
    "allergens": [
     "fish",
@@ -141003,7 +141003,7 @@
     "carbs": 17.6,
     "fiber": 5.8,
     "sugar": 9.5,
-    "costEur": 1.76
+    "costEur": 1.64
    },
    "allergens": [
     "fish",
@@ -141094,7 +141094,7 @@
     "carbs": 11.5,
     "fiber": 2.7,
     "sugar": 6.3,
-    "costEur": 2.44
+    "costEur": 2.33
    },
    "allergens": [
     "fish",
@@ -141554,7 +141554,7 @@
     "carbs": 17.1,
     "fiber": 5.4,
     "sugar": 10,
-    "costEur": 1.9
+    "costEur": 1.88
    },
    "allergens": [
     "milk"
@@ -141918,7 +141918,7 @@
     "carbs": 44.9,
     "fiber": 7,
     "sugar": 4.2,
-    "costEur": 2.04
+    "costEur": 2.03
    },
    "allergens": [
     "soy"
@@ -142101,7 +142101,7 @@
     "carbs": 20.8,
     "fiber": 7.4,
     "sugar": 10.3,
-    "costEur": 1.37
+    "costEur": 1.35
    },
    "allergens": [
     "soy",
@@ -142741,7 +142741,7 @@
     "carbs": 20.9,
     "fiber": 7.4,
     "sugar": 11.9,
-    "costEur": 1.62
+    "costEur": 1.6
    },
    "allergens": [
     "milk"
@@ -143393,7 +143393,7 @@
     "carbs": 21.7,
     "fiber": 7.4,
     "sugar": 12.8,
-    "costEur": 1.31
+    "costEur": 1.3
    },
    "allergens": [
     "milk"
@@ -144045,7 +144045,7 @@
     "carbs": 20.9,
     "fiber": 7.4,
     "sugar": 11.9,
-    "costEur": 1.31
+    "costEur": 1.29
    },
    "allergens": [
     "milk"
@@ -144229,7 +144229,7 @@
     "carbs": 10.5,
     "fiber": 3,
     "sugar": 8.2,
-    "costEur": 2.83
+    "costEur": 2.96
    },
    "allergens": [
     "milk"
@@ -144321,7 +144321,7 @@
     "carbs": 14.3,
     "fiber": 5,
     "sugar": 7,
-    "costEur": 2
+    "costEur": 2.13
    },
    "allergens": [
     "milk"
@@ -144413,7 +144413,7 @@
     "carbs": 16.9,
     "fiber": 5.7,
     "sugar": 6.2,
-    "costEur": 2.2
+    "costEur": 2.34
    },
    "allergens": [
     "milk"
@@ -144509,7 +144509,7 @@
     "carbs": 45.3,
     "fiber": 6.5,
     "sugar": 6.6,
-    "costEur": 1.6
+    "costEur": 1.74
    },
    "allergens": [
     "milk"
@@ -144601,7 +144601,7 @@
     "carbs": 19.4,
     "fiber": 2.1,
     "sugar": 10.2,
-    "costEur": 1.65
+    "costEur": 1.79
    },
    "allergens": [
     "milk"
@@ -144697,7 +144697,7 @@
     "carbs": 20.9,
     "fiber": 7.4,
     "sugar": 11.9,
-    "costEur": 1.67
+    "costEur": 1.79
    },
    "allergens": [
     "milk"
@@ -144789,7 +144789,7 @@
     "carbs": 45.1,
     "fiber": 7,
     "sugar": 12.5,
-    "costEur": 1.89
+    "costEur": 2.03
    },
    "allergens": [
     "milk"
@@ -145349,7 +145349,7 @@
     "carbs": 21.7,
     "fiber": 7.4,
     "sugar": 12.8,
-    "costEur": 1.65
+    "costEur": 1.63
    },
    "allergens": [
     "fish",
@@ -145533,7 +145533,7 @@
     "carbs": 11.3,
     "fiber": 3,
     "sugar": 9.1,
-    "costEur": 3.34
+    "costEur": 3.23
    },
    "allergens": [
     "fish",
@@ -145625,7 +145625,7 @@
     "carbs": 15.1,
     "fiber": 5,
     "sugar": 7.9,
-    "costEur": 2.51
+    "costEur": 2.4
    },
    "allergens": [
     "fish",
@@ -145717,7 +145717,7 @@
     "carbs": 17.7,
     "fiber": 5.7,
     "sugar": 7.1,
-    "costEur": 2.71
+    "costEur": 2.6
    },
    "allergens": [
     "fish",
@@ -145813,7 +145813,7 @@
     "carbs": 46.1,
     "fiber": 6.5,
     "sugar": 7.5,
-    "costEur": 2.12
+    "costEur": 2.01
    },
    "allergens": [
     "fish",
@@ -145905,7 +145905,7 @@
     "carbs": 18.6,
     "fiber": 2.1,
     "sugar": 9.3,
-    "costEur": 2.3
+    "costEur": 2.19
    },
    "allergens": [
     "fish",
@@ -146001,7 +146001,7 @@
     "carbs": 21.7,
     "fiber": 7.4,
     "sugar": 12.8,
-    "costEur": 2.18
+    "costEur": 2.06
    },
    "allergens": [
     "fish",
@@ -146093,7 +146093,7 @@
     "carbs": 44.3,
     "fiber": 7,
     "sugar": 11.6,
-    "costEur": 2.54
+    "costEur": 2.43
    },
    "allergens": [
     "fish",
@@ -146648,7 +146648,7 @@
     "carbs": 24.9,
     "fiber": 9,
     "sugar": 13.6,
-    "costEur": 1.79
+    "costEur": 1.77
    },
    "allergens": [
     "soy",
@@ -146834,7 +146834,7 @@
     "carbs": 67.2,
     "fiber": 5.3,
     "sugar": 9.1,
-    "costEur": 1.37
+    "costEur": 1.36
    },
    "allergens": [],
    "dietFlags": [
@@ -146927,7 +146927,7 @@
     "carbs": 72.4,
     "fiber": 7.2,
     "sugar": 9.5,
-    "costEur": 1.26
+    "costEur": 1.25
    },
    "allergens": [],
    "dietFlags": [
@@ -147020,7 +147020,7 @@
     "carbs": 56.8,
     "fiber": 11.1,
     "sugar": 9.1,
-    "costEur": 1.4
+    "costEur": 1.39
    },
    "allergens": [],
    "dietFlags": [
@@ -147113,7 +147113,7 @@
     "carbs": 62,
     "fiber": 13,
     "sugar": 9.5,
-    "costEur": 1.3
+    "costEur": 1.28
    },
    "allergens": [],
    "dietFlags": [
@@ -147206,7 +147206,7 @@
     "carbs": 65.9,
     "fiber": 16.3,
     "sugar": 9.4,
-    "costEur": 1.46
+    "costEur": 1.45
    },
    "allergens": [
     "gluten"
@@ -147301,7 +147301,7 @@
     "carbs": 71.1,
     "fiber": 18.2,
     "sugar": 9.7,
-    "costEur": 1.35
+    "costEur": 1.34
    },
    "allergens": [
     "gluten"
@@ -147396,7 +147396,7 @@
     "carbs": 59.4,
     "fiber": 13.4,
     "sugar": 9.6,
-    "costEur": 1.34
+    "costEur": 1.33
    },
    "allergens": [
     "gluten"
@@ -147491,7 +147491,7 @@
     "carbs": 64.6,
     "fiber": 15.3,
     "sugar": 9.9,
-    "costEur": 1.24
+    "costEur": 1.22
    },
    "allergens": [
     "gluten"
@@ -147586,7 +147586,7 @@
     "carbs": 54.9,
     "fiber": 8.8,
     "sugar": 9.1,
-    "costEur": 1.73
+    "costEur": 1.71
    },
    "allergens": [],
    "dietFlags": [
@@ -147679,7 +147679,7 @@
     "carbs": 60.1,
     "fiber": 10.7,
     "sugar": 9.5,
-    "costEur": 1.62
+    "costEur": 1.6
    },
    "allergens": [],
    "dietFlags": [
@@ -147772,7 +147772,7 @@
     "carbs": 67.2,
     "fiber": 5.3,
     "sugar": 9.1,
-    "costEur": 1.13
+    "costEur": 1.12
    },
    "allergens": [],
    "dietFlags": [
@@ -147865,7 +147865,7 @@
     "carbs": 72.4,
     "fiber": 7.2,
     "sugar": 9.5,
-    "costEur": 1.02
+    "costEur": 1.01
    },
    "allergens": [],
    "dietFlags": [
@@ -147958,7 +147958,7 @@
     "carbs": 56.8,
     "fiber": 11.1,
     "sugar": 9.1,
-    "costEur": 1.17
+    "costEur": 1.15
    },
    "allergens": [],
    "dietFlags": [
@@ -148051,7 +148051,7 @@
     "carbs": 62,
     "fiber": 13,
     "sugar": 9.5,
-    "costEur": 1.06
+    "costEur": 1.04
    },
    "allergens": [],
    "dietFlags": [
@@ -148144,7 +148144,7 @@
     "carbs": 65.9,
     "fiber": 16.3,
     "sugar": 9.4,
-    "costEur": 1.22
+    "costEur": 1.21
    },
    "allergens": [
     "gluten"
@@ -148239,7 +148239,7 @@
     "carbs": 71.1,
     "fiber": 18.2,
     "sugar": 9.7,
-    "costEur": 1.11
+    "costEur": 1.1
    },
    "allergens": [
     "gluten"
@@ -148334,7 +148334,7 @@
     "carbs": 59.4,
     "fiber": 13.4,
     "sugar": 9.6,
-    "costEur": 1.11
+    "costEur": 1.09
    },
    "allergens": [
     "gluten"
@@ -148429,7 +148429,7 @@
     "carbs": 64.6,
     "fiber": 15.3,
     "sugar": 9.9,
-    "costEur": 1
+    "costEur": 0.98
    },
    "allergens": [
     "gluten"
@@ -148524,7 +148524,7 @@
     "carbs": 54.9,
     "fiber": 8.8,
     "sugar": 9.1,
-    "costEur": 1.49
+    "costEur": 1.47
    },
    "allergens": [],
    "dietFlags": [
@@ -148617,7 +148617,7 @@
     "carbs": 60.1,
     "fiber": 10.7,
     "sugar": 9.5,
-    "costEur": 1.38
+    "costEur": 1.37
    },
    "allergens": [],
    "dietFlags": [
@@ -148710,7 +148710,7 @@
     "carbs": 67.2,
     "fiber": 5.3,
     "sugar": 9.1,
-    "costEur": 2.15
+    "costEur": 2.14
    },
    "allergens": [],
    "dietFlags": [
@@ -148803,7 +148803,7 @@
     "carbs": 72.4,
     "fiber": 7.2,
     "sugar": 9.5,
-    "costEur": 2.04
+    "costEur": 2.03
    },
    "allergens": [],
    "dietFlags": [
@@ -148896,7 +148896,7 @@
     "carbs": 56.8,
     "fiber": 11.1,
     "sugar": 9.1,
-    "costEur": 2.19
+    "costEur": 2.17
    },
    "allergens": [],
    "dietFlags": [
@@ -148989,7 +148989,7 @@
     "carbs": 62,
     "fiber": 13,
     "sugar": 9.5,
-    "costEur": 2.08
+    "costEur": 2.06
    },
    "allergens": [],
    "dietFlags": [
@@ -149082,7 +149082,7 @@
     "carbs": 65.9,
     "fiber": 16.3,
     "sugar": 9.4,
-    "costEur": 2.24
+    "costEur": 2.23
    },
    "allergens": [
     "gluten"
@@ -149177,7 +149177,7 @@
     "carbs": 71.1,
     "fiber": 18.2,
     "sugar": 9.7,
-    "costEur": 2.13
+    "costEur": 2.12
    },
    "allergens": [
     "gluten"
@@ -149272,7 +149272,7 @@
     "carbs": 59.4,
     "fiber": 13.4,
     "sugar": 9.6,
-    "costEur": 2.13
+    "costEur": 2.11
    },
    "allergens": [
     "gluten"
@@ -149367,7 +149367,7 @@
     "carbs": 64.6,
     "fiber": 15.3,
     "sugar": 9.9,
-    "costEur": 2.02
+    "costEur": 2
    },
    "allergens": [
     "gluten"
@@ -149462,7 +149462,7 @@
     "carbs": 54.9,
     "fiber": 8.8,
     "sugar": 9.1,
-    "costEur": 2.51
+    "costEur": 2.49
    },
    "allergens": [],
    "dietFlags": [
@@ -149555,7 +149555,7 @@
     "carbs": 60.1,
     "fiber": 10.7,
     "sugar": 9.5,
-    "costEur": 2.4
+    "costEur": 2.38
    },
    "allergens": [],
    "dietFlags": [
@@ -149648,7 +149648,7 @@
     "carbs": 67.2,
     "fiber": 5.3,
     "sugar": 9.1,
-    "costEur": 0.93
+    "costEur": 0.92
    },
    "allergens": [],
    "dietFlags": [
@@ -149741,7 +149741,7 @@
     "carbs": 72.4,
     "fiber": 7.2,
     "sugar": 9.5,
-    "costEur": 0.82
+    "costEur": 0.81
    },
    "allergens": [],
    "dietFlags": [
@@ -149834,7 +149834,7 @@
     "carbs": 56.8,
     "fiber": 11.1,
     "sugar": 9.1,
-    "costEur": 0.96
+    "costEur": 0.95
    },
    "allergens": [],
    "dietFlags": [
@@ -149927,7 +149927,7 @@
     "carbs": 62,
     "fiber": 13,
     "sugar": 9.5,
-    "costEur": 0.85
+    "costEur": 0.84
    },
    "allergens": [],
    "dietFlags": [
@@ -150020,7 +150020,7 @@
     "carbs": 65.9,
     "fiber": 16.3,
     "sugar": 9.4,
-    "costEur": 1.02
+    "costEur": 1
    },
    "allergens": [
     "gluten"
@@ -150115,7 +150115,7 @@
     "carbs": 71.1,
     "fiber": 18.2,
     "sugar": 9.7,
-    "costEur": 0.91
+    "costEur": 0.9
    },
    "allergens": [
     "gluten"
@@ -150210,7 +150210,7 @@
     "carbs": 59.4,
     "fiber": 13.4,
     "sugar": 9.6,
-    "costEur": 0.9
+    "costEur": 0.89
    },
    "allergens": [
     "gluten"
@@ -150305,7 +150305,7 @@
     "carbs": 64.6,
     "fiber": 15.3,
     "sugar": 9.9,
-    "costEur": 0.79
+    "costEur": 0.78
    },
    "allergens": [
     "gluten"
@@ -150400,7 +150400,7 @@
     "carbs": 54.9,
     "fiber": 8.8,
     "sugar": 9.1,
-    "costEur": 1.29
+    "costEur": 1.27
    },
    "allergens": [],
    "dietFlags": [
@@ -150493,7 +150493,7 @@
     "carbs": 60.1,
     "fiber": 10.7,
     "sugar": 9.5,
-    "costEur": 1.18
+    "costEur": 1.16
    },
    "allergens": [],
    "dietFlags": [
@@ -150586,7 +150586,7 @@
     "carbs": 67.2,
     "fiber": 5.3,
     "sugar": 9.1,
-    "costEur": 1.42
+    "costEur": 1.54
    },
    "allergens": [],
    "dietFlags": [
@@ -150679,7 +150679,7 @@
     "carbs": 72.4,
     "fiber": 7.2,
     "sugar": 9.5,
-    "costEur": 1.31
+    "costEur": 1.44
    },
    "allergens": [],
    "dietFlags": [
@@ -150772,7 +150772,7 @@
     "carbs": 56.8,
     "fiber": 11.1,
     "sugar": 9.1,
-    "costEur": 1.46
+    "costEur": 1.58
    },
    "allergens": [],
    "dietFlags": [
@@ -150865,7 +150865,7 @@
     "carbs": 62,
     "fiber": 13,
     "sugar": 9.5,
-    "costEur": 1.35
+    "costEur": 1.47
    },
    "allergens": [],
    "dietFlags": [
@@ -150958,7 +150958,7 @@
     "carbs": 65.9,
     "fiber": 16.3,
     "sugar": 9.4,
-    "costEur": 1.51
+    "costEur": 1.63
    },
    "allergens": [
     "gluten"
@@ -151053,7 +151053,7 @@
     "carbs": 71.1,
     "fiber": 18.2,
     "sugar": 9.7,
-    "costEur": 1.4
+    "costEur": 1.53
    },
    "allergens": [
     "gluten"
@@ -151148,7 +151148,7 @@
     "carbs": 59.4,
     "fiber": 13.4,
     "sugar": 9.6,
-    "costEur": 1.4
+    "costEur": 1.52
    },
    "allergens": [
     "gluten"
@@ -151243,7 +151243,7 @@
     "carbs": 64.6,
     "fiber": 15.3,
     "sugar": 9.9,
-    "costEur": 1.29
+    "costEur": 1.41
    },
    "allergens": [
     "gluten"
@@ -151338,7 +151338,7 @@
     "carbs": 54.9,
     "fiber": 8.8,
     "sugar": 9.1,
-    "costEur": 1.78
+    "costEur": 1.9
    },
    "allergens": [],
    "dietFlags": [
@@ -151431,7 +151431,7 @@
     "carbs": 60.1,
     "fiber": 10.7,
     "sugar": 9.5,
-    "costEur": 1.67
+    "costEur": 1.79
    },
    "allergens": [],
    "dietFlags": [
@@ -151524,7 +151524,7 @@
     "carbs": 94.2,
     "fiber": 14.3,
     "sugar": 9.9,
-    "costEur": 0.83
+    "costEur": 0.78
    },
    "allergens": [],
    "dietFlags": [],
@@ -151613,7 +151613,7 @@
     "carbs": 99.4,
     "fiber": 16.2,
     "sugar": 10.2,
-    "costEur": 0.73
+    "costEur": 0.67
    },
    "allergens": [],
    "dietFlags": [],
@@ -151702,7 +151702,7 @@
     "carbs": 83.8,
     "fiber": 20.1,
     "sugar": 9.9,
-    "costEur": 0.87
+    "costEur": 0.82
    },
    "allergens": [],
    "dietFlags": [],
@@ -151791,7 +151791,7 @@
     "carbs": 89,
     "fiber": 22,
     "sugar": 10.2,
-    "costEur": 0.76
+    "costEur": 0.71
    },
    "allergens": [],
    "dietFlags": [],
@@ -151880,7 +151880,7 @@
     "carbs": 92.9,
     "fiber": 25.3,
     "sugar": 10.1,
-    "costEur": 0.92
+    "costEur": 0.87
    },
    "allergens": [
     "gluten"
@@ -151971,7 +151971,7 @@
     "carbs": 98.1,
     "fiber": 27.2,
     "sugar": 10.5,
-    "costEur": 0.82
+    "costEur": 0.76
    },
    "allergens": [
     "gluten"
@@ -152062,7 +152062,7 @@
     "carbs": 86.4,
     "fiber": 22.4,
     "sugar": 10.3,
-    "costEur": 0.81
+    "costEur": 0.76
    },
    "allergens": [
     "gluten"
@@ -152153,7 +152153,7 @@
     "carbs": 91.6,
     "fiber": 24.3,
     "sugar": 10.7,
-    "costEur": 0.7
+    "costEur": 0.65
    },
    "allergens": [
     "gluten"
@@ -152244,7 +152244,7 @@
     "carbs": 81.9,
     "fiber": 17.8,
     "sugar": 9.9,
-    "costEur": 1.19
+    "costEur": 1.14
    },
    "allergens": [],
    "dietFlags": [],
@@ -152333,7 +152333,7 @@
     "carbs": 87.1,
     "fiber": 19.7,
     "sugar": 10.2,
-    "costEur": 1.08
+    "costEur": 1.03
    },
    "allergens": [],
    "dietFlags": [],
@@ -152422,7 +152422,7 @@
     "carbs": 89.7,
     "fiber": 14.3,
     "sugar": 9.6,
-    "costEur": 0.71
+    "costEur": 0.7
    },
    "allergens": [],
    "dietFlags": [],
@@ -152511,7 +152511,7 @@
     "carbs": 94.9,
     "fiber": 16.2,
     "sugar": 9.9,
-    "costEur": 0.61
+    "costEur": 0.59
    },
    "allergens": [],
    "dietFlags": [],
@@ -152600,7 +152600,7 @@
     "carbs": 79.3,
     "fiber": 20.1,
     "sugar": 9.6,
-    "costEur": 0.75
+    "costEur": 0.73
    },
    "allergens": [],
    "dietFlags": [],
@@ -152689,7 +152689,7 @@
     "carbs": 84.5,
     "fiber": 22,
     "sugar": 9.9,
-    "costEur": 0.64
+    "costEur": 0.63
    },
    "allergens": [],
    "dietFlags": [],
@@ -152778,7 +152778,7 @@
     "carbs": 88.4,
     "fiber": 25.3,
     "sugar": 9.8,
-    "costEur": 0.8
+    "costEur": 0.79
    },
    "allergens": [
     "gluten"
@@ -152869,7 +152869,7 @@
     "carbs": 93.6,
     "fiber": 27.2,
     "sugar": 10.2,
-    "costEur": 0.7
+    "costEur": 0.68
    },
    "allergens": [
     "gluten"
@@ -152960,7 +152960,7 @@
     "carbs": 81.9,
     "fiber": 22.4,
     "sugar": 10,
-    "costEur": 0.69
+    "costEur": 0.67
    },
    "allergens": [
     "gluten"
@@ -153051,7 +153051,7 @@
     "carbs": 87.1,
     "fiber": 24.3,
     "sugar": 10.4,
-    "costEur": 0.58
+    "costEur": 0.57
    },
    "allergens": [
     "gluten"
@@ -153142,7 +153142,7 @@
     "carbs": 77.4,
     "fiber": 17.8,
     "sugar": 9.6,
-    "costEur": 1.07
+    "costEur": 1.06
    },
    "allergens": [],
    "dietFlags": [],
@@ -153231,7 +153231,7 @@
     "carbs": 82.6,
     "fiber": 19.7,
     "sugar": 9.9,
-    "costEur": 0.96
+    "costEur": 0.95
    },
    "allergens": [],
    "dietFlags": [],
@@ -153320,7 +153320,7 @@
     "carbs": 70.4,
     "fiber": 6.9,
     "sugar": 9.9,
-    "costEur": 1.61
+    "costEur": 1.59
    },
    "allergens": [
     "soy"
@@ -153411,7 +153411,7 @@
     "carbs": 75.6,
     "fiber": 8.8,
     "sugar": 10.3,
-    "costEur": 1.5
+    "costEur": 1.49
    },
    "allergens": [
     "soy"
@@ -153502,7 +153502,7 @@
     "carbs": 60,
     "fiber": 12.7,
     "sugar": 9.9,
-    "costEur": 1.64
+    "costEur": 1.63
    },
    "allergens": [
     "soy"
@@ -153593,7 +153593,7 @@
     "carbs": 65.2,
     "fiber": 14.6,
     "sugar": 10.3,
-    "costEur": 1.53
+    "costEur": 1.52
    },
    "allergens": [
     "soy"
@@ -153684,7 +153684,7 @@
     "carbs": 69.1,
     "fiber": 17.9,
     "sugar": 10.2,
-    "costEur": 1.7
+    "costEur": 1.68
    },
    "allergens": [
     "soy",
@@ -153776,7 +153776,7 @@
     "carbs": 74.3,
     "fiber": 19.8,
     "sugar": 10.5,
-    "costEur": 1.59
+    "costEur": 1.57
    },
    "allergens": [
     "soy",
@@ -153868,7 +153868,7 @@
     "carbs": 62.6,
     "fiber": 15,
     "sugar": 10.4,
-    "costEur": 1.58
+    "costEur": 1.57
    },
    "allergens": [
     "soy",
@@ -153960,7 +153960,7 @@
     "carbs": 67.8,
     "fiber": 16.9,
     "sugar": 10.7,
-    "costEur": 1.47
+    "costEur": 1.46
    },
    "allergens": [
     "soy",
@@ -154052,7 +154052,7 @@
     "carbs": 58.1,
     "fiber": 10.4,
     "sugar": 9.9,
-    "costEur": 1.96
+    "costEur": 1.95
    },
    "allergens": [
     "soy"
@@ -154143,7 +154143,7 @@
     "carbs": 63.3,
     "fiber": 12.3,
     "sugar": 10.3,
-    "costEur": 1.86
+    "costEur": 1.84
    },
    "allergens": [
     "soy"
@@ -154234,7 +154234,7 @@
     "carbs": 67.2,
     "fiber": 5.3,
     "sugar": 9.1,
-    "costEur": 1.06
+    "costEur": 1.05
    },
    "allergens": [],
    "dietFlags": [
@@ -154327,7 +154327,7 @@
     "carbs": 72.4,
     "fiber": 7.2,
     "sugar": 9.5,
-    "costEur": 0.95
+    "costEur": 0.94
    },
    "allergens": [],
    "dietFlags": [
@@ -154420,7 +154420,7 @@
     "carbs": 56.8,
     "fiber": 11.1,
     "sugar": 9.1,
-    "costEur": 1.09
+    "costEur": 1.08
    },
    "allergens": [],
    "dietFlags": [
@@ -154513,7 +154513,7 @@
     "carbs": 62,
     "fiber": 13,
     "sugar": 9.5,
-    "costEur": 0.99
+    "costEur": 0.97
    },
    "allergens": [],
    "dietFlags": [
@@ -154606,7 +154606,7 @@
     "carbs": 65.9,
     "fiber": 16.3,
     "sugar": 9.4,
-    "costEur": 1.15
+    "costEur": 1.14
    },
    "allergens": [
     "gluten"
@@ -154701,7 +154701,7 @@
     "carbs": 71.1,
     "fiber": 18.2,
     "sugar": 9.7,
-    "costEur": 1.04
+    "costEur": 1.03
    },
    "allergens": [
     "gluten"
@@ -154796,7 +154796,7 @@
     "carbs": 59.4,
     "fiber": 13.4,
     "sugar": 9.6,
-    "costEur": 1.03
+    "costEur": 1.02
    },
    "allergens": [
     "gluten"
@@ -154891,7 +154891,7 @@
     "carbs": 64.6,
     "fiber": 15.3,
     "sugar": 9.9,
-    "costEur": 0.93
+    "costEur": 0.91
    },
    "allergens": [
     "gluten"
@@ -154986,7 +154986,7 @@
     "carbs": 54.9,
     "fiber": 8.8,
     "sugar": 9.1,
-    "costEur": 1.42
+    "costEur": 1.4
    },
    "allergens": [],
    "dietFlags": [
@@ -155079,7 +155079,7 @@
     "carbs": 60.1,
     "fiber": 10.7,
     "sugar": 9.5,
-    "costEur": 1.31
+    "costEur": 1.29
    },
    "allergens": [],
    "dietFlags": [
@@ -157333,7 +157333,7 @@
     "carbs": 42.8,
     "fiber": 5,
     "sugar": 30.4,
-    "costEur": 0.46
+    "costEur": 0.43
    },
    "allergens": [
     "milk"
@@ -157738,7 +157738,7 @@
     "carbs": 44.8,
     "fiber": 5,
     "sugar": 32.4,
-    "costEur": 0.48
+    "costEur": 0.44
    },
    "allergens": [
     "milk"
@@ -158143,7 +158143,7 @@
     "carbs": 42.2,
     "fiber": 5,
     "sugar": 29.8,
-    "costEur": 0.55
+    "costEur": 0.51
    },
    "allergens": [
     "milk"
@@ -158548,7 +158548,7 @@
     "carbs": 38.2,
     "fiber": 5,
     "sugar": 25.8,
-    "costEur": 0.47
+    "costEur": 0.43
    },
    "allergens": [
     "milk"
@@ -160175,7 +160175,7 @@
     "carbs": 47.6,
     "fiber": 10,
     "sugar": 15.7,
-    "costEur": 0.31
+    "costEur": 0.25
    },
    "allergens": [
     "milk"
@@ -160265,7 +160265,7 @@
     "carbs": 49.5,
     "fiber": 11.4,
     "sugar": 15,
-    "costEur": 0.28
+    "costEur": 0.22
    },
    "allergens": [],
    "dietFlags": [],
@@ -160350,7 +160350,7 @@
     "carbs": 47.7,
     "fiber": 10,
     "sugar": 15.9,
-    "costEur": 0.61
+    "costEur": 0.55
    },
    "allergens": [
     "milk"
@@ -160440,7 +160440,7 @@
     "carbs": 46.5,
     "fiber": 10,
     "sugar": 14.7,
-    "costEur": 0.86
+    "costEur": 0.8
    },
    "allergens": [],
    "dietFlags": [
@@ -161835,7 +161835,7 @@
     "carbs": 52.5,
     "fiber": 8.5,
     "sugar": 19.4,
-    "costEur": 0.45
+    "costEur": 0.42
    },
    "allergens": [
     "gluten",
@@ -161911,7 +161911,7 @@
     "carbs": 53.2,
     "fiber": 8.7,
     "sugar": 19.4,
-    "costEur": 0.39
+    "costEur": 0.36
    },
    "allergens": [
     "gluten",
@@ -162590,7 +162590,7 @@
     "carbs": 51.1,
     "fiber": 8.5,
     "sugar": 17.9,
-    "costEur": 0.44
+    "costEur": 0.4
    },
    "allergens": [
     "gluten",
@@ -162666,7 +162666,7 @@
     "carbs": 51.8,
     "fiber": 8.7,
     "sugar": 17.9,
-    "costEur": 0.38
+    "costEur": 0.35
    },
    "allergens": [
     "gluten",
@@ -163345,7 +163345,7 @@
     "carbs": 51.9,
     "fiber": 8.5,
     "sugar": 18.7,
-    "costEur": 0.53
+    "costEur": 0.5
    },
    "allergens": [
     "gluten",
@@ -163421,7 +163421,7 @@
     "carbs": 52.6,
     "fiber": 8.7,
     "sugar": 18.7,
-    "costEur": 0.48
+    "costEur": 0.45
    },
    "allergens": [
     "gluten",
@@ -164074,7 +164074,7 @@
     "carbs": 68.9,
     "fiber": 13.1,
     "sugar": 5.8,
-    "costEur": 0.7
+    "costEur": 0.67
    },
    "allergens": [
     "milk"
@@ -164731,7 +164731,7 @@
     "carbs": 76.4,
     "fiber": 15.1,
     "sugar": 14.3,
-    "costEur": 1.18
+    "costEur": 1.15
    },
    "allergens": [
     "milk"
@@ -164998,7 +164998,7 @@
     "carbs": 40,
     "fiber": 8.5,
     "sugar": 11.7,
-    "costEur": 0.5
+    "costEur": 0.46
    },
    "allergens": [
     "eggs",
@@ -165088,7 +165088,7 @@
     "carbs": 41.3,
     "fiber": 8.5,
     "sugar": 13.1,
-    "costEur": 0.49
+    "costEur": 0.45
    },
    "allergens": [
     "eggs",
@@ -165548,7 +165548,7 @@
     "carbs": 63.1,
     "fiber": 18.8,
     "sugar": 11,
-    "costEur": 1.57
+    "costEur": 1.56
    },
    "allergens": [
     "gluten"
@@ -165642,7 +165642,7 @@
     "carbs": 70.7,
     "fiber": 18.2,
     "sugar": 14.9,
-    "costEur": 1.21
+    "costEur": 1.2
    },
    "allergens": [
     "gluten"
@@ -165736,7 +165736,7 @@
     "carbs": 68.2,
     "fiber": 20,
     "sugar": 15.8,
-    "costEur": 1.42
+    "costEur": 1.41
    },
    "allergens": [
     "gluten"
@@ -165830,7 +165830,7 @@
     "carbs": 65.6,
     "fiber": 19,
     "sugar": 14.5,
-    "costEur": 2.06
+    "costEur": 2.05
    },
    "allergens": [
     "gluten"
@@ -165924,7 +165924,7 @@
     "carbs": 91,
     "fiber": 22,
     "sugar": 17,
-    "costEur": 1.41
+    "costEur": 1.4
    },
    "allergens": [
     "gluten"
@@ -166018,7 +166018,7 @@
     "carbs": 69.7,
     "fiber": 21.2,
     "sugar": 15.5,
-    "costEur": 1.17
+    "costEur": 1.16
    },
    "allergens": [
     "gluten"
@@ -166112,7 +166112,7 @@
     "carbs": 68.5,
     "fiber": 18.8,
     "sugar": 11.3,
-    "costEur": 1.71
+    "costEur": 1.66
    },
    "allergens": [
     "gluten"
@@ -166206,7 +166206,7 @@
     "carbs": 76.1,
     "fiber": 18.2,
     "sugar": 15.3,
-    "costEur": 1.36
+    "costEur": 1.3
    },
    "allergens": [
     "gluten"
@@ -166300,7 +166300,7 @@
     "carbs": 73.6,
     "fiber": 20,
     "sugar": 16.1,
-    "costEur": 1.57
+    "costEur": 1.51
    },
    "allergens": [
     "gluten"
@@ -166394,7 +166394,7 @@
     "carbs": 71,
     "fiber": 19,
     "sugar": 14.9,
-    "costEur": 2.2
+    "costEur": 2.15
    },
    "allergens": [
     "gluten"
@@ -166488,7 +166488,7 @@
     "carbs": 96.4,
     "fiber": 22,
     "sugar": 17.4,
-    "costEur": 1.55
+    "costEur": 1.49
    },
    "allergens": [
     "gluten"
@@ -166582,7 +166582,7 @@
     "carbs": 75.1,
     "fiber": 21.2,
     "sugar": 15.9,
-    "costEur": 1.31
+    "costEur": 1.25
    },
    "allergens": [
     "gluten"
@@ -166676,7 +166676,7 @@
     "carbs": 72.5,
     "fiber": 15.7,
     "sugar": 11.8,
-    "costEur": 1.45
+    "costEur": 1.44
    },
    "allergens": [
     "gluten"
@@ -166770,7 +166770,7 @@
     "carbs": 80.1,
     "fiber": 15.1,
     "sugar": 15.8,
-    "costEur": 1.09
+    "costEur": 1.08
    },
    "allergens": [
     "gluten"
@@ -166864,7 +166864,7 @@
     "carbs": 77.6,
     "fiber": 16.9,
     "sugar": 16.6,
-    "costEur": 1.3
+    "costEur": 1.29
    },
    "allergens": [
     "gluten"
@@ -166958,7 +166958,7 @@
     "carbs": 75,
     "fiber": 15.9,
     "sugar": 15.4,
-    "costEur": 1.94
+    "costEur": 1.92
    },
    "allergens": [
     "gluten"
@@ -167052,7 +167052,7 @@
     "carbs": 100.4,
     "fiber": 18.9,
     "sugar": 17.9,
-    "costEur": 1.29
+    "costEur": 1.27
    },
    "allergens": [
     "gluten"
@@ -167146,7 +167146,7 @@
     "carbs": 79.1,
     "fiber": 18.1,
     "sugar": 16.4,
-    "costEur": 1.05
+    "costEur": 1.03
    },
    "allergens": [
     "gluten"

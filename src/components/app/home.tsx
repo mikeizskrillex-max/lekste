@@ -6,6 +6,8 @@ import type { MessageKey } from '@/i18n/messages';
 import { planAvgKcal } from '@/lib/view';
 import { todayIndex, useStore } from '@/state/store';
 import { PageTitle } from '../appshell';
+import { InstallApp } from '../install';
+import { NewWeekBanner } from './menu';
 import { Card, Ring, Stat } from '../ui';
 import { dateOfDay, MealRow, useToast } from './meal';
 
@@ -23,6 +25,7 @@ export function HomePage() {
   return (
     <>
       <PageTitle title={`${t('goodMorning')}${session?.email ? `, ${session.email.split('@')[0]}` : ''} 👋`} sub={`${t(`day${today}` as MessageKey)} · ${num(targets.kcal)} kcal`} />
+      <NewWeekBanner />
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <Stat label={t('weekBudget')} value={eur(answers.weeklyBudget)} sub={answers.household > 1 ? t('personsN', { n: answers.household }) : t('person1')} />
         <Stat label={t('bestBasket')} value={eur(econ.best)} sub={econ.saving > 0 ? <span className="text-leaf">−{eur(econ.saving)} ({t('estimatedSavings').toLowerCase()})</span> : undefined} />
@@ -39,6 +42,7 @@ export function HomePage() {
           <Link key={h} href={h}><Card className="flex items-center gap-3 p-5 transition hover:ring-leaf"><span className="text-[24px]">{i}</span><b>{t(k as MessageKey)}</b><span className="ml-auto text-leaf">→</span></Card></Link>
         ))}
       </div>
+      <div className="mt-6"><InstallApp /></div>
       {verified > 0 && <p className="mt-6 text-[14px]">{t('verifiedSavings')}: <b className="text-leaf">{eur(verified)}</b></p>}
       {node}
     </>

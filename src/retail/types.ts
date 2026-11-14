@@ -30,6 +30,8 @@ export interface PriceRecord {
   promo: boolean;
   promoValidFrom: string | null;
   promoValidTo: string | null;
+  /** the promotion requires the retailer's loyalty card */
+  loyalty?: boolean;
   perKg: number;
   url: string | null;
   imageUrl: string | null;

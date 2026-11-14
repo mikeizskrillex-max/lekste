@@ -1,14 +1,14 @@
-import { PRICES, PRICES_DATE } from '@/data/prices';
+import { PRICES, PRICES_UPDATED_AT } from '@/data/prices';
 import type { RetailerId } from '@/config/markets';
 import { categoryOf, parseBrand } from './matching';
 import type { Catalog, PriceRecord } from './types';
 
 /** When the bundled Barbora/Rimi snapshot was collected (Europe/Vilnius). */
-export const SNAPSHOT_AT = `${PRICES_DATE}T13:00:00+02:00`;
+export const SNAPSHOT_AT = PRICES_UPDATED_AT;
 
 /** The bundled, script-collected snapshot of public e-shop prices as PriceRecords. */
 export const SNAPSHOT_RECORDS: PriceRecord[] = Object.entries(PRICES).flatMap(([ingredientId, byStore]) =>
-  Object.entries(byStore).map(([retailer, o]) => ({
+  Object.entries(byStore).filter(([, o]) => o && o.available !== false).map(([retailer, o]) => ({
     retailer: retailer as RetailerId,
     ingredientId,
     match: 'exact' as const,
@@ -20,12 +20,13 @@ export const SNAPSHOT_RECORDS: PriceRecord[] = Object.entries(PRICES).flatMap(([
     price: o!.price,
     regular: o!.regular,
     promo: o!.promo,
-    promoValidFrom: null,
-    promoValidTo: null,
+    promoValidFrom: o!.promoFrom ?? null,
+    promoValidTo: o!.promoTo ?? null,
+    loyalty: o!.loyalty ?? false,
     perKg: o!.perKg,
     url: o!.url,
     imageUrl: null,
-    retrievedAt: SNAPSHOT_AT,
+    retrievedAt: o!.retrievedAt ?? SNAPSHOT_AT,
     source: 'public_catalog' as const,
     verification: 'snapshot' as const,
   })),

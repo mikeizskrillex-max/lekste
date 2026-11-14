@@ -1,7 +1,7 @@
 # Development status — 2026-11-12
 
-Checks on this commit: `npm run lint` ✓ · `npm run typecheck` ✓ · `npm test` 38/38 ✓ · `npm run build` ✓ ·
-`npm run e2e` 25/25 ✓ (scenarios A–J, production build, development mode) · migration applied to local Postgres 16
+Checks on this commit: `npm run lint` ✓ · `npm run typecheck` ✓ · `npm test` 41/41 ✓ · `npm run build` ✓ ·
+`npm run e2e` 30/30 ✓ (scenarios A–J, production build, development mode) · migration applied to local Postgres 16
 with a Supabase auth stub: 41 tables, 57 RLS policies, owner isolation checked.
 
 | Phase | Status |
@@ -50,3 +50,16 @@ with a Supabase auth stub: 41 tables, 57 RLS policies, owner isolation checked.
   (the rest are not feasible at that budget, e.g. weight gain for 4 people on €75); worst day calorie
   error 11.6 %; ~0.1 s per plan. When a budget is not feasible, the app says so and offers to set the
   minimum budget or switch to 3 meals.
+
+## 2026-11-14 — dislikes, new week, weekly prices, recipe catalog, installable app
+
+* Onboarding and menu settings: "what you don't like" (~45 ingredients) as a hard rule.
+* "New week": archives the current week (history of 12 weeks, restore), builds the next menu with
+  different dishes; a banner appears when the calendar week has moved on.
+* `scripts/refresh-prices.mjs` reads each Barbora/Rimi product page (price, regular price, promotion
+  dates, loyalty-card flag, unit price, availability) into data/prices.json; run it weekly (all 128
+  products read on 2026-11-14, 10 promotions). Not scheduled automatically yet — see README.
+  Lidl Lithuania sells food only in stores (no online food prices): CSV import remains the way.
+* Public recipe catalog /recipes (and /app/recipes): search, meal, time, vegetarian, high-protein,
+  cheapest-first, favourites ♥, "fits me". Favourites are included in menus more often.
+* Installable web app (manifest, icons, add-to-home-screen prompt); sharp for fast images.

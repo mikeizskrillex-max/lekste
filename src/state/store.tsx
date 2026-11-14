@@ -42,6 +42,10 @@ interface State {
   onboarded: boolean;
   plan: Plan | null;
   planCreatedAt: string | null;
+  /** Monday (YYYY-MM-DD) of the week the current plan is for */
+  weekStart?: string;
+  /** previous weeks, newest first */
+  history?: { weekStart: string; plan: Plan; basket: number }[];
   feedback: { recipeId: string; rating: 'up' | 'down' }[];
   done: Record<string, string[]>;
   purchased: string[];
@@ -73,6 +77,12 @@ function write(k: string, v: unknown) {
 
 export const today = () => new Date().toISOString().slice(0, 10);
 export const todayIndex = () => (new Date().getDay() + 6) % 7;
+/** Monday of the given date's week, YYYY-MM-DD (local time). */
+export function mondayOf(d: Date): string {
+  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate() - ((d.getDay() + 6) % 7));
+  return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`;
+}
+const addDaysIso = (iso: string, n: number) => { const [y, m, d] = iso.split('-').map(Number); return mondayOf(new Date(y, m - 1, d + n)); };
 const addDays = (iso: string, d: number) => new Date(Date.parse(iso) + d * 86400000).toISOString();
 const uid = () => Math.random().toString(36).slice(2, 10);
 
@@ -86,6 +96,12 @@ interface Ctx extends State {
   completeOnboarding: () => void;
   replace: (day: number, slot: number, mode: ReplaceMode) => boolean;
   regenerate: (day: number) => void;
+  /** archive this week and build next week's menu with different dishes */
+  newWeek: () => void;
+  restoreWeek: (weekStart: string) => void;
+  toggleFavorite: (recipeId: string) => void;
+  /** true when the calendar week moved on since the plan was made */
+  weekIsOld: boolean;
   rate: (recipeId: string, rating: 'up' | 'down') => void;
   toggleDone: (date: string, recipeId: string) => void;
   togglePurchased: (id: string) => void;
@@ -158,6 +174,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       return { ...p, answers, plan: buildPlan(answers, effectiveTargets(answers)) };
     }),
     completeOnboarding: () => setS((p) => ({
+      weekStart: mondayOf(new Date()),
       ...p, onboarded: true, plan: buildPlan(p.answers, effectiveTargets(p.answers)), planCreatedAt: new Date().toISOString(),
       purchased: [], weights: p.weights.length ? p.weights : [{ date: today(), kg: p.answers.weightKg }],
     })),
@@ -178,6 +195,27 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       return r.notes;
     },
     withdrawHealthConsent: () => setS((p) => ({ ...p, plan: null, onboarded: false, weights: [], answers: { ...DEFAULT_ANSWERS, email: p.answers.email, consentHealth: false, consentTerms: p.answers.consentTerms } })),
+    newWeek: () => setS((p) => {
+      if (!p.plan) return p;
+      const prev = { weekStart: p.weekStart ?? mondayOf(new Date(p.planCreatedAt ?? Date.now())), plan: p.plan, basket: allocation?.week.total ?? 0 };
+      const last = p.plan.days.flatMap((d) => d.meals.map((m) => m.recipeId));
+      const nextStart = p.weekStart && p.weekStart >= mondayOf(new Date()) ? addDaysIso(p.weekStart, 7) : mondayOf(new Date());
+      return {
+        ...p, plan: buildPlan(p.answers, effectiveTargets(p.answers), Date.now() % 9973, last), planCreatedAt: new Date().toISOString(),
+        weekStart: nextStart, history: [prev, ...(p.history ?? [])].slice(0, 12), purchased: [],
+      };
+    }),
+    restoreWeek: (ws) => setS((p) => {
+      const h = (p.history ?? []).find((x) => x.weekStart === ws);
+      if (!h || !p.plan) return p;
+      const cur = { weekStart: p.weekStart ?? mondayOf(new Date()), plan: p.plan, basket: allocation?.week.total ?? 0 };
+      return { ...p, plan: h.plan, history: [cur, ...(p.history ?? []).filter((x) => x.weekStart !== ws)].slice(0, 12), purchased: [] };
+    }),
+    toggleFavorite: (id) => setS((p) => {
+      const f = p.answers.favorites ?? [];
+      return { ...p, answers: { ...p.answers, favorites: f.includes(id) ? f.filter((x) => x !== id) : [...f, id] } };
+    }),
+    weekIsOld: !!s.plan && (s.weekStart ?? mondayOf(new Date(s.planCreatedAt ?? Date.now()))) < mondayOf(new Date()),
     regenerate: (day) => setS((p) => (p.plan ? { ...p, plan: regenerateDay(p.plan, p.answers, effectiveTargets(p.answers), day, Date.now() % 9973, disliked) } : p)),
     rate: (recipeId, rating) => setS((p) => ({ ...p, feedback: [...p.feedback.filter((f) => f.recipeId !== recipeId), { recipeId, rating }] })),
     toggleDone: (date, id) => setS((p) => {

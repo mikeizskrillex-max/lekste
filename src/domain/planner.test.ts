@@ -185,3 +185,27 @@ describe('real basket fits the budget', () => {
     }
   });
 });
+
+describe('new week and favorites', () => {
+  it('a new week avoids last week dishes when the library allows', () => {
+    const u = { ...base, homeStore: 'barbora' as const, weeklyBudget: 70 };
+    const t = calcTargets(u);
+    const w1 = buildPlan(u, t, 7);
+    const ids1 = w1.days.flatMap((d) => d.meals.map((m) => m.recipeId));
+    const w2 = buildPlan(u, t, 4242, ids1);
+    const ids2 = w2.days.flatMap((d) => d.meals.map((m) => m.recipeId));
+    const repeated = ids2.filter((id) => ids1.includes(id)).length;
+    expect(repeated / ids2.length).toBeLessThan(0.15);
+  });
+  it('favorite recipes appear more often', () => {
+    const u = { ...base, homeStore: 'barbora' as const, weeklyBudget: 70 };
+    const fav = eligibleRecipes(u).filter((r) => r.meal === 'breakfast').slice(5, 7).map((r) => r.id);
+    const plan = buildPlan({ ...u, favorites: fav }, calcTargets(u));
+    expect(plan.days.flatMap((d) => d.meals.map((m) => m.recipeId)).some((id) => fav.includes(id))).toBe(true);
+  });
+  it('disliked ingredients never appear', () => {
+    const u = { ...base, homeStore: 'barbora' as const, never: ['beetroot', 'cottage_cheese', 'eggs'] };
+    const plan = buildPlan(u, calcTargets(u));
+    for (const d of plan.days) for (const m of d.meals) expect(RECIPES.find((r) => r.id === m.recipeId)!.items.some(([id]) => u.never.includes(id))).toBe(false);
+  });
+});

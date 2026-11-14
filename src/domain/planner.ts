@@ -89,6 +89,7 @@ function score(r: Recipe, u: QuizAnswers): number {
   if (r.meal === 'breakfast' && r.breakfastStyle && u.breakfastStyle === r.breakfastStyle) s += 2;
   if (r.spice > u.spice) s -= 3 * (r.spice - u.spice);
   if (u.dietType === 'low_carb') s -= recipeFacts(r).carbs / 30;
+  if (u.favorites?.includes(r.id)) s += 5;
   if (isChefRecipe(r.id)) s += 1.2; // curated recipes first, generated ones add variety
   // budget awareness: the tighter the budget per person per day, the more a recipe's price matters
   const perDay = u.weeklyBudget / Math.max(1, u.household) / 7;
@@ -121,7 +122,7 @@ function fits(r: Recipe, slot: MealType): boolean {
 function makeDay(chosen: Recipe[], labels: MealType[], t: Targets, u: Pick<QuizAnswers, 'homeStore'>): PlanDay {
   const base = chosen.reduce((s, r) => s + recipeFacts(r).kcal, 0) || 1;
   const factor = Math.min(1.75, Math.max(0.6, t.kcal / base));
-  const servings = Math.round(factor * 4) / 4;
+  const servings = Math.round(factor * 10) / 10;
   const meals: PlanMeal[] = chosen.map((r, i) => {
     const f = recipeFacts(r);
     return { recipeId: r.id, meal: labels[i], servings, kcal: Math.round(f.kcal * servings), protein: Math.round(f.protein * servings), cost: costOf(r, u) * servings };
@@ -205,8 +206,14 @@ function buildOnce(u: QuizAnswers, t: Targets, pool: Recipe[], baseSlots: MealTy
  * candidate weeks and keeps the one that best balances calories, protein,
  * budget and the user's preferences. Never leaves a meal empty.
  */
-export function buildPlan(u: QuizAnswers, t: Targets, seed = 7): Plan {
-  const pool = eligibleRecipes(u);
+/**
+ * @param avoid recipes to leave out when possible (e.g. last week's dishes for a fresh new week)
+ */
+export function buildPlan(u: QuizAnswers, t: Targets, seed = 7, avoid: string[] = []): Plan {
+  const all = eligibleRecipes(u);
+  const fresh = avoid.length ? all.filter((r) => !avoid.includes(r.id) || u.favorites?.includes(r.id)) : all;
+  const enough = (['breakfast', 'lunch', 'snack', 'dinner'] as MealType[]).every((m) => fresh.filter((r) => fits(r, m)).length >= 7);
+  const pool = enough ? fresh : all;
   const slots = mealSlots(u);
   let best: Plan | null = null;
   let bestScore = Infinity;

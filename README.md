@@ -63,6 +63,12 @@ Admin panel in development mode: `/login?admin=1&next=/admin`, passphrase from
   `node scripts/barbora-urls.mjs` (with `NODE_USE_ENV_PROXY=1` behind a proxy) finds missing Barbora links.
 * Before automated collection: review each retailer's Terms of Service and robots.txt, rate-limit, identify the client.
 
+## Weekly price refresh
+
+`NODE_USE_ENV_PROXY=1 node scripts/refresh-prices.mjs` (proxy variable only behind a proxy) reads every
+product page and updates `data/prices.json`; commit and deploy. To automate, add a scheduled GitHub
+Actions workflow that runs the script every Monday and commits the file (needs `contents: write`).
+
 ## Documentation
 
 * [ARCHITECTURE.md](ARCHITECTURE.md) — modules, data flow, security

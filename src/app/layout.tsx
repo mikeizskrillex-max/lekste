@@ -19,7 +19,8 @@ export const metadata: Metadata = {
     images: [{ url: '/img/site/mealbowl.jpg', width: 1200, height: 800, alt: 'Lėkštė' }],
   },
   twitter: { card: 'summary_large_image' },
-  icons: { icon: '/favicon.svg' },
+  icons: { icon: '/favicon.svg', apple: '/icons/apple-touch-icon.png' },
+  appleWebApp: { capable: true, title: 'Lėkštė', statusBarStyle: 'default' },
 };
 
 export const viewport: Viewport = { themeColor: '#174B35', width: 'device-width', initialScale: 1 };

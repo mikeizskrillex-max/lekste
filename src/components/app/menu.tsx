@@ -6,11 +6,12 @@ import { calcTargets } from '@/domain/nutrition';
 import type { DietType, QuizAnswers, Targets } from '@/domain/types';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
-import { EXCLUSIONS, exclusionOn, planAvgKcal, toggleExclusion } from '@/lib/view';
+import { EXCLUSIONS, exclusionOn, planAvgKcal, recipeName, toggleExclusion } from '@/lib/view';
 import { RETAILERS } from '@/retail/retailers';
 import { todayIndex, useStore } from '@/state/store';
 import { PageTitle } from '../appshell';
 import { DayList, OverBudgetHelp, StorePicker } from '../basket';
+import { DislikeChips } from '../onboarding';
 import { Badge, Button, Card, Chip, Slider, cx } from '../ui';
 import { MealRow, useToast } from './meal';
 
@@ -52,6 +53,10 @@ function Personalize() {
             <div className="flex flex-wrap gap-2">{EXCLUSIONS.map((e) => <Chip key={e} on={exclusionOn(a, e)} onClick={() => set(toggleExclusion(a, e))}>{t(`ex_${e}` as MessageKey)}</Chip>)}</div>
           </div>
           <div className="md:col-span-2">
+            <div className="text-[13.5px] font-semibold">{t('dislikeTitle')}</div>
+            <DislikeChips />
+          </div>
+          <div className="md:col-span-2">
             <div className="mb-2 text-[13.5px] font-semibold">{t('yourStore')}</div>
             <StorePicker compact />
           </div>
@@ -66,7 +71,7 @@ function Personalize() {
 
 export function MenuPage() {
   const { t, eur, num } = useI18n();
-  const { plan, regenerate, weekEconomics, answers, targets, homeStore, allocation } = useStore();
+  const { plan, regenerate, weekEconomics, answers, targets, homeStore, allocation, newWeek, weekStart } = useStore();
   const { show, node } = useToast();
   if (!plan) return null;
   const econ = weekEconomics();
@@ -74,7 +79,10 @@ export function MenuPage() {
   return (
     <>
       <PageTitle title={t('tabMenu2')} sub={<>{num(targets.kcal)} kcal · {num(targets.protein)} g {t('protein')} · {t('avgKcal')}: {num(planAvgKcal(plan))}</>}
-        right={<Badge tone={econ.best > answers.weeklyBudget ? 'danger' : 'leaf'}>{RETAILERS[homeStore].name}: {eur(econ.best)} / {eur(answers.weeklyBudget)}</Badge>} />
+        right={<div className="flex flex-wrap items-center gap-2"><Badge tone={econ.best > answers.weeklyBudget ? 'danger' : 'leaf'}>{RETAILERS[homeStore].name}: {eur(econ.best)} / {eur(answers.weeklyBudget)}</Badge>
+          <Button size="sm" variant="dark" onClick={() => { if (window.confirm(t('newWeekConfirm'))) { newWeek(); show(t('newWeekDone')); window.scrollTo({ top: 0 }); } }}>🗓 {t('newWeek')}</Button></div>} />
+      {weekStart && <p className="-mt-3 mb-4 text-[13px] text-muted">{t('weekOf', { d: weekStart })}</p>}
+      <NewWeekBanner />
       <Personalize />
       <div className="mt-4"><OverBudgetHelp /></div>
       {plan.issues.length > 0 && <p className="mt-4 rounded-2xl bg-gold/20 p-3 text-[13.5px]">{t('infeasibleRecipes')}</p>}
@@ -90,8 +98,43 @@ export function MenuPage() {
           </section>
         ))}
       </div>
+      <PastWeeks />
       {node}
     </>
+  );
+}
+
+/** Shown when the calendar week has moved on since the menu was made. */
+export function NewWeekBanner() {
+  const { t } = useI18n();
+  const { weekIsOld, newWeek } = useStore();
+  if (!weekIsOld) return null;
+  return (
+    <Card className="mb-4 flex flex-wrap items-center justify-between gap-3 border-l-4 border-leaf p-4">
+      <span className="text-[14.5px] font-semibold">🗓 {t('newWeekBanner')}</span>
+      <Button size="sm" onClick={newWeek}>{t('newWeek')} →</Button>
+    </Card>
+  );
+}
+
+function PastWeeks() {
+  const { t, eur, lang } = useI18n();
+  const { history, restoreWeek } = useStore();
+  if (!history?.length) return null;
+  return (
+    <details className="mt-10 rounded-xl2 bg-card p-5 ring-1 ring-line/70">
+      <summary className="cursor-pointer text-[16px] font-extrabold">{t('pastWeeks')} ({history.length})</summary>
+      <ul className="mt-3 divide-y divide-line">
+        {history.map((h) => (
+          <li key={h.weekStart + h.basket} className="flex flex-wrap items-center gap-3 py-3 text-[14px]">
+            <b className="min-w-[150px]">{t('weekOf', { d: h.weekStart })}</b>
+            <span className="text-muted">{t('dishesN', { n: h.plan.days.reduce((s, d) => s + d.meals.length, 0) })}{h.basket ? ` · ${eur(h.basket)}` : ''}</span>
+            <span className="min-w-0 flex-1 truncate text-[12.5px] text-muted">{h.plan.days[0].meals.map((m) => recipeName(m.recipeId, lang)).join(' · ')}</span>
+            <Button size="sm" variant="secondary" onClick={() => restoreWeek(h.weekStart)}>{t('restore')}</Button>
+          </li>
+        ))}
+      </ul>
+    </details>
   );
 }
 

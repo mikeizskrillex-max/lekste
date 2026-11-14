@@ -50,6 +50,7 @@ export function SiteHeader() {
   const links = [
     { href: '/how-it-works', label: t('navHow') },
     { href: '/demo', label: t('navDemo') },
+    { href: '/recipes', label: t('navRecipes') },
     { href: '/supermarkets', label: t('navSupermarkets') },
     { href: '/pricing', label: t('navPricing') },
     { href: '/faq', label: t('navFaq') },
@@ -91,7 +92,7 @@ export function SiteHeader() {
 export function SiteFooter() {
   const { t, lang } = useI18n();
   const cols = [
-    { title: 'Lėkštė', links: [['/how-it-works', t('navHow')], ['/demo', t('navDemo')], ['/pricing', t('navPricing')], ['/faq', t('navFaq')]] },
+    { title: 'Lėkštė', links: [['/how-it-works', t('navHow')], ['/demo', t('navDemo')], ['/recipes', t('navRecipes')], ['/pricing', t('navPricing')], ['/faq', t('navFaq')]] },
     { title: t('navSupermarkets'), links: [['/supermarkets', 'Maxima · Lidl · Rimi · Iki · Barbora']] },
     { title: lang === 'lt' ? 'Teisinė informacija' : 'Правовая информация', links: [['/privacy', t('privacy')], ['/terms', t('terms')]] },
   ];

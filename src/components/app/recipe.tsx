@@ -12,6 +12,7 @@ import { fmtGrams, ingEmoji, ingName, recipeById } from '@/lib/view';
 import { RETAILERS } from '@/retail/retailers';
 import { useStore } from '@/state/store';
 import { StoreLink } from '../basket';
+import { FavoriteButton } from '../catalog';
 import { Badge, Button, Card, DishImage, cx } from '../ui';
 
 function Timer({ minutes }: { minutes: number }) {
@@ -95,6 +96,7 @@ export function RecipePage({ id, backHref = '/app/menu' }: { id: string; backHre
             {f.allergens.length ? <><b>{t('containsAllergens')}:</b> {f.allergens.map((a) => `${ALLERGEN_LABEL[a]?.emoji ?? ''} ${pick(ALLERGEN_LABEL[a] ?? { lt: a, ru: a })}`).join(', ')}</> : <span className="text-muted">{t('noAllergensListed')}</span>}
           </div>
           <Button size="lg" className="mt-5 w-full" onClick={() => setCook(0)}>▶ {t('startCooking')}</Button>
+          <div className="mt-2"><FavoriteButton id={id} /></div>
         </div>
       </div>
 

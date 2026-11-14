@@ -9,7 +9,8 @@ import { ALLERGENS, type Activity, type Allergen, type DietType, type Goal, type
 import { ALLERGEN_LABEL, type MessageKey } from '@/i18n/messages';
 import { useI18n } from '@/i18n/I18nProvider';
 import { getDetail } from '@/data/recipeDetails';
-import { EXCLUSIONS, exclusionOn, recipeById, recipeName, toggleExclusion } from '@/lib/view';
+import { DISLIKE_OPTIONS } from '@/data/ingredients';
+import { EXCLUSIONS, exclusionOn, ingEmoji, ingName, recipeById, recipeName, toggleExclusion } from '@/lib/view';
 import { useStore } from '@/state/store';
 import { Logo } from './site';
 import { Button, ButtonLink, Card, Chip, Container, CountUp, DishImage, Field, Option, Ring, Stat, inputCls, cx } from './ui';
@@ -26,6 +27,20 @@ function NumberInput({ value, onChange, min, max, suffix, id }: { value: number;
       <input id={id} inputMode="decimal" value={raw} className={cx(inputCls, 'pr-12 text-[18px] font-semibold')}
         onChange={(e) => { setRaw(e.target.value); const n = Number(e.target.value.replace(',', '.')); if (Number.isFinite(n) && n >= min && n <= max) onChange(n); }} />
       <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted">{suffix}</span>
+    </div>
+  );
+}
+
+/** Ingredient chips: tap to never get dishes with it (hard rule). */
+export function DislikeChips() {
+  const { lang } = useI18n();
+  const { answers: a, setAnswers } = useStore();
+  return (
+    <div className="mt-3 flex flex-wrap gap-2">
+      {DISLIKE_OPTIONS.map((id) => {
+        const on = a.never.includes(id);
+        return <Chip key={id} on={on} onClick={() => setAnswers({ never: on ? a.never.filter((x) => x !== id) : [...a.never, id] }, true)}>{ingEmoji(id)} {ingName(id, lang)}</Chip>;
+      })}
     </div>
   );
 }
@@ -118,6 +133,11 @@ export function Onboarding() {
                 <Chip key={al} on={a.allergens.includes(al)} onClick={() => set({ allergens: a.allergens.includes(al) ? a.allergens.filter((x) => x !== al) : [...a.allergens, al as Allergen] })}>{ALLERGEN_LABEL[al]?.emoji} {pick(ALLERGEN_LABEL[al])}</Chip>
               ))}
             </div>
+          </details>
+          <details className="rounded-2xl bg-card p-4 ring-1 ring-line" open>
+            <summary className="cursor-pointer text-[14px] font-semibold">{t('dislikeTitle')}</summary>
+            <p className="mt-1 text-[12.5px] text-muted">{t('dislikeHint')}</p>
+            <DislikeChips />
           </details>
           <Field label={t('otherRestrictions')}><input value={a.otherRestrictions ?? ''} maxLength={200} onChange={(e) => set({ otherRestrictions: e.target.value })} className={inputCls} /></Field>
         </div>

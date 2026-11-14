@@ -35,7 +35,8 @@ try {
   await page.getByRole('button', { name: '2', exact: true }).click(); await next();          // 6 household
   await page.getByRole('button', { name: /60–90/ }).click(); await next();                   // 7 budget
   await page.getByRole('button', { name: 'Žuvis', exact: true }).click();                                 // 8 exclusions: fish + dairy
-  await page.getByRole('button', { name: 'Pieno produktai', exact: true }).click(); await next();
+  await page.getByRole('button', { name: 'Pieno produktai', exact: true }).click();
+  await page.getByRole('button', { name: /Burokėliai/ }).click(); await next();
   await page.getByLabel('El. paštas').fill('e2e@example.com');                               // 9
   const boxes = page.locator('input[type=checkbox]');
   await boxes.nth(1).check(); await boxes.nth(2).check();                                    // health + terms consents
@@ -73,6 +74,7 @@ try {
   const ids = s.plan.days.flatMap((d) => d.meals.map((m) => m.recipeId));
   const bad = ids.filter((id) => { const r = RECIPE[id]; return !r || r.allergens.includes('milk') || r.allergens.includes('fish') || r.ingredients.some((i) => ['cod', 'salmon', 'shrimp', 'tuna_can'].includes(i.id)); });
   check('C plan has no fish or dairy', bad.length === 0, bad.join(','));
+  check('C disliked beetroot never appears', !ids.some((id) => RECIPE[id]?.ingredients.some((i) => i.id === 'beetroot')));
   check('C weekly cost within budget', s.plan.weeklyCost <= s.answers.weeklyBudget * 1.05, `${s.plan.weeklyCost.toFixed(2)} / ${s.answers.weeklyBudget}`);
 
   // ---------- B: replace a meal ----------
@@ -120,6 +122,25 @@ try {
   await page.getByRole('button', { name: 'Išsaugoti' }).click();
   await page.goto(`${BASE}/app/progress`);
   check('G progress shows recorded spending', (await page.locator('main').innerText()).includes('25,00'));
+
+  // ---------- new week, history, catalog, favorites ----------
+  await page.goto(`${BASE}/app/menu`);
+  const before7 = JSON.stringify((await state(page)).plan.days.map((d) => d.meals.map((m) => m.recipeId)));
+  page.once('dialog', (d) => d.accept());
+  await page.getByRole('button', { name: /Nauja savaitė/ }).first().click();
+  await page.waitForTimeout(800);
+  s = await state(page);
+  check('NEW new week builds a different menu and keeps history', JSON.stringify(s.plan.days.map((d) => d.meals.map((m) => m.recipeId))) !== before7 && s.history?.length === 1);
+  await page.goto(`${BASE}/app/recipes`);
+  await page.getByPlaceholder(/Ieškoti/).fill('vištien');
+  await page.waitForTimeout(400);
+  const cards = await page.locator('main a[href^="/app/recipe/"]').count();
+  check('NEW recipe catalog search works', cards > 3, `${cards} cards`);
+  await page.getByRole('button', { name: 'Į mėgstamus' }).first().click();
+  s = await state(page);
+  check('NEW favorite saved', (s.answers.favorites ?? []).length === 1);
+  const man = await page.request.get(`${BASE}/manifest.webmanifest`);
+  check('NEW installable web app manifest', man.ok() && (await man.json()).icons.length >= 2);
 
   // ---------- J: cancel subscription ----------
   page.on('dialog', (d) => d.accept());

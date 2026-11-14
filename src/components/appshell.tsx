@@ -12,6 +12,7 @@ import { ButtonLink, Card, Container, Skeleton, cx } from './ui';
 const NAV: { href: string; key: MessageKey; icon: string; mobile?: boolean }[] = [
   { href: '/app', key: 'tabHome', icon: '◉' },
   { href: '/app/menu', key: 'tabMenu2', icon: '🍽', mobile: true },
+  { href: '/app/recipes', key: 'navRecipes', icon: '📖' },
   { href: '/app/shopping', key: 'tabShopping', icon: '🧺', mobile: true },
   { href: '/app/basket', key: 'tabBasket2', icon: '🛒' },
   { href: '/app/compare', key: 'tabCompare', icon: '⚖' },
@@ -21,7 +22,7 @@ const NAV: { href: string; key: MessageKey; icon: string; mobile?: boolean }[] =
   { href: '/app/subscription', key: 'tabSubscription', icon: '💳' },
 ];
 
-const active = (path: string, href: string) => (href === '/app' ? path === '/app' : path.startsWith(href) || (href === '/app/menu' && path.startsWith('/app/recipe')));
+const active = (path: string, href: string) => (href === '/app' ? path === '/app' : path.startsWith(href) || (href === '/app/menu' && path.startsWith('/app/recipe/')));
 
 async function serverLogout() { await fetch('/api/dev/logout', { method: 'POST' }); }
 

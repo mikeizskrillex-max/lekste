@@ -108,4 +108,6 @@ export const DISLIKE_OPTIONS = [
   'mushrooms', 'cottage_cheese', 'cod', 'salmon', 'shrimp', 'broccoli', 'cauliflower', 'beetroot',
   'cabbage', 'zucchini', 'bell_pepper', 'pumpkin', 'avocado', 'beans', 'chickpeas', 'lentils', 'tofu',
   'onion', 'garlic', 'kefir', 'buckwheat', 'barley', 'feta', 'sour_cream',
+  'pork_loin', 'beef_mince', 'turkey_mince', 'tuna_can', 'eggs', 'cheese', 'spinach', 'sweet_potato', 'quinoa', 'bulgur',
+  'green_peas', 'corn', 'peanut_butter', 'walnuts', 'sesame', 'honey', 'banana', 'pear', 'orange', 'rye_bread', 'pasta', 'rice',
 ];

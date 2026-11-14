@@ -105,7 +105,7 @@ export function StoreList({ basket, checkable = false }: { basket: Basket; check
                     <span className="mt-1 block sm:hidden"><StoreLink ingredientId={l.ingredientId} url={l.record.url} store={l.record.retailer} compact /></span>
                   {l.record.promo && (
                     <span className="mt-0.5 inline-flex items-center gap-1 rounded-full bg-gold/30 px-1.5 py-0.5 text-[10.5px] font-bold text-[#6b4a0c]">
-                      {t('promo2')}{l.record.regular && <s className="font-normal">{eur(l.record.regular)}</s>}{l.record.promoValidTo && ` · ${t('promoUntil', { d: date(l.record.promoValidTo, { day: 'numeric', month: 'short' }) })}`}
+                      {t('promo2')}{l.record.regular && <s className="font-normal">{eur(l.record.regular)}</s>}{l.record.loyalty && ` · ${t('loyaltyCard')}`}{l.record.promoValidTo && ` · ${t('promoUntil', { d: date(l.record.promoValidTo, { day: 'numeric', month: 'short' }) })}`}
                     </span>
                   )}
                 </span>
@@ -226,7 +226,7 @@ export function DayList({ day, checkable = false }: { day: number; checkable?: b
                 <span className="block text-[14.5px] font-semibold">{ingName(it.ingredientId, lang)} <span className="font-normal text-muted">· {fmtGrams(it.grams, lang)}</span></span>
                 {it.line ? (
                   it.buyToday
-                    ? <span className="block truncate text-[12px] text-forest">🛒 {t('buyNow')}: {it.line.pantry ? it.line.record.name : `${it.line.packs} × ${it.line.record.name}`}{it.line.record.promo ? ` · ${t('promo2')}` : ''}</span>
+                    ? <span className="block truncate text-[12px] text-forest">🛒 {t('buyNow')}: {it.line.pantry ? it.line.record.name : `${it.line.packs} × ${it.line.record.name}`}{it.line.record.promo ? ` · ${t('promo2')}${it.line.record.loyalty ? ` (${t('loyaltyCard')})` : ''}` : ''}</span>
                     : <span className="block text-[12px] text-muted">✓ {t('alreadyBought')}</span>
                 ) : <span className="block text-[12px] text-danger">{t('notInStore')}</span>}
               </span>
