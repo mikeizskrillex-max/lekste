@@ -225,3 +225,18 @@ describe('taste swipe', () => {
     expect(after.days.flatMap((d) => d.meals).some((m) => ['salmon_rice', 'cod_tomato', 'tuna_salad'].includes(m.recipeId))).toBe(false);
   });
 });
+
+describe('leftovers at home', () => {
+  it('stock lowers the basket and money still adds up', async () => {
+    const { allocate } = await import('./allocation');
+    const u = { ...base, homeStore: 'barbora' as const, weeklyBudget: 70 };
+    const plan = buildPlan(u, calcTargets(u));
+    const a0 = allocate(plan, 1, 'barbora');
+    const grain = a0.week.lines.find((l) => ['rice', 'buckwheat', 'oats', 'pasta', 'bulgur', 'quinoa'].includes(l.ingredientId))!;
+    const a1 = allocate(plan, 1, 'barbora', undefined, { [grain.ingredientId]: 5000 });
+    expect(a1.week.total).toBeLessThan(a0.week.total);
+    expect(a1.week.lines.some((l) => l.ingredientId === grain.ingredientId)).toBe(false);
+    expect(a1.day.reduce((s, x) => s + x, 0)).toBeCloseTo(a1.week.total, 6);
+    expect(a1.items.flat().some((i) => i.ingredientId === grain.ingredientId && i.fromStock)).toBe(true);
+  });
+});

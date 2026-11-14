@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { RECIPES, isChefRecipe, type Recipe } from '@/data/recipes';
 import { getDetail } from '@/data/recipeDetails';
@@ -31,10 +32,13 @@ export function RecipeCatalog({ recipeHref = (id: string) => `/recipe/${id}?back
   const [mine, setMine] = useState(true);
   const [cheap, setCheap] = useState(false);
   const [shown, setShown] = useState(PAGE);
+  const sp = useSearchParams();
+  const [ing, setIng] = useState<string | null>(sp.get('ing'));
 
   const list = useMemo(() => {
     const needle = fold(q.trim());
     const out = RECIPES.filter((r) => {
+      if (ing && !r.items.some(([i]) => i === ing)) return false;
       if (meal !== 'all' && r.meal !== meal) return false;
       const d = getDetail(r.id);
       if (time && (d ? d.prep + d.cook : r.minutes) > time) return false;
@@ -48,12 +52,13 @@ export function RecipeCatalog({ recipeHref = (id: string) => `/recipe/${id}?back
     });
     const cost = (r: Recipe) => recipeAtStore(r, homeStore).cost;
     return out.sort(cheap ? (a, b) => cost(a) - cost(b) : (a, b) => Number(fav.includes(b.id)) - Number(fav.includes(a.id)) || Number(isChefRecipe(b.id)) - Number(isChefRecipe(a.id)) || a[lang].localeCompare(b[lang]));
-  }, [q, meal, time, veg, protein, onlyFav, mine, cheap, fav, onboarded, answers, homeStore, lang]);
+  }, [q, meal, time, veg, protein, onlyFav, mine, cheap, fav, onboarded, answers, homeStore, lang, ing]);
 
   const reset = () => setShown(PAGE);
   return (
     <div>
       <Card className="space-y-3 p-4">
+        {ing && <Chip on onClick={() => setIng(null)}>{ingName(ing, lang)} ✕</Chip>}
         <input value={q} onChange={(e) => { setQ(e.target.value); reset(); }} placeholder={t('searchRecipes')} aria-label={t('searchRecipes')} className={inputCls} />
         <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
           {(['all', 'breakfast', 'lunch', 'dinner', 'snack'] as const).map((m) => <Chip key={m} on={meal === m} onClick={() => { setMeal(m); reset(); }}>{m === 'all' ? t('allMeals') : t(`meal_${m}` as MessageKey)}</Chip>)}

@@ -10,6 +10,7 @@ import { compareStores } from '@/domain/pricing';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { SAMPLE_ANSWERS } from '@/lib/view';
+import type { QuizAnswers } from '@/domain/types';
 import { DEFAULT_CATALOG, latestRetrieval, SNAPSHOT_RECORDS } from '@/retail/catalog';
 import { RETAILER_ORDER, RETAILERS } from '@/retail/retailers';
 import { useStore } from '@/state/store';
@@ -119,4 +120,25 @@ export function Faq({ limit }: { limit?: number }) {
       ))}
     </div>
   );
+}
+
+export type Persona = 'student' | 'couple' | 'family';
+export const PERSONAS: Record<Persona, Partial<QuizAnswers>> = {
+  student: { household: 1, weeklyBudget: 30, goal: 'healthy', sex: 'm', age: 21, weightKg: 72, targetWeightKg: 72, mealsPerDay: 4 },
+  couple: { household: 2, weeklyBudget: 60, goal: 'lose', sex: 'f', age: 32, weightKg: 70, targetWeightKg: 64, mealsPerDay: 4 },
+  family: { household: 4, weeklyBudget: 100, goal: 'keep', sex: 'f', age: 38, weightKg: 68, targetWeightKg: 68, mealsPerDay: 4 },
+};
+
+/** A week for a typical person, priced at the cheapest store that sells the whole list. */
+export function usePersonaPlan(p: Persona) {
+  return useMemo(() => {
+    const a = { ...SAMPLE_ANSWERS, ...PERSONAS[p] } as QuizAnswers;
+    const plan = buildPlan(a, effectiveTargets(a), 11);
+    const need = weeklyNeed(plan, a.household);
+    const rows = compareStores(need, RETAILER_ORDER).filter((r) => r.covered > 0).sort((x, y) => x.missing - y.missing || x.total - y.total);
+    const store = rows[0]?.retailer ?? 'barbora';
+    const alloc = allocate(plan, a.household, store, DEFAULT_CATALOG);
+    const other = rows.find((r) => r.retailer !== store);
+    return { a, plan, alloc, store, saving: other ? Math.max(0, other.total - rows[0].total) : 0, otherStore: other?.retailer ?? null };
+  }, [p]);
 }

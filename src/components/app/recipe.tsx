@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getDetail } from '@/data/recipeDetails';
 import { basketFor, cheapest, effectiveRecord } from '@/domain/pricing';
@@ -43,12 +44,17 @@ function BuyBlock({ id, servings }: { id: string; servings: number }) {
   return (
     <div className="mt-5 rounded-2xl bg-sage/70 p-4">
       <div className="flex items-baseline justify-between"><b className="text-[15px]">🛒 {t('whatToBuy')} · {RETAILERS[homeStore].name}</b><span className="font-display text-[18px] font-extrabold">{eur(b.total)}</span></div>
-      <ul className="mt-2 space-y-1.5 text-[13px]">
+      <ul className="mt-3 space-y-1.5 text-[13px]">
         {b.lines.map((l) => (
-          <li key={l.ingredientId} className="flex items-center justify-between gap-2">
-            <span className="min-w-0">{l.record.url ? <a href={l.record.url} target="_blank" rel="noopener noreferrer" className="hover:underline">{l.record.name}</a> : l.record.name}</span>
+          <li key={l.ingredientId} className="flex items-center gap-3 rounded-xl bg-white/70 p-2.5">
+            <span className="min-w-0 flex-1">
+              <span className="block break-words font-semibold leading-snug">{l.record.name}</span>
+              <span className="mt-0.5 block text-[12px] text-muted tabular-nums">
+                {l.pantry ? `${t('pantry')} · ${eur(l.cost)}` : `${l.packs} × ${eur(l.record.price)}`}
+                {l.record.promo && <span className="ml-1 font-bold text-[#8a6410]">· {t('promo2')}{l.record.regular ? ` (${eur(l.record.regular)})` : ''}{l.record.loyalty ? ` · ${t('loyaltyCard')}` : ''}</span>}
+              </span>
+            </span>
             <StoreLink ingredientId={l.ingredientId} url={l.record.url} store={l.record.retailer} compact />
-            <span className="shrink-0 text-right tabular-nums">{l.pantry ? t('pantry') : `${l.packs} × ${eur(l.record.price)}`}{l.record.promo && <span className="block text-[10.5px] font-bold text-[#8a6410]">{t('promo2')}{l.record.regular ? ` · ${eur(l.record.regular)}` : ''}</span>}</span>
           </li>
         ))}
       </ul>
@@ -64,7 +70,8 @@ export function RecipePage({ id, backHref = '/app/menu' }: { id: string; backHre
   const { answers, catalog, homeStore } = useStore();
   const r = recipeById(id);
   const [servings, setServings] = useState(Math.max(1, answers.household));
-  const [cook, setCook] = useState<number | null>(null);
+  const sp = useSearchParams();
+  const [cook, setCook] = useState<number | null>(sp.get('cook') === '1' ? 0 : null);
   if (!r) return <Card className="p-8 text-center">{t('recipeNotFound')} <Link href={backHref} className="text-leaf">{t('back2')}</Link></Card>;
   const f = recipeFacts(r);
   const d = getDetail(id);

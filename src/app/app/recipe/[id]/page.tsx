@@ -1,5 +1,6 @@
+import { Suspense } from 'react';
 import { RecipePage } from '@/components/app/recipe';
 
 export default function Page({ params }: { params: { id: string } }) {
-  return <RecipePage id={decodeURIComponent(params.id)} />;
+  return <Suspense><RecipePage id={decodeURIComponent(params.id)} /></Suspense>;
 }

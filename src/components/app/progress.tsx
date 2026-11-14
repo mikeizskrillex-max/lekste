@@ -8,15 +8,17 @@ import type { MessageKey } from '@/i18n/messages';
 import { recipeById } from '@/lib/view';
 import { useStore } from '@/state/store';
 import { PageTitle } from '../appshell';
+import { SavingsLine } from '../basket';
+import { useStreak } from './home';
 import { Button, Card, Chip, Stat, inputCls } from '../ui';
-import { dateOfDay } from './meal';
 
 const C = { forest: '#174B35', leaf: '#31966A', gold: '#F0B95B', line: '#E3E2DA', muted: '#5E6B63' };
 const axis = { fontSize: 12, fill: C.muted };
 
 export function ProgressPage() {
   const { t, eur, num, date } = useI18n();
-  const { plan, targets, purchases, weights, trackWeight, addWeight, done, answers, weekEconomics } = useStore();
+  const streak = useStreak();
+  const { plan, targets, purchases, weights, trackWeight, addWeight, done, answers, weekEconomics, dayDate } = useStore();
   const [range, setRange] = useState<7 | 30 | 90>(30);
   const [kg, setKg] = useState('');
   const since = Date.now() - range * 86400000;
@@ -29,11 +31,13 @@ export function ProgressPage() {
         const f = recipeFacts(r);
         return { p: acc.p + f.protein * x.servings, f: acc.f + f.fat * x.servings, c: acc.c + f.carbs * x.servings };
       }, { p: 0, f: 0, c: 0 });
-      return { name: t(`dayS${i}` as MessageKey), kcal: Math.round(d.kcal), ...m };
+      const doneIds = done[dayDate(i)] ?? [];
+      const eaten = d.meals.filter((x) => doneIds.includes(x.recipeId)).reduce((a, x) => a + x.kcal, 0);
+      return { name: t(`dayS${i}` as MessageKey), kcal: Math.round(d.kcal), eaten, ...m };
     });
     const avg = (k: 'p' | 'f' | 'c') => days.reduce((s, d) => s + d[k], 0) / days.length;
     return { days, pie: [{ name: t('protein'), v: avg('p') * 4, c: C.leaf }, { name: t('carbs'), v: avg('c') * 4, c: C.gold }, { name: t('fat'), v: avg('f') * 9, c: C.forest }] };
-  }, [plan, t]);
+  }, [plan, t, done, dayDate]);
 
   if (!plan || !nutrition) return null;
   const econ = weekEconomics();
@@ -43,7 +47,7 @@ export function ProgressPage() {
   const mealsWeek = plan.days.reduce((s, d) => s + d.meals.length, 0);
   const cooked = Object.entries(done).filter(([d]) => Date.parse(d) >= since).reduce((s, [, l]) => s + l.length, 0);
   const wRange = weights.filter((w) => Date.parse(w.date) >= since);
-  const thisWeekCooked = plan.days.reduce((s, _, i) => s + (done[dateOfDay(i)]?.length ?? 0), 0);
+  const thisWeekCooked = plan.days.reduce((s, _, i) => s + (done[dayDate(i)]?.length ?? 0), 0);
 
   return (
     <>
@@ -52,16 +56,18 @@ export function ProgressPage() {
       <h2 className="mb-3 text-[18px] font-extrabold">{t('nutritionStats')}</h2>
       <div className="grid gap-4 lg:grid-cols-[1.6fr_1fr]">
         <Card className="p-4">
-          <div className="mb-2 text-[13px] font-semibold text-muted">{t('kcalPerDay')} · {t('plannedLabel')}</div>
+          <div className="mb-2 text-[13px] font-semibold text-muted">{t('eatenVsPlan')}</div>
           <div className="h-[240px]">
             <ResponsiveContainer>
               <BarChart data={nutrition.days} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
                 <CartesianGrid vertical={false} stroke={C.line} />
                 <XAxis dataKey="name" tick={axis} axisLine={false} tickLine={false} />
                 <YAxis tick={axis} axisLine={false} tickLine={false} />
-                <Tooltip cursor={{ fill: '#E9F1E9' }} formatter={(v: number) => [`${num(v)} kcal`, t('plannedLabel')]} />
+                <Tooltip cursor={{ fill: '#E9F1E9' }} formatter={(v: number, n: string) => [`${num(v)} kcal`, n]} />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
                 <ReferenceLine y={targets.kcal} stroke={C.gold} strokeDasharray="4 4" label={{ value: t('targetLine'), fill: C.muted, fontSize: 11, position: 'insideTopRight' }} />
-                <Bar dataKey="kcal" fill={C.leaf} radius={[6, 6, 0, 0]} maxBarSize={36} />
+                <Bar dataKey="kcal" name={t('plannedLabel')} fill="#CFE3D4" radius={[6, 6, 0, 0]} maxBarSize={28} />
+                <Bar dataKey="eaten" name={t('eatenLabel')} fill={C.leaf} radius={[6, 6, 0, 0]} maxBarSize={28} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -84,7 +90,7 @@ export function ProgressPage() {
 
       <h2 className="mb-3 mt-8 text-[18px] font-extrabold">{t('financeStats')}</h2>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        <Stat label={t('estimatedSavings')} value={eur(econ.saving)} sub={t('perWeek')} />
+        <Stat label={t('estimatedSavings')} value={eur(econ.saving)} sub={<SavingsLine compact />} />
         <Stat label={t('verifiedSavings')} value={eur(verified)} sub={t('verifiedSavingsNote')} />
         <Stat label={t('spending')} value={eur(spent)} sub={t(`range${range}` as MessageKey)} />
         <Stat label={t('costPerMeal')} value={eur(econ.best / Math.max(1, mealsWeek * answers.household))} sub={`${t('costPerPerson')}: ${eur(econ.best / answers.household)}`} />
@@ -110,8 +116,11 @@ export function ProgressPage() {
       <h2 className="mb-3 mt-8 text-[18px] font-extrabold">{t('personalStats')}</h2>
       <div className="grid gap-4 lg:grid-cols-[1.6fr_1fr]">
         <Card className="p-4">
-          <div className="mb-2 text-[13px] font-semibold text-muted">{t('weightTracking')}</div>
-          {!trackWeight ? <p className="py-8 text-center text-[14px] text-muted">{t('weightOff')}</p> : wRange.length > 1 ? (
+          <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2 text-[13px] font-semibold text-muted">
+            <span>{t('weightTracking')}</span>
+            {weights.length > 0 && <span>{t('startWeight')}: <b className="text-ink">{weights[0].kg} kg</b> · {t('nowWeight')}: <b className="text-ink">{weights[weights.length - 1].kg} kg</b>{weights.length > 1 && <b className={weights[weights.length - 1].kg <= weights[0].kg ? 'text-leaf' : 'text-danger'}> ({(weights[weights.length - 1].kg - weights[0].kg > 0 ? '+' : '')}{(weights[weights.length - 1].kg - weights[0].kg).toFixed(1)} kg)</b>}</span>}
+          </div>
+          {!trackWeight ? <p className="py-8 text-center text-[14px] text-muted">{t('weightOff')}</p> : wRange.length > 0 ? (
             <div className="h-[220px]">
               <ResponsiveContainer>
                 <LineChart data={wRange.map((w) => ({ d: date(w.date, { day: 'numeric', month: 'short' }), kg: w.kg }))} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
@@ -134,6 +143,7 @@ export function ProgressPage() {
         <div className="grid gap-3">
           <Stat label={t('mealsCooked')} value={num(cooked)} sub={t(`range${range}` as MessageKey)} />
           <Stat label={t('weekStreak')} value={`${thisWeekCooked}/${mealsWeek}`} />
+          <Stat label={t('streak')} value={`${streak > 0 ? '🔥 ' : ''}${streak}`} sub={t('streakSub')} />
         </div>
       </div>
     </>

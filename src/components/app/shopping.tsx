@@ -4,11 +4,11 @@ import { useMemo, useState } from 'react';
 import type { RetailerId } from '@/config/markets';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
-import { fmtGrams, ingName, retailerName } from '@/lib/view';
+import { fmtGrams, ingName, retailerName, shortDate } from '@/lib/view';
 import { RETAILER_ORDER, RETAILERS } from '@/retail/retailers';
 import { todayIndex, useStore } from '@/state/store';
 import { PageTitle } from '../appshell';
-import { DayList, StoreList, StorePicker, StoreSummary, useHomeBasket, useWeekNeed } from '../basket';
+import { BasicsChecklist, DayList, HomeStock, ShareList, StoreList, StorePicker, StoreSummary, useHomeBasket, useWeekNeed } from '../basket';
 import { Button, Card, Chip, Field, inputCls, cx } from '../ui';
 import { useToast } from './meal';
 
@@ -17,19 +17,21 @@ export { categoryLabel } from '../basket';
 /** Shopping list for the user's ONE store: whole week or a single day. */
 export function ShoppingPage() {
   const { t, lang, eur, date } = useI18n();
-  const { plan, homeStore, recordPurchase, purchases, purchased } = useStore();
+  const { plan, homeStore, recordPurchase, purchases, purchased, dayDate } = useStore();
   const { show, node } = useToast();
   const [view, setView] = useState<'week' | number>('week');
   const [paid, setPaid] = useState('');
   const [store, setStore] = useState<RetailerId | 'mixed'>(homeStore);
   const need = useWeekNeed();
-  const basket = useHomeBasket(need);
+  const fallback = useHomeBasket(need);
+  const { allocation } = useStore();
+  const basket = allocation?.week ?? fallback;
   const got = useMemo(() => basket.lines.filter((l) => purchased.includes(l.ingredientId)).length, [basket, purchased]);
   if (!plan) return null;
 
+  const listText = `🛒 Lėkštė · ${RETAILERS[homeStore].name} — ${eur(basket.total)}\n` + basket.lines.map((l) => `☐ ${ingName(l.ingredientId, lang)} — ${l.pantry ? fmtGrams(l.grams, lang) : `${l.packs} × ${l.record.name}`}${l.record.promo ? ` (${t('promo2')})` : ''}`).join('\n');
   const copy = async () => {
-    const txt = `${RETAILERS[homeStore].name} — ${eur(basket.total)}\n` + basket.lines.map((l) => `☐ ${ingName(l.ingredientId, lang)} — ${l.record.name}, ${l.pantry ? fmtGrams(l.grams, lang) : `${l.packs} × ${eur(l.record.price)}`}${l.record.promo ? ` (${t('promo2')})` : ''}`).join('\n');
-    try { await navigator.clipboard.writeText(txt); show(t('copied')); } catch { show(t('copyList'), true); }
+    try { await navigator.clipboard.writeText(listText); show(t('copied')); } catch { show(t('copyList'), true); }
   };
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,15 +42,17 @@ export function ShoppingPage() {
 
   return (
     <>
-      <PageTitle title={t('shoppingTitle')} sub={`${RETAILERS[homeStore].name} · ${t('ofItems', { a: got, b: basket.lines.length })}`} right={<Button variant="secondary" size="sm" onClick={copy}>{t('copyList')}</Button>} />
+      <PageTitle title={t('shoppingTitle')} sub={`${RETAILERS[homeStore].name} · ${t('ofItems', { a: got, b: basket.lines.length })}`} right={<span className="flex flex-wrap gap-1.5"><ShareList text={listText} /><Button variant="secondary" size="sm" onClick={copy}>{t('copyList')}</Button></span>} />
       <div className="mb-5"><StorePicker onChanged={(r) => { setStore(r); show(t('storeChanged', { store: RETAILERS[r].name })); }} /></div>
       <div className="no-scrollbar mb-5 flex gap-2 overflow-x-auto pb-1">
         <Chip on={view === 'week'} onClick={() => setView('week')}>{t('allDays')}</Chip>
-        {plan.days.map((_, i) => <Chip key={i} on={view === i} onClick={() => setView(i)}>{t(`dayS${i}` as MessageKey)}{i === todayIndex() ? ' •' : ''}</Chip>)}
+        {plan.days.map((_, i) => <Chip key={i} on={view === i} onClick={() => setView(i)}>{t(`dayS${i}` as MessageKey)} <span className="font-normal opacity-75">{shortDate(dayDate(i), lang)}</span>{i === todayIndex() ? ' •' : ''}</Chip>)}
       </div>
       <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
         <div className="space-y-4">
+          <HomeStock />
           {view === 'week' ? (<><StoreSummary basket={basket} /><StoreList basket={basket} checkable /></>) : <DayList day={view} checkable />}
+          <BasicsChecklist />
         </div>
         <div className="space-y-4">
           <Card className="p-5">

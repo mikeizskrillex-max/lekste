@@ -12,7 +12,8 @@ import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { recipeName, SAMPLE_ANSWERS } from '@/lib/view';
 import { Badge, ButtonLink, Card, Container, CountUp, DemoBadge, DishImage, Reveal, SectionTitle, Slider, cx } from './ui';
-import { Faq, PricesChecked, PricingCards, StoreComparisonTable, useSamplePlan, useStoreRows } from './marketing';
+import { Faq, PERSONAS, PricesChecked, PricingCards, StoreComparisonTable, usePersonaPlan, useSamplePlan, useStoreRows, type Persona } from './marketing';
+import { RETAILERS } from '@/retail/retailers';
 
 function Hero() {
   const { t, eur, num } = useI18n();
@@ -88,17 +89,32 @@ function How() {
 
 export function WeekPreview() {
   const { t, lang, eur, num } = useI18n();
-  const { plan, alloc } = useSamplePlan();
+  const [persona, setPersona] = useState<Persona>('couple');
+  const { plan, alloc, a, store, saving, otherStore } = usePersonaPlan(persona);
   const [day, setDay] = useState(0);
   const d = plan.days[day];
   return (
     <section className="bg-sage/60 py-16 md:py-24">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <SectionTitle kicker={t('navDemo')} title={t('weekPreviewTitle')} sub={t('weekPreviewSub')} />
+          <SectionTitle kicker={t('navDemo')} title={t('weekPreviewTitle')} sub={t('personaSub')} />
           <DemoBadge label={t('heroSampleTag')} />
         </div>
-        <div className="no-scrollbar mt-8 flex gap-2 overflow-x-auto pb-1" role="tablist">
+        <div className="mt-8 flex flex-wrap gap-2" role="radiogroup" aria-label={t('personaPick')}>
+          {(['student', 'couple', 'family'] as Persona[]).map((p) => (
+            <button key={p} type="button" role="radio" aria-checked={persona === p} onClick={() => { setPersona(p); setDay(0); }}
+              className={cx('rounded-2xl px-4 py-3 text-left ring-1 transition', persona === p ? 'bg-forest text-white ring-forest' : 'bg-card ring-line hover:ring-leaf')}>
+              <span className="block text-[15px] font-bold">{t(`persona_${p}` as MessageKey)}</span>
+              <span className={cx('block text-[12.5px]', persona === p ? 'text-white/75' : 'text-muted')}>{t('personaMeta', { n: PERSONAS[p].household!, b: eur(PERSONAS[p].weeklyBudget!) })}</span>
+            </button>
+          ))}
+        </div>
+        <Card className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-2 p-4 md:p-5">
+          <span><span className="block text-[12px] font-semibold text-muted">{t('heroChipBasket')} · {RETAILERS[store].name}</span><b className="font-display text-[26px] font-extrabold">{eur(alloc.week.total)}</b></span>
+          <span><span className="block text-[12px] font-semibold text-muted">{t('perPersonDay')}</span><b className="font-display text-[22px] font-extrabold">{eur(alloc.week.total / a.household / 7)}</b></span>
+          {saving > 0 && otherStore && <span className="text-[14px] font-semibold text-leaf">{t('savedVs', { n: eur(saving), store: RETAILERS[otherStore].name })}</span>}
+        </Card>
+        <div className="no-scrollbar mt-5 flex gap-2 overflow-x-auto pb-1" role="tablist">
           {plan.days.map((_, i) => (
             <button key={i} role="tab" aria-selected={day === i} type="button" onClick={() => setDay(i)}
               className={cx('shrink-0 rounded-2xl px-4 py-2.5 text-[14px] font-bold transition', day === i ? 'bg-forest text-white' : 'bg-card text-ink ring-1 ring-line hover:ring-leaf')}>
@@ -121,7 +137,7 @@ export function WeekPreview() {
         </motion.div>
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-[14px]">
           <span><b>{t('dayTotals')}:</b> {num(d.kcal)} kcal · {num(d.protein)} g {t('protein')}</span>
-          <span>{t('dayCost')}: <b>{eur(alloc.day[day])}</b> ({SAMPLE_ANSWERS.household} {t('people2')}) · {t('heroChipBasket')}: <b>{eur(alloc.week.total)}</b></span>
+          <span>{t('dayCost')}: <b>{eur(alloc.day[day])}</b> ({a.household} {t('people2')})</span>
         </div>
       </Container>
     </section>
@@ -240,6 +256,30 @@ export function AssistantPreview() {
   );
 }
 
+function WhyNotChatGpt() {
+  const { t } = useI18n();
+  const rows = [1, 2, 3, 4, 5, 6] as const;
+  return (
+    <section className="py-16 md:py-24">
+      <Container>
+        <SectionTitle center kicker="Lėkštė vs ChatGPT" title={t('whyTitle')} sub={t('whySub')} />
+        <Card className="mx-auto mt-10 max-w-[860px] overflow-hidden">
+          <div className="grid grid-cols-[1.3fr_1fr_1fr] border-b border-line bg-paper/70 px-4 py-3 text-[12.5px] font-bold uppercase tracking-wide text-muted md:px-6">
+            <span /><span className="text-center">ChatGPT</span><span className="text-center text-forest">Lėkštė</span>
+          </div>
+          {rows.map((n) => (
+            <div key={n} className="grid grid-cols-[1.3fr_1fr_1fr] items-center border-b border-line/60 px-4 py-3.5 text-[14px] last:border-0 md:px-6">
+              <span className="font-semibold">{t(`why${n}` as MessageKey)}</span>
+              <span className="text-center text-[13px] text-muted">✕ {t(`why${n}a` as MessageKey)}</span>
+              <span className="text-center text-[13px] font-semibold text-forest">✓ {t(`why${n}b` as MessageKey)}</span>
+            </div>
+          ))}
+        </Card>
+      </Container>
+    </section>
+  );
+}
+
 function Benefits() {
   const { t } = useI18n();
   const icons = ['🍽️', '🏷️', '💶', '🛡️', '👨‍👩‍👧', '🌐'];
@@ -306,5 +346,5 @@ function FinalCta() {
 }
 
 export function Landing() {
-  return (<><Hero /><How /><WeekPreview /><Compare /><Calculator /><AssistantPreview /><Benefits /><Pricing /><FaqSection /><FinalCta /></>);
+  return (<><Hero /><How /><WeekPreview /><Compare /><Calculator /><AssistantPreview /><WhyNotChatGpt /><Benefits /><Pricing /><FaqSection /><FinalCta /></>);
 }

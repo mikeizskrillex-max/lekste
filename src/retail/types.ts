@@ -32,6 +32,8 @@ export interface PriceRecord {
   promoValidTo: string | null;
   /** the promotion requires the retailer's loyalty card */
   loyalty?: boolean;
+  /** earlier checks of the same product (weekly refresh), oldest first */
+  history?: { d: string; p: number; promo: boolean }[];
   perKg: number;
   url: string | null;
   imageUrl: string | null;

@@ -13,6 +13,8 @@ export interface StoreOffer {
   loyalty: boolean;
   available: boolean;
   retrievedAt: string;
+  /** price on each check (weekly), oldest first */
+  history?: { d: string; p: number; promo: boolean }[];
 }
 export type StoreId = 'barbora' | 'rimi';
 export const PRICES_UPDATED_AT: string = data.updatedAt;

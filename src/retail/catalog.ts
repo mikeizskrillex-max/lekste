@@ -23,6 +23,7 @@ export const SNAPSHOT_RECORDS: PriceRecord[] = Object.entries(PRICES).flatMap(([
     promoValidFrom: o!.promoFrom ?? null,
     promoValidTo: o!.promoTo ?? null,
     loyalty: o!.loyalty ?? false,
+    history: o!.history ?? [],
     perKg: o!.perKg,
     url: o!.url,
     imageUrl: null,

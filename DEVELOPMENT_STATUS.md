@@ -1,7 +1,7 @@
 # Development status — 2026-11-12
 
-Checks on this commit: `npm run lint` ✓ · `npm run typecheck` ✓ · `npm test` 42/42 ✓ · `npm run build` ✓ ·
-`npm run e2e` 31/31 ✓ (scenarios A–J, production build, development mode) · migration applied to local Postgres 16
+Checks on this commit: `npm run lint` ✓ · `npm run typecheck` ✓ · `npm test` 43/43 ✓ · `npm run build` ✓ ·
+`npm run e2e` 37/37 ✓ (scenarios A–J, production build, development mode) · migration applied to local Postgres 16
 with a Supabase auth stub: 41 tables, 57 RLS policies, owner isolation checked.
 
 | Phase | Status |
@@ -69,3 +69,20 @@ with a Supabase auth stub: 41 tables, 57 RLS policies, owner isolation checked.
 * After the questionnaire (and from Menu / Settings): swipe ~16 varied dishes (like / not for me).
   Liked main ingredients and cuisines are favoured, disliked dishes are no longer planned and their main
   ingredient is used less (soft rule, not a ban). The deck respects allergies, diet and dislikes.
+
+## 2026-11-14 — polish pass
+
+* Savings are honest and never "0 €": the same items are compared with the most expensive other store that
+  sells them (and the promo part is shown); if another store is cheaper the app says so and offers to switch.
+* Today screen: next meal by time of day (photo, what to take out, "Cook now" → cook mode, "Cooked"),
+  eaten-today ring, streak of days with ≥3 cooked meals, promotions for you with "+ to menu".
+* Progress: eaten vs planned kcal per day, starting/current weight with difference, streak.
+* Dates on every day (14 lapkr.), week ranges, Lithuanian short months.
+* Shopping: share sheet + WhatsApp, leftovers at home (carried over automatically to the next week for
+  shelf-stable items, editable), basics checklist (salt, pepper, frying oil…) with store search links.
+* Price history per product with chart and "below usual" badge (weekly script now keeps 52 points).
+* Landing: student / couple / family switcher with real menus and baskets; "Why not just ChatGPT?" table.
+* Result page: 2.5 s "building your plan" sequence and a headline card with the weekly basket.
+* SEO: schema.org/Recipe on every public recipe page.
+* Accessibility: icon-only buttons on small phones have labels.
+* Not done: proof-reading by a native Lithuanian speaker; dedicated photos for generated dishes.

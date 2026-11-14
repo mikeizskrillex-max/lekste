@@ -20,7 +20,7 @@ export const N = {
   demoData: { lt: 'Demonstraciniai duomenys', ru: 'Демо-данные' },
   illustrative: { lt: 'Iliustracinės vertės', ru: 'Иллюстративные значения' },
   pricesChecked: { lt: 'Kainos patikrintos {date}', ru: 'Цены проверены {date}' },
-  snapshotNote: { lt: 'Barbora ir Rimi kainos — momentinė viešų e. parduotuvių kopija, ne realaus laiko duomenys.', ru: 'Цены Barbora и Rimi — снимок публичных интернет-магазинов, не данные в реальном времени.' },
+  snapshotNote: { lt: 'Kainos atnaujinamos kas pirmadienį iš Barbora ir Rimi e. parduotuvių. Parduotuvėje kaina gali skirtis.', ru: 'Цены обновляются каждый понедельник из интернет-магазинов Barbora и Rimi. В магазине цена может отличаться.' },
   noData: { lt: 'Nėra patikrintų kainų', ru: 'Нет проверенных цен' },
   cheapest: { lt: 'Pigiausia', ru: 'Дешевле всего' },
   perWeek: { lt: 'per savaitę', ru: 'в неделю' },

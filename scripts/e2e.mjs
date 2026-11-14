@@ -112,7 +112,7 @@ try {
   await page.goto(`${BASE}/app/shopping`);
   const shopText = await page.locator('main').innerText();
   check('E shopping list comes from one store only', shopText.includes('Rimi') && !/\bBarbora\b[^\n]*€/.test(shopText.split('Įrašyti apsipirkimą')[0]));
-  await page.getByRole('button', { name: 'An', exact: true }).click();
+  await page.getByRole('button', { name: /^An / }).click();
   check('E per-day list shown', await page.getByText(/Ką nupirkti šiai dienai/).isVisible());
 
   // ---------- F: change budget recalculates ----------
@@ -130,6 +130,23 @@ try {
   await page.getByRole('button', { name: 'Išsaugoti' }).click();
   await page.goto(`${BASE}/app/progress`);
   check('G progress shows recorded spending', (await page.locator('main').innerText()).includes('25,00'));
+
+  // ---------- today screen, promos, sharing, leftovers, basics ----------
+  await page.goto(`${BASE}/app`);
+  check('TODAY next meal card with cook button', await page.getByRole('link', { name: /Gaminti dabar/ }).isVisible());
+  const homeText = await page.locator('main').innerText();
+  check('TODAY savings line is meaningful (not 0,00 €)', /palyginti su|pigesnė|pigiausia/.test(homeText));
+  await page.goto(`${BASE}/app/shopping`);
+  check('SHOP share + WhatsApp buttons', await page.getByRole('button', { name: /Dalintis/ }).isVisible() && await page.getByRole('link', { name: 'WhatsApp' }).isVisible());
+  await page.getByRole('button', { name: /\+ Pridėti/ }).click();
+  await page.locator('form select').first().selectOption('rice');
+  await page.locator('form input[aria-label="g"]').fill('1000');
+  await page.getByRole('button', { name: 'Išsaugoti' }).first().click();
+  await page.waitForTimeout(400);
+  check('SHOP leftover at home saved', ((await state(page)).stock ?? {}).rice === 1000);
+  check('SHOP basics checklist shown', await page.getByText(/Ar turite namuose/).isVisible());
+  const pub = await page.request.get(`${BASE}/recipe/plov`);
+  check('SEO recipe page has schema.org Recipe', (await pub.text()).includes('"@type":"Recipe"'));
 
   // ---------- new week, history, catalog, favorites ----------
   await page.goto(`${BASE}/app/menu`);

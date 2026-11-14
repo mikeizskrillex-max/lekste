@@ -10,14 +10,6 @@ import { recipeName } from '@/lib/view';
 import { useStore } from '@/state/store';
 import { DishImage, cx } from '../ui';
 
-/** ISO date of weekday `day` (0 = Monday) in the current week. */
-export function dateOfDay(day: number): string {
-  const now = new Date();
-  const monday = new Date(now);
-  monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
-  monday.setDate(monday.getDate() + day);
-  return monday.toISOString().slice(0, 10);
-}
 
 export function useToast() {
   const [msg, setMsg] = useState<{ text: string; bad?: boolean } | null>(null);
@@ -34,9 +26,9 @@ const MODES: { mode: ReplaceMode; key: MessageKey }[] = [
 
 export function MealRow({ meal, day, slot, toast }: { meal: PlanMeal; day: number; slot: number; toast: (s: string, bad?: boolean) => void }) {
   const { t, lang, eur, num } = useI18n();
-  const { replace, done, toggleDone, rate, feedback, allocation } = useStore();
+  const { replace, done, toggleDone, rate, feedback, allocation, dayDate } = useStore();
   const [menu, setMenu] = useState(false);
-  const date = dateOfDay(day);
+  const date = dayDate(day);
   const isDone = (done[date] ?? []).includes(meal.recipeId);
   const r = feedback.find((f) => f.recipeId === meal.recipeId)?.rating;
   return (
@@ -46,11 +38,13 @@ export function MealRow({ meal, day, slot, toast }: { meal: PlanMeal; day: numbe
         <div className="text-[11px] font-bold uppercase tracking-wide text-leaf">{t(`meal_${meal.meal}` as MessageKey)}</div>
         <Link href={`/app/recipe/${meal.recipeId}`} className="line-clamp-2 text-[15px] font-bold leading-snug hover:text-leaf">{recipeName(meal.recipeId, lang)}</Link>
         <div className="mt-1 text-[12.5px] text-muted">{num(meal.kcal)} kcal · {num(meal.protein)} g · {eur(allocation?.meal[day]?.[slot] ?? 0)}</div>
-        <div className="mt-2 flex flex-wrap items-center gap-1.5">
-          <button type="button" onClick={() => toggleDone(date, meal.recipeId)} aria-pressed={isDone} className={cx('rounded-full px-2.5 py-1 text-[12px] font-semibold ring-1', isDone ? 'bg-leaf text-white ring-leaf' : 'ring-line hover:ring-leaf')}>✓ {t('markDone')}</button>
-          <button type="button" onClick={() => setMenu((m) => !m)} aria-expanded={menu} className="rounded-full px-2.5 py-1 text-[12px] font-semibold ring-1 ring-line hover:ring-leaf">⇄ {t('replace')}</button>
-          <button type="button" aria-label={t('rateUp')} aria-pressed={r === 'up'} onClick={() => rate(meal.recipeId, 'up')} className={cx('rounded-full px-2 py-1 text-[12px] ring-1', r === 'up' ? 'bg-sage ring-leaf' : 'ring-line')}>👍</button>
-          <button type="button" aria-label={t('rateDown')} aria-pressed={r === 'down'} onClick={() => { rate(meal.recipeId, 'down'); if (replace(day, slot, 'any')) toast(t('replaced')); }} className={cx('rounded-full px-2 py-1 text-[12px] ring-1', r === 'down' ? 'bg-danger/10 ring-danger' : 'ring-line')}>👎</button>
+        <div className="mt-2 flex items-center gap-1">
+          <button type="button" onClick={() => toggleDone(date, meal.recipeId)} aria-pressed={isDone} aria-label={t('markDone')} className={cx('inline-flex h-8 items-center gap-1 rounded-full px-2.5 text-[12px] font-semibold ring-1', isDone ? 'bg-leaf text-white ring-leaf' : 'ring-line hover:ring-leaf')}>✓<span className="hidden min-[400px]:inline"> {t('markDone')}</span></button>
+          <button type="button" onClick={() => setMenu((m) => !m)} aria-expanded={menu} aria-label={t('replace')} className="inline-flex h-8 items-center gap-1 rounded-full px-2.5 text-[12px] font-semibold ring-1 ring-line hover:ring-leaf">⇄<span className="hidden min-[400px]:inline"> {t('replace')}</span></button>
+          <span className="ml-auto flex gap-1">
+            <button type="button" aria-label={t('rateUp')} aria-pressed={r === 'up'} onClick={() => rate(meal.recipeId, 'up')} className={cx('grid h-8 w-8 place-items-center rounded-full text-[13px] ring-1', r === 'up' ? 'bg-sage ring-leaf' : 'ring-line')}>👍</button>
+            <button type="button" aria-label={t('rateDown')} aria-pressed={r === 'down'} onClick={() => { rate(meal.recipeId, 'down'); if (replace(day, slot, 'any')) toast(t('replaced')); }} className={cx('grid h-8 w-8 place-items-center rounded-full text-[13px] ring-1', r === 'down' ? 'bg-danger/10 ring-danger' : 'ring-line')}>👎</button>
+          </span>
         </div>
       </div>
       {menu && (

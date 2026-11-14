@@ -15,10 +15,16 @@ import type { Intent } from '@/ai/intent';
 import type { RetailerId } from '@/config/markets';
 import { DEFAULT_PLANS, type Plan as SubPlan, type PlanId } from '@/config/plans';
 import { effectiveTargets } from '@/domain/nutrition';
-import { buildPlan, regenerateDay, replaceMeal, weeklyNeed, type Plan, type ReplaceMode } from '@/domain/planner';
+import { buildPlan, regenerateDay, replaceMeal, type Plan, type ReplaceMode } from '@/domain/planner';
 import { allocate, type Allocation } from '@/domain/allocation';
 import { learnTaste } from '@/domain/taste';
-import { basketFor, compareStores, setActiveCatalog } from '@/domain/pricing';
+import { RECIPE_BY_ID } from '@/data/recipeIndex';
+import { recipeFacts } from '@/domain/recipeFacts';
+import { categoryOf } from '@/retail/matching';
+import type { ProductCategory } from '@/retail/types';
+
+const SHELF_STABLE = new Set<ProductCategory>(['grains', 'pasta', 'oils', 'nuts', 'frozen', 'other']);
+import { basketFor, setActiveCatalog } from '@/domain/pricing';
 import type { QuizAnswers, Targets } from '@/domain/types';
 import { buildCatalog, retailersWithData, SNAPSHOT_RECORDS } from '@/retail/catalog';
 import { RETAILER_ORDER } from '@/retail/retailers';
@@ -56,6 +62,10 @@ interface State {
   subscription: Subscription;
   session: Session | null;
   emails: { date: string; subject: string; to: string }[];
+  /** shelf-stable leftovers at home, grams by ingredient (rice, pasta, oil…) */
+  stock?: Record<string, number>;
+  /** basic items the user confirmed they have at home (salt, oil for frying…) */
+  basics?: string[];
 }
 
 const KEY = 'lekste:v2';
@@ -83,6 +93,8 @@ export function mondayOf(d: Date): string {
   const x = new Date(d.getFullYear(), d.getMonth(), d.getDate() - ((d.getDay() + 6) % 7));
   return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`;
 }
+/** date n days after an ISO date */
+export const addDaysIso2 = (iso: string, n: number) => { const [y, m, d] = iso.split('-').map(Number); const x = new Date(y, m - 1, d + n); return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`; };
 const addDaysIso = (iso: string, n: number) => { const [y, m, d] = iso.split('-').map(Number); return mondayOf(new Date(y, m - 1, d + n)); };
 const addDays = (iso: string, d: number) => new Date(Date.parse(iso) + d * 86400000).toISOString();
 const uid = () => Math.random().toString(36).slice(2, 10);
@@ -105,6 +117,12 @@ interface Ctx extends State {
   applyTaste: (liked: string[], disliked: string[]) => void;
   /** true when the calendar week moved on since the plan was made */
   weekIsOld: boolean;
+  /** ISO date (YYYY-MM-DD) of a plan day */
+  dayDate: (day: number) => string;
+  setStock: (id: string, grams: number) => void;
+  toggleBasic: (id: string) => void;
+  /** put a recipe into the menu (next matching meal from today) */
+  placeRecipe: (recipeId: string) => { day: number; slot: number } | null;
   rate: (recipeId: string, rating: 'up' | 'down') => void;
   toggleDone: (date: string, recipeId: string) => void;
   togglePurchased: (id: string) => void;
@@ -123,7 +141,7 @@ interface Ctx extends State {
   resetPrices: () => void;
   setPlans: (p: SubPlan[]) => void;
   /** weekly basket economics for the current plan (used by dashboard, progress, savings) */
-  weekEconomics: () => { best: number; reference: number; saving: number; promo: number; missing: number };
+  weekEconomics: () => { best: number; reference: number; saving: number; promo: number; missing: number; cheaperStore: RetailerId | null; cheaperBy: number; refStore: RetailerId | null };
   /** the supermarket all lists are built for */
   homeStore: RetailerId;
   /** supermarkets that have prices (snapshot or CSV) */
@@ -159,7 +177,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const catalog = useMemo(() => { const c = buildCatalog(priceRecords); setActiveCatalog(c); return c; }, [priceRecords]);
   const availableStores = useMemo(() => RETAILER_ORDER.filter((r) => retailersWithData(catalog).includes(r)), [catalog]);
   const homeStore = homeOf(s.answers, availableStores);
-  const allocation = useMemo(() => (s.plan ? allocate(s.plan, s.answers.household, homeStore, catalog) : null), [s.plan, s.answers.household, homeStore, catalog]);
+  const allocation = useMemo(() => (s.plan ? allocate(s.plan, s.answers.household, homeStore, catalog, s.stock ?? {}) : null), [s.plan, s.answers.household, homeStore, catalog, s.stock]);
   const targets = useMemo(() => effectiveTargets(s.answers), [s.answers]);
   const disliked = s.feedback.filter((f) => f.rating === 'down').map((f) => f.recipeId);
 
@@ -203,9 +221,22 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const prev = { weekStart: p.weekStart ?? mondayOf(new Date(p.planCreatedAt ?? Date.now())), plan: p.plan, basket: allocation?.week.total ?? 0 };
       const last = p.plan.days.flatMap((d) => d.meals.map((m) => m.recipeId));
       const nextStart = p.weekStart && p.weekStart >= mondayOf(new Date()) ? addDaysIso(p.weekStart, 7) : mondayOf(new Date());
+      // shelf-stable leftovers of this week's packages stay at home for the next week
+      const stock: Record<string, number> = {};
+      if (allocation) {
+        for (const l of allocation.week.lines) {
+          if (l.pantry || !SHELF_STABLE.has(categoryOf(l.ingredientId))) continue;
+          const left = l.packs * l.record.grams - l.grams;
+          if (left >= 40) stock[l.ingredientId] = Math.round(left);
+        }
+        for (const [id, g] of Object.entries(p.stock ?? {})) {
+          const used = allocation.usedStock.get(id) ?? 0;
+          if (g - used >= 40) stock[id] = Math.round((stock[id] ?? 0) + g - used);
+        }
+      }
       return {
         ...p, plan: buildPlan(p.answers, effectiveTargets(p.answers), Date.now() % 9973, last), planCreatedAt: new Date().toISOString(),
-        weekStart: nextStart, history: [prev, ...(p.history ?? [])].slice(0, 12), purchased: [],
+        weekStart: nextStart, history: [prev, ...(p.history ?? [])].slice(0, 12), purchased: [], stock,
       };
     }),
     restoreWeek: (ws) => setS((p) => {
@@ -223,6 +254,33 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const f = p.answers.favorites ?? [];
       return { ...p, answers: { ...p.answers, favorites: f.includes(id) ? f.filter((x) => x !== id) : [...f, id] } };
     }),
+    dayDate: (day) => addDaysIso2(s.weekStart ?? mondayOf(new Date(s.planCreatedAt ?? Date.now())), day),
+    setStock: (id, grams) => setS((p) => { const st = { ...(p.stock ?? {}) }; if (grams > 0) st[id] = Math.round(grams); else delete st[id]; return { ...p, stock: st }; }),
+    toggleBasic: (id) => setS((p) => { const b = p.basics ?? []; return { ...p, basics: b.includes(id) ? b.filter((x) => x !== id) : [...b, id] }; }),
+    placeRecipe: (recipeId) => {
+      const cur = sRef.current;
+      if (!cur.plan) return null;
+      const r = RECIPE_BY_ID[recipeId];
+      if (!r) return null;
+      const main = (m: string) => m === 'lunch' || m === 'dinner';
+      const t0 = todayIndex();
+      for (let k = 0; k < 7; k++) {
+        const d = (t0 + k) % 7;
+        const slot = cur.plan.days[d].meals.findIndex((m) => m.meal === r.meal || (main(m.meal) && main(r.meal)));
+        if (slot < 0) continue;
+        const f = recipeFacts(r);
+        const days = cur.plan.days.map((day, i) => {
+          if (i !== d) return day;
+          const meals = day.meals.map((m, j) => (j === slot ? { ...m, recipeId, kcal: Math.round(f.kcal * m.servings), protein: Math.round(f.protein * m.servings), cost: f.cost * m.servings } : m));
+          return { ...day, meals, kcal: meals.reduce((a, m) => a + m.kcal, 0), protein: meals.reduce((a, m) => a + m.protein, 0), cost: meals.reduce((a, m) => a + m.cost, 0) };
+        });
+        const plan = { ...cur.plan, days };
+        sRef.current = { ...cur, plan };
+        setS((p) => ({ ...p, plan }));
+        return { day: d, slot };
+      }
+      return null;
+    },
     weekIsOld: !!s.plan && (s.weekStart ?? mondayOf(new Date(s.planCreatedAt ?? Date.now()))) < mondayOf(new Date()),
     regenerate: (day) => setS((p) => (p.plan ? { ...p, plan: regenerateDay(p.plan, p.answers, effectiveTargets(p.answers), day, Date.now() % 9973, disliked) } : p)),
     rate: (recipeId, rating) => setS((p) => ({ ...p, feedback: [...p.feedback.filter((f) => f.recipeId !== recipeId), { recipeId, rating }] })),
@@ -232,7 +290,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     }),
     togglePurchased: (id) => setS((p) => ({ ...p, purchased: p.purchased.includes(id) ? p.purchased.filter((x) => x !== id) : [...p.purchased, id] })),
     recordPurchase: (retailer, paid) => setS((p) => {
-      const e = econ(p.plan, p.answers, catalog, homeOf(p.answers, availableStores));
+      const e = econ(allocation, catalog, homeStore);
       return { ...p, purchases: [...p.purchases, { id: uid(), date: new Date().toISOString(), retailer, paid, reference: e.reference, estimated: e.best }] };
     }),
     addWeight: (kg) => setS((p) => ({ ...p, weights: [...p.weights.filter((w) => w.date !== today()), { date: today(), kg }].sort((a, b) => a.date.localeCompare(b.date)) })),
@@ -260,7 +318,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     importPrices: (records) => setImports((cur) => { const next = [...cur, ...records]; write(PRICE_KEY, next); return next; }),
     resetPrices: () => { write(PRICE_KEY, []); setImports([]); },
     setPlans: (p) => { write(PLANS_KEY, p); setPlansState(p); },
-    weekEconomics: () => econ(s.plan, s.answers, catalog, homeStore),
+    weekEconomics: () => econ(allocation, catalog, homeStore),
   };
 
   return <StoreCtx.Provider value={value}>{children}</StoreCtx.Provider>;
@@ -273,14 +331,30 @@ export function homeOf(a: QuizAnswers, available: RetailerId[]): RetailerId {
   return available[0] ?? 'barbora';
 }
 
-/** Weekly list priced at the user's store vs the priciest store with data (= estimated saving). */
-function econ(plan: Plan | null, a: QuizAnswers, catalog: Catalog, home: RetailerId) {
-  if (!plan) return { best: 0, reference: 0, saving: 0, promo: 0, missing: 0 };
-  const need = weeklyNeed(plan, a.household);
-  const b = basketFor(need, [home], catalog);
-  const rows = compareStores(need, RETAILER_ORDER, catalog).filter((r) => r.covered > 0 && r.missing <= b.missing.length);
-  const reference = rows.length ? Math.max(...rows.map((r) => r.total)) : b.total;
-  return { best: b.total, reference, saving: Math.max(0, reference - b.total), promo: b.saving, missing: b.missing.length };
+/**
+ * Weekly economics at the user's store. `best` is what they pay (whole packages,
+ * promotions, minus leftovers at home). The saving compares the SAME items at the
+ * most expensive other store with prices (items both stores sell), so it is never
+ * an apples-to-oranges number; `promo` is the part that comes from promotions.
+ */
+function econ(alloc: Allocation | null, catalog: Catalog, home: RetailerId) {
+  if (!alloc) return { best: 0, reference: 0, saving: 0, promo: 0, missing: 0, cheaperStore: null as RetailerId | null, cheaperBy: 0, refStore: null as RetailerId | null };
+  const b = alloc.week;
+  const need = new Map(b.lines.map((l) => [l.ingredientId, l.grams]));
+  let reference = b.total;
+  let refStore: RetailerId | null = null;
+  let cheaperStore: RetailerId | null = null;
+  let cheaperBy = 0;
+  for (const r of RETAILER_ORDER) {
+    if (r === home) continue;
+    const common = new Map([...need].filter(([id]) => catalog[id]?.[r]));
+    if (common.size < need.size * 0.8) continue;
+    const other = basketFor(common, [r], catalog).total;
+    const mine = b.lines.filter((l) => common.has(l.ingredientId)).reduce((s, l) => s + l.cost, 0);
+    if (other - mine > reference - b.total) { reference = b.total + (other - mine); refStore = r; }
+    if (mine - other > cheaperBy) { cheaperBy = mine - other; cheaperStore = r; }
+  }
+  return { best: b.total, reference, saving: Math.max(0, reference - b.total), promo: b.saving, missing: b.missing.length, cheaperStore, cheaperBy, refStore };
 }
 
 export function useStore(): Ctx {

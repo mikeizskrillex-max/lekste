@@ -96,6 +96,8 @@ async function main() {
         perKg: round(parsed.perKg ?? ((parsed.price ?? offer.price) / offer.grams) * 1000),
         available: parsed.available,
         retrievedAt: now,
+        // weekly price history (one point per day, last 52)
+        history: [...(offer.history ?? []).filter((h) => h.d !== now.slice(0, 10)), { d: now.slice(0, 10), p: parsed.price ?? offer.price, promo: parsed.promo }].slice(-52),
       };
       if (next.promo) promos++;
       if (next.price !== offer.price || next.promo !== offer.promo || next.available !== offer.available) {

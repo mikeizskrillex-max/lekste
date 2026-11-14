@@ -1,4 +1,5 @@
 import type { Locale, RetailerId } from '@/config/markets';
+import { formatDate } from '@/i18n/I18nProvider';
 import { INGREDIENT_BY_ID, INGREDIENTS } from '@/data/ingredients';
 import { RECIPE_BY_ID } from '@/data/recipeIndex';
 import type { Recipe } from '@/data/recipes';
@@ -61,4 +62,9 @@ export function download(name: string, text: string, type = 'application/json') 
   const a = document.createElement('a');
   a.href = url; a.download = name; a.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/** "16 lapkr." / "16 нояб." for an ISO date */
+export function shortDate(iso: string, lang: Locale): string {
+  return formatDate(iso, lang, { day: 'numeric', month: 'short' });
 }

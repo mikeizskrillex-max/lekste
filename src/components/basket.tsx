@@ -1,10 +1,11 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import { INGREDIENT_BY_ID } from '@/data/ingredients';
 import type { RetailerId } from '@/config/markets';
 import { weeklyNeed, type Plan } from '@/domain/planner';
 import { recipeById } from '@/lib/view';
-import { basketFor, cheapest, compareStores, type Basket, type BasketLine } from '@/domain/pricing';
+import { basketFor, cheapest, compareStores, PANTRY, type Basket, type BasketLine } from '@/domain/pricing';
 import { kitchenMeasure } from '@/domain/units';
 import { useI18n } from '@/i18n/I18nProvider';
 import { fmtGrams, ingEmoji, ingName } from '@/lib/view';
@@ -13,7 +14,7 @@ import { categoryOf } from '@/retail/matching';
 import { RETAILER_ORDER, RETAILERS } from '@/retail/retailers';
 import type { ProductCategory } from '@/retail/types';
 import { useStore } from '@/state/store';
-import { Badge, Button, Card, cx } from './ui';
+import { Badge, Button, Card, cx, inputCls } from './ui';
 
 const CAT: Record<ProductCategory, { lt: string; ru: string }> = {
   meat: { lt: 'Mėsa', ru: 'Мясо' }, fish: { lt: 'Žuvis', ru: 'Рыба' }, dairy: { lt: 'Pieno produktai', ru: 'Молочное' }, eggs: { lt: 'Kiaušiniai', ru: 'Яйца' },
@@ -176,7 +177,9 @@ export function StoreSummary({ basket }: { basket: Basket }) {
 export function BasketView() {
   const { t } = useI18n();
   const need = useWeekNeed();
-  const basket = useHomeBasket(need);
+  const fallback = useHomeBasket(need);
+  const { allocation } = useStore();
+  const basket = allocation?.week ?? fallback;
   return (
     <div className="space-y-5">
       <StorePicker />
@@ -228,7 +231,7 @@ export function DayList({ day, checkable = false }: { day: number; checkable?: b
                   it.buyToday
                     ? <span className="block truncate text-[12px] text-forest">🛒 {t('buyNow')}: {it.line.pantry ? it.line.record.name : `${it.line.packs} × ${it.line.record.name}`}{it.line.record.promo ? ` · ${t('promo2')}${it.line.record.loyalty ? ` (${t('loyaltyCard')})` : ''}` : ''}</span>
                     : <span className="block text-[12px] text-muted">✓ {t('alreadyBought')}</span>
-                ) : <span className="block text-[12px] text-danger">{t('notInStore')}</span>}
+                ) : it.fromStock ? <span className="block text-[12px] text-leaf">🏠 {t('fromHome')}</span> : <span className="block text-[12px] text-danger">{t('notInStore')}</span>}
               </span>
               {it.buyToday && it.line && <StoreLink ingredientId={it.ingredientId} url={it.line.record.url} store={it.line.record.retailer} compact />}
               <span className="shrink-0 text-right">
@@ -260,5 +263,123 @@ export function OverBudgetHelp() {
         <Button size="sm" variant="secondary" onClick={() => setAnswers({ mealsPerDay: 3 }, true)} disabled={answers.mealsPerDay === 3}>{t('fewerMeals')}</Button>
       </div>
     </Card>
+  );
+}
+
+/** Honest savings line: same items vs the most expensive other store; promotions part; cheaper store hint. */
+export function SavingsLine({ compact = false }: { compact?: boolean }) {
+  const { t, eur } = useI18n();
+  const { weekEconomics, setHomeStore } = useStore();
+  const e = weekEconomics();
+  if (e.saving > 0.01 && e.refStore) {
+    return (
+      <span className="text-leaf">
+        {t('savedVs', { n: eur(e.saving), store: RETAILERS[e.refStore].name })}
+        {e.promo > 0.01 && !compact && <span className="text-muted"> · {t('ofWhichPromo', { n: eur(e.promo) })}</span>}
+      </span>
+    );
+  }
+  if (e.cheaperStore && e.cheaperBy > 0.5) {
+    return (
+      <span className="text-[#8a6410]">
+        {t('cheaperElsewhere', { store: RETAILERS[e.cheaperStore].name, n: eur(e.cheaperBy) })}
+        {!compact && <> · <button type="button" className="font-bold underline" onClick={() => setHomeStore(e.cheaperStore!)}>{t('switchTo', { store: RETAILERS[e.cheaperStore].name })}</button></>}
+      </span>
+    );
+  }
+  return <span className="text-muted">{t('youAlreadyCheapest')}</span>;
+}
+
+/** Leftovers at home (rice, pasta, oil…): the basket only buys what is missing. */
+export function HomeStock() {
+  const { t, lang } = useI18n();
+  const { stock, setStock, allocation } = useStore();
+  const [adding, setAdding] = useState(false);
+  const [id, setId] = useState('rice');
+  const [g, setG] = useState('500');
+  const entries = Object.entries(stock ?? {});
+  const options = Object.keys(INGREDIENT_BY_ID).filter((x) => !PANTRY.has(x)).sort((a, b) => ingName(a, lang).localeCompare(ingName(b, lang)));
+  return (
+    <Card className="p-4 md:p-5">
+      <div className="flex items-center justify-between gap-2">
+        <b className="text-[15px]">🏠 {t('atHome')}</b>
+        <button type="button" className="text-[13px] font-semibold text-leaf" onClick={() => setAdding((x) => !x)}>{adding ? t('close2') : `+ ${t('addItem')}`}</button>
+      </div>
+      <p className="mt-1 text-[12.5px] text-muted">{t('atHomeSub')}</p>
+      {entries.length > 0 && (
+        <ul className="mt-3 flex flex-wrap gap-2">
+          {entries.map(([k, v]) => (
+            <li key={k} className="inline-flex items-center gap-1.5 rounded-full bg-sage px-3 py-1.5 text-[13px] font-semibold">
+              {ingEmoji(k)} {ingName(k, lang)} · {fmtGrams(v, lang)}{(allocation?.usedStock.get(k) ?? 0) > 0 && <span className="text-leaf"> ✓</span>}
+              <button type="button" aria-label="✕" className="ml-1 text-muted hover:text-danger" onClick={() => setStock(k, 0)}>✕</button>
+            </li>
+          ))}
+        </ul>
+      )}
+      {adding && (
+        <form className="mt-3 flex flex-wrap gap-2" onSubmit={(e) => { e.preventDefault(); const n = Number(g.replace(',', '.')); if (n > 0) { setStock(id, (stock?.[id] ?? 0) + n); setAdding(false); } }}>
+          <select value={id} onChange={(e) => setId(e.target.value)} className={cx(inputCls, 'min-w-0 flex-1')} aria-label={t('addItem')}>
+            {options.map((o) => <option key={o} value={o}>{ingName(o, lang)}</option>)}
+          </select>
+          <input inputMode="numeric" value={g} onChange={(e) => setG(e.target.value)} className={cx(inputCls, 'w-28')} aria-label="g" />
+          <Button type="submit">{t('save')}</Button>
+        </form>
+      )}
+    </Card>
+  );
+}
+
+const BASICS: { id: string; lt: string; ru: string; q: string; e: string }[] = [
+  { id: 'salt', lt: 'Druska', ru: 'Соль', q: 'druska', e: '🧂' },
+  { id: 'pepper', lt: 'Juodieji pipirai', ru: 'Чёрный перец', q: 'juodieji pipirai', e: '🌶️' },
+  { id: 'frying_oil', lt: 'Aliejus kepimui', ru: 'Масло для жарки', q: 'saulėgrąžų aliejus', e: '🫗' },
+  { id: 'paprika', lt: 'Malta paprika', ru: 'Молотая паприка', q: 'malta paprika', e: '🟥' },
+  { id: 'herbs', lt: 'Džiovintos žolelės', ru: 'Сушёные травы', q: 'prieskoniai žolelės', e: '🌿' },
+  { id: 'bay', lt: 'Lauro lapai', ru: 'Лавровый лист', q: 'lauro lapai', e: '🍃' },
+  { id: 'vinegar', lt: 'Actas', ru: 'Уксус', q: 'actas', e: '🍶' },
+  { id: 'stock', lt: 'Sultinio kubeliai', ru: 'Бульонные кубики', q: 'sultinio kubeliai', e: '🧊' },
+];
+
+/** Basics every recipe assumes (salt, pepper, frying oil…): a checklist with store search links. */
+export function BasicsChecklist() {
+  const { t, lang } = useI18n();
+  const { basics, toggleBasic, homeStore } = useStore();
+  const have = basics ?? [];
+  const missing = BASICS.filter((b) => !have.includes(b.id)).length;
+  const search = (q: string) => (homeStore === 'rimi' ? `https://www.rimi.lt/e-parduotuve/lt/paieska?query=${encodeURIComponent(q)}` : `https://barbora.lt/search?q=${encodeURIComponent(q)}`);
+  return (
+    <details className="rounded-xl2 bg-card p-4 shadow-soft ring-1 ring-line/70 md:p-5" open={missing > 0 && have.length === 0}>
+      <summary className="flex cursor-pointer items-center justify-between gap-2 text-[15px] font-bold">
+        <span>🧂 {t('basicsTitle')}</span>
+        {missing > 0 ? <Badge tone="gold">{t('basicsMissing', { n: missing })}</Badge> : <Badge tone="leaf">✓</Badge>}
+      </summary>
+      <p className="mt-1 text-[12.5px] text-muted">{t('basicsSub')}</p>
+      <ul className="mt-3 grid gap-1.5 sm:grid-cols-2">
+        {BASICS.map((b) => {
+          const on = have.includes(b.id);
+          return (
+            <li key={b.id} className="flex items-center gap-2 text-[14px]">
+              <label className="flex flex-1 cursor-pointer items-center gap-2"><input type="checkbox" checked={on} onChange={() => toggleBasic(b.id)} className="h-5 w-5 accent-[#31966A]" /><span aria-hidden>{b.e}</span><span className={cx(on && 'text-muted line-through')}>{b[lang]}</span></label>
+              {!on && <a href={search(b.q)} target="_blank" rel="noopener noreferrer" className="text-[12px] font-semibold text-leaf hover:underline">{RETAILERS[homeStore].name} ↗</a>}
+            </li>
+          );
+        })}
+      </ul>
+    </details>
+  );
+}
+
+/** Send the list to WhatsApp / Messenger / anywhere (native share sheet when available). */
+export function ShareList({ text }: { text: string }) {
+  const { t } = useI18n();
+  const share = async () => {
+    if (navigator.share) { try { await navigator.share({ title: 'Lėkštė', text }); return; } catch { /* cancelled */ } }
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+  };
+  return (
+    <span className="flex gap-1.5">
+      <Button size="sm" onClick={share}>📤 {t('shareList')}</Button>
+      <a href={`https://wa.me/?text=${encodeURIComponent(text)}`} target="_blank" rel="noopener noreferrer" className="inline-flex h-9 items-center rounded-2xl bg-[#25D366] px-3 text-[13px] font-semibold text-white" aria-label="WhatsApp">WhatsApp</a>
+    </span>
   );
 }

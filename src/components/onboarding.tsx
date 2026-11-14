@@ -10,11 +10,15 @@ import { ALLERGEN_LABEL, type MessageKey } from '@/i18n/messages';
 import { useI18n } from '@/i18n/I18nProvider';
 import { getDetail } from '@/data/recipeDetails';
 import { DISLIKE_OPTIONS } from '@/data/ingredients';
-import { EXCLUSIONS, exclusionOn, ingEmoji, ingName, recipeById, recipeName, toggleExclusion } from '@/lib/view';
+import { RECIPES } from '@/data/recipes';
+import { RETAILERS } from '@/retail/retailers';
+
+const RECIPE_COUNT = RECIPES.length;
+import { EXCLUSIONS, exclusionOn, ingEmoji, ingName, recipeById, recipeName, shortDate, toggleExclusion } from '@/lib/view';
 import { useStore } from '@/state/store';
 import { Logo } from './site';
 import { Button, ButtonLink, Card, Chip, Container, CountUp, DishImage, Field, Option, Ring, Stat, inputCls, cx } from './ui';
-import { DayList, OverBudgetHelp, StorePicker, StoreSummary, StoreTotals, useHomeBasket, useWeekNeed } from './basket';
+import { DayList, OverBudgetHelp, SavingsLine, StorePicker, StoreSummary, StoreTotals, useHomeBasket, useWeekNeed } from './basket';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const BUDGETS = [{ v: 35, l: '30–40 €' }, { v: 50, l: '40–60 €' }, { v: 75, l: '60–90 €' }];
@@ -189,7 +193,7 @@ export function Onboarding() {
 }
 
 /** Meal cards of one day; every dish opens its recipe. */
-export function DayMeals({ day, hrefFor = (id) => `/recipe/${id}` }: { day: number; hrefFor?: (id: string) => string }) {
+export function DayMeals({ day, hrefFor = (id) => `/recipe/${id}?back=/onboarding/result` }: { day: number; hrefFor?: (id: string) => string }) {
   const { t, lang, eur, num } = useI18n();
   const { plan, allocation } = useStore();
   const d0 = plan?.days[day];
@@ -224,8 +228,8 @@ export function DayMeals({ day, hrefFor = (id) => `/recipe/${id}` }: { day: numb
 
 /** Day tabs Mon–Sun: each day's menu and what to buy for it. */
 export function WeekByDay({ hrefFor }: { hrefFor?: (id: string) => string }) {
-  const { t } = useI18n();
-  const { plan } = useStore();
+  const { t, lang } = useI18n();
+  const { plan, dayDate } = useStore();
   const [day, setDay] = useState(0);
   if (!plan) return null;
   return (
@@ -235,6 +239,7 @@ export function WeekByDay({ hrefFor }: { hrefFor?: (id: string) => string }) {
           <button key={i} role="tab" aria-selected={day === i} type="button" onClick={() => setDay(i)}
             className={cx('shrink-0 rounded-2xl px-4 py-2.5 text-[14px] font-bold transition', day === i ? 'bg-forest text-white' : 'bg-card ring-1 ring-line hover:ring-leaf')}>
             <span className="sm:hidden">{t(`dayS${i}` as MessageKey)}</span><span className="hidden sm:inline">{t(`day${i}` as MessageKey)}</span>
+            <span className={cx('ml-1 text-[11.5px] font-semibold', day === i ? 'text-white/75' : 'text-muted')}>{shortDate(dayDate(i), lang)}</span>
           </button>
         ))}
       </div>
@@ -248,6 +253,51 @@ function WeekStore() {
   const need = useWeekNeed();
   const basket = useHomeBasket(need);
   return <div className="mt-4 space-y-4"><StoreSummary basket={basket} /><StoreTotals need={need} /></div>;
+}
+
+/** 2.5-second "building your plan" moment, then the headline numbers. Shown once per plan. */
+function Reveal() {
+  const { t, eur, num } = useI18n();
+  const { planCreatedAt, weekEconomics, homeStore, targets, plan } = useStore();
+  const key = `lekste:revealed:${planCreatedAt}`;
+  const [step, setStep] = useState<number>(() => { try { return sessionStorage.getItem(key) ? 4 : 0; } catch { return 4; } });
+  useEffect(() => {
+    if (step >= 4) return;
+    const id = setTimeout(() => setStep((x) => x + 1), 650);
+    if (step === 3) { try { sessionStorage.setItem(key, '1'); } catch { /* ignore */ } }
+    return () => clearTimeout(id);
+  }, [step, key]);
+  const e = weekEconomics();
+  const dishes = plan ? new Set(plan.days.flatMap((d) => d.meals.map((m) => m.recipeId))).size : 0;
+  const lines = [t('reveal1', { kcal: num(targets.kcal) }), t('reveal2', { n: num(RECIPE_COUNT) }), t('reveal3'), t('reveal4', { store: RETAILERS[homeStore].name })];
+  return (
+    <>
+      <AnimatePresence>
+        {step < 4 && (
+          <motion.div className="fixed inset-0 z-50 grid place-items-center bg-forest px-6 text-white" initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.35 } }}>
+            <div className="w-full max-w-sm">
+              <div className="mb-6 font-display text-[26px] font-extrabold">{t('revealTitle')}</div>
+              <ul className="space-y-3">
+                {lines.map((l, i) => (
+                  <motion.li key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: i <= step ? 1 : 0.25, x: 0 }} className="flex items-center gap-3 text-[16px]">
+                    <span className={cx('grid h-6 w-6 place-items-center rounded-full text-[13px]', i < step ? 'bg-leaf' : 'bg-white/15')}>{i < step ? '✓' : i === step ? '…' : ''}</span>{l}
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mt-6 overflow-hidden rounded-xl3 bg-forest p-6 text-white md:p-8">
+        <div className="text-[13px] font-bold uppercase tracking-wider text-white/60">{t('revealHeadline')}</div>
+        <div className="mt-2 flex flex-wrap items-end gap-x-6 gap-y-2">
+          <span className="font-display text-[44px] font-extrabold leading-none md:text-[56px]"><CountUp value={e.best} format={(n) => eur(n)} /></span>
+          <span className="pb-1 text-[16px] text-white/80">{t('perWeek')} · {RETAILERS[homeStore].name} · {dishes} {t('dishesWord')}</span>
+        </div>
+        {e.saving > 0.5 && e.refStore && <div className="mt-3 inline-block rounded-full bg-gold px-3 py-1 text-[14px] font-bold text-ink">{t('savedVs', { n: eur(e.saving), store: RETAILERS[e.refStore].name })}</div>}
+      </motion.div>
+    </>
+  );
 }
 
 export function Result() {
@@ -266,6 +316,7 @@ export function Result() {
       <Container className="max-w-[980px] py-6">
         <h1 className="font-display text-[34px] font-extrabold leading-tight md:text-[46px]">{t('resultTitle')}</h1>
         <p className="mt-2 text-[16px] text-muted">{t('resultSub')}</p>
+        <Reveal />
 
         <div className="mt-8 grid gap-4 md:grid-cols-[1.1fr_1fr]">
           <Card className="flex items-center gap-6 p-6">
@@ -295,7 +346,7 @@ export function Result() {
 
         <h2 className="mt-12 font-display text-[24px] font-extrabold">{t('weeklySavingPreview')}</h2>
         <WeekStore />
-        {econ.saving > 0 && <p className="mt-3 text-[14px]">{t('estimatedSavings')}: <b className="text-leaf">{eur(econ.saving)}</b> {t('perWeek')} <span className="text-muted">({t('referenceLabel')}: {eur(econ.reference)})</span></p>}
+        <p className="mt-3 text-[14px]"><SavingsLine /></p>
         <p className="mt-6 text-[12px] text-muted">{t('medicalDisclaimer')}</p>
       </Container>
       <div className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper/95 py-3 backdrop-blur pb-safe">

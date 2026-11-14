@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { CatalogPage } from '@/components/catalog';
 import { PublicPage } from '@/components/site';
 
@@ -9,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <PublicPage><CatalogPage /></PublicPage>;
+  return <PublicPage><Suspense><CatalogPage /></Suspense></PublicPage>;
 }

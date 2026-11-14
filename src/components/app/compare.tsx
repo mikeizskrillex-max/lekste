@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import type { RetailerId } from '@/config/markets';
 import { useI18n } from '@/i18n/I18nProvider';
 import { fmtGrams, ingName } from '@/lib/view';
@@ -13,6 +14,31 @@ import { Badge, Card, Chip, inputCls, cx } from '../ui';
 import { categoryLabel } from './shopping';
 
 const CATS: ProductCategory[] = ['vegetables', 'fruits', 'meat', 'fish', 'dairy', 'eggs', 'grains', 'pasta', 'bread', 'oils', 'nuts', 'frozen', 'other'];
+
+/** True when today's price is clearly below the median of its history. */
+function belowUsual(h: { p: number }[], price: number): boolean {
+  if (h.length < 2) return false;
+  const v = h.map((x) => x.p).sort((a, b) => a - b);
+  const med = v[Math.floor(v.length / 2)];
+  return price < med * 0.95;
+}
+
+function PriceChart({ points }: { points: { d: string; p: number; promo: boolean }[] }) {
+  const { eur, date } = useI18n();
+  return (
+    <div className="mt-2 h-[140px] pl-3">
+      <ResponsiveContainer>
+        <LineChart data={points.map((x) => ({ ...x, label: date(x.d, { day: 'numeric', month: 'short' }) }))} margin={{ top: 8, right: 12, left: -18, bottom: 0 }}>
+          <CartesianGrid vertical={false} stroke="#E3E2DA" />
+          <XAxis dataKey="label" tick={{ fontSize: 11, fill: '#5E6B63' }} axisLine={false} tickLine={false} />
+          <YAxis tick={{ fontSize: 11, fill: '#5E6B63' }} axisLine={false} tickLine={false} domain={['dataMin - 0.2', 'dataMax + 0.2']} tickFormatter={(v: number) => v.toFixed(2)} />
+          <Tooltip formatter={(v: number) => eur(v)} />
+          <Line type="stepAfter" dataKey="p" stroke="#31966A" strokeWidth={2.5} dot={(props: { cx?: number; cy?: number; payload?: { promo: boolean }; index?: number }) => <circle key={props.index} cx={props.cx} cy={props.cy} r={4} fill={props.payload?.promo ? '#F0B95B' : '#31966A'} stroke="#fff" strokeWidth={1.5} />} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
 
 export function ComparePage() {
   const { t, lang, eur, date } = useI18n();
@@ -35,7 +61,15 @@ export function ComparePage() {
     }
     return out.sort((a, b) => ingName(a.id, lang).localeCompare(ingName(b.id, lang)));
   }, [catalog, store, cat, promo, q, lang]);
-  const history = (id: string, r: RetailerId) => priceRecords.filter((x) => x.ingredientId === id && x.retailer === r).sort((a, b) => b.retrievedAt.localeCompare(a.retrievedAt));
+  /** weekly checks of the product + any CSV imports, oldest first */
+  const history = (id: string, r: RetailerId) => {
+    const pts = new Map<string, { d: string; p: number; promo: boolean }>();
+    for (const x of priceRecords.filter((y) => y.ingredientId === id && y.retailer === r)) {
+      for (const h of x.history ?? []) pts.set(h.d, h);
+      pts.set(x.retrievedAt.slice(0, 10), { d: x.retrievedAt.slice(0, 10), p: x.price, promo: x.promo });
+    }
+    return [...pts.values()].sort((a, b) => a.d.localeCompare(b.d));
+  };
   return (
     <>
       <PageTitle title={t('compareTitle2')} sub={t('snapshotNote')} />
@@ -76,9 +110,10 @@ export function ComparePage() {
                   </div>
                   <div className="mt-1.5 flex gap-3 pl-5 text-[12px]">
                     {r.url && <a href={r.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-leaf hover:underline">{t('openInStore')} ↗</a>}
-                    {hist.length > 1 && <button type="button" className="font-semibold text-forest" onClick={() => setOpen(open === key ? null : key)}>{t('priceHistory')} ({hist.length})</button>}
+                    {hist.length > 1 && <button type="button" className="font-semibold text-forest" onClick={() => setOpen(open === key ? null : key)}>📈 {t('priceHistory')} ({hist.length})</button>}
+                    {belowUsual(hist, r.price) && <span className="font-bold text-leaf">↓ {t('belowUsual')}</span>}
                   </div>
-                  {open === key && <ul className="mt-2 space-y-1 pl-5 text-[12px] text-muted">{hist.map((h, j) => <li key={j}>{date(h.retrievedAt, { day: 'numeric', month: 'short', year: 'numeric' })}: <b className="text-ink">{eur(h.price)}</b> ({eur(h.perKg)}/kg) · {h.source}</li>)}</ul>}
+                  {open === key && <PriceChart points={hist} />}
                 </div>
               );
             })}
