@@ -10,18 +10,17 @@ import { EXCLUSIONS, exclusionOn, planAvgKcal, toggleExclusion } from '@/lib/vie
 import { RETAILERS } from '@/retail/retailers';
 import { todayIndex, useStore } from '@/state/store';
 import { PageTitle } from '../appshell';
-import { DayList, StorePicker } from '../basket';
+import { DayList, OverBudgetHelp, StorePicker } from '../basket';
 import { Badge, Button, Card, Chip, Slider, cx } from '../ui';
 import { MealRow, useToast } from './meal';
 
 function Personalize() {
   const { t } = useI18n();
-  const { answers: a, targets, setAnswers, weekEconomics } = useStore();
+  const { answers: a, targets, setAnswers } = useStore();
   const [open, setOpen] = useState(false);
   const base = calcTargets(a);
   const setT = (k: keyof Targets, v: number) => setAnswers({ overrides: { ...(a.overrides ?? {}), [k]: v } }, true);
   const set = (p: Partial<QuizAnswers>, rebuild = true) => setAnswers(p, rebuild);
-  const econ = weekEconomics();
   return (
     <Card className="p-5">
       <button type="button" className="flex w-full items-center justify-between text-left" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
@@ -58,7 +57,6 @@ function Personalize() {
           </div>
           <div className="flex flex-wrap items-center gap-3 md:col-span-2">
             {targets.overridden && <Button variant="secondary" size="sm" onClick={() => setAnswers({ overrides: {} }, true)}>{t('resetTargets')} ({base.kcal} kcal)</Button>}
-            {econ.best > a.weeklyBudget && <p className="text-[13px] text-danger">{t('overBudgetWarn', { n: `${(econ.best - a.weeklyBudget).toFixed(2)} €` })}</p>}
           </div>
         </div>
       )}
@@ -78,6 +76,7 @@ export function MenuPage() {
       <PageTitle title={t('tabMenu2')} sub={<>{num(targets.kcal)} kcal · {num(targets.protein)} g {t('protein')} · {t('avgKcal')}: {num(planAvgKcal(plan))}</>}
         right={<Badge tone={econ.best > answers.weeklyBudget ? 'danger' : 'leaf'}>{RETAILERS[homeStore].name}: {eur(econ.best)} / {eur(answers.weeklyBudget)}</Badge>} />
       <Personalize />
+      <div className="mt-4"><OverBudgetHelp /></div>
       {plan.issues.length > 0 && <p className="mt-4 rounded-2xl bg-gold/20 p-3 text-[13.5px]">{t('infeasibleRecipes')}</p>}
       <div className="mt-6 space-y-8">
         {plan.days.map((d, day) => (

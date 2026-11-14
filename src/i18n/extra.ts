@@ -143,6 +143,10 @@ export const X = {
   alreadyBought: { lt: 'Iš jau nupirktos pakuotės', ru: 'Из уже купленной упаковки' },
   packPrice: { lt: 'pakuotė {p}', ru: 'упаковка {p}' },
   dayMathNote: { lt: 'Kaina — tai, kiek šią dieną suvalgote iš savaitės pirkinių; visų 7 dienų suma lygi savaitės krepšeliui. Pirmą kartą reikalingų prekių pakuotės kainuoja {buy}.', ru: 'Цена — сколько из недельных покупок съедается в этот день; сумма 7 дней равна недельной корзине. Упаковки, которые впервые нужны в этот день, стоят {buy}.' },
+  overTitle: { lt: 'Krepšelis viršija biudžetą {n}', ru: 'Корзина выше бюджета на {n}' },
+  overExplain: { lt: 'Su jūsų kalorijų norma ir alergijomis pigiausias savaitės krepšelis {store} kainuoja {min} (pilnos pakuotės). Kalorijų dėl biudžeto nemažiname.', ru: 'При вашей норме калорий и ограничениях самая дешёвая недельная корзина в {store} стоит {min} (целые упаковки). Калории ради бюджета мы не урезаем.' },
+  raiseBudgetTo: { lt: 'Nustatyti biudžetą {n}', ru: 'Поставить бюджет {n}' },
+  fewerMeals: { lt: '3 valgymai per dieną', ru: '3 приёма пищи в день' },
   notFound: { lt: 'Puslapis nerastas', ru: 'Страница не найдена' },
   toHome: { lt: 'Į pradžią', ru: 'На главную' },
 } as const;

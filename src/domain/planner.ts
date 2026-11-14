@@ -1,5 +1,6 @@
 import { isChefRecipe, RECIPES, type Recipe } from '../data/recipes';
-import { recipeAtStore } from './pricing';
+import type { RetailerId } from '@/config/markets';
+import { activeCatalog, basketFor, cheapest, effectiveRecord, PANTRY, recipeAtStore } from './pricing';
 import { passesHardRules, recipeFacts } from './recipeFacts';
 import type { MealType, QuizAnswers, Targets } from './types';
 
@@ -13,7 +14,14 @@ export interface PlanMeal {
   cost: number;
 }
 export interface PlanDay { meals: PlanMeal[]; kcal: number; protein: number; cost: number; vegGrams: number; fiber: number }
-export interface Plan { days: PlanDay[]; weeklyCost: number; issues: string[] }
+export interface Plan {
+  days: PlanDay[];
+  /** sum of portion costs (what is eaten) */
+  weeklyCost: number;
+  /** real weekly basket with whole packages at the user's store */
+  basketTotal?: number;
+  issues: string[];
+}
 
 export function mealSlots(u: Pick<QuizAnswers, 'mealsPerDay' | 'breakfastStyle'>): MealType[] {
   const base: MealType[] =
@@ -29,6 +37,46 @@ export function mealSlots(u: Pick<QuizAnswers, 'mealsPerDay' | 'breakfastStyle'>
 /** Price of one serving for this user: at their supermarket (with its promotions) when chosen. */
 export function costOf(r: Recipe, u: Pick<QuizAnswers, 'homeStore'>): number {
   return u.homeStore ? recipeAtStore(r, u.homeStore).cost : recipeFacts(r).cost;
+}
+
+let recipeIndex: Map<string, Recipe> | null = null;
+const RECIPE_INDEX = () => (recipeIndex ??= new Map(RECIPES.map((r) => [r.id, r])));
+
+/** Shelf price of one package of an ingredient at the user's store (or the cheapest anywhere). */
+const packCache = new WeakMap<object, Map<string, Map<string, number>>>();
+function packPrice(id: string, u: Pick<QuizAnswers, 'homeStore'>): number {
+  const c = activeCatalog();
+  let byStore = packCache.get(c);
+  if (!byStore) { byStore = new Map(); packCache.set(c, byStore); }
+  const sk = u.homeStore ?? '';
+  let m = byStore.get(sk);
+  if (!m) { m = new Map(); byStore.set(sk, m); }
+  let v = m.get(id);
+  if (v === undefined) { v = packPriceRaw(id, u, c); m.set(id, v); }
+  return v;
+}
+function packPriceRaw(id: string, u: Pick<QuizAnswers, 'homeStore'>, c: ReturnType<typeof activeCatalog>): number {
+  const own = u.homeStore ? c[id]?.[u.homeStore] : undefined;
+  const r = own ? effectiveRecord(own) : cheapest(id, c);
+  return r ? r.price : 0;
+}
+
+/**
+ * Extra money a recipe adds to the WEEK's basket given what is already bought:
+ * ingredients from opened packages are almost free, a new ingredient costs a
+ * whole package. This is what makes a menu fit a real budget.
+ */
+function newPackCost(r: Recipe, have: Set<string>, u: Pick<QuizAnswers, 'homeStore'>): number {
+  let s = 0;
+  for (const [id] of r.items) if (!have.has(id) && !PANTRY.has(id)) s += packPrice(id, u);
+  return s;
+}
+
+/** The real weekly basket: whole packages at the user's store (all stores with data otherwise). */
+export function planBasketTotal(plan: Plan, u: Pick<QuizAnswers, 'homeStore' | 'household'>): number {
+  const c = activeCatalog();
+  const stores = (u.homeStore ? [u.homeStore] : (['maxima', 'barbora', 'rimi', 'lidl', 'iki'] as RetailerId[]));
+  return basketFor(weeklyNeed(plan, u.household), stores, c).total;
 }
 
 /** Soft preference score: higher is better. */
@@ -88,9 +136,14 @@ function makeDay(chosen: Recipe[], labels: MealType[], t: Targets, u: Pick<QuizA
   };
 }
 
-function buildOnce(u: QuizAnswers, t: Targets, pool: Recipe[], baseSlots: MealType[], seed: number): Plan {
+function buildOnce(u: QuizAnswers, t: Targets, pool: Recipe[], baseSlots: MealType[], seed: number, scores?: Map<Recipe, number>): Plan {
+  const sc = (r: Recipe) => scores?.get(r) ?? score(r, u);
   const rand = rng(seed);
   const used = new Map<string, number>();
+  const have = new Set<string>();
+  // how much a new package hurts: more when the budget per person is tight
+  const perPersonDay = u.weeklyBudget / Math.max(1, u.household) / 7;
+  const packWeight = Math.max(0.4, Math.min(3, 9 / Math.max(perPersonDay, 1))) * Math.min(2, Math.sqrt(u.household));
   const issues: string[] = [];
   const days: PlanDay[] = [];
 
@@ -101,7 +154,7 @@ function buildOnce(u: QuizAnswers, t: Targets, pool: Recipe[], baseSlots: MealTy
       if (options.length === 0) continue;
       if (cap > 2) issues.push(`not_enough_recipes:${slot}`);
       const ranked = options
-        .map((r) => ({ r, s: score(r, u) + (r.meal === slot ? 1 : 0) + rand() * 2.5 }))
+        .map((r) => ({ r, s: sc(r) + (r.meal === slot ? 1 : 0) + rand() * 2.5 - newPackCost(r, have, u) * packWeight / 2.5 }))
         .sort((a, b) => b.s - a.s);
       return ranked[0].r;
     }
@@ -124,6 +177,7 @@ function buildOnce(u: QuizAnswers, t: Targets, pool: Recipe[], baseSlots: MealTy
       chosen.push(pick);
       labels.push(slot);
       used.set(pick.id, (used.get(pick.id) ?? 0) + 1);
+      pick.items.forEach(([id]) => have.add(id));
     }
 
     // high calorie targets: add snacks rather than serving huge portions
@@ -134,6 +188,7 @@ function buildOnce(u: QuizAnswers, t: Targets, pool: Recipe[], baseSlots: MealTy
       chosen.splice(chosen.length - 1, 0, extra);
       labels.splice(labels.length - 1, 0, 'snack');
       used.set(extra.id, (used.get(extra.id) ?? 0) + 1);
+      extra.items.forEach(([id]) => have.add(id));
       base += recipeFacts(extra).kcal;
     }
 
@@ -155,24 +210,80 @@ export function buildPlan(u: QuizAnswers, t: Targets, seed = 7): Plan {
   const slots = mealSlots(u);
   let best: Plan | null = null;
   let bestScore = Infinity;
+  const scores = new Map(pool.map((r) => [r, score(r, u)]));
   for (let k = 0; k < 10; k++) {
-    const plan = buildOnce(u, t, pool, slots, seed + k * 101);
+    const plan = buildOnce(u, t, pool, slots, seed + k * 101, scores);
+    const basket = planBasketTotal(plan, u);
     const kcalErr = plan.days.reduce((s, d) => s + Math.abs(d.kcal - t.kcal) / t.kcal, 0) / 7;
     const protErr = plan.days.reduce((s, d) => s + Math.max(0, t.protein * 0.9 - d.protein) / t.protein, 0) / 7;
-    const over = Math.max(0, plan.weeklyCost - u.weeklyBudget) / u.weeklyBudget;
-    const total = kcalErr * 3 + protErr * 2 + over * 4 + plan.weeklyCost / u.weeklyBudget * 0.3;
-    if (total < bestScore) { bestScore = total; best = plan; }
+    const over = Math.max(0, basket - u.weeklyBudget) / u.weeklyBudget;
+    // a day far off the calorie target is unacceptable whatever it saves
+    const worstDay = Math.max(...plan.days.map((d) => Math.abs(d.kcal - t.kcal) / t.kcal));
+    const total = kcalErr * 3 + protErr * 2 + over * 6 + (basket / u.weeklyBudget) * 0.3 + Math.max(0, worstDay - 0.15) * 60;
+    if (total < bestScore) { bestScore = total; best = { ...plan, basketTotal: basket }; }
   }
-  return best!;
+  return fitBudget(best!, u, t, pool, scores);
+}
+
+/**
+ * Budget repair on the REAL basket: while the week's whole-package basket is over
+ * budget, swap the meal whose replacement saves the most money (reusing what is
+ * already bought), keeping calories close. Hard rules hold: only eligible recipes.
+ */
+function fitBudget(plan: Plan, u: QuizAnswers, t: Targets, pool: Recipe[], scores: Map<Recipe, number>): Plan {
+  let cur = plan;
+  let total = cur.basketTotal ?? planBasketTotal(cur, u);
+  const byId = new Map(pool.map((r) => [r.id, r]));
+  for (let iter = 0; iter < 30 && total > u.weeklyBudget; iter++) {
+    const counts = new Map<string, number>();
+    cur.days.forEach((d) => d.meals.forEach((m) => counts.set(m.recipeId, (counts.get(m.recipeId) ?? 0) + 1)));
+    let bestPlan: Plan | null = null;
+    let bestTotal = total;
+    for (let d = 0; d < cur.days.length; d++) {
+      for (let slot = 0; slot < cur.days[d].meals.length; slot++) {
+        const m = cur.days[d].meals[slot];
+        const r0 = byId.get(m.recipeId) ?? RECIPES.find((x) => x.id === m.recipeId)!;
+        const k0 = recipeFacts(r0).kcal;
+        // ingredients the rest of the week still buys
+        const have = new Set<string>();
+        cur.days.forEach((dd, di) => dd.meals.forEach((mm, si) => { if (di !== d || si !== slot) byId.get(mm.recipeId)?.items.forEach(([id]) => have.add(id)); }));
+        const inDay = new Set(cur.days[d].meals.map((x) => x.recipeId));
+        const cands = pool
+          .filter((r) => fits(r, m.meal) && !inDay.has(r.id) && (counts.get(r.id) ?? 0) < 2 && Math.abs(recipeFacts(r).kcal - k0) <= Math.max(120, k0 * 0.25))
+          .map((r) => ({ r, c: newPackCost(r, have, u) + costOf(r, u) - (scores.get(r) ?? 0) * 0.05 }))
+          .sort((a, b) => a.c - b.c)
+          .slice(0, 6);
+        for (const { r } of cands) {
+          const f = recipeFacts(r);
+          const meals = cur.days[d].meals.map((x, i) => (i === slot ? { ...x, recipeId: r.id, kcal: Math.round(f.kcal * x.servings), protein: Math.round(f.protein * x.servings), cost: costOf(r, u) * x.servings } : x));
+          const day: PlanDay = { ...cur.days[d], meals, kcal: meals.reduce((s, x) => s + x.kcal, 0), protein: meals.reduce((s, x) => s + x.protein, 0), cost: meals.reduce((s, x) => s + x.cost, 0) };
+          // money never beats nutrition: keep the day within ±12 % of the calorie target (or no worse than now)
+          const errNow = Math.abs(cur.days[d].kcal - t.kcal) / t.kcal;
+          if (Math.abs(day.kcal - t.kcal) / t.kcal > Math.max(0.12, errNow)) continue;
+          if (day.protein < Math.min(cur.days[d].protein, t.protein * 0.85)) continue;
+          const days = cur.days.map((x, i) => (i === d ? day : x));
+          const next: Plan = { ...cur, days, weeklyCost: days.reduce((s, x) => s + x.cost, 0) * u.household };
+          const nt = planBasketTotal(next, u);
+          if (nt < bestTotal - 0.01) { bestTotal = nt; bestPlan = next; }
+        }
+      }
+    }
+    if (!bestPlan) break;
+    cur = bestPlan;
+    total = bestTotal;
+  }
+  const issues = cur.issues.filter((x) => x !== 'over_budget');
+  if (total > u.weeklyBudget) issues.push('over_budget');
+  return { ...cur, basketTotal: total, issues };
 }
 
 /** Grams of each ingredient needed for the whole household for the week. */
 export function weeklyNeed(plan: Plan, household: number): Map<string, number> {
-  const recipes = Object.fromEntries(RECIPES.map((r) => [r.id, r]));
+  const recipes = RECIPE_INDEX();
   const grams = new Map<string, number>();
   for (const day of plan.days) {
     for (const m of day.meals) {
-      for (const [id, g] of recipes[m.recipeId].items) {
+      for (const [id, g] of recipes.get(m.recipeId)!.items) {
         grams.set(id, (grams.get(id) ?? 0) + g * m.servings * household);
       }
     }

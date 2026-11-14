@@ -173,3 +173,15 @@ describe('money adds up', () => {
     }
   });
 });
+
+describe('real basket fits the budget', () => {
+  it('whole-package basket at the chosen store stays within typical budgets', async () => {
+    const { planBasketTotal } = await import('./planner');
+    for (const [store, budget, household] of [['barbora', 40, 1], ['barbora', 50, 1], ['rimi', 50, 1], ['barbora', 75, 2], ['rimi', 100, 2]] as const) {
+      const u = { ...base, homeStore: store, weeklyBudget: budget, household };
+      const plan = buildPlan(u, calcTargets(u));
+      expect(planBasketTotal(plan, u), `${store} ${budget}`).toBeLessThanOrEqual(budget);
+      expect(plan.basketTotal).toBeCloseTo(planBasketTotal(plan, u), 6);
+    }
+  });
+});

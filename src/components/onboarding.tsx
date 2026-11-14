@@ -13,7 +13,7 @@ import { EXCLUSIONS, exclusionOn, recipeById, recipeName, toggleExclusion } from
 import { useStore } from '@/state/store';
 import { Logo } from './site';
 import { Button, ButtonLink, Card, Chip, Container, CountUp, DishImage, Field, Option, Ring, Stat, inputCls, cx } from './ui';
-import { DayList, StorePicker, StoreSummary, StoreTotals, useHomeBasket, useWeekNeed } from './basket';
+import { DayList, OverBudgetHelp, StorePicker, StoreSummary, StoreTotals, useHomeBasket, useWeekNeed } from './basket';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const BUDGETS = [{ v: 35, l: '30–40 €' }, { v: 50, l: '40–60 €' }, { v: 75, l: '60–90 €' }];
@@ -269,6 +269,7 @@ export function Result() {
           </div>
         </div>
 
+        <div className="mt-6"><OverBudgetHelp /></div>
         <h2 className="mt-12 font-display text-[24px] font-extrabold">{t('weekMenuTitle')}</h2>
         <WeekByDay />
 

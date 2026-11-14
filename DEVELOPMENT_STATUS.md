@@ -1,7 +1,7 @@
 # Development status — 2026-11-12
 
-Checks on this commit: `npm run lint` ✓ · `npm run typecheck` ✓ · `npm test` 36/36 ✓ · `npm run build` ✓ ·
-`npm run e2e` 24/24 ✓ (scenarios A–J, production build, development mode) · migration applied to local Postgres 16
+Checks on this commit: `npm run lint` ✓ · `npm run typecheck` ✓ · `npm test` 38/38 ✓ · `npm run build` ✓ ·
+`npm run e2e` 25/25 ✓ (scenarios A–J, production build, development mode) · migration applied to local Postgres 16
 with a Supabase auth stub: 41 tables, 57 RLS policies, owner isolation checked.
 
 | Phase | Status |
@@ -38,3 +38,15 @@ with a Supabase auth stub: 41 tables, 57 RLS policies, owner isolation checked.
 * Result page and app show every day of the week with its menu and its own shopping list.
 * Recipe database: 1 837 dishes (new families: wraps, warm salads, oven bakes, one-pot grains, toasts,
   smoothies, cream soups, overnight oats, stuffed potatoes, fritters, legume stews, scrambled eggs).
+
+## 2026-11-14 — menu fits the real basket
+
+* All money comes from one source: the weekly basket at the user's store (whole packages, promotions),
+  split by day and meal (domain/allocation.ts). Meals add up to days, days add up to the week.
+* The planner now plans for the real basket: it prefers dishes that reuse ingredients already bought
+  that week, compares candidate weeks by basket total, then swaps the costliest meals until the basket
+  fits the budget — never moving a day more than ±12 % off the calorie target.
+* Test grid (2 stores × 3 household sizes × 5 budgets × 2 goals): over-budget weeks 32/60 → 12/60
+  (the rest are not feasible at that budget, e.g. weight gain for 4 people on €75); worst day calorie
+  error 11.6 %; ~0.1 s per plan. When a budget is not feasible, the app says so and offers to set the
+  minimum budget or switch to 3 meals.

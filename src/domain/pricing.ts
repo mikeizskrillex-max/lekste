@@ -18,8 +18,8 @@ export function effectiveRecord(r: PriceRecord, now = Date.now()): PriceRecord {
 
 /** Catalogue the planner prices recipes with (snapshot + admin CSV imports). Set by the app store. */
 let active: Catalog = DEFAULT_CATALOG;
-const storeCache = new Map<string, StoreCost>();
-export function setActiveCatalog(c: Catalog) { if (c !== active) { active = c; storeCache.clear(); } }
+let storeCache = new Map<string, WeakMap<Recipe, StoreCost>>();
+export function setActiveCatalog(c: Catalog) { if (c !== active) { active = c; storeCache = new Map(); } }
 export const activeCatalog = () => active;
 
 export interface StoreCost { cost: number; missing: string[]; promo: string[]; promoSaving: number }
@@ -30,9 +30,10 @@ export interface StoreCost { cost: number; missing: string[]; promo: string[]; p
  * reported in `missing`, so the planner can avoid them.
  */
 export function recipeAtStore(r: Recipe, store: RetailerId, catalog: Catalog = active): StoreCost {
-  const key = `${store}:${r.id}`;
   const cacheable = catalog === active;
-  const hit = cacheable ? storeCache.get(key) : undefined;
+  let byRecipe = storeCache.get(store);
+  if (cacheable && !byRecipe) { byRecipe = new WeakMap(); storeCache.set(store, byRecipe); }
+  const hit = cacheable ? byRecipe!.get(r) : undefined;
   if (hit) return hit;
   const out: StoreCost = { cost: 0, missing: [], promo: [], promoSaving: 0 };
   for (const [id, g] of r.items) {
@@ -42,7 +43,7 @@ export function recipeAtStore(r: Recipe, store: RetailerId, catalog: Catalog = a
     out.cost += (e.perKg * g) / 1000;
     if (e.promo) { out.promo.push(id); if (e.regular) out.promoSaving += (((e.regular - e.price) / e.grams) * g); }
   }
-  if (cacheable) storeCache.set(key, out);
+  if (cacheable) byRecipe!.set(r, out);
   return out;
 }
 

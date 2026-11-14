@@ -223,3 +223,22 @@ export function DayList({ day, checkable = false }: { day: number; checkable?: b
     </div>
   );
 }
+
+/** When the menu can't fit the budget: say so plainly and offer the two real options. */
+export function OverBudgetHelp() {
+  const { t, eur } = useI18n();
+  const { answers, weekEconomics, setAnswers, homeStore } = useStore();
+  const e = weekEconomics();
+  if (!e.best || e.best <= answers.weeklyBudget + 0.01) return null;
+  const need = Math.ceil(e.best);
+  return (
+    <Card className="border-l-4 border-gold p-4 md:p-5">
+      <b className="text-[15px]">{t('overTitle', { n: eur(e.best - answers.weeklyBudget) })}</b>
+      <p className="mt-1 text-[13.5px] text-muted">{t('overExplain', { store: RETAILERS[homeStore].name, min: eur(e.best) })}</p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <Button size="sm" onClick={() => setAnswers({ weeklyBudget: need }, true)}>{t('raiseBudgetTo', { n: `${need} €` })}</Button>
+        <Button size="sm" variant="secondary" onClick={() => setAnswers({ mealsPerDay: 3 }, true)} disabled={answers.mealsPerDay === 3}>{t('fewerMeals')}</Button>
+      </div>
+    </Card>
+  );
+}
