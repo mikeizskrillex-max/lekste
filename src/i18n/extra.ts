@@ -147,6 +147,9 @@ export const X = {
   overExplain: { lt: 'Su jūsų kalorijų norma ir alergijomis pigiausias savaitės krepšelis {store} kainuoja {min} (pilnos pakuotės). Kalorijų dėl biudžeto nemažiname.', ru: 'При вашей норме калорий и ограничениях самая дешёвая недельная корзина в {store} стоит {min} (целые упаковки). Калории ради бюджета мы не урезаем.' },
   raiseBudgetTo: { lt: 'Nustatyti biudžetą {n}', ru: 'Поставить бюджет {n}' },
   fewerMeals: { lt: '3 valgymai per dieną', ru: '3 приёма пищи в день' },
+  buyAt2: { lt: 'Pirkti {store}', ru: 'Купить в {store}' },
+  buyAtTitle: { lt: 'Atidaryti prekę {store} e. parduotuvėje', ru: 'Открыть товар в интернет-магазине {store}' },
+  storeLinkHint: { lt: 'Paspaudus 🛒 atsidaro prekės puslapis {store} — ten spauskite „Į krepšelį“. Prekė pas mus pažymima kaip nupirkta.', ru: 'Нажмите 🛒 — откроется товар в {store}, там нажмите «В корзину». У нас товар отметится как купленный.' },
   notFound: { lt: 'Puslapis nerastas', ru: 'Страница не найдена' },
   toHome: { lt: 'Į pradžią', ru: 'На главную' },
 } as const;

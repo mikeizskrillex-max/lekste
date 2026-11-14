@@ -23,6 +23,22 @@ const CAT: Record<ProductCategory, { lt: string; ru: string }> = {
 export const categoryLabel = (c: ProductCategory, lang: 'lt' | 'ru') => CAT[c][lang];
 const CAT_ORDER: ProductCategory[] = ['vegetables', 'fruits', 'meat', 'fish', 'dairy', 'eggs', 'bread', 'grains', 'pasta', 'frozen', 'oils', 'nuts', 'other'];
 
+/** Opens the product page in the store's e-shop (there the user taps "add to cart"); marks it as bought here. */
+export function StoreLink({ ingredientId, url, store, compact = false }: { ingredientId: string; url: string | null; store: RetailerId; compact?: boolean }) {
+  const { t } = useI18n();
+  const { purchased, togglePurchased } = useStore();
+  if (!url) return null;
+  const done = purchased.includes(ingredientId);
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer"
+      onClick={(e) => { e.stopPropagation(); if (!done) togglePurchased(ingredientId); }}
+      className={cx('inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[12px] font-bold text-white transition hover:brightness-110', done && 'opacity-60')}
+      style={{ background: RETAILERS[store].color }} title={t('buyAtTitle', { store: RETAILERS[store].name })}>
+      {done ? '✓' : '🛒'} {compact ? '' : t('buyAt2', { store: RETAILERS[store].name })} ↗
+    </a>
+  );
+}
+
 /** One-supermarket choice: menu, prices and lists are built for this store only. */
 export function StorePicker({ compact = false, onChanged }: { compact?: boolean; onChanged?: (r: RetailerId) => void }) {
   const { t } = useI18n();
@@ -82,9 +98,11 @@ export function StoreList({ basket, checkable = false }: { basket: Basket; check
                     {l.record.match === 'approximate' && <span className="text-[#8a6410]"> · {t('approx')}</span>}
                   </span>
                 </span>
+                <span className="hidden sm:block"><StoreLink ingredientId={l.ingredientId} url={l.record.url} store={l.record.retailer} /></span>
                 <span className="shrink-0 text-right">
                   <span className="block font-semibold tabular-nums">{eur(l.cost)}</span>
                   <span className="block text-[11.5px] text-muted">{l.pantry ? t('pantry') : `${l.packs} × ${eur(l.record.price)}`}</span>
+                    <span className="mt-1 block sm:hidden"><StoreLink ingredientId={l.ingredientId} url={l.record.url} store={l.record.retailer} compact /></span>
                   {l.record.promo && (
                     <span className="mt-0.5 inline-flex items-center gap-1 rounded-full bg-gold/30 px-1.5 py-0.5 text-[10.5px] font-bold text-[#6b4a0c]">
                       {t('promo2')}{l.record.regular && <s className="font-normal">{eur(l.record.regular)}</s>}{l.record.promoValidTo && ` · ${t('promoUntil', { d: date(l.record.promoValidTo, { day: 'numeric', month: 'short' }) })}`}
@@ -150,6 +168,7 @@ export function StoreSummary({ basket }: { basket: Basket }) {
       <div><div className="text-[12px] font-semibold text-muted">{t('listTotal')}</div><div className="font-display text-[24px] font-extrabold tabular-nums">{eur(basket.total)}</div></div>
       {basket.saving > 0 && <Badge tone="gold">🏷 {t('promoSavingTotal', { n: eur(basket.saving) })}</Badge>}
       <span className="text-[12px] text-muted md:ml-auto">{basket.lines.length} {t('items')}</span>
+      <p className="w-full text-[12.5px] text-muted">🛒 {t('storeLinkHint', { store: RETAILERS[homeStore].name })}</p>
     </Card>
   );
 }
@@ -211,6 +230,7 @@ export function DayList({ day, checkable = false }: { day: number; checkable?: b
                     : <span className="block text-[12px] text-muted">✓ {t('alreadyBought')}</span>
                 ) : <span className="block text-[12px] text-danger">{t('notInStore')}</span>}
               </span>
+              {it.buyToday && it.line && <StoreLink ingredientId={it.ingredientId} url={it.line.record.url} store={it.line.record.retailer} compact />}
               <span className="shrink-0 text-right">
                 <span className="block font-semibold tabular-nums">{eur(it.share)}</span>
                 {it.buyToday && it.line && !it.line.pantry && <span className="block text-[11px] text-muted">{t('packPrice', { p: eur(it.line.cost) })}</span>}

@@ -58,7 +58,9 @@ Admin panel in development mode: `/login?admin=1&next=/admin`, passphrase from
 * Barbora and Rimi prices are a **snapshot of their public e-shop catalogues** (date shown everywhere). Not real-time.
 * Maxima (in-store), Lidl and Iki have **no verified source** yet → CSV import in `/admin/prices` only.
 * Every price carries `source`, `retrievedAt` and `verification`; demo records are never shown as real prices.
-* We never order on the user's behalf; links open the retailer's page.
+* We never order on the user's behalf; every list item has a 🛒 button that opens the product page in the
+  retailer's e-shop (Barbora 64/64, Rimi 64/64 products linked), where the user adds it to the cart.
+  `node scripts/barbora-urls.mjs` (with `NODE_USE_ENV_PROXY=1` behind a proxy) finds missing Barbora links.
 * Before automated collection: review each retailer's Terms of Service and robots.txt, rate-limit, identify the client.
 
 ## Documentation

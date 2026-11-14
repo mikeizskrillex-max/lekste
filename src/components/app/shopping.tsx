@@ -46,7 +46,7 @@ export function ShoppingPage() {
         <Chip on={view === 'week'} onClick={() => setView('week')}>{t('allDays')}</Chip>
         {plan.days.map((_, i) => <Chip key={i} on={view === i} onClick={() => setView(i)}>{t(`dayS${i}` as MessageKey)}{i === todayIndex() ? ' •' : ''}</Chip>)}
       </div>
-      <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
         <div className="space-y-4">
           {view === 'week' ? (<><StoreSummary basket={basket} /><StoreList basket={basket} checkable /></>) : <DayList day={view} checkable />}
         </div>

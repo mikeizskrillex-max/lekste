@@ -11,6 +11,7 @@ import { useI18n } from '@/i18n/I18nProvider';
 import { fmtGrams, ingEmoji, ingName, recipeById } from '@/lib/view';
 import { RETAILERS } from '@/retail/retailers';
 import { useStore } from '@/state/store';
+import { StoreLink } from '../basket';
 import { Badge, Button, Card, DishImage, cx } from '../ui';
 
 function Timer({ minutes }: { minutes: number }) {
@@ -43,8 +44,9 @@ function BuyBlock({ id, servings }: { id: string; servings: number }) {
       <div className="flex items-baseline justify-between"><b className="text-[15px]">🛒 {t('whatToBuy')} · {RETAILERS[homeStore].name}</b><span className="font-display text-[18px] font-extrabold">{eur(b.total)}</span></div>
       <ul className="mt-2 space-y-1.5 text-[13px]">
         {b.lines.map((l) => (
-          <li key={l.ingredientId} className="flex items-start justify-between gap-3">
+          <li key={l.ingredientId} className="flex items-center justify-between gap-2">
             <span className="min-w-0">{l.record.url ? <a href={l.record.url} target="_blank" rel="noopener noreferrer" className="hover:underline">{l.record.name}</a> : l.record.name}</span>
+            <StoreLink ingredientId={l.ingredientId} url={l.record.url} store={l.record.retailer} compact />
             <span className="shrink-0 text-right tabular-nums">{l.pantry ? t('pantry') : `${l.packs} × ${eur(l.record.price)}`}{l.record.promo && <span className="block text-[10.5px] font-bold text-[#8a6410]">{t('promo2')}{l.record.regular ? ` · ${eur(l.record.regular)}` : ''}</span>}</span>
           </li>
         ))}
