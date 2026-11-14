@@ -171,7 +171,7 @@ export function Onboarding() {
 /** Meal cards of one day; every dish opens its recipe. */
 export function DayMeals({ day, hrefFor = (id) => `/recipe/${id}` }: { day: number; hrefFor?: (id: string) => string }) {
   const { t, lang, eur, num } = useI18n();
-  const { plan, answers } = useStore();
+  const { plan, allocation } = useStore();
   const d0 = plan?.days[day];
   if (!d0) return null;
   return (
@@ -188,7 +188,7 @@ export function DayMeals({ day, hrefFor = (id) => `/recipe/${id}` }: { day: numb
                 <div className="min-w-0 flex-1 py-1">
                   <div className="text-[11px] font-bold uppercase text-leaf">{t(`meal_${m.meal}` as MessageKey)}</div>
                   <div className="line-clamp-2 text-[15px] font-bold leading-snug group-hover:text-leaf">{recipeName(m.recipeId, lang)}</div>
-                  <div className="mt-1 text-[12.5px] text-muted">{num(m.kcal)} kcal · {num(m.protein)} g {t('protein')} · {eur(m.cost * answers.household)} · ⏱ {d ? d.prep + d.cook : r?.minutes} {t('minutesShort')}</div>
+                  <div className="mt-1 text-[12.5px] text-muted">{num(m.kcal)} kcal · {num(m.protein)} g {t('protein')} · {eur(allocation?.meal[day][i] ?? 0)} · ⏱ {d ? d.prep + d.cook : r?.minutes} {t('minutesShort')}</div>
                   {first && <p className="mt-1 line-clamp-2 text-[12.5px] text-ink/70">1. {first}</p>}
                   <span className="mt-1.5 inline-block text-[13px] font-bold text-leaf">{t('openRecipeCta')} →</span>
                 </div>
@@ -197,7 +197,7 @@ export function DayMeals({ day, hrefFor = (id) => `/recipe/${id}` }: { day: numb
           );
         })}
       </div>
-      <p className="mt-3 text-[14px]">{t('dayTotals')}: <b>{num(d0.kcal)} kcal</b> · {num(d0.protein)} g {t('protein')} · {t('dayCost')}: <b>{eur(d0.cost * answers.household)}</b></p>
+      <p className="mt-3 text-[14px]">{t('dayTotals')}: <b>{num(d0.kcal)} kcal</b> · {num(d0.protein)} g {t('protein')} · {t('dayCost')}: <b>{eur(allocation?.day[day] ?? 0)}</b></p>
     </>
   );
 }

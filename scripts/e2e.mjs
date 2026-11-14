@@ -45,6 +45,18 @@ try {
   check('A result shows the menu for every day', await page.getByRole('tab').count() === 7);
   await page.getByRole('tab').nth(3).click();
   check('A day 4 has its own shopping list', await page.getByText(/Ką nupirkti šiai dienai/).isVisible());
+  {
+    const euro = (txt) => Number(txt.replace(/[^0-9,]/g, '').replace(',', '.'));
+    const weekTxt = await page.getByText('Numatomas krepšelis').locator('..').innerText();
+    const week = euro(weekTxt.split('\n')[1]);
+    let sum = 0;
+    for (let i = 0; i < 7; i++) {
+      await page.getByRole('tab').nth(i).click();
+      const head = await page.getByText(/Šios dienos dalis iš savaitės krepšelio/).locator('../..').innerText();
+      sum += euro(head.split('\n').pop());
+    }
+    check('A 7 day totals add up to the weekly basket', Math.abs(sum - week) <= 0.05, `${sum.toFixed(2)} vs ${week.toFixed(2)}`);
+  }
   await page.getByRole('link', { name: /Gauti visą savaitės planą/ }).click();
   await page.waitForURL('**/checkout**');
   await page.locator('input[type=checkbox]').check();

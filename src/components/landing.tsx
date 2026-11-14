@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { applyIntent, type Note } from '@/ai/apply';
 import { parseRules } from '@/ai/rules';
+import { allocate, type Allocation } from '@/domain/allocation';
+import { DEFAULT_CATALOG } from '@/retail/catalog';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { recipeName, SAMPLE_ANSWERS } from '@/lib/view';
@@ -86,7 +88,7 @@ function How() {
 
 export function WeekPreview() {
   const { t, lang, eur, num } = useI18n();
-  const { plan } = useSamplePlan();
+  const { plan, alloc } = useSamplePlan();
   const [day, setDay] = useState(0);
   const d = plan.days[day];
   return (
@@ -105,13 +107,13 @@ export function WeekPreview() {
           ))}
         </div>
         <motion.div key={day} initial={{ opacity: 0.4, y: 6 }} animate={{ opacity: 1, y: 0 }} className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {d.meals.map((m) => (
+          {d.meals.map((m, i) => (
             <Link key={m.recipeId + m.meal} href={`/recipe/${m.recipeId}?back=/`} className="group"><Card className="h-full overflow-hidden transition group-hover:ring-leaf">
               <DishImage id={m.recipeId} alt={recipeName(m.recipeId, lang)} className="aspect-[4/3]" sizes="(max-width: 640px) 100vw, 300px" />
               <div className="p-4">
                 <div className="text-[11.5px] font-bold uppercase tracking-wide text-leaf">{t(`meal_${m.meal}` as MessageKey)}</div>
                 <div className="mt-1 line-clamp-2 min-h-[44px] text-[15.5px] font-bold leading-snug">{recipeName(m.recipeId, lang)}</div>
-                <div className="mt-2 flex justify-between text-[13px] text-muted"><span>{num(m.kcal)} kcal · {num(m.protein)} g</span><span className="font-semibold text-ink">{eur(m.cost)}</span></div>
+                <div className="mt-2 flex justify-between text-[13px] text-muted"><span>{num(m.kcal)} kcal · {num(m.protein)} g</span><span className="font-semibold text-ink">{eur(alloc.meal[day][i])}</span></div>
                 <div className="mt-2 text-[12.5px] font-bold text-leaf">{t('openRecipeCta')} →</div>
               </div>
             </Card></Link>
@@ -119,7 +121,7 @@ export function WeekPreview() {
         </motion.div>
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-[14px]">
           <span><b>{t('dayTotals')}:</b> {num(d.kcal)} kcal · {num(d.protein)} g {t('protein')}</span>
-          <span>{t('dayCost')}: <b>{eur(d.cost)}</b> / {t('people2')}</span>
+          <span>{t('dayCost')}: <b>{eur(alloc.day[day])}</b> ({SAMPLE_ANSWERS.household} {t('people2')}) · {t('heroChipBasket')}: <b>{eur(alloc.week.total)}</b></span>
         </div>
       </Container>
     </section>
@@ -180,13 +182,14 @@ export function AssistantPreview() {
   const { t, lang, eur } = useI18n();
   const { plan } = useSamplePlan();
   const [text, setText] = useState('');
-  const [state, setState] = useState<{ notes: Note[]; day: number; plan: typeof plan } | null>(null);
+  const [state, setState] = useState<{ notes: Note[]; day: number; plan: typeof plan; alloc: Allocation } | null>(null);
   const run = (msg: string) => {
     setText(msg);
     const intent = parseRules(msg, 0);
     const r = applyIntent(SAMPLE_ANSWERS, plan, intent, [], 5);
     const changedDay = intent.actions.find((a) => a.day !== null)?.day ?? 0;
-    setState({ notes: r.notes, day: changedDay, plan: r.plan ?? plan });
+    const p2 = r.plan ?? plan;
+    setState({ notes: r.notes, day: changedDay, plan: p2, alloc: allocate(p2, SAMPLE_ANSWERS.household, 'barbora', DEFAULT_CATALOG) });
   };
   const before = useMemo(() => plan.days[state?.day ?? 0], [plan, state]);
   const after = state?.plan.days[state.day];
@@ -223,7 +226,7 @@ export function AssistantPreview() {
                       <div key={i} className="flex items-center justify-between gap-3 border-b border-line/60 px-4 py-2.5 text-[14px] last:border-0">
                         <span className="min-w-0"><span className="mr-2 text-[11px] font-bold uppercase text-leaf">{t(`meal_${m.meal}` as MessageKey)}</span>
                           {changed && <s className="mr-1 text-muted">{recipeName(old.recipeId, lang)}</s>}<b className={changed ? 'text-forest' : ''}>{recipeName(m.recipeId, lang)}</b></span>
-                        <span className="shrink-0 tabular-nums text-muted">{eur(m.cost)}</span>
+                        <span className="shrink-0 tabular-nums text-muted">{eur(state.alloc.meal[state.day][i])}</span>
                       </div>
                     );
                   })}

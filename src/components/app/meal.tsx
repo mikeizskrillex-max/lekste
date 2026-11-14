@@ -34,7 +34,7 @@ const MODES: { mode: ReplaceMode; key: MessageKey }[] = [
 
 export function MealRow({ meal, day, slot, toast }: { meal: PlanMeal; day: number; slot: number; toast: (s: string, bad?: boolean) => void }) {
   const { t, lang, eur, num } = useI18n();
-  const { replace, done, toggleDone, rate, feedback, answers } = useStore();
+  const { replace, done, toggleDone, rate, feedback, allocation } = useStore();
   const [menu, setMenu] = useState(false);
   const date = dateOfDay(day);
   const isDone = (done[date] ?? []).includes(meal.recipeId);
@@ -45,7 +45,7 @@ export function MealRow({ meal, day, slot, toast }: { meal: PlanMeal; day: numbe
       <div className="min-w-0 flex-1 py-0.5">
         <div className="text-[11px] font-bold uppercase tracking-wide text-leaf">{t(`meal_${meal.meal}` as MessageKey)}</div>
         <Link href={`/app/recipe/${meal.recipeId}`} className="line-clamp-2 text-[15px] font-bold leading-snug hover:text-leaf">{recipeName(meal.recipeId, lang)}</Link>
-        <div className="mt-1 text-[12.5px] text-muted">{num(meal.kcal)} kcal · {num(meal.protein)} g · {eur(meal.cost * answers.household)}</div>
+        <div className="mt-1 text-[12.5px] text-muted">{num(meal.kcal)} kcal · {num(meal.protein)} g · {eur(allocation?.meal[day]?.[slot] ?? 0)}</div>
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
           <button type="button" onClick={() => toggleDone(date, meal.recipeId)} aria-pressed={isDone} className={cx('rounded-full px-2.5 py-1 text-[12px] font-semibold ring-1', isDone ? 'bg-leaf text-white ring-leaf' : 'ring-line hover:ring-leaf')}>✓ {t('markDone')}</button>
           <button type="button" onClick={() => setMenu((m) => !m)} aria-expanded={menu} className="rounded-full px-2.5 py-1 text-[12px] font-semibold ring-1 ring-line hover:ring-leaf">⇄ {t('replace')}</button>

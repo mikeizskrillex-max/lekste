@@ -154,3 +154,22 @@ describe('one supermarket', () => {
     expect(effectiveRecord({ ...rec, promoValidTo: '2999-01-01' })).toMatchObject({ promo: true, price: 0.5 });
   });
 });
+
+describe('money adds up', () => {
+  it('meals sum to days and days sum exactly to the weekly basket', async () => {
+    const { allocate } = await import('./allocation');
+    for (const household of [1, 3]) {
+      const u = { ...base, homeStore: 'barbora' as const, household };
+      const plan = buildPlan(u, calcTargets(u));
+      const a = allocate(plan, household, 'barbora');
+      const days = a.day.reduce((s, x) => s + x, 0);
+      expect(days).toBeCloseTo(a.week.total, 6);
+      a.meal.forEach((m, d) => expect(m.reduce((s, x) => s + x, 0)).toBeCloseTo(a.day[d], 6));
+      expect(a.daySaving.reduce((s, x) => s + x, 0)).toBeCloseTo(a.week.saving, 6);
+      // every weekly item is bought exactly once (on its first day)
+      const bought = a.items.flat().filter((i) => i.buyToday && i.line).map((i) => i.ingredientId);
+      expect(new Set(bought).size).toBe(bought.length);
+      expect(bought.length).toBe(a.week.lines.length);
+    }
+  });
+});

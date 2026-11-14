@@ -175,20 +175,51 @@ export function dayNeed(plan: Plan, day: number, household: number): Map<string,
   return need;
 }
 
-/** What to buy for one day, at the user's store only. */
+/** One day of the week: what is used, its share of the weekly basket, and what to buy first that day. */
 export function DayList({ day, checkable = false }: { day: number; checkable?: boolean }) {
-  const { t, eur } = useI18n();
-  const { plan, answers, homeStore, catalog } = useStore();
-  const basket = useMemo(() => (plan ? basketFor(dayNeed(plan, day, answers.household), [homeStore], catalog) : null), [plan, day, answers.household, homeStore, catalog]);
-  if (!basket) return null;
+  const { t, lang, eur } = useI18n();
+  const { allocation, homeStore, purchased, togglePurchased } = useStore();
+  if (!allocation) return null;
+  const items = [...allocation.items[day]].sort((a, b) => Number(b.buyToday) - Number(a.buyToday) || ingName(a.ingredientId, lang).localeCompare(ingName(b.ingredientId, lang)));
+  const toBuy = items.filter((i) => i.buyToday && i.line);
+  const buyCost = toBuy.reduce((s, i) => s + i.line!.cost, 0);
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <b className="text-[17px]">🛒 {t('whatToBuyDay')} · {RETAILERS[homeStore].name}</b>
-        <span className="flex items-center gap-2">{basket.saving > 0 && <Badge tone="gold">🏷 {t('promoSavingTotal', { n: eur(basket.saving) })}</Badge>}<span className="font-display text-[20px] font-extrabold tabular-nums">{eur(basket.total)}</span></span>
+      <div className="flex flex-wrap items-end justify-between gap-2">
+        <div>
+          <b className="text-[17px]">🛒 {t('whatToBuyDay')} · {RETAILERS[homeStore].name}</b>
+          <div className="text-[12.5px] text-muted">{t('dayShareOf', { week: eur(allocation.week.total) })}</div>
+        </div>
+        <span className="flex items-center gap-2">
+          {allocation.daySaving[day] > 0.005 && <Badge tone="gold">🏷 {t('promoSavingTotal', { n: eur(allocation.daySaving[day]) })}</Badge>}
+          <span className="font-display text-[22px] font-extrabold tabular-nums">{eur(allocation.day[day])}</span>
+        </span>
       </div>
-      <StoreList basket={basket} checkable={checkable} />
-      <p className="text-[12px] text-muted">{t('dayBuyNote')} {t('snapshotNote')}</p>
+      <Card className="overflow-hidden">
+        {items.map((it) => {
+          const done = checkable && purchased.includes(it.ingredientId);
+          const Row = checkable ? 'label' : 'div';
+          return (
+            <Row key={it.ingredientId} className={cx('flex items-center gap-3 border-b border-line/60 px-4 py-3 last:border-0 md:px-5', checkable && 'cursor-pointer', done && 'opacity-50')}>
+              {checkable && <input type="checkbox" checked={done} onChange={() => togglePurchased(it.ingredientId)} className="h-5 w-5 shrink-0 accent-[#31966A]" />}
+              <span aria-hidden className="text-[19px]">{ingEmoji(it.ingredientId)}</span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-[14.5px] font-semibold">{ingName(it.ingredientId, lang)} <span className="font-normal text-muted">· {fmtGrams(it.grams, lang)}</span></span>
+                {it.line ? (
+                  it.buyToday
+                    ? <span className="block truncate text-[12px] text-forest">🛒 {t('buyNow')}: {it.line.pantry ? it.line.record.name : `${it.line.packs} × ${it.line.record.name}`}{it.line.record.promo ? ` · ${t('promo2')}` : ''}</span>
+                    : <span className="block text-[12px] text-muted">✓ {t('alreadyBought')}</span>
+                ) : <span className="block text-[12px] text-danger">{t('notInStore')}</span>}
+              </span>
+              <span className="shrink-0 text-right">
+                <span className="block font-semibold tabular-nums">{eur(it.share)}</span>
+                {it.buyToday && it.line && !it.line.pantry && <span className="block text-[11px] text-muted">{t('packPrice', { p: eur(it.line.cost) })}</span>}
+              </span>
+            </Row>
+          );
+        })}
+      </Card>
+      <p className="text-[12px] text-muted">{t('dayMathNote', { buy: eur(buyCost) })} {t('snapshotNote')}</p>
     </div>
   );
 }

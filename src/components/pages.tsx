@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import type { RetailerId } from '@/config/markets';
 import { effectiveTargets } from '@/domain/nutrition';
-import { buildPlan, weeklyNeed } from '@/domain/planner';
-import { basketFor } from '@/domain/pricing';
+import { buildPlan } from '@/domain/planner';
+import { allocate } from '@/domain/allocation';
 import type { Goal, QuizAnswers } from '@/domain/types';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
@@ -109,8 +109,8 @@ export function DemoPage() {
     const targets = effectiveTargets(a);
     const plan = buildPlan(a, targets, 3);
     const store = (a.homeStore ?? 'barbora') as RetailerId;
-    const best = basketFor(weeklyNeed(plan, a.household), [store], DEFAULT_CATALOG);
-    return { targets, plan, best, store };
+    const alloc = allocate(plan, a.household, store, DEFAULT_CATALOG);
+    return { targets, plan, best: alloc.week, alloc, store };
   }, [a]);
   const d = res.plan.days[day];
   const best = res.best;
@@ -146,13 +146,13 @@ export function DemoPage() {
             {res.plan.days.map((_, i) => <Chip key={i} on={day === i} onClick={() => setDay(i)}>{t(`dayS${i}` as MessageKey)}</Chip>)}
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
-            {d.meals.map((m) => (
+            {d.meals.map((m, i) => (
               <Card key={m.recipeId + m.meal} className="flex gap-3 overflow-hidden p-2.5">
                 <DishImage id={m.recipeId} alt={recipeName(m.recipeId, lang)} className="h-20 w-20 shrink-0 rounded-xl" sizes="80px" />
                 <div className="min-w-0 py-1">
                   <div className="text-[11px] font-bold uppercase text-leaf">{t(`meal_${m.meal}` as MessageKey)}</div>
                   <div className="line-clamp-2 text-[14.5px] font-bold leading-snug">{recipeName(m.recipeId, lang)}</div>
-                  <div className="mt-1 text-[12.5px] text-muted">{num(m.kcal)} kcal · {num(m.protein)} g · {eur(m.cost)}</div>
+                  <div className="mt-1 text-[12.5px] text-muted">{num(m.kcal)} kcal · {num(m.protein)} g · {eur(res.alloc.meal[day][i])}</div>
                 </div>
               </Card>
             ))}

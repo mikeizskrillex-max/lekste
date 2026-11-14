@@ -16,6 +16,7 @@ import type { RetailerId } from '@/config/markets';
 import { DEFAULT_PLANS, type Plan as SubPlan, type PlanId } from '@/config/plans';
 import { effectiveTargets } from '@/domain/nutrition';
 import { buildPlan, regenerateDay, replaceMeal, weeklyNeed, type Plan, type ReplaceMode } from '@/domain/planner';
+import { allocate, type Allocation } from '@/domain/allocation';
 import { basketFor, compareStores, setActiveCatalog } from '@/domain/pricing';
 import type { QuizAnswers, Targets } from '@/domain/types';
 import { buildCatalog, retailersWithData, SNAPSHOT_RECORDS } from '@/retail/catalog';
@@ -109,6 +110,8 @@ interface Ctx extends State {
   /** supermarkets that have prices (snapshot or CSV) */
   availableStores: RetailerId[];
   setHomeStore: (r: RetailerId) => void;
+  /** weekly basket at the home store split by day and meal (all money shown comes from here) */
+  allocation: Allocation | null;
   /** apply a structured assistant intent with the deterministic planner */
   applyAssistant: (intent: Intent) => Note[];
   /** withdraw health-data consent: deletes the plan and health answers */
@@ -137,13 +140,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const catalog = useMemo(() => { const c = buildCatalog(priceRecords); setActiveCatalog(c); return c; }, [priceRecords]);
   const availableStores = useMemo(() => RETAILER_ORDER.filter((r) => retailersWithData(catalog).includes(r)), [catalog]);
   const homeStore = homeOf(s.answers, availableStores);
+  const allocation = useMemo(() => (s.plan ? allocate(s.plan, s.answers.household, homeStore, catalog) : null), [s.plan, s.answers.household, homeStore, catalog]);
   const targets = useMemo(() => effectiveTargets(s.answers), [s.answers]);
   const disliked = s.feedback.filter((f) => f.rating === 'down').map((f) => f.recipeId);
 
   const email = useCallback((subject: string) => setS((p) => ({ ...p, emails: [{ date: new Date().toISOString(), subject, to: p.answers.email || p.session?.email || '' }, ...p.emails].slice(0, 20) })), []);
 
   const value: Ctx = {
-    ...s, ready, targets, catalog, priceRecords, plans, homeStore, availableStores,
+    ...s, ready, targets, catalog, priceRecords, plans, homeStore, availableStores, allocation,
     setHomeStore: (r) => setS((p) => {
       const answers = { ...p.answers, homeStore: r, stores: [r] };
       return { ...p, answers, plan: p.plan ? buildPlan(answers, effectiveTargets(answers)) : p.plan };

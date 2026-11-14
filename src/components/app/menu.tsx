@@ -68,7 +68,7 @@ function Personalize() {
 
 export function MenuPage() {
   const { t, eur, num } = useI18n();
-  const { plan, regenerate, weekEconomics, answers, targets, homeStore } = useStore();
+  const { plan, regenerate, weekEconomics, answers, targets, homeStore, allocation } = useStore();
   const { show, node } = useToast();
   if (!plan) return null;
   const econ = weekEconomics();
@@ -84,7 +84,7 @@ export function MenuPage() {
           <section key={day} aria-labelledby={`day-${day}`}>
             <div className="mb-3 flex items-baseline justify-between gap-2">
               <h2 id={`day-${day}`} className="text-[19px] font-extrabold">{t(`day${day}` as MessageKey)} {day === today && <Badge tone="leaf" className="ml-1 align-middle">{t('todayLabel')}</Badge>}</h2>
-              <Link href={`/app/menu/${day}`} className="text-[13px] font-semibold text-leaf hover:underline">{num(d.kcal)} kcal · {eur(d.cost * answers.household)} →</Link>
+              <Link href={`/app/menu/${day}`} className="text-[13px] font-semibold text-leaf hover:underline">{num(d.kcal)} kcal · {eur(allocation?.day[day] ?? 0)} →</Link>
             </div>
             <div className="grid gap-2.5 md:grid-cols-2">{d.meals.map((m, slot) => <MealRow key={`${m.recipeId}-${slot}`} meal={m} day={day} slot={slot} toast={show} />)}</div>
             <button type="button" onClick={() => { regenerate(day); show(t('regenerated')); }} className={cx('mt-3 w-full rounded-2xl border-2 border-dashed border-leaf/40 py-3 text-[14px] font-bold text-forest transition hover:bg-sage')}>↻ {t('regenDay2')}</button>
@@ -98,14 +98,14 @@ export function MenuPage() {
 
 export function DayPage({ day }: { day: number }) {
   const { t, eur, num } = useI18n();
-  const { plan, regenerate, targets, answers } = useStore();
+  const { plan, regenerate, targets, allocation } = useStore();
   const { show, node } = useToast();
   if (!plan || !plan.days[day]) return <p>{t('notFound')}</p>;
   const d = plan.days[day];
   return (
     <>
       <Link href="/app/menu" className="text-[14px] font-semibold text-leaf">{t('back2')}</Link>
-      <PageTitle title={t(`day${day}` as MessageKey)} sub={`${num(d.kcal)} / ${num(targets.kcal)} kcal · ${num(d.protein)} g ${t('protein')} · ${eur(d.cost * answers.household)}`} />
+      <PageTitle title={t(`day${day}` as MessageKey)} sub={`${num(d.kcal)} / ${num(targets.kcal)} kcal · ${num(d.protein)} g ${t('protein')} · ${eur(allocation?.day[day] ?? 0)}`} />
       <div className="no-scrollbar -mt-2 mb-5 flex gap-2 overflow-x-auto">{plan.days.map((_, i) => <Link key={i} href={`/app/menu/${i}`} className={cx('shrink-0 rounded-full px-3.5 py-2 text-[13.5px] font-bold ring-1', i === day ? 'bg-forest text-white ring-forest' : 'bg-card ring-line')}>{t(`dayS${i}` as MessageKey)}</Link>)}</div>
       <div className="space-y-2.5">{d.meals.map((m, slot) => <MealRow key={`${m.recipeId}-${slot}`} meal={m} day={day} slot={slot} toast={show} />)}</div>
       <Button variant="dark" size="lg" className="mt-5 w-full" onClick={() => { regenerate(day); show(t('regenerated')); }}>↻ {t('regenDay2')}</Button>

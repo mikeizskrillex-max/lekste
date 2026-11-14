@@ -5,6 +5,7 @@ import type { RetailerId } from '@/config/markets';
 import { planMonthlyEquivalent } from '@/config/plans';
 import { effectiveTargets } from '@/domain/nutrition';
 import { buildPlan, weeklyNeed } from '@/domain/planner';
+import { allocate } from '@/domain/allocation';
 import { compareStores } from '@/domain/pricing';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
@@ -20,11 +21,11 @@ export function useSamplePlan() {
     const t = effectiveTargets(SAMPLE_ANSWERS);
     const plan = buildPlan(SAMPLE_ANSWERS, t, 11);
     const need = weeklyNeed(plan, SAMPLE_ANSWERS.household);
-    // like-for-like: only items that every retailer with data has a price for
-    const withData = RETAILER_ORDER.filter((r) => Object.values(DEFAULT_CATALOG).some((b) => b[r]));
-    const common = new Map([...need].filter(([id]) => withData.every((r) => DEFAULT_CATALOG[id]?.[r])));
-    const rows = compareStores(common, RETAILER_ORDER);
-    return { t, plan, need, rows };
+    const rows = compareStores(need, RETAILER_ORDER);
+    // the sample is priced at the cheapest store that has the whole list; day and meal prices are its shares
+    const best = rows.filter((r) => r.covered > 0).sort((a, b) => a.missing - b.missing || a.total - b.total)[0];
+    const alloc = allocate(plan, SAMPLE_ANSWERS.household, best?.retailer ?? 'barbora', DEFAULT_CATALOG);
+    return { t, plan, need, rows, alloc };
   }, []);
 }
 

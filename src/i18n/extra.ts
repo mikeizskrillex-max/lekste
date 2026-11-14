@@ -138,6 +138,11 @@ export const X = {
   promosThisWeek: { lt: 'Akcijos jūsų sąraše', ru: 'Акции в вашем списке' },
   storeChanged: { lt: 'Meniu ir sąrašas perskaičiuoti pagal {store}', ru: 'Меню и список пересчитаны под {store}' },
   weekMenuTitle: { lt: 'Jūsų savaitės meniu — kiekviena diena', ru: 'Ваше меню на неделю — по дням' },
+  dayShareOf: { lt: 'Šios dienos dalis iš savaitės krepšelio {week}', ru: 'Доля этого дня в недельной корзине {week}' },
+  buyNow: { lt: 'Nupirkite', ru: 'Купить' },
+  alreadyBought: { lt: 'Iš jau nupirktos pakuotės', ru: 'Из уже купленной упаковки' },
+  packPrice: { lt: 'pakuotė {p}', ru: 'упаковка {p}' },
+  dayMathNote: { lt: 'Kaina — tai, kiek šią dieną suvalgote iš savaitės pirkinių; visų 7 dienų suma lygi savaitės krepšeliui. Pirmą kartą reikalingų prekių pakuotės kainuoja {buy}.', ru: 'Цена — сколько из недельных покупок съедается в этот день; сумма 7 дней равна недельной корзине. Упаковки, которые впервые нужны в этот день, стоят {buy}.' },
   notFound: { lt: 'Puslapis nerastas', ru: 'Страница не найдена' },
   toHome: { lt: 'Į pradžią', ru: 'На главную' },
 } as const;
