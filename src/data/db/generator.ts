@@ -15,6 +15,7 @@
 import type { Recipe } from '../recipes';
 import type { RecipeDetail, Step } from '../recipeDetails';
 import type { Equipment, MealType } from '../../domain/types';
+import { extraRecipes } from './generator2';
 
 type L = [ru: string, lt: string];
 interface Gen { recipe: Recipe; detail: RecipeDetail; photo: string }
@@ -461,7 +462,7 @@ function snacks(): Gen[] {
 }
 
 // ---------- build ----------
-const ALL: Gen[] = [...mains(), ...soups(), ...bowls(), ...pastas(), ...breakfasts(), ...snacks()];
+const ALL: Gen[] = [...mains(), ...soups(), ...bowls(), ...pastas(), ...breakfasts(), ...snacks(), ...extraRecipes()];
 
 export const GENERATED_RECIPES: Recipe[] = ALL.map((g) => g.recipe);
 export const GENERATED_DETAILS: Record<string, RecipeDetail> = Object.fromEntries(ALL.map((g) => [g.recipe.id, g.detail]));

@@ -3,14 +3,13 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { getDetail } from '@/data/recipeDetails';
-import type { RetailerId } from '@/config/markets';
-import { cheapest, strategies } from '@/domain/pricing';
+import { basketFor, cheapest, effectiveRecord } from '@/domain/pricing';
 import { recipeFacts } from '@/domain/recipeFacts';
 import { kitchenMeasure } from '@/domain/units';
 import { ALLERGEN_LABEL, type MessageKey } from '@/i18n/messages';
 import { useI18n } from '@/i18n/I18nProvider';
 import { fmtGrams, ingEmoji, ingName, recipeById } from '@/lib/view';
-import { RETAILER_ORDER, RETAILERS } from '@/retail/retailers';
+import { RETAILERS } from '@/retail/retailers';
 import { useStore } from '@/state/store';
 import { Badge, Button, Card, DishImage, cx } from '../ui';
 
@@ -35,25 +34,23 @@ function Timer({ minutes }: { minutes: number }) {
 
 function BuyBlock({ id, servings }: { id: string; servings: number }) {
   const { t, lang, eur } = useI18n();
-  const { answers, catalog } = useStore();
+  const { homeStore, catalog } = useStore();
   const r = recipeById(id)!;
   const need = new Map(r.items.map(([ing, g]) => [ing, g * servings] as [string, number]));
-  const st = strategies(need, RETAILER_ORDER, answers.stores as RetailerId[], answers.travelCost ?? 0, catalog);
-  const b = st.multi;
-  if (!b) return null;
+  const b = basketFor(need, [homeStore], catalog);
   return (
     <div className="mt-5 rounded-2xl bg-sage/70 p-4">
-      <div className="flex items-baseline justify-between"><b className="text-[15px]">🛒 {t('whatToBuy')}</b><span className="font-display text-[18px] font-extrabold">{eur(b.total)}</span></div>
+      <div className="flex items-baseline justify-between"><b className="text-[15px]">🛒 {t('whatToBuy')} · {RETAILERS[homeStore].name}</b><span className="font-display text-[18px] font-extrabold">{eur(b.total)}</span></div>
       <ul className="mt-2 space-y-1.5 text-[13px]">
         {b.lines.map((l) => (
           <li key={l.ingredientId} className="flex items-start justify-between gap-3">
-            <span className="min-w-0"><span className="mr-1 inline-block rounded px-1.5 text-[10.5px] font-bold text-white" style={{ background: RETAILERS[l.record.retailer].color }}>{RETAILERS[l.record.retailer].name}</span>
-              {l.record.url ? <a href={l.record.url} target="_blank" rel="noopener noreferrer" className="hover:underline">{l.record.name}</a> : l.record.name}</span>
-            <span className="shrink-0 tabular-nums">{l.pantry ? t('pantry') : `${l.packs} × ${eur(l.record.price)}`}</span>
+            <span className="min-w-0">{l.record.url ? <a href={l.record.url} target="_blank" rel="noopener noreferrer" className="hover:underline">{l.record.name}</a> : l.record.name}</span>
+            <span className="shrink-0 text-right tabular-nums">{l.pantry ? t('pantry') : `${l.packs} × ${eur(l.record.price)}`}{l.record.promo && <span className="block text-[10.5px] font-bold text-[#8a6410]">{t('promo2')}{l.record.regular ? ` · ${eur(l.record.regular)}` : ''}</span>}</span>
           </li>
         ))}
       </ul>
-      {b.missing.length > 0 && <p className="mt-2 text-[12px] text-muted">{t('missingItems', { n: b.missing.length })}: {b.missing.map((x) => ingName(x, lang)).join(', ')}</p>}
+      {b.lines.length === 0 && <p className="mt-2 text-[12px] text-muted">{t('noData')}</p>}
+      {b.missing.length > 0 && <p className="mt-2 text-[12px] text-muted">{t('notInStore')}: {b.missing.map((x) => ingName(x, lang)).join(', ')}</p>}
       <p className="mt-2 text-[11.5px] text-muted">{t('snapshotNote')}</p>
     </div>
   );
@@ -61,7 +58,7 @@ function BuyBlock({ id, servings }: { id: string; servings: number }) {
 
 export function RecipePage({ id, backHref = '/app/menu' }: { id: string; backHref?: string }) {
   const { t, lang, pick, eur, num } = useI18n();
-  const { answers, catalog } = useStore();
+  const { answers, catalog, homeStore } = useStore();
   const r = recipeById(id);
   const [servings, setServings] = useState(Math.max(1, answers.household));
   const [cook, setCook] = useState<number | null>(null);
@@ -112,7 +109,8 @@ export function RecipePage({ id, backHref = '/app/menu' }: { id: string; backHre
           <ul className="mt-4 divide-y divide-line">
             {r.items.map(([ing, g]) => {
               const grams = g * servings;
-              const c = cheapest(ing, catalog);
+              const own = catalog[ing]?.[homeStore];
+              const c = own ? effectiveRecord(own) : cheapest(ing, catalog);
               return (
                 <li key={ing} className="flex items-center gap-3 py-2.5">
                   <span aria-hidden className="text-[18px]">{ingEmoji(ing)}</span>

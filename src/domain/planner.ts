@@ -1,4 +1,5 @@
 import { isChefRecipe, RECIPES, type Recipe } from '../data/recipes';
+import { recipeAtStore } from './pricing';
 import { passesHardRules, recipeFacts } from './recipeFacts';
 import type { MealType, QuizAnswers, Targets } from './types';
 
@@ -25,6 +26,11 @@ export function mealSlots(u: Pick<QuizAnswers, 'mealsPerDay' | 'breakfastStyle'>
   return base;
 }
 
+/** Price of one serving for this user: at their supermarket (with its promotions) when chosen. */
+export function costOf(r: Recipe, u: Pick<QuizAnswers, 'homeStore'>): number {
+  return u.homeStore ? recipeAtStore(r, u.homeStore).cost : recipeFacts(r).cost;
+}
+
 /** Soft preference score: higher is better. */
 function score(r: Recipe, u: QuizAnswers): number {
   let s = 0;
@@ -38,7 +44,12 @@ function score(r: Recipe, u: QuizAnswers): number {
   if (isChefRecipe(r.id)) s += 1.2; // curated recipes first, generated ones add variety
   // budget awareness: the tighter the budget per person per day, the more a recipe's price matters
   const perDay = u.weeklyBudget / Math.max(1, u.household) / 7;
-  s -= recipeFacts(r).cost * Math.max(0.5, 10 / Math.max(perDay, 1));
+  s -= costOf(r, u) * Math.max(0.5, 10 / Math.max(perDay, 1));
+  if (u.homeStore) {
+    const at = recipeAtStore(r, u.homeStore);
+    s += Math.min(2, at.promo.length * 0.8); // this week's promotions in the user's store
+    s -= at.missing.length * 2.5; // the store does not sell an ingredient
+  }
   return s;
 }
 
@@ -59,13 +70,13 @@ function fits(r: Recipe, slot: MealType): boolean {
   return r.meal === slot || (MAIN.has(slot) && MAIN.has(r.meal));
 }
 
-function makeDay(chosen: Recipe[], labels: MealType[], t: Targets): PlanDay {
+function makeDay(chosen: Recipe[], labels: MealType[], t: Targets, u: Pick<QuizAnswers, 'homeStore'>): PlanDay {
   const base = chosen.reduce((s, r) => s + recipeFacts(r).kcal, 0) || 1;
   const factor = Math.min(1.75, Math.max(0.6, t.kcal / base));
   const servings = Math.round(factor * 4) / 4;
   const meals: PlanMeal[] = chosen.map((r, i) => {
     const f = recipeFacts(r);
-    return { recipeId: r.id, meal: labels[i], servings, kcal: Math.round(f.kcal * servings), protein: Math.round(f.protein * servings), cost: f.cost * servings };
+    return { recipeId: r.id, meal: labels[i], servings, kcal: Math.round(f.kcal * servings), protein: Math.round(f.protein * servings), cost: costOf(r, u) * servings };
   });
   return {
     meals,
@@ -126,7 +137,7 @@ function buildOnce(u: QuizAnswers, t: Targets, pool: Recipe[], baseSlots: MealTy
       base += recipeFacts(extra).kcal;
     }
 
-    days.push(makeDay(chosen, labels, t));
+    days.push(makeDay(chosen, labels, t, u));
   }
 
   const weeklyCost = days.reduce((s, d) => s + d.cost, 0) * u.household;
@@ -191,7 +202,7 @@ export function regenerateDay(plan: Plan, u: QuizAnswers, t: Targets, day: numbe
     chosen.push(pick);
     labels.push(m.meal);
   }
-  const days = plan.days.map((d, i) => (i === day ? makeDay(chosen, labels, t) : d));
+  const days = plan.days.map((d, i) => (i === day ? makeDay(chosen, labels, t, u) : d));
   const weeklyCost = days.reduce((s, d) => s + d.cost, 0) * u.household;
   return { ...plan, days, weeklyCost };
 }
@@ -213,7 +224,7 @@ export function replaceMeal(plan: Plan, u: QuizAnswers, t: Targets, day: number,
   const options = eligibleRecipes(u).filter((r) => {
     if (!fits(r, cur.meal) || inDay.has(r.id) || disliked.includes(r.id)) return false;
     const f = recipeFacts(r);
-    if (mode === 'cheaper' && !(f.cost < curF.cost * 0.92)) return false;
+    if (mode === 'cheaper' && !(costOf(r, u) < costOf(curR, u) * 0.92)) return false;
     if (mode === 'protein' && !(f.protein > curF.protein * 1.15)) return false;
     if (mode === 'vegetarian' && (f.flags.includes('meat') || f.flags.includes('fish') || f.flags.includes('seafood'))) return false;
     return true;
@@ -222,7 +233,7 @@ export function replaceMeal(plan: Plan, u: QuizAnswers, t: Targets, day: number,
   const rank = (r: Recipe) => {
     const f = recipeFacts(r);
     let s = score(r, u) + rand() * 3;
-    if (mode === 'cheaper') s += (curF.cost - f.cost) * 3;
+    if (mode === 'cheaper') s += (costOf(curR, u) - costOf(r, u)) * 3;
     if (mode === 'protein') s += (f.protein - curF.protein) / 5;
     // keep the day close to the calorie target
     s -= Math.abs(f.kcal - curF.kcal) / 150;
@@ -231,7 +242,7 @@ export function replaceMeal(plan: Plan, u: QuizAnswers, t: Targets, day: number,
   const pick = options.map((r) => ({ r, s: rank(r) })).sort((a, b) => b.s - a.s)[0].r;
   const f = recipeFacts(pick);
   const meals = plan.days[day].meals.map((m, i) => (i === slot
-    ? { ...m, recipeId: pick.id, kcal: Math.round(f.kcal * m.servings), protein: Math.round(f.protein * m.servings), cost: f.cost * m.servings }
+    ? { ...m, recipeId: pick.id, kcal: Math.round(f.kcal * m.servings), protein: Math.round(f.protein * m.servings), cost: costOf(pick, u) * m.servings }
     : m));
   const dayObj: PlanDay = {
     ...plan.days[day], meals,

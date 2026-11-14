@@ -30,7 +30,7 @@ export function applyIntent(answers: QuizAnswers, plan: Plan | null, intent: Int
       case 'set_household': if (x.household && x.household >= 1 && x.household <= 8) { a = { ...a, household: x.household }; notes.push({ kind: 'ok', key: 'n_household', vars: { n: x.household } }); } break;
       case 'set_diet': if (x.diet) { a = { ...a, dietType: x.diet as DietType }; rebuild = true; notes.push({ kind: 'ok', key: `n_diet_${x.diet}` }); } break;
       case 'exclude': if (x.exclusion && !exclusionOn(a, x.exclusion)) { a = { ...a, ...toggleExclusion(a, x.exclusion) }; rebuild = true; notes.push({ kind: 'ok', key: `n_ex_${x.exclusion}` }); } break;
-      case 'set_stores': if (x.stores?.length) { a = { ...a, stores: x.stores }; notes.push({ kind: 'ok', key: 'n_stores', vars: { s: x.stores.join(', ') } }); } break;
+      case 'set_stores': if (x.stores?.length) { a = { ...a, stores: [x.stores[0]], homeStore: x.stores[0] }; rebuild = true; notes.push({ kind: 'ok', key: 'n_stores', vars: { s: x.stores.join(', ') } }); } break;
       case 'set_meals_per_day': if (x.value && [3, 4, 5].includes(x.value)) { a = { ...a, mealsPerDay: x.value as 3 | 4 | 5 }; rebuild = true; notes.push({ kind: 'ok', key: 'n_meals', vars: { n: x.value } }); } break;
       case 'set_cooking_time': if (x.value && [15, 30, 60].includes(x.value)) { a = { ...a, cookingTimeMax: x.value as 15 | 30 | 60 }; rebuild = true; notes.push({ kind: 'ok', key: 'n_time', vars: { n: x.value } }); } break;
       default: break;

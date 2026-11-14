@@ -16,16 +16,17 @@ import type { RetailerId } from '@/config/markets';
 import { DEFAULT_PLANS, type Plan as SubPlan, type PlanId } from '@/config/plans';
 import { effectiveTargets } from '@/domain/nutrition';
 import { buildPlan, regenerateDay, replaceMeal, weeklyNeed, type Plan, type ReplaceMode } from '@/domain/planner';
-import { strategies } from '@/domain/pricing';
+import { basketFor, compareStores, setActiveCatalog } from '@/domain/pricing';
 import type { QuizAnswers, Targets } from '@/domain/types';
-import { buildCatalog, SNAPSHOT_RECORDS } from '@/retail/catalog';
+import { buildCatalog, retailersWithData, SNAPSHOT_RECORDS } from '@/retail/catalog';
+import { RETAILER_ORDER } from '@/retail/retailers';
 import type { Catalog, PriceRecord } from '@/retail/types';
 
 export const DEFAULT_ANSWERS: QuizAnswers = {
   goal: 'lose', sex: 'f', age: 30, heightCm: 168, weightKg: 72, targetWeightKg: 67, activity: 'light',
   household: 1, weeklyBudget: 50, allergens: [], lactoseIntolerant: false, dietType: 'any', never: [], avoid: [],
   likedProteins: [], likedCuisines: [], mealsPerDay: 4, breakfastStyle: 'sweet', cookingTimeMax: 30,
-  equipment: ['oven', 'blender'], batchCooking: false, spice: 1, stores: ['barbora', 'rimi'], health: [], email: '',
+  equipment: ['oven', 'blender'], batchCooking: false, spice: 1, stores: ['barbora'], homeStore: 'barbora', health: [], email: '',
   consentHealth: false, consentTerms: false, marketingConsent: false, otherRestrictions: '', travelCost: 1.5,
 };
 
@@ -102,7 +103,12 @@ interface Ctx extends State {
   resetPrices: () => void;
   setPlans: (p: SubPlan[]) => void;
   /** weekly basket economics for the current plan (used by dashboard, progress, savings) */
-  weekEconomics: () => { best: number; reference: number; saving: number };
+  weekEconomics: () => { best: number; reference: number; saving: number; promo: number; missing: number };
+  /** the supermarket all lists are built for */
+  homeStore: RetailerId;
+  /** supermarkets that have prices (snapshot or CSV) */
+  availableStores: RetailerId[];
+  setHomeStore: (r: RetailerId) => void;
   /** apply a structured assistant intent with the deterministic planner */
   applyAssistant: (intent: Intent) => Note[];
   /** withdraw health-data consent: deletes the plan and health answers */
@@ -128,14 +134,20 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => { if (ready) write(KEY, s); }, [s, ready]);
 
   const priceRecords = useMemo(() => [...SNAPSHOT_RECORDS, ...imports], [imports]);
-  const catalog = useMemo(() => buildCatalog(priceRecords), [priceRecords]);
+  const catalog = useMemo(() => { const c = buildCatalog(priceRecords); setActiveCatalog(c); return c; }, [priceRecords]);
+  const availableStores = useMemo(() => RETAILER_ORDER.filter((r) => retailersWithData(catalog).includes(r)), [catalog]);
+  const homeStore = homeOf(s.answers, availableStores);
   const targets = useMemo(() => effectiveTargets(s.answers), [s.answers]);
   const disliked = s.feedback.filter((f) => f.rating === 'down').map((f) => f.recipeId);
 
   const email = useCallback((subject: string) => setS((p) => ({ ...p, emails: [{ date: new Date().toISOString(), subject, to: p.answers.email || p.session?.email || '' }, ...p.emails].slice(0, 20) })), []);
 
   const value: Ctx = {
-    ...s, ready, targets, catalog, priceRecords, plans,
+    ...s, ready, targets, catalog, priceRecords, plans, homeStore, availableStores,
+    setHomeStore: (r) => setS((p) => {
+      const answers = { ...p.answers, homeStore: r, stores: [r] };
+      return { ...p, answers, plan: p.plan ? buildPlan(answers, effectiveTargets(answers)) : p.plan };
+    }),
     setAnswers: (a, rebuild = false) => setS((p) => {
       const answers = { ...p.answers, ...a };
       if (!rebuild || !p.plan) return { ...p, answers };
@@ -170,7 +182,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     }),
     togglePurchased: (id) => setS((p) => ({ ...p, purchased: p.purchased.includes(id) ? p.purchased.filter((x) => x !== id) : [...p.purchased, id] })),
     recordPurchase: (retailer, paid) => setS((p) => {
-      const e = econ(p.plan, p.answers, catalog);
+      const e = econ(p.plan, p.answers, catalog, homeOf(p.answers, availableStores));
       return { ...p, purchases: [...p.purchases, { id: uid(), date: new Date().toISOString(), retailer, paid, reference: e.reference, estimated: e.best }] };
     }),
     addWeight: (kg) => setS((p) => ({ ...p, weights: [...p.weights.filter((w) => w.date !== today()), { date: today(), kg }].sort((a, b) => a.date.localeCompare(b.date)) })),
@@ -198,25 +210,27 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     importPrices: (records) => setImports((cur) => { const next = [...cur, ...records]; write(PRICE_KEY, next); return next; }),
     resetPrices: () => { write(PRICE_KEY, []); setImports([]); },
     setPlans: (p) => { write(PLANS_KEY, p); setPlansState(p); },
-    weekEconomics: () => econ(s.plan, s.answers, catalog),
+    weekEconomics: () => econ(s.plan, s.answers, catalog, homeStore),
   };
 
   return <StoreCtx.Provider value={value}>{children}</StoreCtx.Provider>;
 }
 
-/** Best basket (strategy B) vs the most expensive single store with data = estimated saving. */
-function econ(plan: Plan | null, a: QuizAnswers, catalog: Catalog) {
-  if (!plan) return { best: 0, reference: 0, saving: 0 };
+/** The user's supermarket; falls back to the first one with prices. */
+export function homeOf(a: QuizAnswers, available: RetailerId[]): RetailerId {
+  const want = a.homeStore ?? (a.stores[0] as RetailerId | undefined);
+  if (want && available.includes(want)) return want;
+  return available[0] ?? 'barbora';
+}
+
+/** Weekly list priced at the user's store vs the priciest store with data (= estimated saving). */
+function econ(plan: Plan | null, a: QuizAnswers, catalog: Catalog, home: RetailerId) {
+  if (!plan) return { best: 0, reference: 0, saving: 0, promo: 0, missing: 0 };
   const need = weeklyNeed(plan, a.household);
-  const all: RetailerId[] = ['maxima', 'barbora', 'rimi', 'lidl', 'iki'];
-  const st = strategies(need, all, a.stores as RetailerId[], a.travelCost ?? 0, catalog);
-  const best = st.multi?.total ?? 0;
-  // reference: priciest single store that covers the same items
-  const refs = all
-    .map((r) => strategies(need, [r], [], 0, catalog).single)
-    .filter((b): b is NonNullable<typeof b> => !!b && b.missing.length <= (st.multi?.missing.length ?? 0));
-  const reference = refs.length ? Math.max(...refs.map((b) => b.total)) : best;
-  return { best, reference, saving: Math.max(0, reference - best) };
+  const b = basketFor(need, [home], catalog);
+  const rows = compareStores(need, RETAILER_ORDER, catalog).filter((r) => r.covered > 0 && r.missing <= b.missing.length);
+  const reference = rows.length ? Math.max(...rows.map((r) => r.total)) : b.total;
+  return { best: b.total, reference, saving: Math.max(0, reference - b.total), promo: b.saving, missing: b.missing.length };
 }
 
 export function useStore(): Ctx {

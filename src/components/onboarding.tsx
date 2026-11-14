@@ -8,15 +8,12 @@ import { weeksToGoal } from '@/domain/nutrition';
 import { ALLERGENS, type Activity, type Allergen, type DietType, type Goal, type QuizAnswers } from '@/domain/types';
 import { ALLERGEN_LABEL, type MessageKey } from '@/i18n/messages';
 import { useI18n } from '@/i18n/I18nProvider';
-import type { RetailerId } from '@/config/markets';
 import { getDetail } from '@/data/recipeDetails';
-import { strategies } from '@/domain/pricing';
-import { EXCLUSIONS, exclusionOn, fmtGrams, ingEmoji, ingName, recipeById, recipeName, toggleExclusion } from '@/lib/view';
-import { RETAILER_ORDER, RETAILERS } from '@/retail/retailers';
+import { EXCLUSIONS, exclusionOn, recipeById, recipeName, toggleExclusion } from '@/lib/view';
 import { useStore } from '@/state/store';
 import { Logo } from './site';
 import { Button, ButtonLink, Card, Chip, Container, CountUp, DishImage, Field, Option, Ring, Stat, inputCls, cx } from './ui';
-import { StrategySummary } from './basket';
+import { DayList, StorePicker, StoreSummary, StoreTotals, useHomeBasket, useWeekNeed } from './basket';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const BUDGETS = [{ v: 35, l: '30–40 €' }, { v: 50, l: '40–60 €' }, { v: 75, l: '60–90 €' }];
@@ -133,7 +130,7 @@ export function Onboarding() {
           </div>
           <div>
             <div className="mb-2 text-[13.5px] font-semibold">{t('storesLabel')}</div>
-            <div className="flex flex-wrap gap-2">{RETAILER_ORDER.map((r) => <Chip key={r} on={a.stores.includes(r)} onClick={() => set({ stores: a.stores.includes(r) ? a.stores.filter((x) => x !== r) : [...a.stores, r] })}>{RETAILERS[r].name}</Chip>)}</div>
+            <StorePicker />
           </div>
           <Field label={t('emailField')}><input type="email" autoComplete="email" value={a.email} onChange={(e) => set({ email: e.target.value.trim() })} className={inputCls} /></Field>
           <label className="flex items-start gap-3 text-[13.5px]"><input type="checkbox" className="mt-0.5 h-5 w-5 accent-[#31966A]" checked={a.health.length > 0} onChange={(e) => set({ health: e.target.checked ? ['other'] : [] })} /><span>{t('healthLabel')}</span></label>
@@ -171,39 +168,74 @@ export function Onboarding() {
   );
 }
 
-function DayShopping({ day }: { day: number }) {
-  const { t, lang, eur } = useI18n();
-  const { plan, answers, catalog } = useStore();
-  if (!plan) return null;
-  const need = new Map<string, number>();
-  plan.days[day].meals.forEach((m) => recipeById(m.recipeId)?.items.forEach(([id, g]) => need.set(id, (need.get(id) ?? 0) + g * m.servings * answers.household)));
-  const b = strategies(need, RETAILER_ORDER, answers.stores as RetailerId[], answers.travelCost ?? 0, catalog).multi;
-  if (!b) return null;
+/** Meal cards of one day; every dish opens its recipe. */
+export function DayMeals({ day, hrefFor = (id) => `/recipe/${id}` }: { day: number; hrefFor?: (id: string) => string }) {
+  const { t, lang, eur, num } = useI18n();
+  const { plan, answers } = useStore();
+  const d0 = plan?.days[day];
+  if (!d0) return null;
   return (
-    <Card className="mt-6 overflow-hidden">
-      <div className="flex items-baseline justify-between border-b border-line px-5 py-3"><b className="text-[16px]">🛒 {t('whatToBuyDay')}</b><span className="font-display text-[18px] font-extrabold">{eur(b.total)}</span></div>
-      <ul className="divide-y divide-line/70">
-        {b.lines.map((l) => (
-          <li key={l.ingredientId} className="flex items-center gap-3 px-5 py-2.5 text-[14px]">
-            <span aria-hidden>{ingEmoji(l.ingredientId)}</span>
-            <span className="min-w-0 flex-1"><b className="block">{ingName(l.ingredientId, lang)} · {fmtGrams(l.grams, lang)}</b><span className="block truncate text-[12px] text-muted">{l.record.name}</span></span>
-            <span className="rounded px-1.5 text-[11px] font-bold text-white" style={{ background: RETAILERS[l.record.retailer].color }}>{RETAILERS[l.record.retailer].name}</span>
-            <span className="w-20 text-right tabular-nums">{l.pantry ? eur(l.cost) : `${l.packs} × ${eur(l.record.price)}`}</span>
-          </li>
-        ))}
-      </ul>
-      <p className="px-5 py-3 text-[12px] text-muted">{t('dayBuyNote')} {t('snapshotNote')}</p>
-    </Card>
+    <>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {d0.meals.map((m, i) => {
+          const r = recipeById(m.recipeId);
+          const d = getDetail(m.recipeId);
+          const first = d ? (lang === 'lt' ? d.steps[0]?.[2] : d.steps[0]?.[1]) : r && (lang === 'lt' ? r.stepsLt[0] : r.stepsRu[0]);
+          return (
+            <Link key={`${m.recipeId}-${i}`} href={hrefFor(m.recipeId)} className="group">
+              <Card className="flex h-full gap-3 overflow-hidden p-2.5 transition group-hover:ring-leaf">
+                <DishImage id={m.recipeId} alt={recipeName(m.recipeId, lang)} className="h-28 w-28 shrink-0 rounded-xl" sizes="112px" />
+                <div className="min-w-0 flex-1 py-1">
+                  <div className="text-[11px] font-bold uppercase text-leaf">{t(`meal_${m.meal}` as MessageKey)}</div>
+                  <div className="line-clamp-2 text-[15px] font-bold leading-snug group-hover:text-leaf">{recipeName(m.recipeId, lang)}</div>
+                  <div className="mt-1 text-[12.5px] text-muted">{num(m.kcal)} kcal · {num(m.protein)} g {t('protein')} · {eur(m.cost * answers.household)} · ⏱ {d ? d.prep + d.cook : r?.minutes} {t('minutesShort')}</div>
+                  {first && <p className="mt-1 line-clamp-2 text-[12.5px] text-ink/70">1. {first}</p>}
+                  <span className="mt-1.5 inline-block text-[13px] font-bold text-leaf">{t('openRecipeCta')} →</span>
+                </div>
+              </Card>
+            </Link>
+          );
+        })}
+      </div>
+      <p className="mt-3 text-[14px]">{t('dayTotals')}: <b>{num(d0.kcal)} kcal</b> · {num(d0.protein)} g {t('protein')} · {t('dayCost')}: <b>{eur(d0.cost * answers.household)}</b></p>
+    </>
   );
 }
 
+/** Day tabs Mon–Sun: each day's menu and what to buy for it. */
+export function WeekByDay({ hrefFor }: { hrefFor?: (id: string) => string }) {
+  const { t } = useI18n();
+  const { plan } = useStore();
+  const [day, setDay] = useState(0);
+  if (!plan) return null;
+  return (
+    <div className="mt-4">
+      <div className="no-scrollbar mb-4 flex gap-2 overflow-x-auto pb-1" role="tablist">
+        {plan.days.map((_, i) => (
+          <button key={i} role="tab" aria-selected={day === i} type="button" onClick={() => setDay(i)}
+            className={cx('shrink-0 rounded-2xl px-4 py-2.5 text-[14px] font-bold transition', day === i ? 'bg-forest text-white' : 'bg-card ring-1 ring-line hover:ring-leaf')}>
+            <span className="sm:hidden">{t(`dayS${i}` as MessageKey)}</span><span className="hidden sm:inline">{t(`day${i}` as MessageKey)}</span>
+          </button>
+        ))}
+      </div>
+      <DayMeals day={day} hrefFor={hrefFor} />
+      <div className="mt-6"><DayList day={day} /></div>
+    </div>
+  );
+}
+
+function WeekStore() {
+  const need = useWeekNeed();
+  const basket = useHomeBasket(need);
+  return <div className="mt-4 space-y-4"><StoreSummary basket={basket} /><StoreTotals need={need} /></div>;
+}
+
 export function Result() {
-  const { t, lang, eur, num } = useI18n();
+  const { t, eur, num } = useI18n();
   const { ready, plan, targets, answers: a, weekEconomics, onboarded } = useStore();
   const sp = useSearchParams();
   if (!ready) return <div className="grid min-h-screen place-items-center text-muted">{t('loading')}</div>;
   if (!onboarded || !plan) return <Container className="py-20 text-center"><p>{t('noPlanYet')}</p><ButtonLink href="/onboarding" className="mt-6">{t('startOnboarding')}</ButtonLink></Container>;
-  const day = plan.days[0];
   const econ = weekEconomics();
   const weeks = weeksToGoal(a);
   const kcalP = targets.protein * 4, kcalF = targets.fat * 9, kcalC = targets.carbs * 4;
@@ -237,34 +269,11 @@ export function Result() {
           </div>
         </div>
 
-        <h2 className="mt-12 font-display text-[24px] font-extrabold">{t('sampleDay')} · {t('day0')}</h2>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          {day.meals.map((m) => {
-            const r = recipeById(m.recipeId);
-            const d = getDetail(m.recipeId);
-            const first = d ? (lang === 'lt' ? d.steps[0]?.[2] : d.steps[0]?.[1]) : r && (lang === 'lt' ? r.stepsLt[0] : r.stepsRu[0]);
-            return (
-              <Link key={m.recipeId + m.meal} href={`/recipe/${m.recipeId}`} className="group">
-                <Card className="flex h-full gap-3 overflow-hidden p-2.5 transition group-hover:ring-leaf">
-                  <DishImage id={m.recipeId} alt={recipeName(m.recipeId, lang)} className="h-28 w-28 shrink-0 rounded-xl" sizes="112px" />
-                  <div className="min-w-0 flex-1 py-1">
-                    <div className="text-[11px] font-bold uppercase text-leaf">{t(`meal_${m.meal}` as MessageKey)}</div>
-                    <div className="line-clamp-2 text-[15px] font-bold leading-snug group-hover:text-leaf">{recipeName(m.recipeId, lang)}</div>
-                    <div className="mt-1 text-[12.5px] text-muted">{num(m.kcal)} kcal · {num(m.protein)} g {t('protein')} · {eur(m.cost)} · ⏱ {d ? d.prep + d.cook : r?.minutes} {t('minutesShort')}</div>
-                    {first && <p className="mt-1 line-clamp-2 text-[12.5px] text-ink/70">1. {first}</p>}
-                    <span className="mt-1.5 inline-block text-[13px] font-bold text-leaf">{t('openRecipeCta')} →</span>
-                  </div>
-                </Card>
-              </Link>
-            );
-          })}
-        </div>
-        <p className="mt-3 text-[14px]">{t('dayTotals')}: <b>{num(day.kcal)} kcal</b> · {t('dayCost')}: <b>{eur(day.cost)}</b> / {t('people2')}</p>
-
-        <DayShopping day={0} />
+        <h2 className="mt-12 font-display text-[24px] font-extrabold">{t('weekMenuTitle')}</h2>
+        <WeekByDay />
 
         <h2 className="mt-12 font-display text-[24px] font-extrabold">{t('weeklySavingPreview')}</h2>
-        <div className="mt-4"><StrategySummary /></div>
+        <WeekStore />
         {econ.saving > 0 && <p className="mt-3 text-[14px]">{t('estimatedSavings')}: <b className="text-leaf">{eur(econ.saving)}</b> {t('perWeek')} <span className="text-muted">({t('referenceLabel')}: {eur(econ.reference)})</span></p>}
         <p className="mt-6 text-[12px] text-muted">{t('medicalDisclaimer')}</p>
       </Container>

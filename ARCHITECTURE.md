@@ -9,7 +9,7 @@ src/
     planner.ts        weekly plan (best of 10 candidates), regenerateDay, replaceMeal (any/cheaper/protein/vegetarian)
     recipeFacts.ts    nutrition, allergens, diet flags and cost computed from ingredients; hard rules
     pricing.ts        baskets with whole packages, pantry pro-rating, store comparison, strategies A/B/C
-  data/               ingredients (66), recipes (73 chef + 1 366 generated), cooking steps, price snapshot
+  data/               ingredients (66), recipes (73 chef + 1 764 generated), cooking steps, price snapshot
   retail/             retailer adapters, price records with provenance, catalogue builder, CSV import, product matching
   ai/                 intent schema (zod), rules parser, provider interface + Anthropic provider, deterministic applyIntent
   server/             server-only: Supabase clients, auth (viewer), signed dev session, Stripe, Resend, rate limit, logs/audit

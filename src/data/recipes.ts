@@ -327,4 +327,6 @@ export const CHEF_RECIPES: Recipe[] = [
 ];
 
 /** The whole recipe database: chef recipes + generated dishes (src/data/db/generator.ts). */
-export const RECIPES: Recipe[] = [...CHEF_RECIPES, ...GENERATED_RECIPES];
+const CHEF_NAMES = new Set(CHEF_RECIPES.map((r) => r.lt));
+/** Generated dishes that duplicate a chef recipe's name are dropped. */
+export const RECIPES: Recipe[] = [...CHEF_RECIPES, ...GENERATED_RECIPES.filter((r) => !CHEF_NAMES.has(r.lt))];

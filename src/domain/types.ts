@@ -51,6 +51,8 @@ export interface QuizAnswers {
   batchCooking: boolean;
   spice: 0 | 1 | 2;
   stores: string[];
+  /** the one supermarket the user shops at: menu, prices and lists are built for it */
+  homeStore?: 'maxima' | 'barbora' | 'rimi' | 'lidl' | 'iki';
   health: HealthFlag[];
   email: string;
   consentHealth: boolean;

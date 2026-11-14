@@ -49,7 +49,7 @@ export function toggleExclusion(a: QuizAnswers, e: Exclusion): Partial<QuizAnswe
 export const SAMPLE_ANSWERS: QuizAnswers = {
   goal: 'lose', sex: 'f', age: 34, heightCm: 168, weightKg: 74, targetWeightKg: 68, activity: 'light', household: 2, weeklyBudget: 60,
   allergens: [], lactoseIntolerant: false, dietType: 'any', never: [], avoid: [], likedProteins: [], likedCuisines: [], mealsPerDay: 4,
-  breakfastStyle: 'sweet', cookingTimeMax: 30, equipment: ['oven', 'blender'], batchCooking: false, spice: 1, stores: ['barbora', 'rimi'],
+  breakfastStyle: 'sweet', cookingTimeMax: 30, equipment: ['oven', 'blender'], batchCooking: false, spice: 1, stores: ['barbora'], homeStore: 'barbora',
   health: [], email: '', consentHealth: true, consentTerms: true, travelCost: 1.5,
 };
 

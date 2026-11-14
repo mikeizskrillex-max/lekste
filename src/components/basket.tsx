@@ -1,105 +1,194 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import type { RetailerId } from '@/config/markets';
-import { weeklyNeed } from '@/domain/planner';
-import { strategies, type Strategy, type StrategyResult } from '@/domain/pricing';
+import { weeklyNeed, type Plan } from '@/domain/planner';
+import { recipeById } from '@/lib/view';
+import { basketFor, cheapest, compareStores, type Basket, type BasketLine } from '@/domain/pricing';
+import { kitchenMeasure } from '@/domain/units';
 import { useI18n } from '@/i18n/I18nProvider';
 import { fmtGrams, ingEmoji, ingName } from '@/lib/view';
+
+import { categoryOf } from '@/retail/matching';
 import { RETAILER_ORDER, RETAILERS } from '@/retail/retailers';
+import type { ProductCategory } from '@/retail/types';
 import { useStore } from '@/state/store';
-import { Badge, Card, Slider, cx } from './ui';
+import { Badge, Button, Card, cx } from './ui';
 
-export function useStrategies() {
-  const { plan, answers, catalog } = useStore();
-  return useMemo(() => {
-    if (!plan) return null;
-    return strategies(weeklyNeed(plan, answers.household), RETAILER_ORDER, answers.stores as RetailerId[], answers.travelCost ?? 0, catalog);
-  }, [plan, answers.household, answers.stores, answers.travelCost, catalog]);
-}
+const CAT: Record<ProductCategory, { lt: string; ru: string }> = {
+  meat: { lt: 'Mėsa', ru: 'Мясо' }, fish: { lt: 'Žuvis', ru: 'Рыба' }, dairy: { lt: 'Pieno produktai', ru: 'Молочное' }, eggs: { lt: 'Kiaušiniai', ru: 'Яйца' },
+  vegetables: { lt: 'Daržovės', ru: 'Овощи' }, fruits: { lt: 'Vaisiai ir uogos', ru: 'Фрукты и ягоды' }, grains: { lt: 'Kruopos ir ankštiniai', ru: 'Крупы и бобовые' }, pasta: { lt: 'Makaronai', ru: 'Макароны' },
+  bread: { lt: 'Duona', ru: 'Хлеб' }, oils: { lt: 'Aliejai ir padažai', ru: 'Масла и соусы' }, nuts: { lt: 'Riešutai ir sėklos', ru: 'Орехи и семечки' }, frozen: { lt: 'Šaldyti', ru: 'Заморозка' }, other: { lt: 'Kita', ru: 'Другое' },
+};
+export const categoryLabel = (c: ProductCategory, lang: 'lt' | 'ru') => CAT[c][lang];
+const CAT_ORDER: ProductCategory[] = ['vegetables', 'fruits', 'meat', 'fish', 'dairy', 'eggs', 'bread', 'grains', 'pasta', 'frozen', 'oils', 'nuts', 'other'];
 
-const LABEL: Record<Strategy, 'strategyA' | 'strategyB' | 'strategyC'> = { single: 'strategyA', multi: 'strategyB', preferred: 'strategyC' };
-
-function StrategyCard({ s, kind, active, onPick, best }: { s: StrategyResult | null; kind: Strategy; active: boolean; onPick: () => void; best: boolean }) {
-  const { t, eur } = useI18n();
-  const stores = s ? Array.from(new Set(s.lines.map((l) => l.record.retailer))) : [];
+/** One-supermarket choice: menu, prices and lists are built for this store only. */
+export function StorePicker({ compact = false, onChanged }: { compact?: boolean; onChanged?: (r: RetailerId) => void }) {
+  const { t } = useI18n();
+  const { homeStore, availableStores, setHomeStore } = useStore();
   return (
-    <button type="button" onClick={onPick} aria-pressed={active}
-      className={cx('flex flex-col rounded-xl2 bg-card p-4 text-left shadow-soft ring-1 transition md:p-5', active ? 'ring-2 ring-leaf' : 'ring-line/70 hover:ring-leaf/50')}>
-      <div className="flex items-center justify-between gap-2"><span className="text-[13.5px] font-bold">{t(LABEL[kind])}</span>{best && <Badge tone="leaf">{t('bestValue')}</Badge>}</div>
-      {s ? (
-        <>
-          <div className="mt-2 font-display text-[28px] font-extrabold tabular-nums">{eur(s.total)}</div>
-          <div className="text-[12.5px] text-muted">{t('visits', { n: s.visits })}{s.travelCost > 0 ? ` · ${t('totalWithTravel')} ${eur(s.effective)}` : ''}</div>
-          <div className="mt-3 flex flex-wrap gap-1.5">{stores.map((r) => <span key={r} className="rounded-full px-2 py-0.5 text-[11.5px] font-bold text-white" style={{ background: RETAILERS[r].color }}>{RETAILERS[r].name}</span>)}</div>
-          {s.missing.length > 0 && <div className="mt-2 text-[12px] text-danger">{t('missingItems', { n: s.missing.length })}</div>}
-        </>
-      ) : <div className="mt-3 text-[13px] text-muted">{t('noPreferred')}</div>}
-    </button>
-  );
-}
-
-export function StrategySummary({ value, onChange }: { value?: Strategy; onChange?: (s: Strategy) => void }) {
-  const st = useStrategies();
-  const [local, setLocal] = useState<Strategy>('multi');
-  const sel = value ?? local;
-  if (!st) return null;
-  const effs = (['single', 'multi', 'preferred'] as Strategy[]).map((k) => st[k]?.effective ?? Infinity);
-  const min = Math.min(...effs);
-  return (
-    <div className="grid gap-3 md:grid-cols-3">
-      {(['single', 'multi', 'preferred'] as Strategy[]).map((k, i) => (
-        <StrategyCard key={k} kind={k} s={st[k]} active={sel === k} best={effs[i] === min && min < Infinity} onPick={() => (onChange ?? setLocal)(k)} />
-      ))}
+    <div>
+      {!compact && <p className="mb-3 text-[13.5px] text-muted">{t('storePickerSub')}</p>}
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+        {RETAILER_ORDER.map((r) => {
+          const has = availableStores.includes(r);
+          const on = homeStore === r;
+          return (
+            <button key={r} type="button" disabled={!has} aria-pressed={on} onClick={() => { setHomeStore(r); onChanged?.(r); }}
+              className={cx('flex flex-col items-start rounded-2xl px-3.5 py-3 text-left ring-1 transition', on ? 'bg-sage ring-2 ring-leaf' : 'bg-card ring-line hover:ring-leaf/60', !has && 'cursor-not-allowed opacity-50 hover:ring-line')}>
+              <span className="flex items-center gap-2 text-[15px] font-bold"><span className="h-2.5 w-2.5 rounded-full" style={{ background: RETAILERS[r].color }} />{RETAILERS[r].name}{on && <span className="text-leaf">✓</span>}</span>
+              <span className="mt-0.5 text-[11.5px] text-muted">{!has ? t('noPricesYet') : r === 'barbora' ? t('barboraSub') : ' '}</span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
 
-export function BasketView() {
-  const { t, lang, eur } = useI18n();
-  const { answers, setAnswers } = useStore();
-  const st = useStrategies();
-  const [sel, setSel] = useState<Strategy>('multi');
-  if (!st) return null;
-  const s = st[sel];
-  const groups = new Map<RetailerId, NonNullable<typeof s>['lines']>();
-  s?.lines.forEach((l) => groups.set(l.record.retailer, [...(groups.get(l.record.retailer) ?? []), l]));
+export function useWeekNeed() {
+  const { plan, answers } = useStore();
+  return useMemo(() => (plan ? weeklyNeed(plan, answers.household) : new Map<string, number>()), [plan, answers.household]);
+}
+
+export function useHomeBasket(need: Map<string, number>): Basket {
+  const { homeStore, catalog } = useStore();
+  return useMemo(() => basketFor(need, [homeStore], catalog), [need, homeStore, catalog]);
+}
+
+/** Shopping list for ONE store: whole packages, its promotions, items it doesn't sell. */
+export function StoreList({ basket, checkable = false }: { basket: Basket; checkable?: boolean }) {
+  const { t, lang, eur, date } = useI18n();
+  const { purchased, togglePurchased, catalog } = useStore();
+  const groups = new Map<ProductCategory, BasketLine[]>();
+  basket.lines.forEach((l) => { const c = categoryOf(l.ingredientId); groups.set(c, [...(groups.get(c) ?? []), l]); });
   return (
-    <div className="space-y-6">
-      <StrategySummary value={sel} onChange={setSel} />
-      <Card className="p-5">
-        <Slider id="travel" label={t('travelCost')} value={answers.travelCost ?? 0} min={0} max={5} step={0.5} suffix=" €" onChange={(v) => setAnswers({ travelCost: v })} />
-        <p className="mt-2 text-[12.5px] text-muted">{t('travelHint')}</p>
-      </Card>
-      {s && [...groups].map(([r, lines]) => (
-        <Card key={r} className="overflow-hidden">
-          <div className="flex items-center justify-between border-b border-line px-5 py-3" style={{ borderLeft: `4px solid ${RETAILERS[r].color}` }}>
-            <b>{t('itemsAt', { store: RETAILERS[r].name })}</b>
-            <span className="font-display font-extrabold tabular-nums">{eur(lines.reduce((x, l) => x + l.cost, 0))}</span>
-          </div>
-          {lines.map((l) => (
-            <div key={l.ingredientId} className="flex items-center gap-3 border-b border-line/60 px-5 py-3 last:border-0">
-              <span className="text-[20px]" aria-hidden>{ingEmoji(l.ingredientId)}</span>
-              <div className="min-w-0 flex-1">
-                <div className="text-[14.5px] font-semibold">{ingName(l.ingredientId, lang)}</div>
-                <div className="truncate text-[12px] text-muted">
-                  {l.record.name} · {fmtGrams(l.record.grams, lang)} · {t('needG', { g: fmtGrams(l.grams, lang) })}
-                  {l.record.match === 'approximate' && <> · <span className="text-gold">{t('approx')}</span></>}
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="font-semibold tabular-nums">{eur(l.cost)}</div>
-                <div className="text-[11.5px] text-muted">{l.pantry ? t('pantry') : t('packsN', { n: l.packs })}{l.record.promo && <span className="ml-1 font-bold text-leaf">{t('promo2')}</span>}</div>
-              </div>
-              {l.record.url && <a href={l.record.url} target="_blank" rel="noopener noreferrer" className="hidden text-[12px] font-semibold text-leaf hover:underline sm:block">↗</a>}
-            </div>
-          ))}
+    <div className="space-y-4">
+      {CAT_ORDER.filter((c) => groups.has(c)).map((c) => (
+        <Card key={c} className="overflow-hidden">
+          <div className="border-b border-line bg-paper/60 px-4 py-2 text-[12px] font-bold uppercase tracking-wide text-muted md:px-5">{categoryLabel(c, lang)}</div>
+          {groups.get(c)!.sort((a, b) => ingName(a.ingredientId, lang).localeCompare(ingName(b.ingredientId, lang))).map((l) => {
+            const done = checkable && purchased.includes(l.ingredientId);
+            const Row = checkable ? 'label' : 'div';
+            return (
+              <Row key={l.ingredientId} className={cx('flex items-center gap-3 border-b border-line/60 px-4 py-3 last:border-0 md:px-5', checkable && 'cursor-pointer', done && 'opacity-50')}>
+                {checkable && <input type="checkbox" checked={done} onChange={() => togglePurchased(l.ingredientId)} className="h-5 w-5 shrink-0 accent-[#31966A]" />}
+                <span aria-hidden className="text-[19px]">{ingEmoji(l.ingredientId)}</span>
+                <span className="min-w-0 flex-1">
+                  <span className={cx('block text-[14.5px] font-semibold', done && 'line-through')}>{ingName(l.ingredientId, lang)} <span className="font-normal text-muted">· {fmtGrams(l.grams, lang)}{kitchenMeasure(l.ingredientId, l.grams, lang) ? ` (${kitchenMeasure(l.ingredientId, l.grams, lang)})` : ''}</span></span>
+                  <span className="block truncate text-[12px] text-muted">
+                    {l.record.url ? <a href={l.record.url} target="_blank" rel="noopener noreferrer" className="hover:text-leaf hover:underline" onClick={(e) => e.stopPropagation()}>{l.record.name}</a> : l.record.name}
+                    {l.record.match === 'approximate' && <span className="text-[#8a6410]"> · {t('approx')}</span>}
+                  </span>
+                </span>
+                <span className="shrink-0 text-right">
+                  <span className="block font-semibold tabular-nums">{eur(l.cost)}</span>
+                  <span className="block text-[11.5px] text-muted">{l.pantry ? t('pantry') : `${l.packs} × ${eur(l.record.price)}`}</span>
+                  {l.record.promo && (
+                    <span className="mt-0.5 inline-flex items-center gap-1 rounded-full bg-gold/30 px-1.5 py-0.5 text-[10.5px] font-bold text-[#6b4a0c]">
+                      {t('promo2')}{l.record.regular && <s className="font-normal">{eur(l.record.regular)}</s>}{l.record.promoValidTo && ` · ${t('promoUntil', { d: date(l.record.promoValidTo, { day: 'numeric', month: 'short' }) })}`}
+                    </span>
+                  )}
+                </span>
+              </Row>
+            );
+          })}
         </Card>
       ))}
-      {s && s.missing.length > 0 && (
-        <Card className="p-5"><b className="text-[14px]">{t('missingItems', { n: s.missing.length })}</b><p className="mt-1 text-[13px] text-muted">{s.missing.map((id) => ingName(id, lang)).join(', ')}</p></Card>
+      {basket.missing.length > 0 && (
+        <Card className="p-4 md:p-5">
+          <b className="text-[14px]">{t('notInStore')} ({basket.missing.length})</b>
+          <ul className="mt-2 space-y-1 text-[13px]">
+            {basket.missing.map((id) => { const alt = cheapest(id, catalog); return (
+              <li key={id} className="flex justify-between gap-3"><span>{ingEmoji(id)} {ingName(id, lang)}</span><span className="text-muted">{alt ? t('elsewhere', { store: RETAILERS[alt.retailer].name, price: eur(alt.price) }) : t('noData')}</span></li>
+            ); })}
+          </ul>
+        </Card>
       )}
+    </div>
+  );
+}
+
+/** Same list priced at every store with data — to help choose, not to split the trip. */
+export function StoreTotals({ need }: { need: Map<string, number> }) {
+  const { t, eur } = useI18n();
+  const { homeStore, catalog, availableStores, setHomeStore } = useStore();
+  const rows = useMemo(() => compareStores(need, RETAILER_ORDER, catalog), [need, catalog]);
+  const withData = rows.filter((r) => availableStores.includes(r.retailer) && r.covered > 0).sort((a, b) => a.missing - b.missing || a.total - b.total);
+  const min = withData.length ? Math.min(...withData.filter((r) => r.missing === withData[0].missing).map((r) => r.total)) : 0;
+  return (
+    <Card className="overflow-hidden">
+      <div className="border-b border-line px-4 py-3 text-[14px] font-extrabold md:px-5">{t('sameListElsewhere')}</div>
+      {withData.map((r) => {
+        const on = r.retailer === homeStore;
+        return (
+          <div key={r.retailer} className={cx('flex flex-wrap items-center gap-3 border-b border-line/60 px-4 py-3 last:border-0 md:px-5', on && 'bg-sage/60')}>
+            <span className="h-2.5 w-2.5 rounded-full" style={{ background: RETAILERS[r.retailer].color }} />
+            <b className="min-w-[90px]">{RETAILERS[r.retailer].name}</b>
+            {r.total === min && <Badge tone="leaf">{t('cheapest')}</Badge>}
+            {r.missing > 0 && <span className="text-[12px] text-danger">{t('missingItems', { n: r.missing })}</span>}
+            <span className="ml-auto font-display text-[17px] font-extrabold tabular-nums">{eur(r.total)}</span>
+            {on ? <Badge tone="sage">✓ {t('yourStore')}</Badge> : <Button size="sm" variant="secondary" onClick={() => setHomeStore(r.retailer)}>{t('shopHere')}</Button>}
+          </div>
+        );
+      })}
+      {RETAILER_ORDER.filter((r) => !availableStores.includes(r)).length > 0 && (
+        <p className="px-4 py-3 text-[12px] text-muted md:px-5">{RETAILER_ORDER.filter((r) => !availableStores.includes(r)).map((r) => RETAILERS[r].name).join(', ')}: {t('noPricesYet')}</p>
+      )}
+    </Card>
+  );
+}
+
+/** Summary header: store, total, promo savings. */
+export function StoreSummary({ basket }: { basket: Basket }) {
+  const { t, eur } = useI18n();
+  const { homeStore } = useStore();
+  return (
+    <Card className="flex flex-wrap items-center gap-x-6 gap-y-2 p-4 md:p-5" style={{ borderLeft: `5px solid ${RETAILERS[homeStore].color}` }}>
+      <div><div className="text-[12px] font-semibold text-muted">{t('yourStore')}</div><div className="text-[18px] font-extrabold">{RETAILERS[homeStore].name}</div></div>
+      <div><div className="text-[12px] font-semibold text-muted">{t('listTotal')}</div><div className="font-display text-[24px] font-extrabold tabular-nums">{eur(basket.total)}</div></div>
+      {basket.saving > 0 && <Badge tone="gold">🏷 {t('promoSavingTotal', { n: eur(basket.saving) })}</Badge>}
+      <span className="text-[12px] text-muted md:ml-auto">{basket.lines.length} {t('items')}</span>
+    </Card>
+  );
+}
+
+export function BasketView() {
+  const { t } = useI18n();
+  const need = useWeekNeed();
+  const basket = useHomeBasket(need);
+  return (
+    <div className="space-y-5">
+      <StorePicker />
+      <StoreSummary basket={basket} />
+      <StoreTotals need={need} />
       <p className="text-[12.5px] text-muted">{t('noOrdering')} {t('snapshotNote')}</p>
+    </div>
+  );
+}
+
+/** Grams of each ingredient for ONE day of the plan (whole household). */
+export function dayNeed(plan: Plan, day: number, household: number): Map<string, number> {
+  const need = new Map<string, number>();
+  plan.days[day]?.meals.forEach((m) => recipeById(m.recipeId)?.items.forEach(([id, g]) => need.set(id, (need.get(id) ?? 0) + g * m.servings * household)));
+  return need;
+}
+
+/** What to buy for one day, at the user's store only. */
+export function DayList({ day, checkable = false }: { day: number; checkable?: boolean }) {
+  const { t, eur } = useI18n();
+  const { plan, answers, homeStore, catalog } = useStore();
+  const basket = useMemo(() => (plan ? basketFor(dayNeed(plan, day, answers.household), [homeStore], catalog) : null), [plan, day, answers.household, homeStore, catalog]);
+  if (!basket) return null;
+  return (
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <b className="text-[17px]">🛒 {t('whatToBuyDay')} · {RETAILERS[homeStore].name}</b>
+        <span className="flex items-center gap-2">{basket.saving > 0 && <Badge tone="gold">🏷 {t('promoSavingTotal', { n: eur(basket.saving) })}</Badge>}<span className="font-display text-[20px] font-extrabold tabular-nums">{eur(basket.total)}</span></span>
+      </div>
+      <StoreList basket={basket} checkable={checkable} />
+      <p className="text-[12px] text-muted">{t('dayBuyNote')} {t('snapshotNote')}</p>
     </div>
   );
 }

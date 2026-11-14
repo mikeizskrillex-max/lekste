@@ -1,6 +1,50 @@
 import type { RetailerId } from '@/config/markets';
 import { DEFAULT_CATALOG } from '@/retail/catalog';
+import type { Recipe } from '@/data/recipes';
 import type { Catalog, PriceRecord } from '@/retail/types';
+
+/**
+ * Promotion validity: a promotion is used only between its valid-from and
+ * valid-to dates; afterwards the regular shelf price applies.
+ */
+export function effectiveRecord(r: PriceRecord, now = Date.now()): PriceRecord {
+  if (!r.promo) return r;
+  const from = r.promoValidFrom ? Date.parse(r.promoValidFrom) : -Infinity;
+  const to = r.promoValidTo ? Date.parse(r.promoValidTo) + 86400000 : Infinity;
+  if (now >= from && now < to) return r;
+  if (!r.regular) return { ...r, promo: false };
+  return { ...r, promo: false, price: r.regular, regular: null, perKg: (r.regular / r.grams) * 1000 };
+}
+
+/** Catalogue the planner prices recipes with (snapshot + admin CSV imports). Set by the app store. */
+let active: Catalog = DEFAULT_CATALOG;
+const storeCache = new Map<string, StoreCost>();
+export function setActiveCatalog(c: Catalog) { if (c !== active) { active = c; storeCache.clear(); } }
+export const activeCatalog = () => active;
+
+export interface StoreCost { cost: number; missing: string[]; promo: string[]; promoSaving: number }
+
+/**
+ * Cost of one serving at ONE supermarket, using its promotions. Ingredients
+ * that store has no price for are counted at the cheapest known price and
+ * reported in `missing`, so the planner can avoid them.
+ */
+export function recipeAtStore(r: Recipe, store: RetailerId, catalog: Catalog = active): StoreCost {
+  const key = `${store}:${r.id}`;
+  const cacheable = catalog === active;
+  const hit = cacheable ? storeCache.get(key) : undefined;
+  if (hit) return hit;
+  const out: StoreCost = { cost: 0, missing: [], promo: [], promoSaving: 0 };
+  for (const [id, g] of r.items) {
+    const raw = catalog[id]?.[store];
+    if (!raw) { out.missing.push(id); const c = cheapest(id, catalog); out.cost += c ? (c.perKg * g) / 1000 : 0; continue; }
+    const e = effectiveRecord(raw);
+    out.cost += (e.perKg * g) / 1000;
+    if (e.promo) { out.promo.push(id); if (e.regular) out.promoSaving += (((e.regular - e.price) / e.grams) * g); }
+  }
+  if (cacheable) storeCache.set(key, out);
+  return out;
+}
 
 /** Long-lasting pantry items: only the part used this week counts towards the weekly cost. */
 export const PANTRY = new Set(['olive_oil', 'honey', 'soy_sauce', 'sesame', 'peanut_butter', 'walnuts', 'sunflower_seeds', 'garlic']);
@@ -8,8 +52,9 @@ export const PANTRY = new Set(['olive_oil', 'honey', 'soy_sauce', 'sesame', 'pea
 /** Cheapest record per kg for an ingredient across the given retailers. */
 export function cheapest(id: string, catalog: Catalog = DEFAULT_CATALOG, stores?: RetailerId[]): PriceRecord | null {
   let best: PriceRecord | null = null;
-  for (const r of Object.values(catalog[id] ?? {})) {
-    if (!r || (stores && !stores.includes(r.retailer))) continue;
+  for (const raw of Object.values(catalog[id] ?? {})) {
+    if (!raw || (stores && !stores.includes(raw.retailer))) continue;
+    const r = effectiveRecord(raw);
     if (!best || r.perKg < best.perKg) best = r;
   }
   return best;
@@ -55,8 +100,9 @@ export function basketFor(need: Map<string, number>, stores: RetailerId[], catal
     const pantry = PANTRY.has(id);
     let best: BasketLine | null = null;
     for (const s of stores) {
-      const r = catalog[id]?.[s];
-      if (!r) continue;
+      const raw = catalog[id]?.[s];
+      if (!raw) continue;
+      const r = effectiveRecord(raw);
       const { cost, packs } = lineCost(r, grams, pantry);
       if (!best || cost < best.cost) {
         const saving = r.promo && r.regular ? (r.regular - r.price) * (pantry ? grams / r.grams : packs) : 0;
@@ -72,13 +118,13 @@ export function basketFor(need: Map<string, number>, stores: RetailerId[], catal
   };
 }
 
-export interface StoreComparison { retailer: RetailerId; total: number; missing: number; covered: number }
+export interface StoreComparison { retailer: RetailerId; total: number; missing: number; covered: number; saving: number }
 
 /** Same basket priced at each retailer alone. Retailers without data report full "missing". */
 export function compareStores(need: Map<string, number>, retailers: RetailerId[], catalog: Catalog = DEFAULT_CATALOG): StoreComparison[] {
   return retailers.map((r) => {
     const b = basketFor(need, [r], catalog);
-    return { retailer: r, total: b.total, missing: b.missing.length, covered: b.lines.length };
+    return { retailer: r, total: b.total, missing: b.missing.length, covered: b.lines.length, saving: b.saving };
   });
 }
 

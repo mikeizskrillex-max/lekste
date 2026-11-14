@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react';
 import type { RetailerId } from '@/config/markets';
 import { effectiveTargets } from '@/domain/nutrition';
 import { buildPlan, weeklyNeed } from '@/domain/planner';
-import { strategies } from '@/domain/pricing';
+import { basketFor } from '@/domain/pricing';
 import type { Goal, QuizAnswers } from '@/domain/types';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
@@ -108,11 +108,12 @@ export function DemoPage() {
   const res = useMemo(() => {
     const targets = effectiveTargets(a);
     const plan = buildPlan(a, targets, 3);
-    const st = strategies(weeklyNeed(plan, a.household), RETAILER_ORDER, a.stores as RetailerId[], a.travelCost ?? 0, DEFAULT_CATALOG);
-    return { targets, plan, st };
+    const store = (a.homeStore ?? 'barbora') as RetailerId;
+    const best = basketFor(weeklyNeed(plan, a.household), [store], DEFAULT_CATALOG);
+    return { targets, plan, best, store };
   }, [a]);
   const d = res.plan.days[day];
-  const best = res.st.multi;
+  const best = res.best;
   return (
     <>
       <PageHero kicker={t('navDemo')} title={t('demoTitle')} sub={t('demoSub')} />
@@ -128,13 +129,17 @@ export function DemoPage() {
             <div className="mb-2 text-[13.5px] font-semibold">{t('q8')}</div>
             <div className="flex flex-wrap gap-2">{EXCLUSIONS.map((e) => <Chip key={e} on={exclusionOn(a, e)} onClick={() => set(toggleExclusion(a, e))}>{t(`ex_${e}` as MessageKey)}</Chip>)}</div>
           </div>
+          <div>
+            <div className="mb-2 text-[13.5px] font-semibold">{t('yourStore')}</div>
+            <div className="flex flex-wrap gap-2">{retailersWithData(DEFAULT_CATALOG).map((r) => <Chip key={r} on={(a.homeStore ?? 'barbora') === r} onClick={() => set({ homeStore: r, stores: [r] })}>{RETAILERS[r].name}</Chip>)}</div>
+          </div>
           <DemoBadge label={t('demoData')} />
         </Card>
         <div className="space-y-5">
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             <Stat label={t('dailyTarget')} value={`${num(res.targets.kcal)}`} sub="kcal" />
             <Stat label={t('proteinG')} value={num(res.targets.protein)} sub="g" />
-            <Stat label={t('bestBasket')} value={best ? eur(best.total) : '—'} sub={best ? t('visits', { n: best.visits }) : t('noData')} />
+            <Stat label={RETAILERS[res.store].name} value={eur(best.total)} sub={best.saving > 0 ? t('promoSavingTotal', { n: eur(best.saving) }) : t('listTotal')} />
             <Stat label={t('weeklyBudgetLabel')} value={eur(a.weeklyBudget)} sub={best && best.total > a.weeklyBudget ? <span className="text-danger">+{eur(best.total - a.weeklyBudget)}</span> : '✓'} />
           </div>
           <div className="no-scrollbar flex gap-2 overflow-x-auto">

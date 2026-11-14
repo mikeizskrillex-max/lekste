@@ -2,15 +2,15 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import type { RetailerId } from '@/config/markets';
 import { calcTargets } from '@/domain/nutrition';
 import type { DietType, QuizAnswers, Targets } from '@/domain/types';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { EXCLUSIONS, exclusionOn, planAvgKcal, toggleExclusion } from '@/lib/view';
-import { RETAILER_ORDER, RETAILERS } from '@/retail/retailers';
+import { RETAILERS } from '@/retail/retailers';
 import { todayIndex, useStore } from '@/state/store';
 import { PageTitle } from '../appshell';
+import { DayList, StorePicker } from '../basket';
 import { Badge, Button, Card, Chip, Slider, cx } from '../ui';
 import { MealRow, useToast } from './meal';
 
@@ -53,8 +53,8 @@ function Personalize() {
             <div className="flex flex-wrap gap-2">{EXCLUSIONS.map((e) => <Chip key={e} on={exclusionOn(a, e)} onClick={() => set(toggleExclusion(a, e))}>{t(`ex_${e}` as MessageKey)}</Chip>)}</div>
           </div>
           <div className="md:col-span-2">
-            <div className="mb-2 text-[13.5px] font-semibold">{t('storesPreferred')}</div>
-            <div className="flex flex-wrap gap-2">{RETAILER_ORDER.map((r) => <Chip key={r} on={a.stores.includes(r)} onClick={() => set({ stores: a.stores.includes(r) ? a.stores.filter((x) => x !== r) : [...a.stores, r as RetailerId] }, false)}>{RETAILERS[r].name}</Chip>)}</div>
+            <div className="mb-2 text-[13.5px] font-semibold">{t('yourStore')}</div>
+            <StorePicker compact />
           </div>
           <div className="flex flex-wrap items-center gap-3 md:col-span-2">
             {targets.overridden && <Button variant="secondary" size="sm" onClick={() => setAnswers({ overrides: {} }, true)}>{t('resetTargets')} ({base.kcal} kcal)</Button>}
@@ -68,7 +68,7 @@ function Personalize() {
 
 export function MenuPage() {
   const { t, eur, num } = useI18n();
-  const { plan, regenerate, weekEconomics, answers, targets } = useStore();
+  const { plan, regenerate, weekEconomics, answers, targets, homeStore } = useStore();
   const { show, node } = useToast();
   if (!plan) return null;
   const econ = weekEconomics();
@@ -76,7 +76,7 @@ export function MenuPage() {
   return (
     <>
       <PageTitle title={t('tabMenu2')} sub={<>{num(targets.kcal)} kcal · {num(targets.protein)} g {t('protein')} · {t('avgKcal')}: {num(planAvgKcal(plan))}</>}
-        right={<Badge tone={econ.best > answers.weeklyBudget ? 'danger' : 'leaf'}>{t('bestBasket')}: {eur(econ.best)} / {eur(answers.weeklyBudget)}</Badge>} />
+        right={<Badge tone={econ.best > answers.weeklyBudget ? 'danger' : 'leaf'}>{RETAILERS[homeStore].name}: {eur(econ.best)} / {eur(answers.weeklyBudget)}</Badge>} />
       <Personalize />
       {plan.issues.length > 0 && <p className="mt-4 rounded-2xl bg-gold/20 p-3 text-[13.5px]">{t('infeasibleRecipes')}</p>}
       <div className="mt-6 space-y-8">
@@ -109,6 +109,7 @@ export function DayPage({ day }: { day: number }) {
       <div className="no-scrollbar -mt-2 mb-5 flex gap-2 overflow-x-auto">{plan.days.map((_, i) => <Link key={i} href={`/app/menu/${i}`} className={cx('shrink-0 rounded-full px-3.5 py-2 text-[13.5px] font-bold ring-1', i === day ? 'bg-forest text-white ring-forest' : 'bg-card ring-line')}>{t(`dayS${i}` as MessageKey)}</Link>)}</div>
       <div className="space-y-2.5">{d.meals.map((m, slot) => <MealRow key={`${m.recipeId}-${slot}`} meal={m} day={day} slot={slot} toast={show} />)}</div>
       <Button variant="dark" size="lg" className="mt-5 w-full" onClick={() => { regenerate(day); show(t('regenerated')); }}>↻ {t('regenDay2')}</Button>
+      <div className="mt-8"><DayList day={day} checkable /></div>
       {node}
     </>
   );

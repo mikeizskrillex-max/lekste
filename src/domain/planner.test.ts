@@ -131,3 +131,26 @@ describe('replace a meal', () => {
     expect(vf.allergens).not.toContain('milk');
   });
 });
+
+describe('one supermarket', () => {
+  it('prices the plan at the chosen store and prefers dishes it sells', async () => {
+    const { recipeAtStore, basketFor } = await import('./pricing');
+    const { weeklyNeed } = await import('./planner');
+    for (const store of ['barbora', 'rimi'] as const) {
+      const u = { ...base, homeStore: store };
+      const plan = buildPlan(u, calcTargets(u));
+      const ids = plan.days.flatMap((d) => d.meals.map((m) => m.recipeId));
+      const missing = ids.filter((id) => recipeAtStore(RECIPES.find((r) => r.id === id)!, store).missing.length > 0);
+      expect(missing.length).toBeLessThanOrEqual(2);
+      const b = basketFor(weeklyNeed(plan, 1), [store]);
+      expect(b.lines.every((l) => l.record.retailer === store)).toBe(true);
+    }
+  });
+  it('ignores expired promotions', async () => {
+    const { effectiveRecord } = await import('./pricing');
+    const rec = { retailer: 'lidl', ingredientId: 'oats', match: 'exact', name: 'x', brand: null, ean: null, category: 'grains', grams: 500, price: 0.5, regular: 1, promo: true,
+      promoValidFrom: '2020-01-01', promoValidTo: '2020-01-07', perKg: 1, url: null, imageUrl: null, retrievedAt: '2020-01-01', source: 'csv_import', verification: 'unverified' } as const;
+    expect(effectiveRecord(rec)).toMatchObject({ promo: false, price: 1, perKg: 2 });
+    expect(effectiveRecord({ ...rec, promoValidTo: '2999-01-01' })).toMatchObject({ promo: true, price: 0.5 });
+  });
+});

@@ -41,8 +41,10 @@ try {
   await boxes.nth(1).check(); await boxes.nth(2).check();                                    // health + terms consents
   await page.getByRole('button', { name: /Pamatyti mano rezultatą/ }).click();
   await page.waitForURL('**/onboarding/result');
-  await page.getByText(/Visa pavyzdinė diena/).waitFor();
-  check('A result shows kcal and full sample day', await page.getByText(/Visa pavyzdinė diena/).isVisible());
+  await page.getByText(/Jūsų savaitės meniu/).waitFor();
+  check('A result shows the menu for every day', await page.getByRole('tab').count() === 7);
+  await page.getByRole('tab').nth(3).click();
+  check('A day 4 has its own shopping list', await page.getByText(/Ką nupirkti šiai dienai/).isVisible());
   await page.getByRole('link', { name: /Gauti visą savaitės planą/ }).click();
   await page.waitForURL('**/checkout**');
   await page.locator('input[type=checkbox]').check();
@@ -80,8 +82,16 @@ try {
 
   // ---------- E: basket comparison across supermarkets ----------
   await page.goto(`${BASE}/app/basket`);
-  check('E three strategies shown', await page.getByText(/A\. Pigiausia viena parduotuvė/).isVisible() && await page.getByText(/B\. Geriausia vertė/).isVisible());
-  check('E verified retailers priced', (await page.locator('main').innerText()).match(/Barbora|Rimi/) !== null);
+  check('E same list priced at every store with data', await page.getByText(/Tas pats sąrašas kitose parduotuvėse/).isVisible() && (await page.locator('main').innerText()).match(/Barbora[\s\S]*Rimi|Rimi[\s\S]*Barbora/) !== null);
+  await page.getByRole('button', { name: /Rimi/ }).first().click();
+  await page.waitForTimeout(500);
+  s = await state(page);
+  check('E choosing a store rebuilds the plan for it', s.answers.homeStore === 'rimi');
+  await page.goto(`${BASE}/app/shopping`);
+  const shopText = await page.locator('main').innerText();
+  check('E shopping list comes from one store only', shopText.includes('Rimi') && !/\bBarbora\b[^\n]*€/.test(shopText.split('Įrašyti apsipirkimą')[0]));
+  await page.getByRole('button', { name: 'An', exact: true }).click();
+  check('E per-day list shown', await page.getByText(/Ką nupirkti šiai dienai/).isVisible());
 
   // ---------- F: change budget recalculates ----------
   await page.goto(`${BASE}/app/menu`);
