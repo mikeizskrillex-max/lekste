@@ -45,7 +45,7 @@ export function SettingsPage() {
         <Card className="p-5">
           <h2 className="text-[17px] font-extrabold">{t('nutritionPrefs')}</h2>
           <p className="mt-2 text-[14px] text-muted">{t(`goal_${a.goal}` as MessageKey)} · {t(`diet_${a.dietType}` as MessageKey)} · {a.household} {t('people2')} · {a.weeklyBudget} €</p>
-          <div className="mt-4 flex flex-wrap gap-2"><ButtonLink href="/app/menu" variant="secondary" size="sm">{t('personalize')}</ButtonLink><ButtonLink href="/onboarding" variant="ghost" size="sm">{t('redoOnboarding')}</ButtonLink></div>
+          <div className="mt-4 flex flex-wrap gap-2"><ButtonLink href="/app/menu" variant="secondary" size="sm">{t('personalize')}</ButtonLink><ButtonLink href="/onboarding/taste?next=/app/menu" variant="secondary" size="sm">👅 {t('tasteCta')}</ButtonLink><ButtonLink href="/onboarding" variant="ghost" size="sm">{t('redoOnboarding')}</ButtonLink></div>
         </Card>
         <Card className="p-5 lg:col-span-2">
           <h2 className="text-[17px] font-extrabold">{t('privacyData')}</h2>

@@ -73,7 +73,7 @@ export function Onboarding() {
     if (step === 9) {
       completeOnboarding();
       const plan = sp.get('plan');
-      router.push(`/onboarding/result${plan ? `?plan=${plan}` : ''}`);
+      router.push(`/onboarding/taste?next=${encodeURIComponent(`/onboarding/result${plan ? `?plan=${plan}` : ''}`)}`);
       return;
     }
     setDir(1); setStep((s) => s + 1);

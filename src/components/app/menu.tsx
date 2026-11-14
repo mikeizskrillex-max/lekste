@@ -12,7 +12,7 @@ import { todayIndex, useStore } from '@/state/store';
 import { PageTitle } from '../appshell';
 import { DayList, OverBudgetHelp, StorePicker } from '../basket';
 import { DislikeChips } from '../onboarding';
-import { Badge, Button, Card, Chip, Slider, cx } from '../ui';
+import { Badge, Button, ButtonLink, Card, Chip, Slider, cx } from '../ui';
 import { MealRow, useToast } from './meal';
 
 function Personalize() {
@@ -80,6 +80,7 @@ export function MenuPage() {
     <>
       <PageTitle title={t('tabMenu2')} sub={<>{num(targets.kcal)} kcal · {num(targets.protein)} g {t('protein')} · {t('avgKcal')}: {num(planAvgKcal(plan))}</>}
         right={<div className="flex flex-wrap items-center gap-2"><Badge tone={econ.best > answers.weeklyBudget ? 'danger' : 'leaf'}>{RETAILERS[homeStore].name}: {eur(econ.best)} / {eur(answers.weeklyBudget)}</Badge>
+          <ButtonLink href="/onboarding/taste?next=/app/menu" size="sm" variant="secondary">👅 {t('tasteCta')}</ButtonLink>
           <Button size="sm" variant="dark" onClick={() => { if (window.confirm(t('newWeekConfirm'))) { newWeek(); show(t('newWeekDone')); window.scrollTo({ top: 0 }); } }}>🗓 {t('newWeek')}</Button></div>} />
       {weekStart && <p className="-mt-3 mb-4 text-[13px] text-muted">{t('weekOf', { d: weekStart })}</p>}
       <NewWeekBanner />

@@ -1,7 +1,7 @@
 # Development status — 2026-11-12
 
-Checks on this commit: `npm run lint` ✓ · `npm run typecheck` ✓ · `npm test` 41/41 ✓ · `npm run build` ✓ ·
-`npm run e2e` 30/30 ✓ (scenarios A–J, production build, development mode) · migration applied to local Postgres 16
+Checks on this commit: `npm run lint` ✓ · `npm run typecheck` ✓ · `npm test` 42/42 ✓ · `npm run build` ✓ ·
+`npm run e2e` 31/31 ✓ (scenarios A–J, production build, development mode) · migration applied to local Postgres 16
 with a Supabase auth stub: 41 tables, 57 RLS policies, owner isolation checked.
 
 | Phase | Status |
@@ -57,9 +57,15 @@ with a Supabase auth stub: 41 tables, 57 RLS policies, owner isolation checked.
 * "New week": archives the current week (history of 12 weeks, restore), builds the next menu with
   different dishes; a banner appears when the calendar week has moved on.
 * `scripts/refresh-prices.mjs` reads each Barbora/Rimi product page (price, regular price, promotion
-  dates, loyalty-card flag, unit price, availability) into data/prices.json; run it weekly (all 128
-  products read on 2026-11-14, 10 promotions). Not scheduled automatically yet — see README.
+  dates, loyalty-card flag, unit price, availability) into data/prices.json; runs every Monday via
+  .github/workflows/refresh-prices.yml (all 128 products read on 2026-11-14, 10 promotions).
   Lidl Lithuania sells food only in stores (no online food prices): CSV import remains the way.
 * Public recipe catalog /recipes (and /app/recipes): search, meal, time, vegetarian, high-protein,
   cheapest-first, favourites ♥, "fits me". Favourites are included in menus more often.
 * Installable web app (manifest, icons, add-to-home-screen prompt); sharp for fast images.
+
+## 2026-11-14 — taste swipe
+
+* After the questionnaire (and from Menu / Settings): swipe ~16 varied dishes (like / not for me).
+  Liked main ingredients and cuisines are favoured, disliked dishes are no longer planned and their main
+  ingredient is used less (soft rule, not a ban). The deck respects allergies, diet and dislikes.

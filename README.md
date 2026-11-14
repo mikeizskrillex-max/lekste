@@ -66,8 +66,10 @@ Admin panel in development mode: `/login?admin=1&next=/admin`, passphrase from
 ## Weekly price refresh
 
 `NODE_USE_ENV_PROXY=1 node scripts/refresh-prices.mjs` (proxy variable only behind a proxy) reads every
-product page and updates `data/prices.json`; commit and deploy. To automate, add a scheduled GitHub
-Actions workflow that runs the script every Monday and commits the file (needs `contents: write`).
+product page and updates `data/prices.json`. `.github/workflows/refresh-prices.yml` does this every Monday
+05:17 UTC (and on demand: Actions → Refresh store prices → Run workflow) and commits the file when prices
+changed; the hosting redeploys on that commit. If the repository restricts Actions, allow "Read and write
+permissions" for workflows in Settings → Actions → General.
 
 ## Documentation
 

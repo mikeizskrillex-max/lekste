@@ -17,6 +17,7 @@ import { DEFAULT_PLANS, type Plan as SubPlan, type PlanId } from '@/config/plans
 import { effectiveTargets } from '@/domain/nutrition';
 import { buildPlan, regenerateDay, replaceMeal, weeklyNeed, type Plan, type ReplaceMode } from '@/domain/planner';
 import { allocate, type Allocation } from '@/domain/allocation';
+import { learnTaste } from '@/domain/taste';
 import { basketFor, compareStores, setActiveCatalog } from '@/domain/pricing';
 import type { QuizAnswers, Targets } from '@/domain/types';
 import { buildCatalog, retailersWithData, SNAPSHOT_RECORDS } from '@/retail/catalog';
@@ -100,6 +101,8 @@ interface Ctx extends State {
   newWeek: () => void;
   restoreWeek: (weekStart: string) => void;
   toggleFavorite: (recipeId: string) => void;
+  /** apply the taste swipe and rebuild the menu */
+  applyTaste: (liked: string[], disliked: string[]) => void;
   /** true when the calendar week moved on since the plan was made */
   weekIsOld: boolean;
   rate: (recipeId: string, rating: 'up' | 'down') => void;
@@ -210,6 +213,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       if (!h || !p.plan) return p;
       const cur = { weekStart: p.weekStart ?? mondayOf(new Date()), plan: p.plan, basket: allocation?.week.total ?? 0 };
       return { ...p, plan: h.plan, history: [cur, ...(p.history ?? []).filter((x) => x.weekStart !== ws)].slice(0, 12), purchased: [] };
+    }),
+    applyTaste: (liked, disliked) => setS((p) => {
+      const answers = { ...p.answers, ...learnTaste(p.answers, liked, disliked) };
+      const feedback = [...p.feedback.filter((f) => !liked.includes(f.recipeId) && !disliked.includes(f.recipeId)), ...liked.map((recipeId) => ({ recipeId, rating: 'up' as const })), ...disliked.map((recipeId) => ({ recipeId, rating: 'down' as const }))];
+      return { ...p, answers, feedback, plan: p.plan ? buildPlan(answers, effectiveTargets(answers)) : p.plan };
     }),
     toggleFavorite: (id) => setS((p) => {
       const f = p.answers.favorites ?? [];

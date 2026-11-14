@@ -51,6 +51,9 @@ export interface QuizAnswers {
   batchCooking: boolean;
   spice: 0 | 1 | 2;
   stores: string[];
+  /** dishes liked / disliked in the taste swipe — they steer the planner */
+  tasteLiked?: string[];
+  dislikedRecipes?: string[];
   /** recipes the user saved with ♥ — the planner includes them more often */
   favorites?: string[];
   /** the one supermarket the user shops at: menu, prices and lists are built for it */

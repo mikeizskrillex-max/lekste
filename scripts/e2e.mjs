@@ -41,7 +41,15 @@ try {
   const boxes = page.locator('input[type=checkbox]');
   await boxes.nth(1).check(); await boxes.nth(2).check();                                    // health + terms consents
   await page.getByRole('button', { name: /Pamatyti mano rezultatą/ }).click();
-  await page.waitForURL('**/onboarding/result');
+  await page.waitForURL('**/onboarding/taste**');
+  await page.getByText(/Kas jums patinka/).waitFor();
+  for (const v of ['Patinka', 'Patinka', 'Ne man', 'Patinka', 'Ne man']) { await page.getByRole('button', { name: v, exact: true }).click(); await page.waitForTimeout(300); }
+  await page.getByRole('button', { name: /Praleisti/ }).click();
+  await page.waitForURL('**/onboarding/result**');
+  {
+    const st = await state(page);
+    check('TASTE swipes saved and used', (st.answers.tasteLiked ?? []).length === 3 && (st.answers.dislikedRecipes ?? []).length === 2);
+  }
   await page.getByText(/Jūsų savaitės meniu/).waitFor();
   check('A result shows the menu for every day', await page.getByRole('tab').count() === 7);
   await page.getByRole('tab').nth(3).click();

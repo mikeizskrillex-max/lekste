@@ -90,6 +90,8 @@ function score(r: Recipe, u: QuizAnswers): number {
   if (r.spice > u.spice) s -= 3 * (r.spice - u.spice);
   if (u.dietType === 'low_carb') s -= recipeFacts(r).carbs / 30;
   if (u.favorites?.includes(r.id)) s += 5;
+  if (u.tasteLiked?.includes(r.id)) s += 2;
+  if (u.dislikedRecipes?.includes(r.id)) s -= 12;
   if (isChefRecipe(r.id)) s += 1.2; // curated recipes first, generated ones add variety
   // budget awareness: the tighter the budget per person per day, the more a recipe's price matters
   const perDay = u.weeklyBudget / Math.max(1, u.household) / 7;

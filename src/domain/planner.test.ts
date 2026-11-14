@@ -209,3 +209,19 @@ describe('new week and favorites', () => {
     for (const d of plan.days) for (const m of d.meals) expect(RECIPES.find((r) => r.id === m.recipeId)!.items.some(([id]) => u.never.includes(id))).toBe(false);
   });
 });
+
+describe('taste swipe', () => {
+  it('liking chicken and disliking fish shifts the menu', async () => {
+    const { learnTaste, mainIngredient } = await import('./taste');
+    const u = { ...base, homeStore: 'barbora' as const, weeklyBudget: 70 };
+    const count = (plan: ReturnType<typeof buildPlan>, ids: string[]) => plan.days.flatMap((d) => d.meals).filter((m) => ids.includes(mainIngredient(RECIPES.find((r) => r.id === m.recipeId)!))).length;
+    const before = buildPlan(u, calcTargets(u));
+    const learned = { ...u, ...learnTaste(u, ['chicken_buckwheat', 'chicken_curry', 'plov', 'shawarma'], ['salmon_rice', 'cod_tomato', 'tuna_salad']) };
+    const after = buildPlan(learned, calcTargets(learned));
+    expect(learned.likedProteins).toEqual(expect.arrayContaining(['chicken_breast', 'chicken_thigh']));
+    expect(learned.avoid).toEqual(expect.arrayContaining(['salmon', 'cod']));
+    expect(count(after, ['chicken_breast', 'chicken_thigh'])).toBeGreaterThanOrEqual(count(before, ['chicken_breast', 'chicken_thigh']));
+    expect(count(after, ['salmon', 'cod', 'tuna_can'])).toBeLessThanOrEqual(count(before, ['salmon', 'cod', 'tuna_can']));
+    expect(after.days.flatMap((d) => d.meals).some((m) => ['salmon_rice', 'cod_tomato', 'tuna_salad'].includes(m.recipeId))).toBe(false);
+  });
+});
