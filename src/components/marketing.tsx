@@ -90,9 +90,7 @@ export function PricingCards() {
           <div className="text-[15px] font-bold text-muted">{t(`plan_${p.id}` as MessageKey)}</div>
           <div className="mt-2 font-display text-[40px] font-extrabold tracking-tight">{eur(p.price)}</div>
           <div className="text-[13px] text-muted">
-            {p.price !== p.renewalPrice || p.periodDays !== p.renewalDays
-              ? t('planRenews', { days: p.periodDays, price: eur(p.renewalPrice), period: p.renewalDays })
-              : t('planEquivalent', { price: eur(planMonthlyEquivalent(p)) })}
+            {t('vatIncluded')} · {p.oneTime ? t('planOnce') : <>{p.id !== 'monthly' && <>{t('planEquivalent', { price: eur(planMonthlyEquivalent(p)) })} · </>}{t('planEvery', { n: p.renewalDays })}</>}
           </div>
           <ul className="mt-5 flex-1 space-y-2 text-[14px]">
             {(['b1', 'b2', 'b3', 'b4'] as const).map((k) => <li key={k} className="flex gap-2"><span className="text-leaf">✓</span>{t(k)}</li>)}

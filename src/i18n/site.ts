@@ -73,13 +73,13 @@ export const N = {
   b6: { lt: 'Be programėlės', ru: 'Без приложения' }, b6d: { lt: 'Veikia naršyklėje telefone ir kompiuteryje.', ru: 'Работает в браузере на телефоне и компьютере.' },
   pricingTitle2: { lt: 'Paprastos kainos, jokių staigmenų', ru: 'Простые цены, без сюрпризов' },
   pricingSub2: { lt: 'Kainos su PVM. Prenumeratą atšaukiate bet kada nustatymuose.', ru: 'Цены с НДС. Подписку можно отменить в любой момент в настройках.' },
-  plan_intro2w: { lt: '2 savaitės — įžanginis', ru: '2 недели — вводный' },
+  plan_lifetime: { lt: 'Visam laikui', ru: 'Навсегда' },
   plan_monthly: { lt: '1 mėnuo', ru: '1 месяц' },
   plan_quarterly: { lt: '3 mėnesiai', ru: '3 месяца' },
   planRenews: { lt: 'Po {days} d. atsinaujina už {price} kas {period} d.', ru: 'Через {days} дн. продлевается за {price} каждые {period} дн.' },
   planEquivalent: { lt: '≈ {price} per mėn.', ru: '≈ {price} в мес.' },
   choose: { lt: 'Pasirinkti', ru: 'Выбрать' },
-  popular2: { lt: 'Populiariausias', ru: 'Популярный' },
+  popular2: { lt: 'Geriausia kaina', ru: 'Выгоднее всего' },
   footerTag: { lt: 'Asmeninis AI mitybos planuotojas ir prekybos centrų kainų palyginimas. Lietuva, 2026.', ru: 'Личный AI-планировщик питания и сравнение цен супермаркетов. Литва, 2026.' },
 
   // ---------- onboarding ----------

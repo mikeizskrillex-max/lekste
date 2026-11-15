@@ -245,6 +245,12 @@ export const X = {
   reveal4: { lt: 'Skaičiuojame krepšelį {store}', ru: 'Считаем корзину в {store}' },
   revealHeadline: { lt: 'Jūsų savaitė', ru: 'Ваша неделя' },
   dishesWord: { lt: 'patiekalai', ru: 'блюд' },
+  planOnce: { lt: 'Vienkartinis mokėjimas — prieiga visam laikui, be prenumeratos.', ru: 'Разовый платёж — доступ навсегда, без подписки.' },
+  planEvery: { lt: 'Atsinaujina kas {n} d. Atšaukti galite bet kada.', ru: 'Продлевается каждые {n} дн. Отменить можно в любой момент.' },
+  vatIncluded: { lt: 'su PVM', ru: 'с НДС' },
+  billingOnce: { lt: 'Šiandien mokate {price} vieną kartą. Jokių pasikartojančių mokėjimų.', ru: 'Сегодня вы платите {price} один раз. Никаких повторных списаний.' },
+  lifetimeAccess: { lt: 'Prieiga visam laikui', ru: 'Доступ навсегда' },
+  plan_intro2w: { lt: '2 savaitės (senas planas)', ru: '2 недели (старый тариф)' },
   notFound: { lt: 'Puslapis nerastas', ru: 'Страница не найдена' },
   toHome: { lt: 'Į pradžią', ru: 'На главную' },
 } as const;

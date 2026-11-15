@@ -22,7 +22,7 @@ export function Checkout() {
   const router = useRouter();
   const sp = useSearchParams();
   const plans = store.plans.filter((p) => p.active);
-  const initial = (sp.get('plan') as PlanId) ?? 'intro2w';
+  const initial = (sp.get('plan') as PlanId) ?? 'quarterly';
   const [planId, setPlanId] = useState<PlanId>(plans.some((p) => p.id === initial) ? initial : plans[0].id);
   const [email, setEmail] = useState(store.answers.email);
   const [consent, setConsent] = useState(false);
@@ -32,7 +32,7 @@ export function Checkout() {
   if (!store.ready) return null;
   if (!store.onboarded) return <Container className="py-24 text-center"><p>{t('checkoutRequiresOnboarding')}</p><ButtonLink href="/onboarding" className="mt-6">{t('startOnboarding')}</ButtonLink></Container>;
   const plan = plans.find((p) => p.id === planId)!;
-  const renew = t('planRenews', { days: plan.periodDays, price: eur(plan.renewalPrice), period: plan.renewalDays });
+  const renew = plan.oneTime ? '' : t('planEvery', { n: plan.renewalDays });
 
   const pay = async () => {
     if (!EMAIL_RE.test(email) || !consent) { setState('error'); return; }
@@ -65,7 +65,7 @@ export function Checkout() {
                 className={cx('flex w-full items-center justify-between gap-4 rounded-2xl bg-card p-4 text-left ring-1 transition', planId === p.id ? 'ring-2 ring-leaf' : 'ring-line hover:ring-leaf/50')}>
                 <span>
                   <span className="flex items-center gap-2 font-bold">{t(`plan_${p.id}` as MessageKey)}{p.highlighted && <Badge tone="leaf">{t('popular2')}</Badge>}</span>
-                  <span className="text-[12.5px] text-muted">{t('planRenews', { days: p.periodDays, price: eur(p.renewalPrice), period: p.renewalDays })}</span>
+                  <span className="text-[12.5px] text-muted">{t('vatIncluded')} · {p.oneTime ? t('planOnce') : t('planEvery', { n: p.renewalDays })}</span>
                 </span>
                 <span className="font-display text-[22px] font-extrabold">{eur(p.price)}</span>
               </button>
@@ -78,7 +78,7 @@ export function Checkout() {
         <Card className="h-fit p-6 md:sticky md:top-6">
           <div className="text-[13px] font-semibold text-muted">{t(`plan_${plan.id}` as MessageKey)}</div>
           <div className="mt-1 font-display text-[40px] font-extrabold">{eur(plan.price)}</div>
-          <p className="mt-3 text-[13.5px] leading-relaxed text-muted">{t('billingTerms', { price: eur(plan.price), renew })}</p>
+          <p className="mt-3 text-[13.5px] leading-relaxed text-muted">{plan.oneTime ? t('billingOnce', { price: eur(plan.price) }) : t('billingTerms', { price: eur(plan.price), renew })}</p>
           {store.plan && <p className="mt-3 text-[13px]">✓ {recipeName(store.plan.days[0].meals[0].recipeId, lang)} …</p>}
           <Button size="lg" className="mt-6 w-full" onClick={pay} disabled={state === 'busy'}>{state === 'busy' && modes.stripe ? t('stripeRedirect') : t('payNow', { price: eur(plan.price) })}</Button>
           <p className="mt-3 text-center text-[12px] text-muted">🔒 {t('securePay2')}</p>
@@ -98,7 +98,7 @@ export function Success() {
   const sessionId = sp.get('session_id');
   useEffect(() => {
     // Returning from Stripe: the webhook is the source of truth; mirror locally for the UI.
-    if (store.ready && sessionId && store.subscription.status !== 'active') store.subscribe((sp.get('plan') as PlanId) || 'intro2w', 'stripe');
+    if (store.ready && sessionId && store.subscription.status !== 'active') store.subscribe((sp.get('plan') as PlanId) || 'monthly', 'stripe');
   }, [store.ready, sessionId]); // eslint-disable-line react-hooks/exhaustive-deps
   const sub = store.subscription;
   return (

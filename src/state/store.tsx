@@ -168,7 +168,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setS({ ...EMPTY, ...read<Partial<State>>(KEY, {}) });
     setImports(read<PriceRecord[]>(PRICE_KEY, []));
-    setPlansState(read<SubPlan[]>(PLANS_KEY, DEFAULT_PLANS));
+    const saved = read<SubPlan[]>(PLANS_KEY, DEFAULT_PLANS);
+    setPlansState(saved.length === DEFAULT_PLANS.length && saved.every((x) => DEFAULT_PLANS.some((d) => d.id === x.id)) ? saved : DEFAULT_PLANS);
     setReady(true);
   }, []);
   useEffect(() => { if (ready) write(KEY, s); }, [s, ready]);
@@ -301,7 +302,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       setS((p) => ({
         ...p,
         subscription: {
-          planId, status: 'active', startedAt: now, currentPeriodEnd: addDays(now, plan.periodDays), mode,
+          planId, status: 'active', startedAt: now, currentPeriodEnd: plan.oneTime ? null : addDays(now, plan.periodDays), mode,
           payments: [{ id: `${mode}_${uid()}`, date: now, amount: plan.price, status: 'paid', planId }, ...p.subscription.payments],
         },
       }));

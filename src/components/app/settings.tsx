@@ -99,11 +99,11 @@ export function SubscriptionPage() {
         <div className="grid gap-4 sm:grid-cols-3">
           <div><div className="text-[12.5px] text-muted">{t('subStatus')}</div><div className="mt-1 text-[18px] font-extrabold">{t(`st_${sub.status}` as MessageKey)}</div></div>
           <div><div className="text-[12.5px] text-muted">{t('planLabel')}</div><div className="mt-1 text-[18px] font-extrabold">{sub.planId ? t(`plan_${sub.planId}` as MessageKey) : '—'}</div></div>
-          <div><div className="text-[12.5px] text-muted">{sub.status === 'canceled' ? t('accessUntil') : t('nextBilling')}</div><div className="mt-1 text-[18px] font-extrabold">{sub.currentPeriodEnd ? date(sub.currentPeriodEnd, { day: 'numeric', month: 'long', year: 'numeric' }) : '—'}</div></div>
+          <div><div className="text-[12.5px] text-muted">{sub.planId === 'lifetime' ? t('accessUntil') : sub.status === 'canceled' ? t('accessUntil') : t('nextBilling')}</div><div className="mt-1 text-[18px] font-extrabold">{sub.planId === 'lifetime' && sub.status !== 'none' ? `♾ ${t('lifetimeAccess')}` : sub.currentPeriodEnd ? date(sub.currentPeriodEnd, { day: 'numeric', month: 'long', year: 'numeric' }) : '—'}</div></div>
         </div>
         <div className="mt-5 flex flex-wrap gap-2">
           {sub.status === 'none' && <ButtonLink href="/checkout">{t('choosePlanCta')}</ButtonLink>}
-          {sub.status === 'active' && <Button variant="secondary" onClick={() => { if (window.confirm(t('cancelConfirm'))) s.cancelSubscription(); }}>{t('cancelSub')}</Button>}
+          {sub.status === 'active' && sub.planId !== 'lifetime' && <Button variant="secondary" onClick={() => { if (window.confirm(t('cancelConfirm'))) s.cancelSubscription(); }}>{t('cancelSub')}</Button>}
           {sub.status === 'canceled' && <Button onClick={s.resumeSubscription}>{t('resumeSub')}</Button>}
           {sub.status !== 'none' && <ButtonLink href="/checkout" variant="ghost">{t('changePlan')}</ButtonLink>}
           {modes.stripe && sub.mode === 'stripe' && <Button variant="ghost" onClick={portal}>{t('managePayment')}</Button>}

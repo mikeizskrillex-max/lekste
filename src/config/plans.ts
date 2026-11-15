@@ -4,7 +4,7 @@
  * system_settings in production, in local storage in development mode).
  * Never hard-code prices in components — always read them from here.
  */
-export type PlanId = 'intro2w' | 'monthly' | 'quarterly';
+export type PlanId = 'monthly' | 'quarterly' | 'lifetime';
 
 export interface Plan {
   id: PlanId;
@@ -18,15 +18,17 @@ export interface Plan {
   renewalDays: number;
   stripePriceEnv: string;
   highlighted?: boolean;
+  /** one payment, access forever (no renewal) */
+  oneTime?: boolean;
   active: boolean;
 }
 
 export const DEFAULT_PLANS: Plan[] = [
-  { id: 'intro2w', price: 9.99, renewalPrice: 12.99, periodDays: 14, renewalDays: 30, stripePriceEnv: 'STRIPE_PRICE_INTRO_2W', active: true },
-  { id: 'monthly', price: 12.99, renewalPrice: 12.99, periodDays: 30, renewalDays: 30, stripePriceEnv: 'STRIPE_PRICE_MONTHLY', highlighted: true, active: true },
-  { id: 'quarterly', price: 29.99, renewalPrice: 29.99, periodDays: 90, renewalDays: 90, stripePriceEnv: 'STRIPE_PRICE_QUARTERLY', active: true },
+  { id: 'monthly', price: 9, renewalPrice: 9, periodDays: 30, renewalDays: 30, stripePriceEnv: 'STRIPE_PRICE_MONTHLY', active: true },
+  { id: 'quarterly', price: 20, renewalPrice: 20, periodDays: 90, renewalDays: 90, stripePriceEnv: 'STRIPE_PRICE_QUARTERLY', highlighted: true, active: true },
+  { id: 'lifetime', price: 80, renewalPrice: 0, periodDays: 0, renewalDays: 0, stripePriceEnv: 'STRIPE_PRICE_LIFETIME', oneTime: true, active: true },
 ];
 
 export function planMonthlyEquivalent(p: Plan): number {
-  return (p.renewalPrice / p.renewalDays) * 30;
+  return p.oneTime ? 0 : (p.renewalPrice / p.renewalDays) * 30;
 }

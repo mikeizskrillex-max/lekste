@@ -42,6 +42,20 @@ export async function POST(req: Request) {
     case 'checkout.session.completed': {
       const cs = event.data.object;
       if (cs.subscription) await upsertSub(await s.subscriptions.retrieve(typeof cs.subscription === 'string' ? cs.subscription : cs.subscription.id));
+      else if (cs.mode === 'payment' && cs.payment_status === 'paid') {
+        // lifetime access: one payment, no renewal
+        const userId = cs.metadata?.userId || null;
+        await db.from('subscriptions').upsert({
+          stripe_subscription_id: cs.id,
+          stripe_customer_id: typeof cs.customer === 'string' ? cs.customer : cs.customer?.id ?? null,
+          user_id: userId && !userId.startsWith('dev:') ? userId : null,
+          plan_id: cs.metadata?.planId ?? 'lifetime',
+          status: 'active',
+          cancel_at_period_end: false,
+          current_period_end: null,
+          updated_at: new Date().toISOString(),
+        }, { onConflict: 'stripe_subscription_id' });
+      }
       break;
     }
     case 'customer.subscription.created':

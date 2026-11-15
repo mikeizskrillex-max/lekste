@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const lang: Locale = cookies().get('lang')?.value === 'ru' ? 'ru' : 'lt';
   const jsonLd = {
     '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Lėkštė', url: SITE_URL, applicationCategory: 'HealthApplication',
-    operatingSystem: 'Web', inLanguage: ['lt', 'ru'], offers: { '@type': 'Offer', price: '12.99', priceCurrency: 'EUR' },
+    operatingSystem: 'Web', inLanguage: ['lt', 'ru'], offers: { '@type': 'AggregateOffer', lowPrice: '9.00', highPrice: '80.00', priceCurrency: 'EUR' },
   };
   return (
     <html lang={lang}>
