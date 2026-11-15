@@ -98,7 +98,7 @@ export function Success() {
   const sessionId = sp.get('session_id');
   useEffect(() => {
     // Returning from Stripe: the webhook is the source of truth; mirror locally for the UI.
-    if (store.ready && sessionId && store.subscription.status !== 'active') store.subscribe(store.subscription.planId ?? 'intro2w', 'stripe');
+    if (store.ready && sessionId && store.subscription.status !== 'active') store.subscribe((sp.get('plan') as PlanId) || 'intro2w', 'stripe');
   }, [store.ready, sessionId]); // eslint-disable-line react-hooks/exhaustive-deps
   const sub = store.subscription;
   return (

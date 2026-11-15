@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       plan_id: sub.metadata?.planId ?? null,
       status: status ?? sub.status,
       cancel_at_period_end: sub.cancel_at_period_end,
-      current_period_end: sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null,
+      current_period_end: sub.items.data[0]?.current_period_end ? new Date(sub.items.data[0].current_period_end * 1000).toISOString() : null,
       updated_at: new Date().toISOString(),
     }, { onConflict: 'stripe_subscription_id' });
   };
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
       break;
     case 'invoice.payment_failed': {
       const inv = event.data.object;
-      const subId = inv.subscription;
+      const subId = inv.parent?.subscription_details?.subscription;
       if (subId) await db.from('subscriptions').update({ status: 'past_due', updated_at: new Date().toISOString() }).eq('stripe_subscription_id', typeof subId === 'string' ? subId : subId.id);
       break;
     }

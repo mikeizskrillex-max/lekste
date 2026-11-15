@@ -24,7 +24,7 @@
     "resend": "4.0.1",
     "server-only": "^0.0.1",
     "sharp": "^0.33.5",
-    "stripe": "17.3.1",
+    "stripe": "^23.0.1",
     "zod": "3.25.76"
   },
   "devDependencies": {
