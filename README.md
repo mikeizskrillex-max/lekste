@@ -37,8 +37,14 @@ Admin panel in development mode: `/login?admin=1&next=/admin`, passphrase from
 | `npm run dev` / `build` / `start` | Next.js |
 | `npm run lint` / `typecheck` | ESLint, `tsc --noEmit` |
 | `npm test` | Vitest unit tests (nutrition, planner, retail, CSV, assistant parser, photos) |
-| `npm run e2e` | Playwright scenarios A–J against a running server (`E2E_URL`, default :3000) |
+| `npm run e2e` | Playwright scenarios against a running server built with `NEXT_PUBLIC_SUPABASE_URL=none` (development mode; `E2E_URL`, default :3000) |
 | `npm run db:export` | export the recipe database to `data/recipes.json` |
+
+## Supabase
+
+The project URL and publishable key are public and set as defaults in `src/config/supabasePublic.ts`
+(environment variables override them; `NEXT_PUBLIC_SUPABASE_URL=none` turns Supabase off). The secret key
+(`SUPABASE_SECRET_KEY`) belongs only in the hosting's environment variables.
 
 ## Production setup
 

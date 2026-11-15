@@ -1,3 +1,4 @@
+import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from '@/config/supabasePublic';
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import { SESSION_COOKIE, verifySession } from '@/server/session';
@@ -9,8 +10,8 @@ export async function middleware(req: NextRequest) {
   let res = NextResponse.next({ request: req });
   let role: 'user' | 'admin' | null = null;
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anon = (process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  const url = SUPABASE_URL;
+  const anon = SUPABASE_PUBLISHABLE_KEY;
   if (url && anon) {
     const sb = createServerClient(url, anon, {
       cookies: {

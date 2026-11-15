@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { integrations } from '@/config/env';
 import * as z from 'zod/v4';
 import { audit } from '@/server/logs';
 import { clientIp, rateLimit } from '@/server/rateLimit';
@@ -8,7 +9,7 @@ const Body = z.object({ email: z.email().max(200), role: z.enum(['user', 'admin'
 
 /** Development-mode sign-in. Disabled as soon as Supabase Auth is configured. */
 export async function POST(req: Request) {
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL) return NextResponse.json({ error: 'disabled' }, { status: 404 });
+  if (integrations.supabase) return NextResponse.json({ error: 'disabled' }, { status: 404 });
   const rl = rateLimit(`devlogin:${clientIp(req)}`, 10, 60_000);
   if (!rl.ok) return NextResponse.json({ error: 'rate_limited' }, { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } });
   const parsed = Body.safeParse(await req.json().catch(() => null));

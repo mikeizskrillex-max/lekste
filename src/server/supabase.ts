@@ -1,10 +1,11 @@
+import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from '@/config/supabasePublic';
 import 'server-only';
 import { createServerClient } from '@supabase/ssr';
 import { createClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const anon = (process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+const url = SUPABASE_URL;
+const anon = SUPABASE_PUBLISHABLE_KEY;
 
 /** Supabase client bound to the visitor's auth cookies (RLS applies). */
 export function supabaseServer() {
