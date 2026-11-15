@@ -80,10 +80,15 @@ try {
   await page.waitForURL('**/checkout**');
   check('ACCOUNT created after the result page', true);
   await page.locator('input[type=checkbox]').check();
-  await page.getByRole('button', { name: /Mokėti/ }).click();
+  await page.getByRole('button', { name: /Pradėti 7 d\. nemokamai|Mokėti/ }).click();
   await page.waitForURL('**/success');
   await page.getByText(/Prenumerata aktyvi/).waitFor();
   check('A test checkout reaches success', true);
+  {
+    const sub = (await state(page)).subscription;
+    const days = Math.round((Date.parse(sub.trialEnd) - Date.now()) / 86400000);
+    check('TRIAL starts a 7-day free week (0 € today)', sub.status === 'trialing' && days === 7 && sub.payments[0].amount === 0, `${sub.status}, ${days} d`);
+  }
   await page.getByRole('link', { name: /Atidaryti paskyrą/ }).click();
   await page.waitForURL('**/app');
   check('A dashboard opens with bottom nav (mobile)', await page.getByRole('navigation', { name: 'Tabs' }).isVisible());
@@ -183,7 +188,7 @@ try {
   await page.goto(`${BASE}/app/subscription`);
   await page.getByRole('button', { name: /Atšaukti prenumeratą/ }).click();
   await page.waitForTimeout(300);
-  check('J cancel updates status', (await state(page)).subscription.status === 'canceled' && await page.getByText('Atšaukta').first().isVisible());
+  check('J cancel keeps access until the end and stops renewal', (await state(page)).subscription.cancelAtPeriodEnd === true && await page.getByText(/prieiga lieka iki/).first().isVisible());
 
   // ---------- I: unauthorized access blocked ----------
   const anon = await browser.newContext();

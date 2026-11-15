@@ -13,7 +13,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { applyIntent, type Note } from '@/ai/apply';
 import type { Intent } from '@/ai/intent';
 import type { RetailerId } from '@/config/markets';
-import { DEFAULT_PLANS, type Plan as SubPlan, type PlanId } from '@/config/plans';
+import { DEFAULT_PLANS, TRIAL_DAYS, type Plan as SubPlan, type PlanId } from '@/config/plans';
 import { effectiveTargets } from '@/domain/nutrition';
 import { buildPlan, regenerateDay, replaceMeal, type Plan, type ReplaceMode } from '@/domain/planner';
 import { allocate, type Allocation } from '@/domain/allocation';
@@ -38,9 +38,22 @@ export const DEFAULT_ANSWERS: QuizAnswers = {
   consentHealth: false, consentTerms: false, marketingConsent: false, otherRestrictions: '', travelCost: 1.5,
 };
 
-export type SubStatus = 'none' | 'active' | 'canceled' | 'past_due';
-export interface Payment { id: string; date: string; amount: number; status: 'paid' | 'failed' | 'refund_requested' | 'refunded'; planId: PlanId }
-export interface Subscription { planId: PlanId | null; status: SubStatus; startedAt: string | null; currentPeriodEnd: string | null; mode: 'test' | 'stripe'; payments: Payment[] }
+export type SubStatus = 'none' | 'trialing' | 'active' | 'canceled' | 'past_due';
+export interface Payment { id: string; date: string; amount: number; status: 'paid' | 'failed' | 'refund_requested' | 'refunded' | 'open' | 'trial'; planId: PlanId | null; receiptUrl?: string | null }
+export interface Subscription {
+  planId: PlanId | null; status: SubStatus; startedAt: string | null; currentPeriodEnd: string | null; mode: 'test' | 'stripe'; payments: Payment[];
+  /** end of the free week */
+  trialEnd?: string | null;
+  /** cancelled: access stays until currentPeriodEnd / trialEnd, no more charges */
+  cancelAtPeriodEnd?: boolean;
+}
+
+/** Can the user use the app right now? */
+export function hasAccess(sub: Subscription): boolean {
+  if (sub.status === 'active' || sub.status === 'trialing' || sub.status === 'past_due') return true;
+  const until = sub.currentPeriodEnd ?? sub.trialEnd;
+  return sub.status === 'canceled' && !!until && Date.parse(until) > Date.now();
+}
 export interface PurchaseRecord { id: string; date: string; retailer: RetailerId | 'mixed'; paid: number; reference: number; estimated: number }
 export interface Session { email: string; role: 'user' | 'admin' }
 
@@ -133,6 +146,8 @@ interface Ctx extends State {
   addWeight: (kg: number) => void;
   setTrackWeight: (on: boolean) => void;
   subscribe: (planId: PlanId, mode?: 'test' | 'stripe') => void;
+  /** reload the subscription from the server (Stripe is the source of truth) */
+  refreshSubscription: () => Promise<void>;
   cancelSubscription: () => void;
   resumeSubscription: () => void;
   requestRefund: (paymentId: string) => void;
@@ -304,18 +319,35 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     subscribe: (planId, mode = 'test') => {
       const plan = plans.find((x) => x.id === planId)!;
       const now = new Date().toISOString();
+      const trial = !plan.oneTime;
+      const trialEnd = trial ? addDays(now, TRIAL_DAYS) : null;
       setS((p) => ({
         ...p,
         subscription: {
-          planId, status: 'active', startedAt: now, currentPeriodEnd: plan.oneTime ? null : addDays(now, plan.periodDays), mode,
-          payments: [{ id: `${mode}_${uid()}`, date: now, amount: plan.price, status: 'paid', planId }, ...p.subscription.payments],
+          planId, status: trial ? 'trialing' : 'active', startedAt: now, trialEnd, cancelAtPeriodEnd: false,
+          currentPeriodEnd: plan.oneTime ? null : trialEnd, mode,
+          payments: [{ id: `${mode}_${uid()}`, date: now, amount: trial ? 0 : plan.price, status: trial ? 'trial' : 'paid', planId }, ...p.subscription.payments],
         },
       }));
       email('Lėkštė: prenumerata patvirtinta / подписка подтверждена');
       email('Lėkštė: jūsų savaitės meniu / ваше меню на неделю');
     },
-    cancelSubscription: () => { setS((p) => ({ ...p, subscription: { ...p.subscription, status: 'canceled' } })); email('Lėkštė: prenumerata atšaukta / подписка отменена'); },
-    resumeSubscription: () => setS((p) => ({ ...p, subscription: { ...p.subscription, status: 'active' } })),
+    refreshSubscription: async () => {
+      const r = await fetch('/api/subscription').catch(() => null);
+      if (!r?.ok) return;
+      const j = await r.json();
+      if (j.mode !== 'stripe' || !j.subscription) return;
+      const x = j.subscription;
+      setS((p) => ({ ...p, subscription: { planId: x.planId, status: x.status, startedAt: x.startedAt, currentPeriodEnd: x.currentPeriodEnd, trialEnd: x.trialEnd, cancelAtPeriodEnd: x.cancelAtPeriodEnd, mode: 'stripe', payments: x.payments } }));
+    },
+    cancelSubscription: () => {
+      if (s.subscription.mode === 'stripe') { void fetch('/api/subscription', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'cancel' }) }).then(() => value.refreshSubscription()); return; }
+      setS((p) => ({ ...p, subscription: { ...p.subscription, cancelAtPeriodEnd: true } })); email('Lėkštė: prenumerata atšaukta / подписка отменена');
+    },
+    resumeSubscription: () => {
+      if (s.subscription.mode === 'stripe') { void fetch('/api/subscription', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'resume' }) }).then(() => value.refreshSubscription()); return; }
+      setS((p) => ({ ...p, subscription: { ...p.subscription, cancelAtPeriodEnd: false, status: p.subscription.status === 'canceled' ? 'active' : p.subscription.status } }));
+    },
     requestRefund: (id) => setS((p) => ({ ...p, subscription: { ...p.subscription, payments: p.subscription.payments.map((x) => (x.id === id ? { ...x, status: 'refund_requested' } : x)) } })),
     login: (mail, role = 'user') => setS((p) => ({ ...p, session: { email: mail, role }, answers: { ...p.answers, email: p.answers.email || mail } })),
     logout: () => setS((p) => ({ ...p, session: null })),

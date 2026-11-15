@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import * as z from 'zod/v4';
-import { DEFAULT_PLANS } from '@/config/plans';
+import { DEFAULT_PLANS, TRIAL_DAYS } from '@/config/plans';
 import { SITE_URL } from '@/config/env';
 import { clientIp, rateLimit } from '@/server/rateLimit';
 import { stripe } from '@/server/stripe';
@@ -28,7 +28,8 @@ export async function POST(req: Request) {
   const viewer = await getViewer();
   const common = {
     line_items: [{ price, quantity: 1 }],
-    customer_email: parsed.data.email,
+    // the account email links the payment to the account (subscription status is looked up by it)
+    customer_email: viewer?.email || parsed.data.email,
     client_reference_id: viewer?.id,
     locale: (parsed.data.lang === 'lt' ? 'lt' : 'ru') as 'lt' | 'ru',
     allow_promotion_codes: true,
@@ -39,6 +40,16 @@ export async function POST(req: Request) {
   // Lifetime = one payment; monthly / 3 months = subscription that renews until cancelled.
   const session = plan.oneTime
     ? await s.checkout.sessions.create({ ...common, mode: 'payment', customer_creation: 'always', invoice_creation: { enabled: true } })
-    : await s.checkout.sessions.create({ ...common, mode: 'subscription', subscription_data: { metadata: { planId: plan.id, userId: viewer?.id ?? '' } } });
+    : await s.checkout.sessions.create({
+      ...common,
+      mode: 'subscription',
+      payment_method_collection: 'always',
+      subscription_data: {
+        metadata: { planId: plan.id, userId: viewer?.id ?? '' },
+        // 7 days free; the card is charged on day 8 unless cancelled before
+        trial_period_days: TRIAL_DAYS,
+        trial_settings: { end_behavior: { missing_payment_method: 'cancel' } },
+      },
+    });
   return NextResponse.json({ mode: 'stripe', url: session.url });
 }

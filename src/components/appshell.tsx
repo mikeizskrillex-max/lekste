@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { signOut } from '@/lib/account';
-import { useStore } from '@/state/store';
+import { hasAccess, useStore } from '@/state/store';
 import { DevBanner, LangSwitch, Logo } from './site';
 import { ButtonLink, Card, Container, Skeleton, cx } from './ui';
 
@@ -31,13 +31,15 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useI18n();
   const path = usePathname();
   const router = useRouter();
-  const { ready, onboarded, subscription, logout, session } = useStore();
+  const { ready, onboarded, subscription, logout, session, refreshSubscription } = useStore();
+  // Stripe is the source of truth for access: refresh on every visit to the app
+  useEffect(() => { if (ready && session) void refreshSubscription(); }, [ready, session?.email]); // eslint-disable-line react-hooks/exhaustive-deps
   const open = path.startsWith('/app/settings') || path.startsWith('/app/subscription') || path.startsWith('/app/recipe');
 
   let content = children;
   if (!ready) content = <div className="space-y-4"><Skeleton className="h-10 w-1/2" /><Skeleton className="h-40" /><Skeleton className="h-40" /></div>;
   else if (!onboarded && !open) content = <Gate text={t('noPlanYet')} href="/onboarding" cta={t('startOnboarding')} />;
-  else if (subscription.status === 'none' && !open) content = <Gate text={t('subscriptionNeeded')} href="/checkout" cta={t('choosePlanCta')} />;
+  else if (!hasAccess(subscription) && !open) content = <Gate text={t('subscriptionNeeded')} href="/checkout" cta={t('choosePlanCta')} />;
 
   return (
     <div className="min-h-screen bg-paper">
@@ -66,7 +68,10 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
       </header>
       <main id="main" className="pb-28 lg:pb-12 lg:pl-[248px]">
-        <Container className="max-w-[1080px] py-6 md:py-8">{content}</Container>
+        <Container className="max-w-[1080px] py-6 md:py-8">
+          {ready && subscription.status === 'past_due' && <BillingBanner tone="danger" text={t('paymentFailed')} />}
+          {content}
+        </Container>
       </main>
       <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-line bg-card/95 backdrop-blur pb-safe lg:hidden" aria-label="Tabs">
         {NAV.filter((n) => n.mobile).map((n) => (
@@ -75,6 +80,17 @@ export function AppShell({ children }: { children: ReactNode }) {
           </Link>
         ))}
       </nav>
+    </div>
+  );
+}
+
+function BillingBanner({ text, tone }: { text: string; tone: 'danger' | 'info' }) {
+  const { t } = useI18n();
+  const portal = async () => { const r = await fetch('/api/portal', { method: 'POST' }); const j = await r.json().catch(() => ({})); if (j.url) location.href = j.url; };
+  return (
+    <div className={cx('mb-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl p-4 text-[14px] font-semibold', tone === 'danger' ? 'bg-danger/10 text-danger' : 'bg-sage text-forest')}>
+      <span>{text}</span>
+      <button type="button" onClick={portal} className="rounded-xl bg-white px-3 py-2 text-[13px] ring-1 ring-current">{t('updateCard')}</button>
     </div>
   );
 }

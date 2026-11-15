@@ -35,9 +35,10 @@ export function DevBanner() {
   const modes = useModes();
   const { t } = useI18n();
   if (modes.supabase && modes.stripe) return null;
+  const list = [!modes.supabase && 'Supabase', !modes.stripe && 'Stripe'].filter(Boolean).join(', ');
   return (
     <div className="bg-ink px-4 py-1.5 text-center text-[11.5px] font-medium text-white/85">
-      ◎ {t('devMode')}: {t('devBanner', { list: [!modes.supabase && 'Supabase', !modes.stripe && 'Stripe', !modes.ai && 'AI', !modes.email && 'Resend'].filter(Boolean).join(', ') })}
+      ◎ {modes.supabase ? t('devBannerShort', { list }) : `${t('devMode')}: ${t('devBanner', { list })}`}
     </div>
   );
 }

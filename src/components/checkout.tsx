@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useModes } from '@/app/providers';
-import type { PlanId } from '@/config/plans';
+import { TRIAL_DAYS, type PlanId } from '@/config/plans';
+import { formatDate } from '@/i18n/I18nProvider';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { recipeName } from '@/lib/view';
@@ -32,7 +33,7 @@ export function Checkout() {
   if (!store.ready) return null;
   if (!store.onboarded) return <Container className="py-24 text-center"><p>{t('checkoutRequiresOnboarding')}</p><ButtonLink href="/onboarding" className="mt-6">{t('startOnboarding')}</ButtonLink></Container>;
   const plan = plans.find((p) => p.id === planId)!;
-  const renew = plan.oneTime ? '' : t('planEvery', { n: plan.renewalDays });
+  const trialDate = formatDate(new Date(Date.now() + TRIAL_DAYS * 86400000).toISOString(), lang, { day: 'numeric', month: 'long' });
 
   const pay = async () => {
     if (!EMAIL_RE.test(email) || !consent) { setState('error'); return; }
@@ -65,7 +66,7 @@ export function Checkout() {
               <button key={p.id} type="button" onClick={() => setPlanId(p.id)} aria-pressed={planId === p.id}
                 className={cx('flex w-full items-center justify-between gap-4 rounded-2xl bg-card p-4 text-left ring-1 transition', planId === p.id ? 'ring-2 ring-leaf' : 'ring-line hover:ring-leaf/50')}>
                 <span>
-                  <span className="flex items-center gap-2 font-bold">{t(`plan_${p.id}` as MessageKey)}{p.highlighted && <Badge tone="leaf">{t('popular2')}</Badge>}</span>
+                  <span className="flex flex-wrap items-center gap-2 font-bold">{t(`plan_${p.id}` as MessageKey)}{p.highlighted && <Badge tone="leaf">{t('popular2')}</Badge>}{!p.oneTime && <Badge tone="gold">🎁 {t('trialBadge')}</Badge>}</span>
                   <span className="text-[12.5px] text-muted">{t('vatIncluded')} · {p.oneTime ? t('planOnce') : t('planEvery', { n: p.renewalDays })}</span>
                 </span>
                 <span className="font-display text-[22px] font-extrabold">{eur(p.price)}</span>
@@ -78,10 +79,11 @@ export function Checkout() {
         </div>
         <Card className="h-fit p-6 md:sticky md:top-6">
           <div className="text-[13px] font-semibold text-muted">{t(`plan_${plan.id}` as MessageKey)}</div>
-          <div className="mt-1 font-display text-[40px] font-extrabold">{eur(plan.price)}</div>
-          <p className="mt-3 text-[13.5px] leading-relaxed text-muted">{plan.oneTime ? t('billingOnce', { price: eur(plan.price) }) : t('billingTerms', { price: eur(plan.price), renew })}</p>
+          <div className="mt-1 font-display text-[40px] font-extrabold">{plan.oneTime ? eur(plan.price) : eur(0)}</div>
+          {!plan.oneTime && <div className="text-[13px] text-muted">{t('trialThen', { price: eur(plan.price), n: plan.renewalDays })}</div>}
+          <p className="mt-3 text-[13.5px] leading-relaxed text-muted">{plan.oneTime ? t('billingOnce', { price: eur(plan.price) }) : t('trialTerms', { date: trialDate, price: eur(plan.price), n: plan.renewalDays })}</p>
           {store.plan && <p className="mt-3 text-[13px]">✓ {recipeName(store.plan.days[0].meals[0].recipeId, lang)} …</p>}
-          <Button size="lg" className="mt-6 w-full" onClick={pay} disabled={state === 'busy'}>{state === 'busy' && modes.stripe ? t('stripeRedirect') : t('payNow', { price: eur(plan.price) })}</Button>
+          <Button size="lg" className="mt-6 w-full" onClick={pay} disabled={state === 'busy'}>{state === 'busy' && modes.stripe ? t('stripeRedirect') : plan.oneTime ? t('payNow', { price: eur(plan.price) }) : t('startTrial')}</Button>
           <p className="mt-3 text-center text-[12px] text-muted">🔒 {t('securePay2')}</p>
           {!modes.stripe && <p className="mt-4 rounded-xl bg-gold/20 p-3 text-[12.5px]">◎ {t('testModeNotice')}</p>}
           <p className="mt-4 text-center text-[12px]"><Link href="/terms" className="text-leaf underline">{t('terms')}</Link> · <Link href="/privacy" className="text-leaf underline">{t('privacy')}</Link></p>
@@ -92,14 +94,19 @@ export function Checkout() {
 }
 
 export function Success() {
-  const { t, lang, eur } = useI18n();
+  const { t, lang, eur, date } = useI18n();
   const modes = useModes();
   const store = useStore();
   const sp = useSearchParams();
   const sessionId = sp.get('session_id');
   useEffect(() => {
     // Returning from Stripe: the webhook is the source of truth; mirror locally for the UI.
-    if (store.ready && sessionId && store.subscription.status !== 'active') store.subscribe((sp.get('plan') as PlanId) || 'monthly', 'stripe');
+    // Returning from Stripe: never trust the URL — ask the server (Stripe) for the real status.
+    if (!store.ready || !sessionId) return;
+    let n = 0;
+    const tick = () => { void store.refreshSubscription(); if (++n < 5) timer = setTimeout(tick, 2000); };
+    let timer = setTimeout(tick, 300);
+    return () => clearTimeout(timer);
   }, [store.ready, sessionId]); // eslint-disable-line react-hooks/exhaustive-deps
   const sub = store.subscription;
   return (
@@ -107,7 +114,8 @@ export function Success() {
       <Container className="flex h-16 items-center"><Logo /></Container>
       <Container className="max-w-[640px] py-10 text-center">
         <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-leaf text-[30px] text-white">✓</div>
-        <h1 className="mt-5 font-display text-[34px] font-extrabold">{t('successTitle')}</h1>
+        <h1 className="mt-5 font-display text-[34px] font-extrabold">{modes.stripe && sub.status === 'none' ? t('activatingSub') : t('successTitle')}</h1>
+        {sub.status === 'trialing' && sub.trialEnd && <p className="mt-2 font-semibold text-forest">🎁 {t('trialUntil', { date: date(sub.trialEnd, { day: 'numeric', month: 'long' }) })}</p>}
         <p className="mt-2 text-[16px] text-muted">{t('successText')}</p>
         <ButtonLink href="/app" size="lg" className="mt-8">{t('openDashboard')} →</ButtonLink>
         {!modes.email && store.plan && (

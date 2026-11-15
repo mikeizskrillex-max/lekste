@@ -87,7 +87,7 @@ export function PricingCards() {
       {plans.filter((p) => p.active).map((p) => (
         <Card key={p.id} className={cx('relative flex flex-col p-6', p.highlighted && 'ring-2 ring-leaf')}>
           {p.highlighted && <Badge tone="leaf" className="absolute -top-3 left-6 bg-leaf text-white">{t('popular2')}</Badge>}
-          <div className="text-[15px] font-bold text-muted">{t(`plan_${p.id}` as MessageKey)}</div>
+          <div className="flex items-center justify-between gap-2"><span className="text-[15px] font-bold text-muted">{t(`plan_${p.id}` as MessageKey)}</span>{!p.oneTime && <Badge tone="gold">🎁 {t('trialBadge')}</Badge>}</div>
           <div className="mt-2 font-display text-[40px] font-extrabold tracking-tight">{eur(p.price)}</div>
           <div className="text-[13px] text-muted">
             {t('vatIncluded')} · {p.oneTime ? t('planOnce') : <>{p.id !== 'monthly' && <>{t('planEquivalent', { price: eur(planMonthlyEquivalent(p)) })} · </>}{t('planEvery', { n: p.renewalDays })}</>}
@@ -95,14 +95,14 @@ export function PricingCards() {
           <ul className="mt-5 flex-1 space-y-2 text-[14px]">
             {(['b1', 'b2', 'b3', 'b4'] as const).map((k) => <li key={k} className="flex gap-2"><span className="text-leaf">✓</span>{t(k)}</li>)}
           </ul>
-          <ButtonLink href={`/onboarding?plan=${p.id}`} variant={p.highlighted ? 'primary' : 'secondary'} className="mt-6 w-full">{t('choose')}</ButtonLink>
+          <ButtonLink href={`/onboarding?plan=${p.id}`} variant={p.highlighted ? 'primary' : 'secondary'} className="mt-6 w-full">{p.oneTime ? t('choose') : t('startTrial')}</ButtonLink>
         </Card>
       ))}
     </div>
   );
 }
 
-export const FAQ_KEYS = [1, 2, 3, 4, 5, 6, 7, 8] as const;
+export const FAQ_KEYS = [9, 1, 2, 3, 4, 5, 6, 7, 8] as const;
 export function Faq({ limit }: { limit?: number }) {
   const { t } = useI18n();
   const [open, setOpen] = useState<number | null>(0);

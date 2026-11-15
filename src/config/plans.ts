@@ -4,6 +4,9 @@
  * system_settings in production, in local storage in development mode).
  * Never hard-code prices in components — always read them from here.
  */
+/** Free trial for subscriptions (card required, charged on day 8 unless cancelled). */
+export const TRIAL_DAYS = 7;
+
 export type PlanId = 'monthly' | 'quarterly' | 'lifetime';
 
 export interface Plan {

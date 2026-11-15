@@ -96,3 +96,16 @@ with a Supabase auth stub: 41 tables, 57 RLS policies, owner isolation checked.
   household + budget suggested from household size + store; restrictions with "more options" and one
   combined consent). Email moved to account creation; taste swipe optional from the result page.
 * Pricing: €9 / month, €20 / 3 months, €80 lifetime (VAT included), Stripe sandbox verified.
+
+## 2026-11-15 — real billing: 7-day trial, Stripe as source of truth
+
+* Monthly and 3-month plans start with a 7-day free trial (card required, €0 today, charged on day 8
+  unless cancelled); lifetime is a one-time payment.
+* /api/subscription reads the subscription from Stripe by the account email (status, trial end, renewal,
+  cancel-at-period-end, invoices with receipt links); the app gate, success page and subscription page use
+  it — nothing about payment is trusted from the browser any more.
+* Cancel / resume go to Stripe (cancel at period end); Stripe customer portal for card and invoices
+  (portal configuration created); failed payment banner with "update card".
+* Account deletion cancels billing, deletes app_state and signs out. Terms and FAQ describe the trial.
+* Verified against the Stripe sandbox: trial subscription → trialing → cancel → resume → portal; checkout
+  €0 today with the account email.
