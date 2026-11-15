@@ -4,6 +4,7 @@ import { createContext, useContext, type ReactNode } from 'react';
 import type { Locale } from '@/config/markets';
 import { I18nProvider } from '@/i18n/I18nProvider';
 import { StoreProvider } from '@/state/store';
+import { AccountSync } from '@/state/sync';
 
 /** Which integrations the server has keys for (booleans only, never the keys). */
 export interface Modes { supabase: boolean; stripe: boolean; ai: boolean; email: boolean }
@@ -14,7 +15,7 @@ export function Providers({ lang, modes, children }: { lang: Locale; modes: Mode
   return (
     <ModesCtx.Provider value={modes}>
       <I18nProvider initial={lang}>
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider><AccountSync />{children}</StoreProvider>
       </I18nProvider>
     </ModesCtx.Provider>
   );

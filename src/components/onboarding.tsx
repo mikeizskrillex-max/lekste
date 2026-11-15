@@ -20,8 +20,6 @@ import { Logo } from './site';
 import { Button, ButtonLink, Card, Chip, Container, CountUp, DishImage, Field, Option, Ring, Stat, inputCls, cx } from './ui';
 import { DayList, OverBudgetHelp, SavingsLine, StorePicker, StoreSummary, StoreTotals, useHomeBasket, useWeekNeed } from './basket';
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const BUDGETS = [{ v: 35, l: '30–40 €' }, { v: 50, l: '40–60 €' }, { v: 75, l: '60–90 €' }];
 
 function NumberInput({ value, onChange, min, max, suffix, id }: { value: number; onChange: (n: number) => void; min: number; max: number; suffix: string; id: string }) {
   const [raw, setRaw] = useState(String(value));
@@ -49,119 +47,153 @@ export function DislikeChips() {
   );
 }
 
+const round5 = (n: number) => Math.round(n / 5) * 5;
+/** Budget options scale with the household; the middle one is preselected. */
+export function budgetOptions(household: number): number[] {
+  return [round5(26 * household + 4), round5(36 * household + 4), round5(52 * household + 4)];
+}
+
+/** − value + control: one tap instead of typing on a phone. */
+function Stepper({ id, label, value, min, max, step = 1, suffix, onChange }: { id: string; label: string; value: number; min: number; max: number; step?: number; suffix: string; onChange: (n: number) => void }) {
+  return (
+    <Field label={label}>
+      <div className="flex items-center gap-2">
+        <button type="button" aria-label={`${label} −`} onClick={() => onChange(Math.max(min, Math.round((value - step) * 10) / 10))} className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-card text-[20px] ring-1 ring-line active:scale-95">−</button>
+        <div className="flex-1"><NumberInput id={id} value={value} min={min} max={max} suffix={suffix} onChange={onChange} /></div>
+        <button type="button" aria-label={`${label} +`} onClick={() => onChange(Math.min(max, Math.round((value + step) * 10) / 10))} className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-card text-[20px] ring-1 ring-line active:scale-95">+</button>
+      </div>
+    </Field>
+  );
+}
+
+const STEPS = 4;
+
+/**
+ * Fast questionnaire: 4 screens with sensible defaults (≈ 1 minute).
+ * 1 goal (tap = next) · 2 body & activity · 3 household, budget, store · 4 restrictions & consents.
+ * Email and password are asked later, when the user saves the plan (account).
+ */
 export function Onboarding() {
-  const { t, pick } = useI18n();
+  const { t, pick, eur } = useI18n();
   const { answers: a, setAnswers, completeOnboarding } = useStore();
   const router = useRouter();
   const sp = useSearchParams();
   const [step, setStep] = useState(1);
   const [dir, setDir] = useState(1);
-  const [customBudget, setCustomBudget] = useState(!BUDGETS.some((b) => b.v === a.weeklyBudget));
+  const [customBudget, setCustomBudget] = useState(false);
+  const [more, setMore] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const set = (p: Partial<QuizAnswers>) => { setErr(null); setAnswers(p); };
   const needsTarget = a.goal === 'lose' || a.goal === 'gain';
+  const budgets = budgetOptions(a.household);
 
+  const go = (n: number) => { setErr(null); setDir(n > step ? 1 : -1); setStep(n); window.scrollTo({ top: 0 }); };
   const valid = (): string | null => {
-    if (step === 2 && (a.age < 18 || a.age > 100)) return t('under18');
-    if (step === 3 && (a.heightCm < 120 || a.heightCm > 230 || a.weightKg < 35 || a.weightKg > 250)) return '!';
-    if (step === 4 && needsTarget && (a.goal === 'lose' ? a.targetWeightKg >= a.weightKg : a.targetWeightKg <= a.weightKg)) return '!';
-    if (step === 9) {
-      if (!EMAIL_RE.test(a.email)) return t('emailInvalid');
-      if (!a.consentHealth || !a.consentTerms) return t('requiredConsent');
+    if (step === 2) {
+      if (a.age < 18 || a.age > 100) return t('under18');
+      if (a.heightCm < 120 || a.heightCm > 230 || a.weightKg < 35 || a.weightKg > 250) return t('checkNumbers');
+      if (needsTarget && (a.goal === 'lose' ? a.targetWeightKg >= a.weightKg : a.targetWeightKg <= a.weightKg)) return t('checkTarget');
     }
+    if (step === 4 && (!a.consentHealth || !a.consentTerms)) return t('requiredConsent');
     return null;
   };
   const next = () => {
     const e = valid();
     if (e) { setErr(e); return; }
-    if (step === 9) {
+    if (step === STEPS) {
       completeOnboarding();
       const plan = sp.get('plan');
-      router.push(`/onboarding/taste?next=${encodeURIComponent(`/onboarding/result${plan ? `?plan=${plan}` : ''}`)}`);
+      router.push(`/onboarding/result${plan ? `?plan=${plan}` : ''}`);
       return;
     }
-    setDir(1); setStep((s) => s + 1);
+    go(step + 1);
   };
-  const back = () => { setErr(null); setDir(-1); setStep((s) => Math.max(1, s - 1)); };
+  const pickGoal = (g: Goal) => {
+    const target = g === 'lose' ? Math.round(a.weightKg * 0.92) : g === 'gain' ? Math.round(a.weightKg * 1.06) : a.weightKg;
+    set({ goal: g, targetWeightKg: target });
+    setDir(1); setStep(2); window.scrollTo({ top: 0 });
+  };
+  const setHousehold = (n: number) => {
+    const opts = budgetOptions(n);
+    set({ household: n, ...(customBudget ? {} : { weeklyBudget: opts[1] }) });
+  };
 
+  const title = [t('q1'), t('oAbout'), t('oFamily'), t('q8')][step - 1];
   const body = () => {
     switch (step) {
       case 1: return (
         <div className="space-y-2.5">
-          {(['lose', 'keep', 'gain', 'healthy'] as Goal[]).map((g) => <Option key={g} on={a.goal === g} onClick={() => set({ goal: g })}><span className="text-[22px]">{({ lose: '⚖️', keep: '🧘', gain: '💪', healthy: '🥗' })[g]}</span>{t(`goal_${g}` as MessageKey)}</Option>)}
+          {(['lose', 'keep', 'gain', 'healthy'] as Goal[]).map((g) => <Option key={g} on={a.goal === g} onClick={() => pickGoal(g)}><span className="text-[22px]">{({ lose: '⚖️', keep: '🧘', gain: '💪', healthy: '🥗' })[g]}</span>{t(`goal_${g}` as MessageKey)}<span className="ml-auto text-muted">›</span></Option>)}
         </div>
       );
       case 2: return (
-        <div className="space-y-5">
-          <div className="grid grid-cols-2 gap-2.5">{(['f', 'm'] as const).map((s) => <Option key={s} on={a.sex === s} onClick={() => set({ sex: s })}>{t(`sex_${s}` as MessageKey)}</Option>)}</div>
-          <Field label={`${t('age')}, ${t('years')}`}><NumberInput id="age" value={a.age} min={1} max={110} suffix="" onChange={(n) => set({ age: Math.round(n) })} /></Field>
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-2.5">{(['f', 'm'] as const).map((x) => <Option key={x} on={a.sex === x} onClick={() => set({ sex: x })} className="justify-center">{t(`sex_${x}` as MessageKey)}</Option>)}</div>
+          <Stepper id="age" label={`${t('age')}, ${t('years')}`} value={a.age} min={14} max={100} suffix="" onChange={(n) => set({ age: Math.round(n) })} />
+          <Stepper id="h" label={t('height')} value={a.heightCm} min={120} max={230} suffix={t('cm')} onChange={(n) => set({ heightCm: Math.round(n) })} />
+          <Stepper id="w" label={t('weight')} value={a.weightKg} min={35} max={250} step={0.5} suffix={t('kg')} onChange={(n) => set({ weightKg: n })} />
+          {needsTarget && <Stepper id="tw" label={t('targetWeight')} value={a.targetWeightKg} min={35} max={250} step={0.5} suffix={t('kg')} onChange={(n) => set({ targetWeightKg: n })} />}
+          {needsTarget && (() => { const w = weeksToGoal(a); return w ? <p className="text-[13.5px] text-muted">{t('timeline')}: <b className="text-ink">≈ {w} {t('weeks')}</b></p> : null; })()}
+          <div>
+            <div className="mb-2 text-[13.5px] font-semibold">{t('q5')}</div>
+            <div className="grid grid-cols-2 gap-2">{(['sedentary', 'light', 'moderate', 'high'] as Activity[]).map((x) => <Option key={x} on={a.activity === x} onClick={() => set({ activity: x })} className="px-3 py-2.5 text-[13px]">{t(`act_${x}` as MessageKey)}</Option>)}</div>
+          </div>
         </div>
       );
       case 3: return (
-        <div className="grid grid-cols-2 gap-3">
-          <Field label={t('height')}><NumberInput id="h" value={a.heightCm} min={100} max={240} suffix={t('cm')} onChange={(n) => set({ heightCm: Math.round(n) })} /></Field>
-          <Field label={t('weight')}><NumberInput id="w" value={a.weightKg} min={30} max={300} suffix={t('kg')} onChange={(n) => set({ weightKg: n, targetWeightKg: a.goal === 'lose' ? Math.min(a.targetWeightKg, n - 1) : a.goal === 'gain' ? Math.max(a.targetWeightKg, n + 1) : n })} /></Field>
-        </div>
-      );
-      case 4: return needsTarget ? (
-        <div className="space-y-3">
-          <Field label={t('targetWeight')}><NumberInput id="tw" value={a.targetWeightKg} min={35} max={250} suffix={t('kg')} onChange={(n) => set({ targetWeightKg: n })} /></Field>
-          {(() => { const w = weeksToGoal(a); return w ? <p className="text-[14px] text-muted">{t('timeline')}: <b className="text-ink">≈ {w} {t('weeks')}</b></p> : null; })()}
-        </div>
-      ) : <p className="rounded-2xl bg-sage p-4 text-[15px]">{a.goal === 'keep' ? t('q4keep') : t('goalHealthyNote')}</p>;
-      case 5: return (
-        <div className="space-y-2.5">{(['sedentary', 'light', 'moderate', 'high'] as Activity[]).map((x) => <Option key={x} on={a.activity === x} onClick={() => set({ activity: x })}>{t(`act_${x}` as MessageKey)}</Option>)}</div>
-      );
-      case 6: return (
-        <div className="grid grid-cols-3 gap-2.5">{[1, 2, 3, 4, 5, 6].map((n) => <Option key={n} on={a.household === n} onClick={() => set({ household: n })} className="justify-center text-[18px]">{n}</Option>)}</div>
-      );
-      case 7: return (
-        <div className="space-y-2.5">
-          {BUDGETS.map((b) => <Option key={b.v} on={!customBudget && a.weeklyBudget === b.v} onClick={() => { setCustomBudget(false); set({ weeklyBudget: b.v }); }}>{b.l} <span className="ml-auto text-[13px] font-normal text-muted">{t('perWeek')}</span></Option>)}
-          <Option on={customBudget} onClick={() => setCustomBudget(true)}>{t('budgetCustom')}</Option>
-          {customBudget && <NumberInput id="budget" value={a.weeklyBudget} min={15} max={500} suffix="€" onChange={(n) => set({ weeklyBudget: Math.round(n) })} />}
-          <p className="text-[13px] text-muted">{a.household > 1 ? t('personsN', { n: a.household }) : t('person1')}</p>
-        </div>
-      );
-      case 8: return (
         <div className="space-y-5">
-          <div className="flex flex-wrap gap-2">{EXCLUSIONS.map((e) => <Chip key={e} on={exclusionOn(a, e)} onClick={() => set(toggleExclusion(a, e))}>{t(`ex_${e}` as MessageKey)}</Chip>)}</div>
           <div>
-            <div className="mb-2 text-[13.5px] font-semibold">{t('dietTypeLabel')}</div>
-            <div className="flex flex-wrap gap-2">{(['any', 'vegetarian', 'vegan', 'pescatarian', 'low_carb'] as DietType[]).map((d) => <Chip key={d} on={a.dietType === d} onClick={() => set({ dietType: d })}>{t(`diet_${d}` as MessageKey)}</Chip>)}</div>
+            <div className="mb-2 text-[13.5px] font-semibold">{t('q6')}</div>
+            <div className="grid grid-cols-6 gap-2">{[1, 2, 3, 4, 5, 6].map((n) => <Option key={n} on={a.household === n} onClick={() => setHousehold(n)} className="justify-center px-0 text-[17px]">{n}</Option>)}</div>
           </div>
-          <details className="rounded-2xl bg-card p-4 ring-1 ring-line">
-            <summary className="cursor-pointer text-[14px] font-semibold">{t('otherAllergies')}</summary>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {ALLERGENS.filter((x) => x !== 'milk' && x !== 'gluten').map((al) => (
-                <Chip key={al} on={a.allergens.includes(al)} onClick={() => set({ allergens: a.allergens.includes(al) ? a.allergens.filter((x) => x !== al) : [...a.allergens, al as Allergen] })}>{ALLERGEN_LABEL[al]?.emoji} {pick(ALLERGEN_LABEL[al])}</Chip>
+          <div>
+            <div className="mb-2 text-[13.5px] font-semibold">{t('q7')}</div>
+            <div className="grid grid-cols-3 gap-2">
+              {budgets.map((v, i) => (
+                <Option key={v} on={!customBudget && a.weeklyBudget === v} onClick={() => { setCustomBudget(false); set({ weeklyBudget: v }); }} className="flex-col items-start gap-0 px-3 py-2.5">
+                  <span className="text-[17px]">{eur(v)}</span><span className="text-[11.5px] font-normal text-muted">{[t('budgetLow'), t('budgetMid'), t('budgetHigh')][i]}</span>
+                </Option>
               ))}
             </div>
-          </details>
-          <details className="rounded-2xl bg-card p-4 ring-1 ring-line" open>
-            <summary className="cursor-pointer text-[14px] font-semibold">{t('dislikeTitle')}</summary>
-            <p className="mt-1 text-[12.5px] text-muted">{t('dislikeHint')}</p>
-            <DislikeChips />
-          </details>
-          <Field label={t('otherRestrictions')}><input value={a.otherRestrictions ?? ''} maxLength={200} onChange={(e) => set({ otherRestrictions: e.target.value })} className={inputCls} /></Field>
-        </div>
-      );
-      case 9: return (
-        <div className="space-y-5">
-          <div>
-            <div className="mb-2 text-[13.5px] font-semibold">{t('timePerDish')}</div>
-            <div className="flex gap-2">{([15, 30, 60] as const).map((m) => <Chip key={m} on={a.cookingTimeMax === m} onClick={() => set({ cookingTimeMax: m })}>{t('upTo')} {m} {t('minutesShort')}</Chip>)}</div>
+            <button type="button" className="mt-2 text-[13px] font-semibold text-leaf" onClick={() => setCustomBudget((c) => !c)}>{customBudget ? '✕' : '+'} {t('budgetCustom')}</button>
+            {customBudget && <div className="mt-2"><NumberInput id="budget" value={a.weeklyBudget} min={15} max={500} suffix="€" onChange={(n) => set({ weeklyBudget: Math.round(n) })} /></div>}
+            <p className="mt-1 text-[12.5px] text-muted">≈ {eur(a.weeklyBudget / a.household / 7)} {t('perPersonDayShort')}</p>
           </div>
           <div>
             <div className="mb-2 text-[13.5px] font-semibold">{t('storesLabel')}</div>
-            <StorePicker />
+            <StorePicker compact />
           </div>
-          <Field label={t('emailField')}><input type="email" autoComplete="email" value={a.email} onChange={(e) => set({ email: e.target.value.trim() })} className={inputCls} /></Field>
-          <label className="flex items-start gap-3 text-[13.5px]"><input type="checkbox" className="mt-0.5 h-5 w-5 accent-[#31966A]" checked={a.health.length > 0} onChange={(e) => set({ health: e.target.checked ? ['other'] : [] })} /><span>{t('healthLabel')}</span></label>
-          {a.health.length > 0 && <p className="rounded-2xl bg-gold/20 p-3 text-[13.5px]">{t('healthStop2')}</p>}
+        </div>
+      );
+      case 4: return (
+        <div className="space-y-5">
+          <div className="flex flex-wrap gap-2">{EXCLUSIONS.map((e) => <Chip key={e} on={exclusionOn(a, e)} onClick={() => set(toggleExclusion(a, e))}>{t(`ex_${e}` as MessageKey)}</Chip>)}</div>
+          <div className="flex flex-wrap gap-2">{(['any', 'vegetarian', 'vegan', 'pescatarian', 'low_carb'] as DietType[]).map((d) => <Chip key={d} on={a.dietType === d} onClick={() => set({ dietType: d })}>{t(`diet_${d}` as MessageKey)}</Chip>)}</div>
+          <button type="button" onClick={() => setMore((m) => !m)} aria-expanded={more} className="flex w-full items-center justify-between rounded-2xl bg-card px-4 py-3 text-left text-[14px] font-semibold ring-1 ring-line">
+            <span>⚙ {t('moreOptions')}</span><span className="text-[12.5px] font-normal text-muted">{t('moreOptionsSub')}</span>
+          </button>
+          {more && (
+            <div className="space-y-5 rounded-2xl bg-card p-4 ring-1 ring-line">
+              <div>
+                <div className="mb-2 text-[13.5px] font-semibold">{t('otherAllergies')}</div>
+                <div className="flex flex-wrap gap-2">
+                  {ALLERGENS.filter((x) => x !== 'milk' && x !== 'gluten').map((al) => (
+                    <Chip key={al} on={a.allergens.includes(al)} onClick={() => set({ allergens: a.allergens.includes(al) ? a.allergens.filter((x) => x !== al) : [...a.allergens, al as Allergen] })}>{ALLERGEN_LABEL[al]?.emoji} {pick(ALLERGEN_LABEL[al])}</Chip>
+                  ))}
+                </div>
+              </div>
+              <div><div className="text-[13.5px] font-semibold">{t('dislikeTitle')}</div><DislikeChips /></div>
+              <div>
+                <div className="mb-2 text-[13.5px] font-semibold">{t('timePerDish')}</div>
+                <div className="flex gap-2">{([15, 30, 60] as const).map((m) => <Chip key={m} on={a.cookingTimeMax === m} onClick={() => set({ cookingTimeMax: m })}>{t('upTo')} {m} {t('minutesShort')}</Chip>)}</div>
+              </div>
+              <Field label={t('otherRestrictions')}><input value={a.otherRestrictions ?? ''} maxLength={200} onChange={(e) => set({ otherRestrictions: e.target.value })} className={inputCls} /></Field>
+              <label className="flex items-start gap-3 text-[13.5px]"><input type="checkbox" className="mt-0.5 h-5 w-5 accent-[#31966A]" checked={a.health.length > 0} onChange={(e) => set({ health: e.target.checked ? ['other'] : [] })} /><span>{t('healthLabel')}</span></label>
+              {a.health.length > 0 && <p className="rounded-2xl bg-gold/20 p-3 text-[13.5px]">{t('healthStop2')}</p>}
+            </div>
+          )}
           <div className="space-y-3 rounded-2xl bg-card p-4 ring-1 ring-line">
-            <label className="flex items-start gap-3 text-[13.5px]"><input type="checkbox" className="mt-0.5 h-5 w-5 shrink-0 accent-[#31966A]" checked={a.consentHealth} onChange={(e) => set({ consentHealth: e.target.checked })} /><span>{t('consentHealth2')} <b className="text-danger">*</b></span></label>
-            <label className="flex items-start gap-3 text-[13.5px]"><input type="checkbox" className="mt-0.5 h-5 w-5 shrink-0 accent-[#31966A]" checked={a.consentTerms} onChange={(e) => set({ consentTerms: e.target.checked })} /><span>{t('consentTerms2')} <Link href="/terms" className="text-leaf underline">{t('terms')}</Link> · <Link href="/privacy" className="text-leaf underline">{t('privacy')}</Link> <b className="text-danger">*</b></span></label>
+            <label className="flex items-start gap-3 text-[13.5px]"><input type="checkbox" className="mt-0.5 h-5 w-5 shrink-0 accent-[#31966A]" checked={a.consentHealth && a.consentTerms} onChange={(e) => set({ consentHealth: e.target.checked, consentTerms: e.target.checked })} /><span>{t('consentBoth')} <Link href="/terms" className="text-leaf underline">{t('terms')}</Link> · <Link href="/privacy" className="text-leaf underline">{t('privacy')}</Link> <b className="text-danger">*</b></span></label>
             <label className="flex items-start gap-3 text-[13.5px]"><input type="checkbox" className="mt-0.5 h-5 w-5 shrink-0 accent-[#31966A]" checked={!!a.marketingConsent} onChange={(e) => set({ marketingConsent: e.target.checked })} /><span>{t('consentMarketing')}</span></label>
           </div>
         </div>
@@ -171,21 +203,22 @@ export function Onboarding() {
 
   return (
     <div className="min-h-screen bg-paper">
-      <Container className="flex h-16 items-center justify-between"><Logo /><span className="text-[13px] font-semibold text-muted">{t('step', { n: step })}</span></Container>
-      <div className="h-1.5 bg-line/60"><motion.div className="h-full bg-leaf" animate={{ width: `${(step / 9) * 100}%` }} /></div>
-      <Container className="max-w-[560px] py-8 md:py-14">
+      <Container className="flex h-16 items-center justify-between"><Logo /><span className="text-[13px] font-semibold text-muted">{t('stepOf', { n: step, of: STEPS })} · {t('aboutMinute')}</span></Container>
+      <div className="h-1.5 bg-line/60"><motion.div className="h-full bg-leaf" animate={{ width: `${(step / STEPS) * 100}%` }} /></div>
+      <Container className="max-w-[560px] py-6 md:py-12">
         <AnimatePresence mode="wait" initial={false}>
-          <motion.div key={step} initial={{ opacity: 0, x: 24 * dir }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 * dir }} transition={{ duration: 0.22 }}>
-            <h1 className="mb-6 font-display text-[28px] font-extrabold leading-tight md:text-[34px]">{t(`q${step}` as MessageKey)}</h1>
+          <motion.div key={step} initial={{ opacity: 0, x: 24 * dir }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 * dir }} transition={{ duration: 0.2 }}>
+            <h1 className="mb-5 font-display text-[26px] font-extrabold leading-tight md:text-[32px]">{title}</h1>
             {body()}
           </motion.div>
         </AnimatePresence>
-        {err && err !== '!' && <p role="alert" className="mt-4 text-[14px] font-semibold text-danger">{err}</p>}
-        {err === '!' && <p role="alert" className="mt-4 text-[14px] font-semibold text-danger">⚠</p>}
-        <div className="sticky bottom-0 -mx-5 mt-8 flex gap-3 bg-paper/95 px-5 py-4 backdrop-blur pb-safe md:static md:mx-0 md:bg-transparent md:px-0">
-          {step > 1 && <Button variant="secondary" size="lg" onClick={back}>{t('back2')}</Button>}
-          <Button size="lg" className="flex-1" onClick={next}>{step === 9 ? t('seeMyResult') : t('next2')}</Button>
-        </div>
+        {err && <p role="alert" className="mt-4 text-[14px] font-semibold text-danger">{err}</p>}
+        {step > 1 && (
+          <div className="sticky bottom-0 -mx-5 mt-6 flex gap-3 bg-paper/95 px-5 py-4 backdrop-blur pb-safe md:static md:mx-0 md:bg-transparent md:px-0">
+            <Button variant="secondary" size="lg" onClick={() => go(step - 1)} aria-label={t('back2')}>←</Button>
+            <Button size="lg" className="flex-1" onClick={next}>{step === STEPS ? t('seeMyResult') : t('next2')}</Button>
+          </div>
+        )}
         <p className="mt-4 text-center text-[12px] text-muted">{t('medicalDisclaimer')}</p>
       </Container>
     </div>
@@ -302,8 +335,9 @@ function Reveal() {
 
 export function Result() {
   const { t, eur, num } = useI18n();
-  const { ready, plan, targets, answers: a, weekEconomics, onboarded } = useStore();
+  const { ready, plan, targets, answers: a, weekEconomics, onboarded, session } = useStore();
   const sp = useSearchParams();
+  const checkoutHref = `/checkout${sp.get('plan') ? `?plan=${sp.get('plan')}` : ''}`;
   if (!ready) return <div className="grid min-h-screen place-items-center text-muted">{t('loading')}</div>;
   if (!onboarded || !plan) return <Container className="py-20 text-center"><p>{t('noPlanYet')}</p><ButtonLink href="/onboarding" className="mt-6">{t('startOnboarding')}</ButtonLink></Container>;
   const econ = weekEconomics();
@@ -341,7 +375,10 @@ export function Result() {
         </div>
 
         <div className="mt-6"><OverBudgetHelp /></div>
-        <h2 className="mt-12 font-display text-[24px] font-extrabold">{t('weekMenuTitle')}</h2>
+        <div className="mt-12 flex flex-wrap items-end justify-between gap-3">
+          <h2 className="font-display text-[24px] font-extrabold">{t('weekMenuTitle')}</h2>
+          <ButtonLink href="/onboarding/taste?next=/onboarding/result" variant="secondary" size="sm">👅 {t('tasteCtaResult')}</ButtonLink>
+        </div>
         <WeekByDay />
 
         <h2 className="mt-12 font-display text-[24px] font-extrabold">{t('weeklySavingPreview')}</h2>
@@ -352,7 +389,7 @@ export function Result() {
       <div className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper/95 py-3 backdrop-blur pb-safe">
         <Container className="flex max-w-[980px] items-center justify-between gap-3">
           <span className="hidden text-[14px] text-muted sm:block">{t('subscriptionNeeded')}</span>
-          <ButtonLink href={`/checkout${sp.get('plan') ? `?plan=${sp.get('plan')}` : ''}`} size="lg" className="flex-1 sm:flex-none">{t('getFullPlan')} →</ButtonLink>
+          <ButtonLink href={session ? checkoutHref : `/register?next=${encodeURIComponent(checkoutHref)}`} size="lg" className="flex-1 sm:flex-none">{t('getFullPlan')} →</ButtonLink>
         </Container>
       </div>
     </div>

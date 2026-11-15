@@ -36,6 +36,7 @@ export function Checkout() {
 
   const pay = async () => {
     if (!EMAIL_RE.test(email) || !consent) { setState('error'); return; }
+    if (modes.supabase && !store.session) { router.push(`/register?next=${encodeURIComponent(`/checkout?plan=${planId}`)}`); return; }
     setState('busy');
     store.setAnswers({ email });
     if (modes.stripe) {

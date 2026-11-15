@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
+import { signOut } from '@/lib/account';
 import { useStore } from '@/state/store';
 import { DevBanner, LangSwitch, Logo } from './site';
 import { ButtonLink, Card, Container, Skeleton, cx } from './ui';
@@ -24,7 +25,7 @@ const NAV: { href: string; key: MessageKey; icon: string; mobile?: boolean }[] =
 
 const active = (path: string, href: string) => (href === '/app' ? path === '/app' : path.startsWith(href) || (href === '/app/menu' && path.startsWith('/app/recipe/')));
 
-async function serverLogout() { await fetch('/api/dev/logout', { method: 'POST' }); }
+async function serverLogout() { await signOut(); }
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useI18n();

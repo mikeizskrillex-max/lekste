@@ -115,6 +115,9 @@ interface Ctx extends State {
   toggleFavorite: (recipeId: string) => void;
   /** apply the taste swipe and rebuild the menu */
   applyTaste: (liked: string[], disliked: string[]) => void;
+  /** account sync: current persistable state and replacing it with the saved one */
+  snapshot: () => Omit<State, 'session'>;
+  importState: (data: Partial<State>) => void;
   /** true when the calendar week moved on since the plan was made */
   weekIsOld: boolean;
   /** ISO date (YYYY-MM-DD) of a plan day */
@@ -246,6 +249,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const cur = { weekStart: p.weekStart ?? mondayOf(new Date()), plan: p.plan, basket: allocation?.week.total ?? 0 };
       return { ...p, plan: h.plan, history: [cur, ...(p.history ?? []).filter((x) => x.weekStart !== ws)].slice(0, 12), purchased: [] };
     }),
+    snapshot: () => { const { session: _s, ...rest } = sRef.current; void _s; return rest; },
+    importState: (data) => setS((p) => ({ ...EMPTY, ...data, session: p.session })),
     applyTaste: (liked, disliked) => setS((p) => {
       const answers = { ...p.answers, ...learnTaste(p.answers, liked, disliked) };
       const feedback = [...p.feedback.filter((f) => !liked.includes(f.recipeId) && !disliked.includes(f.recipeId)), ...liked.map((recipeId) => ({ recipeId, rating: 'up' as const })), ...disliked.map((recipeId) => ({ recipeId, rating: 'down' as const }))];

@@ -86,3 +86,13 @@ with a Supabase auth stub: 41 tables, 57 RLS policies, owner isolation checked.
 * SEO: schema.org/Recipe on every public recipe page.
 * Accessibility: icon-only buttons on small phones have labels.
 * Not done: proof-reading by a native Lithuanian speaker; dedicated photos for generated dishes.
+
+## 2026-11-15 — accounts and a 1-minute questionnaire
+
+* Email + password accounts (Supabase Auth): register after the result page, sign in, forgot password →
+  email link → new password. The whole app state is saved per user in `app_state`
+  (supabase/migrations/0003_app_state.sql, RLS: owner only) and loaded on sign-in on any device.
+* Questionnaire: 4 screens with defaults (goal tap = next; body + activity on one screen with ± steppers;
+  household + budget suggested from household size + store; restrictions with "more options" and one
+  combined consent). Email moved to account creation; taste swipe optional from the result page.
+* Pricing: €9 / month, €20 / 3 months, €80 lifetime (VAT included), Stripe sandbox verified.

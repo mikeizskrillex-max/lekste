@@ -26,21 +26,27 @@ try {
   await page.goto(`${BASE}/`);
   check('A landing renders hero', await page.getByRole('heading', { level: 1 }).isVisible());
   await page.goto(`${BASE}/onboarding`);
+  const t0 = Date.now();
   const next = () => page.getByRole('button', { name: /Toliau|Далее/ }).click();
-  await page.getByRole('button', { name: /Numesti svorio/ }).click(); await next();          // 1 goal
-  await next();                                                                              // 2 sex/age (defaults)
-  await next();                                                                              // 3 height/weight
-  await next();                                                                              // 4 target
-  await next();                                                                              // 5 activity
-  await page.getByRole('button', { name: '2', exact: true }).click(); await next();          // 6 household
-  await page.getByRole('button', { name: /60–90/ }).click(); await next();                   // 7 budget
-  await page.getByRole('button', { name: 'Žuvis', exact: true }).click();                                 // 8 exclusions: fish + dairy
+  await page.getByRole('button', { name: /Numesti svorio/ }).click();                         // 1 goal (auto-advance)
+  await page.getByText(/Apie jus/).waitFor();
+  await page.getByRole('button', { name: 'Ūgis +' }).click();                                  // 2 body: one tap on a stepper
+  await next();
+  await page.getByRole('button', { name: '2', exact: true }).click();                          // 3 household, budget, store
+  await page.getByRole('button', { name: /laisviau/ }).click();
+  await next();
+  await page.getByRole('button', { name: 'Žuvis', exact: true }).click();                      // 4 exclusions: fish + dairy
   await page.getByRole('button', { name: 'Pieno produktai', exact: true }).click();
-  await page.getByRole('button', { name: /Burokėliai/ }).click(); await next();
-  await page.getByLabel('El. paštas').fill('e2e@example.com');                               // 9
+  await page.getByRole('button', { name: /Daugiau nustatymų/ }).click();
+  await page.getByRole('button', { name: /Burokėliai/ }).click();
   const boxes = page.locator('input[type=checkbox]');
-  await boxes.nth(1).check(); await boxes.nth(2).check();                                    // health + terms consents
+  await boxes.nth(1).check();                                                                  // combined consent
   await page.getByRole('button', { name: /Pamatyti mano rezultatą/ }).click();
+  await page.waitForURL('**/onboarding/result**');
+  check('FAST questionnaire is 4 screens', true, `${((Date.now() - t0) / 1000).toFixed(1)} s automated`);
+  // optional taste swipe from the result page
+  await page.getByText(/Jūsų savaitės meniu/).waitFor();
+  await page.getByRole('link', { name: /Patikslinti skonį/ }).click();
   await page.waitForURL('**/onboarding/taste**');
   await page.getByText(/Kas jums patinka/).waitFor();
   for (const v of ['Patinka', 'Patinka', 'Ne man', 'Patinka', 'Ne man']) { await page.getByRole('button', { name: v, exact: true }).click(); await page.waitForTimeout(300); }
@@ -67,7 +73,12 @@ try {
     check('A 7 day totals add up to the weekly basket', Math.abs(sum - week) <= 0.05, `${sum.toFixed(2)} vs ${week.toFixed(2)}`);
   }
   await page.getByRole('link', { name: /Gauti visą savaitės planą/ }).click();
+  await page.waitForURL('**/register**');
+  await page.getByLabel('El. paštas').fill('e2e@example.com');
+  await page.getByLabel('Slaptažodis').fill('e2e-password-123');
+  await page.getByRole('button', { name: /Sukurti paskyrą ir tęsti/ }).click();
   await page.waitForURL('**/checkout**');
+  check('ACCOUNT created after the result page', true);
   await page.locator('input[type=checkbox]').check();
   await page.getByRole('button', { name: /Mokėti/ }).click();
   await page.waitForURL('**/success');
@@ -192,7 +203,7 @@ try {
   await ad.goto(`${BASE}/login?next=/admin/prices&admin=1`);
   await ad.getByLabel('El. paštas').fill('admin@example.com');
   await ad.getByLabel(/Slaptafrazė/).fill(process.env.DEV_ADMIN_PASSPHRASE ?? 'lekste-admin');
-  await ad.getByRole('button', { name: /kūrimo režimu/ }).click();
+  await ad.getByRole('button', { name: 'Prisijungti', exact: true }).click();
   await ad.waitForURL('**/admin/prices');
   const csv = 'retailer,product_name,price_eur,package_grams,regular_price_eur,ingredient_id,brand,ean,promo_valid_from,promo_valid_to,url\nlidl,Avižiniai dribsniai 500 g,0.49,500,0.79,oats,,,2026-11-10,2026-11-16,';
   await ad.locator('textarea').fill(csv);
