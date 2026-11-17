@@ -38,7 +38,7 @@ export function HowItWorksPage() {
             </div>
           </Card>
         ))}
-        <div className="pt-6 text-center"><ButtonLink href="/onboarding" size="lg">{t('ctaCreate')} →</ButtonLink></div>
+        <div className="pt-6 text-center"><ButtonLink href="/onboarding" size="lg" data-track="cta_plan" data-track-place="page">{t('ctaCreate')} →</ButtonLink></div>
         <p className="text-center text-[12.5px] text-muted">{t('medicalDisclaimer')}</p>
       </Container>
     </>
@@ -158,7 +158,7 @@ export function DemoPage() {
             ))}
           </div>
           {res.plan.issues.length > 0 && <p className="rounded-2xl bg-gold/20 p-3 text-[13.5px]">{t('infeasibleRecipes')}</p>}
-          <div className="text-center"><ButtonLink href="/onboarding" size="lg">{t('ctaCreate')} →</ButtonLink></div>
+          <div className="text-center"><ButtonLink href="/onboarding" size="lg" data-track="cta_plan" data-track-place="page">{t('ctaCreate')} →</ButtonLink></div>
         </div>
       </Container>
       <div className="mt-16"><AssistantPreview /></div>

@@ -109,7 +109,7 @@ export const N = {
   consentHealth2: { lt: 'Sutinku, kad mano sveikatos duomenys (ūgis, svoris, tikslas, alergijos) būtų tvarkomi mitybos planui sudaryti. Sutikimą galite atšaukti nustatymuose.', ru: 'Согласен(на) на обработку данных о здоровье (рост, вес, цель, аллергии) для составления плана. Согласие можно отозвать в настройках.' },
   consentTerms2: { lt: 'Sutinku su naudojimo sąlygomis ir privatumo politika.', ru: 'Согласен(на) с условиями использования и политикой конфиденциальности.' },
   consentMarketing: { lt: 'Noriu gauti patarimų ir pasiūlymų el. paštu (neprivaloma).', ru: 'Хочу получать советы и предложения по email (необязательно).' },
-  seeMyResult: { lt: 'Pamatyti mano rezultatą →', ru: 'Посмотреть мой результат →' },
+  seeMyResult: { lt: 'Rodyti mano planą →', ru: 'Показать мой план →' },
   requiredConsent: { lt: 'Planui sudaryti reikia sutikimo tvarkyti sveikatos duomenis.', ru: 'Для плана нужно согласие на обработку данных о здоровье.' },
   emailInvalid: { lt: 'Įveskite teisingą el. pašto adresą.', ru: 'Введите корректный email.' },
 

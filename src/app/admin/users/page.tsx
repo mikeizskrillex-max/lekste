@@ -1,3 +1,3 @@
-import { AdminUsers } from '@/components/admin';
+import { AdminDashboard } from '@/components/admin-dashboard';
 
-export default function Page() { return <AdminUsers />; }
+export default function Page() { return <AdminDashboard />; }

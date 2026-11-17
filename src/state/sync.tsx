@@ -7,6 +7,7 @@
  */
 import { useEffect, useRef } from 'react';
 import { supabaseBrowser } from '@/lib/supabaseBrowser';
+import type { QuizAnswers } from '@/domain/types';
 import { useStore } from './store';
 
 export function AccountSync() {
@@ -33,6 +34,16 @@ export function AccountSync() {
       const localNewer = local.onboarded && (!server?.planCreatedAt || (local.planCreatedAt ?? '') > (server.planCreatedAt ?? ''));
       if (server && !localNewer) storeRef.current.importState(server);
       else if (local.onboarded) await sb.from('app_state').upsert({ user_id: id, data: local, updated_at: new Date().toISOString() });
+      else if (!server) {
+        // first sign-in on a new device (e.g. the confirmation email opened on a phone):
+        // rebuild the plan from the questionnaire saved with the account at sign-up
+        const { data: u } = await sb.auth.getUser();
+        const saved = u.user?.user_metadata?.lekste_answers as Partial<QuizAnswers> | undefined;
+        if (saved && saved.consentHealth && saved.consentTerms) {
+          storeRef.current.setAnswers(saved);
+          storeRef.current.completeOnboarding();
+        }
+      }
       loaded.current = true;
     };
     void sb.auth.getSession().then(({ data }) => onUser(data.session?.user.id ?? null, data.session?.user.email ?? null));

@@ -2,13 +2,13 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useModes } from '@/app/providers';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
-import { sendReset, setNewPassword, signIn, signUp, type AuthResult } from '@/lib/account';
+import { AFTER_CONFIRM_KEY, sendReset, setNewPassword, signIn, signUp, type AuthResult } from '@/lib/account';
 import { useStore } from '@/state/store';
-import { Button, Card, Container, Field, inputCls } from './ui';
+import { Button, ButtonLink, Card, Container, Field, inputCls } from './ui';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const safe = (n: string | null, d: string) => (n && n.startsWith('/') && !n.startsWith('//') ? n : d);
@@ -47,11 +47,12 @@ export function RegisterForm() {
     e.preventDefault();
     if (!EMAIL_RE.test(email)) { setErr('emailInvalid'); return; }
     setState('busy'); setErr(null);
-    const r = await signUp(email.trim().toLowerCase(), pw);
+    const r = await signUp(email.trim().toLowerCase(), pw, next, store.onboarded ? { ...store.answers, email } : undefined);
     if (!r.ok) { setErr(ERR[r.error]); setState('idle'); return; }
     store.setAnswers({ email });
-    store.login(email);
+    // not signed in until the email is confirmed: showing a session now would bounce the person to the login page
     if (r.needsConfirm) { setState('confirm'); return; }
+    store.login(email);
     router.push(next); router.refresh();
   };
   return (
@@ -87,7 +88,7 @@ export function LoginForm() {
   const [pw, setPw] = useState('');
   const [mode, setMode] = useState<'password' | 'reset' | 'resetSent'>('password');
   const [busy, setBusy] = useState(false);
-  const [err, setErr] = useState<MessageKey | null>(sp.get('error') ? 'errLink' : null);
+  const [err, setErr] = useState<MessageKey | null>(sp.get('error') === 'reset' ? 'errResetLink' : sp.get('error') ? 'errLink' : null);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -160,3 +161,31 @@ export function ResetPasswordForm() {
 }
 
 export function RegisterCard() { return <RegisterForm />; }
+
+/** After an email link: the account is confirmed and signed in — continue where the person was going. */
+export function AuthDone() {
+  const { t } = useI18n();
+  const router = useRouter();
+  const store = useStore();
+  const [to, setTo] = useState('/app');
+  useEffect(() => {
+    let next = '/app';
+    try { next = localStorage.getItem(AFTER_CONFIRM_KEY) || '/app'; localStorage.removeItem(AFTER_CONFIRM_KEY); } catch { /* storage blocked */ }
+    if (!next.startsWith('/') || next.startsWith('//')) next = '/app';
+    // the plan may still be restoring from the account on a new device: let it settle, then go on
+    if (next.startsWith('/checkout') && !store.onboarded) next = '/app';
+    setTo(next);
+    const id = setTimeout(() => { router.replace(next); router.refresh(); }, 1200);
+    return () => clearTimeout(id);
+  }, [router]); // eslint-disable-line react-hooks/exhaustive-deps
+  return (
+    <Container className="grid min-h-[60vh] place-items-center py-10">
+      <Card className="w-full max-w-[440px] p-8 text-center">
+        <div className="text-[44px]">✅</div>
+        <h1 className="mt-2 font-display text-[26px] font-extrabold">{t('accountConfirmed')}</h1>
+        <p className="mt-2 text-[15px] text-muted">{t('accountConfirmedSub')}</p>
+        <ButtonLink href={to} size="lg" className="mt-6 w-full">{t('continue')} →</ButtonLink>
+      </Card>
+    </Container>
+  );
+}

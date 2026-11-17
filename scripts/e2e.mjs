@@ -41,7 +41,7 @@ try {
   await page.getByRole('button', { name: /Burokėliai/ }).click();
   const boxes = page.locator('input[type=checkbox]');
   await boxes.nth(1).check();                                                                  // combined consent
-  await page.getByRole('button', { name: /Pamatyti mano rezultatą/ }).click();
+  await page.getByRole('button', { name: /Rodyti mano planą/ }).click();
   await page.waitForURL('**/onboarding/result**');
   check('FAST questionnaire is 4 screens', true, `${((Date.now() - t0) / 1000).toFixed(1)} s automated`);
   // optional taste swipe from the result page

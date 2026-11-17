@@ -95,7 +95,7 @@ export function PricingCards() {
           <ul className="mt-5 flex-1 space-y-2 text-[14px]">
             {(['b1', 'b2', 'b3', 'b4'] as const).map((k) => <li key={k} className="flex gap-2"><span className="text-leaf">✓</span>{t(k)}</li>)}
           </ul>
-          <ButtonLink href={`/onboarding?plan=${p.id}`} variant={p.highlighted ? 'primary' : 'secondary'} className="mt-6 w-full">{p.oneTime ? t('choose') : t('startTrial')}</ButtonLink>
+          <ButtonLink data-track="cta_plan" data-track-place="pricing" href={`/onboarding?plan=${p.id}`} variant={p.highlighted ? 'primary' : 'secondary'} className="mt-6 w-full">{p.oneTime ? t('choose') : t('startTrial')}</ButtonLink>
         </Card>
       ))}
     </div>

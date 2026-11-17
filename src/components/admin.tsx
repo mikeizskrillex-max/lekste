@@ -2,13 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useModes } from '@/app/providers';
 import type { PlanId } from '@/config/plans';
 import { INGREDIENTS } from '@/data/ingredients';
 import { RECIPES } from '@/data/recipes';
-import { recipeFacts } from '@/domain/recipeFacts';
 import { download } from '@/lib/view';
 import { CSV_TEMPLATE, importPriceCsv, type ImportResult } from '@/retail/csv';
 import { categoryOf } from '@/retail/matching';
@@ -20,8 +18,8 @@ import { Badge, Button, Card, Container, Stat, cx, inputCls } from './ui';
 
 /** Admin UI is internal and in English. */
 const NAV = [
-  ['/admin', 'Overview'], ['/admin/products', 'Products'], ['/admin/prices', 'Prices & CSV import'], ['/admin/supermarkets', 'Supermarkets'],
-  ['/admin/users', 'Users'], ['/admin/analytics', 'Analytics'], ['/admin/ai', 'AI logs'],
+  ['/admin/analytics', '📊 Клиенты и аналитика'], ['/admin', 'Overview'], ['/admin/products', 'Products'], ['/admin/prices', 'Prices & CSV import'], ['/admin/supermarkets', 'Supermarkets'],
+  ['/admin/ai', 'AI logs'],
 ] as const;
 
 export function AdminShell({ children }: { children: ReactNode }) {
@@ -178,65 +176,6 @@ export function AdminSupermarkets() {
         })}
       </div>
       <p className="mt-4 text-[12.5px] text-muted">Catalogue refresh runs from scripts (see README → Price data) and is disabled unless RETAILER_FETCH_ENABLED=true.</p>
-    </>
-  );
-}
-
-export function AdminUsers() {
-  const store = useStore();
-  const [data, setData] = useState<{ mode: string; users: { id: string; email: string; created_at: string; subscriptions?: { status: string; plan_id: string }[] }[] } | null>(null);
-  useEffect(() => { fetch('/api/admin/users').then((r) => r.json()).then(setData).catch(() => setData({ mode: 'error', users: [] })); }, []);
-  return (
-    <>
-      <H sub="Account and subscription fields only. Health answers are never shown in the admin panel.">Users</H>
-      {data?.mode === 'dev' && (
-        <Card className="p-5 text-[14px]">
-          <p className="text-muted">Supabase is not configured, so there is no user database. In development mode data lives in each visitor&apos;s browser. This browser:</p>
-          <p className="mt-3"><b>{store.session?.email ?? '—'}</b> · subscription: {store.subscription.status} ({store.subscription.mode}) · onboarded: {String(store.onboarded)}</p>
-        </Card>
-      )}
-      {data?.mode === 'supabase' && (
-        <Card className="overflow-x-auto">
-          <table className="w-full text-[13px]"><thead className="bg-paper text-left text-muted"><tr><th className="px-3 py-2">Email</th><th className="px-3 py-2">Created</th><th className="px-3 py-2">Subscription</th></tr></thead>
-            <tbody>{data.users.map((u) => <tr key={u.id} className="border-t border-line"><td className="px-3 py-2">{u.email}</td><td className="px-3 py-2">{u.created_at.slice(0, 10)}</td><td className="px-3 py-2">{u.subscriptions?.[0] ? `${u.subscriptions[0].status} · ${u.subscriptions[0].plan_id}` : '—'}</td></tr>)}</tbody></table>
-        </Card>
-      )}
-      {!data && <p className="text-muted">Loading…</p>}
-    </>
-  );
-}
-
-export function AdminAnalytics() {
-  const modes = useModes();
-  const s = useStore();
-  const byMeal = useMemo(() => (['breakfast', 'lunch', 'dinner', 'snack'] as const).map((m) => {
-    const list = RECIPES.filter((r) => r.meal === m);
-    return { meal: m, recipes: list.length, avgCost: +(list.reduce((x, r) => x + recipeFacts(r).cost, 0) / Math.max(1, list.length)).toFixed(2) };
-  }), []);
-  return (
-    <>
-      <H sub={modes.supabase ? 'Aggregates from the database.' : 'Supabase not connected: business metrics below are for this browser only. Recipe database metrics are real.'}>Analytics</H>
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        <Stat label="Subscription (this browser)" value={<span className="text-[18px]">{s.subscription.status}</span>} />
-        <Stat label="Payments recorded" value={s.subscription.payments.length} />
-        <Stat label="Purchases recorded" value={s.purchases.length} />
-        <Stat label="AI provider" value={<span className="text-[18px]">{modes.ai ? 'anthropic' : 'rules'}</span>} />
-      </div>
-      <Card className="mt-6 p-4">
-        <div className="mb-2 text-[13px] font-semibold text-muted">Recipes per meal type · average cost per serving (snapshot prices)</div>
-        <div className="h-[260px]">
-          <ResponsiveContainer>
-            <BarChart data={byMeal} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
-              <CartesianGrid vertical={false} stroke="#E3E2DA" />
-              <XAxis dataKey="meal" tick={{ fontSize: 12 }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 12 }} axisLine={false} tickLine={false} />
-              <Tooltip />
-              <Bar dataKey="recipes" fill="#31966A" radius={[6, 6, 0, 0]} maxBarSize={48} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-        <ul className="mt-3 flex flex-wrap gap-4 text-[13px]">{byMeal.map((b) => <li key={b.meal}>{b.meal}: avg {eur(b.avgCost)}</li>)}</ul>
-      </Card>
     </>
   );
 }

@@ -1,3 +1,3 @@
-import { AdminAnalytics } from '@/components/admin';
+import { AdminDashboard } from '@/components/admin-dashboard';
 
-export default function Page() { return <AdminAnalytics />; }
+export default function Page() { return <AdminDashboard />; }

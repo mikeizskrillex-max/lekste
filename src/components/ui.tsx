@@ -19,11 +19,11 @@ const BTN: Record<BtnVariant, string> = {
 const SIZE = { sm: 'h-9 px-3.5 text-[13px]', md: 'h-11 px-5 text-[15px]', lg: 'h-14 px-7 text-[16px]' };
 
 export function Button({ variant = 'primary', size = 'md', className, ...p }: ComponentProps<'button'> & { variant?: BtnVariant; size?: keyof typeof SIZE }) {
-  return <button type="button" {...p} className={cx('inline-flex items-center justify-center gap-2 rounded-2xl font-semibold transition active:scale-[.98] disabled:pointer-events-none disabled:opacity-45', BTN[variant], SIZE[size], className)} />;
+  return <button type="button" {...p} className={cx('inline-flex items-center justify-center gap-2 rounded-2xl text-center font-semibold leading-tight transition active:scale-[.98] disabled:pointer-events-none disabled:opacity-45', BTN[variant], SIZE[size], className)} />;
 }
 
 export function ButtonLink({ variant = 'primary', size = 'md', className, ...p }: ComponentProps<typeof Link> & { variant?: BtnVariant; size?: keyof typeof SIZE }) {
-  return <Link {...p} className={cx('inline-flex items-center justify-center gap-2 rounded-2xl font-semibold transition active:scale-[.98]', BTN[variant], SIZE[size], className)} />;
+  return <Link {...p} className={cx('inline-flex items-center justify-center gap-2 rounded-2xl text-center font-semibold leading-tight transition active:scale-[.98]', BTN[variant], SIZE[size], className)} />;
 }
 
 export function Card({ className, ...p }: ComponentProps<'div'>) {
@@ -46,7 +46,7 @@ export function DemoBadge({ label }: { label: string }) {
 export function Chip({ on, onClick, children, className }: { on: boolean; onClick: () => void; children: ReactNode; className?: string }) {
   return (
     <button type="button" aria-pressed={on} onClick={onClick}
-      className={cx('inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13.5px] font-semibold ring-1 transition', on ? 'bg-forest text-white ring-forest' : 'bg-card text-ink ring-line hover:ring-leaf/60', className)}>
+      className={cx('inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-2 text-[13.5px] font-semibold ring-1 transition', on ? 'bg-forest text-white ring-forest' : 'bg-card text-ink ring-line hover:ring-leaf/60', className)}>
       {children}
     </button>
   );

@@ -71,7 +71,7 @@ export function SiteHeader() {
           {session
             ? <ButtonLink href="/app" variant="secondary" size="sm">{t('tabHome')}</ButtonLink>
             : <Link href="/login" className="hidden px-2 text-[14px] font-semibold text-ink/75 hover:text-ink sm:block">{t('login')}</Link>}
-          <ButtonLink href="/onboarding" size="sm" className="hidden sm:inline-flex">{t('ctaCreate')}</ButtonLink>
+          <ButtonLink href="/onboarding" size="sm" className="hidden sm:inline-flex" data-track="cta_plan" data-track-place="header">{t('ctaCreate')}</ButtonLink>
           <button type="button" className="grid h-10 w-10 place-items-center rounded-xl ring-1 ring-line lg:hidden" aria-label="Menu" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
             <span className="text-[18px]">{open ? '✕' : '☰'}</span>
           </button>
@@ -82,7 +82,7 @@ export function SiteHeader() {
           <Container className="flex flex-col gap-1 py-3">
             {links.map((l) => <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="rounded-xl px-3 py-3 text-[16px] font-semibold hover:bg-sage">{l.label}</Link>)}
             <Link href={session ? '/app' : '/login'} onClick={() => setOpen(false)} className="rounded-xl px-3 py-3 text-[16px] font-semibold hover:bg-sage">{session ? t('tabHome') : t('login')}</Link>
-            <div className="flex items-center justify-between px-3 pt-2"><LangSwitch /><ButtonLink href="/onboarding" size="sm">{t('ctaCreate')}</ButtonLink></div>
+            <div className="flex items-center justify-between px-3 pt-2"><LangSwitch /><ButtonLink href="/onboarding" size="sm" data-track="cta_plan" data-track-place="menu">{t('ctaCreate')}</ButtonLink></div>
           </Container>
         </div>
       )}

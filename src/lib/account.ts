@@ -13,11 +13,20 @@ const devLogin = async (email: string): Promise<AuthResult> => {
   return r?.ok ? { ok: true } : { ok: false, error: 'network' };
 };
 
-export async function signUp(email: string, password: string): Promise<AuthResult> {
+/** Where to continue after the confirmation link (same browser); other devices fall back to the app. */
+export const AFTER_CONFIRM_KEY = 'lekste:afterConfirm';
+
+/**
+ * @param next  where the person continues after confirming (e.g. /checkout)
+ * @param answers questionnaire answers saved with the account, so a confirmation
+ *                opened on another device (phone mail app) still has the plan
+ */
+export async function signUp(email: string, password: string, next = '/app', answers?: unknown): Promise<AuthResult> {
   if (password.length < 8) return { ok: false, error: 'weak' };
   const sb = supabaseBrowser();
   if (!sb) return devLogin(email);
-  const { data, error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: `${location.origin}/auth/callback?next=/app` } });
+  try { localStorage.setItem(AFTER_CONFIRM_KEY, next); } catch { /* storage blocked */ }
+  const { data, error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: `${location.origin}/auth/callback`, data: answers ? { lekste_answers: answers } : undefined } });
   if (error) return { ok: false, error: /already|registered|exists/i.test(error.message) ? 'exists' : /password/i.test(error.message) ? 'weak' : 'network' };
   // existing confirmed users come back with no identities
   if (data.user && data.user.identities && data.user.identities.length === 0) return { ok: false, error: 'exists' };
@@ -35,7 +44,7 @@ export async function signIn(email: string, password: string): Promise<AuthResul
 export async function sendReset(email: string): Promise<boolean> {
   const sb = supabaseBrowser();
   if (!sb) return true;
-  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: `${location.origin}/auth/callback?next=/auth/reset` });
+  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: `${location.origin}/auth/callback?type=recovery&next=/auth/reset` });
   return !error;
 }
 

@@ -390,7 +390,7 @@ export function Result() {
       <div className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper/95 py-3 backdrop-blur pb-safe">
         <Container className="flex max-w-[980px] items-center justify-between gap-3">
           <span className="hidden text-[14px] text-muted sm:block">{t('resultBarNote', { price: eur(Math.min(...DEFAULT_PLANS.filter((x) => !x.oneTime).map(planMonthlyEquivalent))) })}</span>
-          <ButtonLink href={session ? checkoutHref : `/register?next=${encodeURIComponent(checkoutHref)}`} size="lg" className="flex-1 sm:flex-none">{t('getFullPlan')} →</ButtonLink>
+          <ButtonLink href={session ? checkoutHref : `/register?next=${encodeURIComponent(checkoutHref)}`} size="lg" className="flex-1 sm:flex-none" data-track="cta_month" data-track-place="result">{t('getFullPlan')} →</ButtonLink>
         </Container>
       </div>
     </div>

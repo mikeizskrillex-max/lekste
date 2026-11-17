@@ -1,5 +1,6 @@
 'use client';
 
+import { PageTracker } from '@/components/tracker';
 import { createContext, useContext, type ReactNode } from 'react';
 import type { Locale } from '@/config/markets';
 import { I18nProvider } from '@/i18n/I18nProvider';
@@ -15,7 +16,7 @@ export function Providers({ lang, modes, children }: { lang: Locale; modes: Mode
   return (
     <ModesCtx.Provider value={modes}>
       <I18nProvider initial={lang}>
-        <StoreProvider><AccountSync />{children}</StoreProvider>
+        <StoreProvider><AccountSync /><PageTracker />{children}</StoreProvider>
       </I18nProvider>
     </ModesCtx.Provider>
   );

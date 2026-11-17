@@ -23,13 +23,13 @@ function Hero() {
   const dishes = plan.days[0].meals.slice(0, 3);
   return (
     <section className="relative overflow-hidden">
-      <Container className="grid items-center gap-12 pb-16 pt-10 md:pt-16 lg:grid-cols-[1.05fr_1fr] lg:pb-24">
+      <Container className="grid grid-cols-[minmax(0,1fr)] items-center gap-12 pb-16 pt-10 md:pt-16 lg:grid-cols-[1.05fr_1fr] lg:pb-24">
         <div>
           <Badge tone="sage" className="mb-5">✦ {t('heroKicker2')}</Badge>
           <h1 className="font-display text-[44px] font-extrabold leading-[1.02] tracking-tight text-forest md:text-[68px]">{t('heroTitle3')}</h1>
           <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-ink/75 md:text-[19px]">{t('brandSub')}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href="/onboarding" size="lg">{t('ctaCreate')} →</ButtonLink>
+            <ButtonLink href="/onboarding" size="lg" data-track="cta_plan" data-track-place="hero">{t('ctaCreate')} →</ButtonLink>
             <ButtonLink href="/how-it-works" size="lg" variant="secondary">{t('ctaHow')}</ButtonLink>
           </div>
           <p className="mt-5 max-w-lg text-[13.5px] text-muted">{t('heroNote3')}</p>
@@ -148,7 +148,7 @@ function Compare() {
   const { t } = useI18n();
   return (
     <section className="py-16 md:py-24">
-      <Container className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:items-center">
+      <Container className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[1fr_1.3fr] lg:items-center">
         <div>
           <SectionTitle kicker={t('navSupermarkets')} title={t('compareTitle')} sub={t('compareSub')} />
           <p className="mt-4 text-[13px] text-muted">{t('snapshotNote')}</p>
@@ -211,7 +211,7 @@ export function AssistantPreview() {
   const after = state?.plan.days[state.day];
   return (
     <section className="bg-sage/60 py-16 md:py-24">
-      <Container className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
+      <Container className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
         <div>
           <SectionTitle kicker={t('aiAssistant')} title={t('assistantTitle')} sub={t('assistantSub')} />
           <div className="mt-6 flex flex-wrap gap-2">
@@ -319,7 +319,7 @@ function FaqSection() {
   const { t } = useI18n();
   return (
     <section className="py-16 md:py-24">
-      <Container className="grid gap-10 lg:grid-cols-[1fr_1.6fr]">
+      <Container className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[1fr_1.6fr]">
         <div>
           <SectionTitle kicker={t('navFaq')} title={t('faqTitle')} />
           <Link href="/faq" className="mt-5 inline-block font-semibold text-leaf hover:underline">{t('faqMore')} →</Link>
@@ -338,7 +338,7 @@ function FinalCta() {
         <Image src="/img/site/produce.jpg" alt="" fill sizes="1200px" className="object-cover opacity-25" />
         <div className="relative">
           <h2 className="font-display text-[34px] font-extrabold leading-tight md:text-[52px]">{t('brandPromise')}</h2>
-          <ButtonLink href="/onboarding" size="lg" variant="gold" className="mt-8">{t('ctaCreate')} →</ButtonLink>
+          <ButtonLink href="/onboarding" size="lg" variant="gold" className="mt-8" data-track="cta_plan" data-track-place="bottom">{t('ctaCreate')} →</ButtonLink>
         </div>
       </div>
     </Container>

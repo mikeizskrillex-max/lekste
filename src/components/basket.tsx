@@ -102,7 +102,7 @@ export function StoreList({ basket, checkable = false }: { basket: Basket; check
                 <span className="hidden sm:block"><StoreLink ingredientId={l.ingredientId} url={l.record.url} store={l.record.retailer} /></span>
                 <span className="shrink-0 text-right">
                   <span className="block font-semibold tabular-nums">{eur(l.cost)}</span>
-                  <span className="block text-[11.5px] text-muted">{l.pantry ? t('pantry') : `${l.packs} × ${eur(l.record.price)}`}</span>
+                  <span className="block max-w-[110px] text-[11.5px] leading-tight text-muted sm:max-w-none">{l.pantry ? t('pantry') : `${l.packs} × ${eur(l.record.price)}`}</span>
                     <span className="mt-1 block sm:hidden"><StoreLink ingredientId={l.ingredientId} url={l.record.url} store={l.record.retailer} compact /></span>
                   {l.record.promo && (
                     <span className="mt-0.5 inline-flex items-center gap-1 rounded-full bg-gold/30 px-1.5 py-0.5 text-[10.5px] font-bold text-[#6b4a0c]">
