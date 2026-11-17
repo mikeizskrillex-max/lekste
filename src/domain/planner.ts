@@ -104,6 +104,20 @@ function score(r: Recipe, u: QuizAnswers): number {
   return s;
 }
 
+/**
+ * Protein awareness: when the target asks for a lot of protein per calorie
+ * (weight loss, muscle gain, cutting), recipes rich in protein rank higher.
+ * Portions are scaled for calories, so the protein share is what matters.
+ */
+function proteinFit(r: Recipe, t: Targets): number {
+  const need = (t.protein * 4) / Math.max(1, t.kcal);
+  const w = Math.min(1.5, Math.max(0, (need - 0.2) / 0.1));
+  if (!w) return 0;
+  const f = recipeFacts(r);
+  const share = (f.protein * 4) / Math.max(1, f.kcal);
+  return Math.max(-3, Math.min(3, (share - need * 0.8) * 14)) * w;
+}
+
 /** Small deterministic PRNG so a week looks varied but is reproducible. */
 function rng(seed: number) {
   let x = seed || 1;
@@ -219,7 +233,7 @@ export function buildPlan(u: QuizAnswers, t: Targets, seed = 7, avoid: string[] 
   const slots = mealSlots(u);
   let best: Plan | null = null;
   let bestScore = Infinity;
-  const scores = new Map(pool.map((r) => [r, score(r, u)]));
+  const scores = new Map(pool.map((r) => [r, score(r, u) + proteinFit(r, t)]));
   for (let k = 0; k < 10; k++) {
     const plan = buildOnce(u, t, pool, slots, seed + k * 101, scores);
     const basket = planBasketTotal(plan, u);
@@ -228,7 +242,7 @@ export function buildPlan(u: QuizAnswers, t: Targets, seed = 7, avoid: string[] 
     const over = Math.max(0, basket - u.weeklyBudget) / u.weeklyBudget;
     // a day far off the calorie target is unacceptable whatever it saves
     const worstDay = Math.max(...plan.days.map((d) => Math.abs(d.kcal - t.kcal) / t.kcal));
-    const total = kcalErr * 3 + protErr * 2 + over * 6 + (basket / u.weeklyBudget) * 0.3 + Math.max(0, worstDay - 0.15) * 60;
+    const total = kcalErr * 3 + protErr * 4 + over * 6 + (basket / u.weeklyBudget) * 0.3 + Math.max(0, worstDay - 0.15) * 60;
     if (total < bestScore) { bestScore = total; best = { ...plan, basketTotal: basket }; }
   }
   return fitBudget(best!, u, t, pool, scores);
