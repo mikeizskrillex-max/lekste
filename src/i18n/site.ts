@@ -120,7 +120,7 @@ export const N = {
   dayCost: { lt: 'Dienos kaina', ru: 'Стоимость дня' },
   weeklySavingPreview: { lt: 'Savaitės krepšelio palyginimas', ru: 'Сравнение корзины на неделю' },
   timeline: { lt: 'Apytikslis laikas iki tikslo', ru: 'Примерное время до цели' },
-  getFullPlan: { lt: 'Gauti visą savaitės planą', ru: 'Получить полный план на неделю' },
+  getFullPlan: { lt: 'Gauti mėnesio planą', ru: 'Получить план на месяц' },
 
   // ---------- checkout / success ----------
   checkoutTitle: { lt: 'Pasirinkite planą', ru: 'Выберите тариф' },

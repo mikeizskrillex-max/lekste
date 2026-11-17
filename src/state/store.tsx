@@ -48,11 +48,31 @@ export interface Subscription {
   cancelAtPeriodEnd?: boolean;
 }
 
-/** Can the user use the app right now? */
-export function hasAccess(sub: Subscription): boolean {
-  if (sub.status === 'active' || sub.status === 'trialing' || sub.status === 'past_due') return true;
-  const until = sub.currentPeriodEnd ?? sub.trialEnd;
-  return sub.status === 'canceled' && !!until && Date.parse(until) > Date.now();
+/** A few days after a paid period ends, while the card payment is retried. */
+const GRACE_MS = 3 * 86400000;
+const at = (iso?: string | null) => (iso ? Date.parse(iso) : NaN);
+
+/**
+ * Can the user use the app right now? Every state has an end date, so access
+ * closes even if the browser never hears back from the server:
+ * free week → until trialEnd; paid → until the period end (+3 days while a
+ * renewal is retried); lifetime → always; cancelled → until the paid/trial end.
+ */
+export function hasAccess(sub: Subscription, now = Date.now()): boolean {
+  switch (sub.status) {
+    case 'trialing': { const end = at(sub.trialEnd ?? sub.currentPeriodEnd); return end > now; }
+    case 'active': { const end = at(sub.currentPeriodEnd); return Number.isNaN(end) || end + GRACE_MS > now; }
+    case 'past_due': { const end = at(sub.currentPeriodEnd); return !Number.isNaN(end) && end + GRACE_MS > now; }
+    case 'canceled': { const end = at(sub.currentPeriodEnd ?? sub.trialEnd); return end > now; }
+    default: return false;
+  }
+}
+
+/** Why the app is closed: never subscribed, the free week ended, or the paid period ended. */
+export function accessEnded(sub: Subscription): 'none' | 'trial' | 'paid' {
+  if (sub.status === 'none' || !sub.startedAt) return 'none';
+  const paid = sub.payments.some((p) => p.status === 'paid');
+  return paid ? 'paid' : 'trial';
 }
 export interface PurchaseRecord { id: string; date: string; retailer: RetailerId | 'mixed'; paid: number; reference: number; estimated: number }
 export interface Session { email: string; role: 'user' | 'admin' }

@@ -72,7 +72,7 @@ try {
     }
     check('A 7 day totals add up to the weekly basket', Math.abs(sum - week) <= 0.05, `${sum.toFixed(2)} vs ${week.toFixed(2)}`);
   }
-  await page.getByRole('link', { name: /Gauti visą savaitės planą/ }).click();
+  await page.getByRole('link', { name: /Gauti mėnesio planą/ }).click();
   await page.waitForURL('**/register**');
   await page.getByLabel('El. paštas').fill('e2e@example.com');
   await page.getByLabel('Slaptažodis').fill('e2e-password-123');

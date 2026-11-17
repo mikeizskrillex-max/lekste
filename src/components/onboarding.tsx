@@ -11,6 +11,7 @@ import { useI18n } from '@/i18n/I18nProvider';
 import { getDetail } from '@/data/recipeDetails';
 import { DISLIKE_OPTIONS } from '@/data/ingredients';
 import { RECIPES } from '@/data/recipes';
+import { DEFAULT_PLANS, planMonthlyEquivalent } from '@/config/plans';
 import { RETAILERS } from '@/retail/retailers';
 
 const RECIPE_COUNT = RECIPES.length;
@@ -388,7 +389,7 @@ export function Result() {
       </Container>
       <div className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper/95 py-3 backdrop-blur pb-safe">
         <Container className="flex max-w-[980px] items-center justify-between gap-3">
-          <span className="hidden text-[14px] text-muted sm:block">{t('subscriptionNeeded')}</span>
+          <span className="hidden text-[14px] text-muted sm:block">{t('resultBarNote', { price: eur(Math.min(...DEFAULT_PLANS.filter((x) => !x.oneTime).map(planMonthlyEquivalent))) })}</span>
           <ButtonLink href={session ? checkoutHref : `/register?next=${encodeURIComponent(checkoutHref)}`} size="lg" className="flex-1 sm:flex-none">{t('getFullPlan')} →</ButtonLink>
         </Container>
       </div>

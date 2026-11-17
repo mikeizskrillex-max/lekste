@@ -6,7 +6,7 @@ import { useEffect, type ReactNode } from 'react';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { signOut } from '@/lib/account';
-import { hasAccess, useStore } from '@/state/store';
+import { accessEnded, hasAccess, useStore } from '@/state/store';
 import { DevBanner, LangSwitch, Logo } from './site';
 import { ButtonLink, Card, Container, Skeleton, cx } from './ui';
 
@@ -34,12 +34,16 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { ready, onboarded, subscription, logout, session, refreshSubscription } = useStore();
   // Stripe is the source of truth for access: refresh on every visit to the app
   useEffect(() => { if (ready && session) void refreshSubscription(); }, [ready, session?.email]); // eslint-disable-line react-hooks/exhaustive-deps
-  const open = path.startsWith('/app/settings') || path.startsWith('/app/subscription') || path.startsWith('/app/recipe');
+  // without access only account pages stay open (to pay, cancel or delete data)
+  const open = path.startsWith('/app/settings') || path.startsWith('/app/subscription');
 
   let content = children;
   if (!ready) content = <div className="space-y-4"><Skeleton className="h-10 w-1/2" /><Skeleton className="h-40" /><Skeleton className="h-40" /></div>;
   else if (!onboarded && !open) content = <Gate text={t('noPlanYet')} href="/onboarding" cta={t('startOnboarding')} />;
-  else if (!hasAccess(subscription) && !open) content = <Gate text={t('subscriptionNeeded')} href="/checkout" cta={t('choosePlanCta')} />;
+  else if (!hasAccess(subscription) && !open) {
+    const why = accessEnded(subscription);
+    content = <Gate text={t(why === 'trial' ? 'trialEndedGate' : why === 'paid' ? 'paidEndedGate' : 'subscriptionNeeded')} href="/checkout" cta={t('choosePlanCta')} />;
+  }
 
   return (
     <div className="min-h-screen bg-paper">
