@@ -214,8 +214,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       return { ...p, answers, plan: buildPlan(answers, effectiveTargets(answers)) };
     }),
     completeOnboarding: () => setS((p) => ({
-      weekStart: mondayOf(new Date()),
       ...p, onboarded: true, plan: buildPlan(p.answers, effectiveTargets(p.answers)), planCreatedAt: new Date().toISOString(),
+      // a freshly made plan is always for the current week (an older weekStart must not survive a redo)
+      weekStart: mondayOf(new Date()),
       purchased: [], weights: p.weights.length ? p.weights : [{ date: today(), kg: p.answers.weightKg }],
     })),
     replace: (day, slot, mode) => {
