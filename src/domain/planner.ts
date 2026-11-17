@@ -99,7 +99,7 @@ function score(r: Recipe, u: QuizAnswers): number {
   if (u.homeStore) {
     const at = recipeAtStore(r, u.homeStore);
     s += Math.min(2, at.promo.length * 0.8); // this week's promotions in the user's store
-    s -= at.missing.length * 2.5; // the store does not sell an ingredient
+    s -= at.missing.length * 7; // the store does not sell an ingredient: you could not cook it
   }
   return s;
 }
@@ -111,11 +111,11 @@ function score(r: Recipe, u: QuizAnswers): number {
  */
 function proteinFit(r: Recipe, t: Targets): number {
   const need = (t.protein * 4) / Math.max(1, t.kcal);
-  const w = Math.min(1.5, Math.max(0, (need - 0.2) / 0.1));
+  const w = Math.min(1.2, Math.max(0, (need - 0.15) / 0.1));
   if (!w) return 0;
   const f = recipeFacts(r);
   const share = (f.protein * 4) / Math.max(1, f.kcal);
-  return Math.max(-3, Math.min(3, (share - need * 0.8) * 14)) * w;
+  return Math.max(-3, Math.min(1.2, (share - need * 0.85) * 14)) * w;
 }
 
 /** Small deterministic PRNG so a week looks varied but is reproducible. */
@@ -242,7 +242,10 @@ export function buildPlan(u: QuizAnswers, t: Targets, seed = 7, avoid: string[] 
     const over = Math.max(0, basket - u.weeklyBudget) / u.weeklyBudget;
     // a day far off the calorie target is unacceptable whatever it saves
     const worstDay = Math.max(...plan.days.map((d) => Math.abs(d.kcal - t.kcal) / t.kcal));
-    const total = kcalErr * 3 + protErr * 4 + over * 6 + (basket / u.weeklyBudget) * 0.3 + Math.max(0, worstDay - 0.15) * 60;
+    // and no single day far below the protein target
+    const worstProt = Math.max(...plan.days.map((d) => Math.max(0, t.protein * 0.8 - d.protein) / t.protein));
+    const protOver = plan.days.reduce((s, d) => s + Math.max(0, d.protein - t.protein * 1.25) / t.protein, 0) / 7;
+    const total = kcalErr * 3 + protErr * 4 + worstProt * 8 + protOver * 4 + over * 6 + (basket / u.weeklyBudget) * 0.3 + Math.max(0, worstDay - 0.15) * 60;
     if (total < bestScore) { bestScore = total; best = { ...plan, basketTotal: basket }; }
   }
   return fitBudget(best!, u, t, pool, scores);
