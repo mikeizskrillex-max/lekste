@@ -52,3 +52,15 @@ test('design page is hidden from search engines and shows the price source', asy
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
   await expect(page.getByRole('button', { name: /Kainos šaltinis: Barbora · patikrinta 2026-11-16/ })).toBeVisible();
 });
+
+test('home shows the pains, the plans 8,99 / 19,99 / 79,99 € and no sideways scroll', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'Ar pažįstama?' })).toBeVisible();
+  for (const price of ['8,99', '19,99', '79,99'])
+    await expect(page.getByText(new RegExp(`^${price}\\s€$`))).toBeVisible();
+  await expect(page.getByRole('table')).toBeVisible();
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
+  expect(overflow).toBeLessThanOrEqual(0);
+});

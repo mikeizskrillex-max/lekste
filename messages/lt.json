@@ -118,5 +118,116 @@
     "title": "Puslapis nerastas",
     "body": "Tokio puslapio nėra. Grįžkite į pradžią.",
     "home": "Į pradžią"
+  },
+  "home": {
+    "weekCaption": "7 dienos · 3–5 patiekalai per dieną",
+    "photosNote": "Nuotraukos — iliustracijos",
+    "days": {
+      "d0": "Pr",
+      "d1": "An",
+      "d2": "Tr",
+      "d3": "Kt",
+      "d4": "Pn",
+      "d5": "Še"
+    },
+    "dishes": {
+      "d0": "Vištiena su grikiais",
+      "d1": "Moliūgų sriuba",
+      "d2": "Varškėčiai",
+      "d3": "Lašiša su ryžiais",
+      "d4": "Plovas su vištiena",
+      "d5": "Avižinė košė su uogomis"
+    },
+    "perks": {
+      "prices": "Tikros Barbora ir Rimi kainos",
+      "allergens": "Alergenus tikrina kodas",
+      "list": "Pirkinių sąrašas su nuorodomis"
+    },
+    "pains": {
+      "title": "Ar pažįstama?",
+      "subtitle": "Lėkštė sukurta tam, kad šių klausimų nebeliktų.",
+      "p1Title": "„Ką šiandien valgysim?“",
+      "p1Text": "Kasdien tas pats klausimas, o vakare — vėl pica.",
+      "p1Fix": "Visa savaitė suplanuota iš anksto.",
+      "p2Title": "Nežinote, kiek išleisite",
+      "p2Text": "Kvitas visada didesnis nei planavote, o akcijos praeina pro šalį.",
+      "p2Fix": "Krepšelio kaina žinoma iš anksto, su šios savaitės akcijomis.",
+      "p3Title": "Maistas keliauja į šiukšliadėžę",
+      "p3Text": "Pirkote „dėl visa ko“, o pusė sugedo šaldytuve.",
+      "p3Fix": "Tikslūs kiekiai ir pakuotės — perkate tiek, kiek reikia.",
+      "p4Title": "Planai iš interneto — ne Lietuvai",
+      "p4Text": "Produktų nėra Barboroje ar Rimi, porcijos uncijomis, kalorijas skaičiuojate patys.",
+      "p4Fix": "Tik produktai iš Barbora ir Rimi, kalorijos jau suskaičiuotos."
+    },
+    "why": {
+      "title": "Kodėl Lėkštė",
+      "w1Title": "Meniu jau paruoštas",
+      "w1Text": "Septynios dienos, kiekvienas patiekalas su receptu ir laiku.",
+      "w2Title": "Tikros kainos",
+      "w2Text": "Kiekviena kaina turi šaltinį ir patikrinimo laiką.",
+      "w3Title": "Jūsų biudžetas",
+      "w3Text": "Krepšelis skaičiuojamas pagal tikras pakuotes ir telpa į jūsų sumą.",
+      "w4Title": "Saugu alergiškiems",
+      "w4Text": "Alergenus tikrina kodas pagal sudėtį, ne AI spėjimai.",
+      "w5Title": "Visai šeimai",
+      "w5Text": "Porcijos kiekvienam: suaugusiems ir vaikams.",
+      "w6Title": "Be programėlės",
+      "w6Text": "Veikia naršyklėje telefone ir kompiuteryje."
+    },
+    "priceDemo": {
+      "title": "Kaip atrodo kaina Lėkštėje",
+      "text": "Prie kiekvienos kainos matote, iš kurios parduotuvės ji paimta ir kada patikrinta. Kainos atnaujinamos kas pirmadienį.",
+      "product": "Prekė iš e. parduotuvės",
+      "source": "Šaltinis",
+      "checked": "Patikrinta",
+      "promo": "Akcija iki",
+      "store": "Barbora arba Rimi",
+      "date": "kas pirmadienį",
+      "promoValue": "rodome, jei yra"
+    },
+    "chatgpt": {
+      "title": "Kodėl ne tiesiog ChatGPT?",
+      "subtitle": "ChatGPT gali sugalvoti meniu. Lėkštė jį suplanuoja pagal tikras kainas ir paverčia pirkinių sąrašu.",
+      "colChatgpt": "ChatGPT",
+      "colLekste": "Lėkštė",
+      "r1": "Kainos",
+      "r1a": "spėja",
+      "r1b": "tikros, kas savaitę",
+      "r2": "Akcijos",
+      "r2a": "nežino",
+      "r2b": "Barbora ir Rimi",
+      "r3": "Biudžetas",
+      "r3a": "neskaičiuoja pakuočių",
+      "r3b": "krepšelis telpa",
+      "r4": "Alergijos",
+      "r4a": "gali suklysti",
+      "r4b": "tikrina kodas",
+      "r5": "Pirkinių sąrašas",
+      "r5a": "rankomis",
+      "r5b": "su nuorodomis į prekes",
+      "r6": "Kita savaitė",
+      "r6a": "iš naujo",
+      "r6b": "vienu paspaudimu"
+    },
+    "pricing": {
+      "title": "Paprastos kainos, jokių staigmenų",
+      "subtitle": "Kainos su PVM. Prenumeratą atšaukiate bet kada nustatymuose.",
+      "monthly": "1 mėnuo",
+      "quarterly": "3 mėnesiai",
+      "lifetime": "Visam laikui",
+      "best": "Geriausia kaina",
+      "trial": "🎁 {days} dienos nemokamai",
+      "perMonth": "≈ {price} / mėn.",
+      "renewsEvery": "Atsinaujina kas {days} d.",
+      "oneTime": "Vienkartinis mokėjimas, be prenumeratos",
+      "ctaTrial": "Pradėti {days} d. nemokamai",
+      "ctaChoose": "Pasirinkti",
+      "free": "Nemokamai be kortelės: anketa, jūsų norma ir pirmoji meniu diena."
+    },
+    "final": {
+      "title": "Sudarykite pirmąją savaitę",
+      "text": "9 klausimai, apie 3 minutes — ir matote savo meniu bei krepšelio kainą.",
+      "cta": "Sudaryti meniu"
+    }
   }
 }

@@ -6,7 +6,7 @@ export const NAV = [
   { key: 'how', href: '/#kaip-veikia', ready: true },
   { key: 'recipes', href: '/receptai', ready: false },
   { key: 'stores', href: '/prekybos-centrai', ready: false },
-  { key: 'pricing', href: '/kainos', ready: false },
+  { key: 'pricing', href: '/#kainos', ready: true },
   { key: 'faq', href: '/duk', ready: false },
 ] as const;
 
