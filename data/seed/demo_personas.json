@@ -1,0 +1,32 @@
+{
+  "_note": "Demo personas for the home page (SPEC §13). Menus and baskets are computed from real data every Monday — never hard-coded.",
+  "personas": [
+    {
+      "code": "studentas",
+      "name": { "lt": "Studentas", "ru": "Студент" },
+      "adults": 1,
+      "children": [],
+      "weeklyBudgetEur": 30,
+      "goal": "cheaper",
+      "store": "cheapest"
+    },
+    {
+      "code": "pora",
+      "name": { "lt": "Pora", "ru": "Пара" },
+      "adults": 2,
+      "children": [],
+      "weeklyBudgetEur": 60,
+      "goal": "healthier",
+      "store": "cheapest"
+    },
+    {
+      "code": "seima",
+      "name": { "lt": "Šeima su vaikais", "ru": "Семья с детьми" },
+      "adults": 2,
+      "children": [{ "age": 6 }, { "age": 10 }],
+      "weeklyBudgetEur": 100,
+      "goal": "healthier",
+      "store": "cheapest"
+    }
+  ]
+}

@@ -39,7 +39,10 @@ npm test               # Vitest
 npm run test:e2e       # Playwright
 npm run i18n:check     # все ключи lt есть в ru, нет лишних, нет строк в компонентах
 npm run db:types       # типы из схемы Supabase
-npm run db:test        # pgTAP: RLS и ограничения
+npm run db:test        # pgTAP: RLS и ограничения (DATABASE_URL)
+npm run db:local       # временный Postgres 16 + pgTAP: миграции + тесты RLS (так же в CI)
+npm run db:migrate     # применить миграции (SUPABASE_DB_URL; в main — GitHub Actions)
+npm run screenshots -- <папка> [url]  # скриншоты 360/1440, светлая и тёмная
 npm run ingredients:verify
 npm run recipes:generate -- --count 100 --meal dinner --diet vegetarian
 npm run recipes:check

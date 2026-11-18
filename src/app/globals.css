@@ -1,0 +1,121 @@
+@import 'tailwindcss';
+
+/* Dark theme follows the `dark` class set by next-themes (system by default). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Lėkštė design tokens — direction A "Šilta virtuvė" (warm kitchen + fintech precision).
+ * The only place colours are defined. Text/background pairs pass WCAG 2.1 AA (≥ 4.5:1).
+ */
+:root {
+  --bg: #faf5ec; /* cream paper */
+  --surface: #ffffff;
+  --surface-2: #f3ecdf;
+  --ink: #22201c; /* warm graphite, 14.97:1 on bg */
+  --muted: #6b645b; /* 5.37:1 on bg */
+  --line: #e7decf;
+  --accent: #c13f22; /* tomato, white text 5.25:1 */
+  --accent-ink: #ffffff;
+  --accent-soft: #f8dfd6;
+  --promo: #f2c14e; /* butter: promotions, ink text 9.69:1 */
+  --promo-ink: #22201c;
+  --savings: #11736b; /* deep teal: money saved, 5.24:1 on bg */
+  --danger: #b3261e;
+  --focus: #c13f22;
+  --shadow: 0 1px 2px rgb(34 32 28 / 0.06), 0 8px 24px -12px rgb(34 32 28 / 0.18);
+  --paper-opacity: 0.35;
+}
+
+.dark {
+  --bg: #171513;
+  --surface: #211e1b;
+  --surface-2: #2a2622;
+  --ink: #f4eee4; /* 15.78:1 */
+  --muted: #a89f93; /* 6.98:1 */
+  --line: #3a342e;
+  --accent: #ee6a47; /* tomato on dark: text 5.89:1 */
+  --accent-ink: #171513;
+  --accent-soft: #3d231b;
+  --promo: #e9b949;
+  --promo-ink: #171513;
+  --savings: #3fb3a6; /* 7.12:1 */
+  --danger: #f2867d;
+  --focus: #ee6a47;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 10px 28px -14px rgb(0 0 0 / 0.7);
+  --paper-opacity: 0.12;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-promo: var(--promo);
+  --color-promo-ink: var(--promo-ink);
+  --color-savings: var(--savings);
+  --color-danger: var(--danger);
+  --font-serif: var(--font-literata), Georgia, 'Times New Roman', serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-card: var(--shadow);
+  --radius-card: 1.25rem;
+  --ease-out-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Paper grain: an inline SVG noise layer, fixed behind content. Pure CSS, no image request. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: var(--paper-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .28 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  /* Prices and amounts: equal-width digits so columns line up */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "_meta": {
+    "locale": "lt",
+    "reference": true,
+    "reviewed": false
+  },
+  "meta": {
+    "title": "Lėkštė — asmeninis AI mitybos planuotojas",
+    "description": "Savaitės meniu pagal jūsų tikslą, biudžetą ir tikras Barbora bei Rimi akcijas. Pigiausias krepšelis ir pirkinių sąrašas su nuorodomis į prekes."
+  },
+  "common": {
+    "brand": "Lėkštė",
+    "skipToContent": "Pereiti prie turinio",
+    "medicalDisclaimer": "Tai nėra medicininė konsultacija.",
+    "comingSoon": "Netrukus",
+    "illustration": "Iliustracija",
+    "sample": "Dizaino pavyzdys"
+  },
+  "nav": {
+    "recipes": "Receptai",
+    "stores": "Prekybos centrai",
+    "pricing": "Kainos",
+    "how": "Kaip veikia",
+    "faq": "DUK",
+    "start": "Sudaryti meniu",
+    "openMenu": "Atidaryti meniu",
+    "closeMenu": "Uždaryti meniu",
+    "main": "Pagrindinis meniu"
+  },
+  "lang": {
+    "label": "Kalba",
+    "lt": "Lietuvių",
+    "ru": "Русский"
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Šviesi",
+    "dark": "Tamsi",
+    "system": "Kaip įrenginyje"
+  },
+  "hero": {
+    "title": "Jūsų asmeninis AI mitybos planuotojas",
+    "subtitle": "Savaitės meniu pagal jūsų tikslą, biudžetą ir tikras prekybos centrų akcijas.",
+    "ctaPrimary": "Sudaryti meniu",
+    "ctaSecondary": "Žiūrėti pavyzdį"
+  },
+  "how": {
+    "title": "Keturi žingsniai — ir savaitė suplanuota",
+    "s1Title": "Atsakote į 9 klausimus",
+    "s1Text": "Tikslas, kūno duomenys, biudžetas, ko nevalgote ir kur perkate.",
+    "s2Title": "Skaičiuojame normą",
+    "s2Text": "Kalorijos ir makroelementai pagal patikrintas formules, ne spėjimus.",
+    "s3Title": "AI sudaro meniu",
+    "s3Text": "Iš receptų bazės, laikantis alergijų ir biudžeto.",
+    "s4Title": "Pigiausias krepšelis",
+    "s4Text": "Sujungiame produktus ir lyginame Barbora ir Rimi kainas."
+  },
+  "footer": {
+    "pricesNote": "Kainos atnaujinamos kas pirmadienį iš Barbora ir Rimi e. parduotuvių. Parduotuvėje kaina gali skirtis.",
+    "company": "Įmonė",
+    "code": "Įmonės kodas",
+    "vat": "PVM kodas",
+    "address": "Adresas",
+    "support": "Pagalba",
+    "rights": "© {year} Lėkštė"
+  },
+  "start": {
+    "title": "Anketa",
+    "body": "Anketa ruošiama. Netrukus galėsite atsakyti į 9 klausimus ir gauti savo savaitės meniu.",
+    "back": "Grįžti į pradžią"
+  },
+  "price": {
+    "checked": "{store} · patikrinta {date}",
+    "perPortion": "porcija",
+    "sourceInfo": "Kainos šaltinis"
+  },
+  "dish": {
+    "meal_breakfast": "Pusryčiai",
+    "meal_lunch": "Pietūs",
+    "meal_dinner": "Vakarienė",
+    "meal_snack": "Užkandis",
+    "minutes": "{n} min",
+    "kcal": "kcal",
+    "protein": "Baltymai",
+    "fat": "Riebalai",
+    "carbs": "Angliavandeniai",
+    "replace": "Pakeisti",
+    "lock": "Užfiksuoti",
+    "remove": "Pašalinti",
+    "portion": "porcija"
+  },
+  "design": {
+    "title": "Dizaino sistema",
+    "intro": "Spalvos, šriftai ir komponentai. Vidinis puslapis, paieškos sistemos jo nerodo.",
+    "colors": "Spalvos",
+    "type": "Šriftai",
+    "buttons": "Mygtukai",
+    "card": "Patiekalo kortelė",
+    "pangram": "Įžūlūs šunys ėda žąsų ūkį — ačiū, česnakai!",
+    "sampleNote": "Kainos ir skaičiai šiame puslapyje — tik dizaino pavyzdys, ne tikri duomenys.",
+    "dish1": "Vištiena su grikiais ir daržovėmis",
+    "dish2": "Moliūgų trinta sriuba",
+    "tokens": {
+      "bg": "Fonas",
+      "surface": "Paviršius",
+      "ink": "Tekstas",
+      "muted": "Antrinis tekstas",
+      "accent": "Akcentas",
+      "promo": "Akcija",
+      "savings": "Sutaupyta",
+      "line": "Linija"
+    },
+    "badgePromo": "Akcija",
+    "badgeSavings": "−12,40 € palyginti su Rimi",
+    "badgeNeutral": "Iliustracija"
+  },
+  "notFound": {
+    "title": "Puslapis nerastas",
+    "body": "Tokio puslapio nėra. Grįžkite į pradžią.",
+    "home": "Į pradžią"
+  }
+}
