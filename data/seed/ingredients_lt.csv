@@ -1,0 +1,150 @@
+slug,name_lt,name_ru,category,origin,unit,piece_g,density_g_ml,allergens,composition_varies,usda_fdc_id,usda_description,synonyms_lt,synonyms_ru
+carrot,Morkos,Морковь,vegetables,plant,g,70,,,no,170393,"Carrots, raw",morka;morkų,морковка
+onion,Svogūnai,Лук репчатый,vegetables,plant,g,110,,,no,170000,"Onions, raw",svogūnas;svogunu,лук
+red_onion,Raudonieji svogūnai,Красный лук,vegetables,plant,g,120,,,no,170000,"Onions, raw",raudonas svogūnas,лук красный;ялтинский лук
+garlic,Česnakai,Чеснок,vegetables,plant,g,5,,,no,169230,"Garlic, raw",česnakas;česnako skiltelė,зубчик чеснока
+potato,Bulvės,Картофель,vegetables,plant,g,150,,,no,170026,"Potatoes, flesh and skin, raw",bulvė;bulviu,картошка
+sweet_potato,Batatai,Батат,vegetables,plant,g,200,,,no,168482,"Sweet potato, raw, unprepared (Includes foods for USDA's Food Distribution Program)",saldžiosios bulvės,сладкий картофель
+cabbage,Baltagūžiai kopūstai,Белокочанная капуста,vegetables,plant,g,,,,no,169975,"Cabbage, raw",kopūstas;kopustai,капуста
+red_cabbage,Raudongūžiai kopūstai,Краснокочанная капуста,vegetables,plant,g,,,,no,169977,"Cabbage, red, raw",raudonieji kopūstai,красная капуста
+cauliflower,Žiediniai kopūstai,Цветная капуста,vegetables,plant,g,,,,no,169986,"Cauliflower, raw",kalafioras,
+broccoli,Brokoliai,Брокколи,vegetables,plant,g,,,,no,170379,"Broccoli, raw",brokolis,брокколи
+beetroot,Burokėliai,Свёкла,vegetables,plant,g,150,,,no,169145,"Beets, raw",burokai;runkeliai,свекла;буряк
+cucumber,Agurkai,Огурцы,vegetables,plant,g,200,,,no,168409,"Cucumber, with peel, raw",agurkas,огурец
+tomato,Pomidorai,Помидоры,vegetables,plant,g,120,,,no,170457,"Tomatoes, red, ripe, raw, year round average",pomidoras,томаты;помидор
+cherry_tomato,Vyšniniai pomidorai,Помидоры черри,vegetables,plant,g,15,,,no,170457,"Tomatoes, red, ripe, raw, year round average",cherry pomidorai,черри
+red_pepper,Raudonosios paprikos,Красный перец,vegetables,plant,g,160,,,no,170108,"Peppers, sweet, red, raw",paprika;raudona paprika,болгарский перец;сладкий перец
+green_pepper,Žaliosios paprikos,Зелёный перец,vegetables,plant,g,150,,,no,170427,"Peppers, sweet, green, raw",žalia paprika,зелёный болгарский перец
+zucchini,Cukinijos,Кабачки,vegetables,plant,g,250,,,no,169291,"Squash, summer, zucchini, includes skin, raw",cukinija,цукини;кабачок
+eggplant,Baklažanai,Баклажаны,vegetables,plant,g,300,,,no,169228,"Eggplant, raw",baklažanas,баклажан
+pumpkin,Moliūgai,Тыква,vegetables,plant,g,,,,no,168448,"Pumpkin, raw",moliūgas,тыква
+celery,Salierų stiebai,Сельдерей стеблевой,vegetables,plant,g,40,,celery,no,169988,"Celery, raw",salieras;salierai,сельдерей
+leek,Porai,Лук-порей,vegetables,plant,g,150,,,no,169246,"Leeks, (bulb and lower leaf-portion), raw",poras,порей
+spinach,Špinatai,Шпинат,vegetables,plant,g,,,,no,168462,"Spinach, raw",špinatas,шпинат
+lettuce,Lapinės salotos,Листовой салат,vegetables,plant,g,,,,no,169249,"Lettuce, green leaf, raw",salotos;salotų lapai,салат;листья салата
+iceberg,Ledinės salotos,Салат айсберг,vegetables,plant,g,500,,,no,169248,"Lettuce, iceberg (includes crisphead types), raw",ledinės,айсберг
+mushroom,Pievagrybiai,Шампиньоны,vegetables,plant,g,20,,,no,169251,"Mushrooms, white, raw",grybai;šampinjonai,грибы
+radish,Ridikėliai,Редис,vegetables,plant,g,15,,,no,169276,"Radishes, raw",ridikai,редиска
+dill,Krapai,Укроп,herbs,plant,g,,,,no,172233,"Dill weed, fresh",krapų,укропчик
+parsley,Petražolės,Петрушка,herbs,plant,g,,,,no,170416,"Parsley, fresh",petražolių lapai,зелень петрушки
+spring_onion,Svogūnų laiškai,Зелёный лук,herbs,plant,g,15,,,no,170005,"Onions, spring or scallions (includes tops and bulb), raw",laiškiniai svogūnai;žalieji svogūnai,лук зелёный
+ginger,Imbieras,Имбирь,vegetables,plant,g,,,,no,169231,"Ginger root, raw",imbiero šaknis,имбирь корень
+avocado,Avokadai,Авокадо,vegetables,plant,g,170,,,no,171705,"Avocados, raw, all commercial varieties",avokadas,авокадо
+lemon,Citrinos,Лимоны,fruit,plant,g,100,,,no,167746,"Lemons, raw, without peel",citrina,лимон
+frozen_peas,Šaldyti žirneliai,Зелёный горошек замороженный,frozen,plant,g,,,,no,170016,"Peas, green, frozen, unprepared (Includes foods for USDA's Food Distribution Program)",žalieji žirneliai,горошек
+frozen_green_beans,Šaldytos šparaginės pupelės,Стручковая фасоль замороженная,frozen,plant,g,,,,no,169962,"Beans, snap, green, frozen, all styles, unprepared (Includes foods for USDA's Food Distribution Program)",šparaginės pupelės,стручковая фасоль
+frozen_veg_mix,Šaldytų daržovių mišinys,Замороженная овощная смесь,frozen,plant,g,,,,yes,170471,"Vegetables, mixed, frozen, unprepared",daržovių mišinys,овощная смесь
+canned_corn,Konservuoti kukurūzai,Кукуруза консервированная,canned,plant,g,,,,yes,169214,"Corn, sweet, yellow, canned, whole kernel, drained solids",kukurūzai,кукуруза
+sauerkraut,Rauginti kopūstai,Квашеная капуста,canned,plant,g,,,,yes,169279,"Sauerkraut, canned, solids and liquids",raugintų kopūstų,квашенка
+pickles,Marinuoti agurkai,Маринованные огурцы,canned,plant,g,60,,,yes,168558,"Pickles, cucumber, dill or kosher dill",konservuoti agurkai;rauginti agurkai,солёные огурцы;огурцы маринованные
+tomato_paste,Pomidorų pasta,Томатная паста,canned,plant,g,,,,yes,170459,"Tomato products, canned, paste, without salt added (Includes foods for USDA's Food Distribution Program)",pomidorų pastos,томатная паста
+canned_tomatoes,Konservuoti pomidorai,Томаты в собственном соку,canned,plant,g,,,,yes,170051,"Tomatoes, red, ripe, canned, packed in tomato juice",pjaustyti pomidorai,томаты консервированные
+apple,Obuoliai,Яблоки,fruit,plant,g,180,,,no,171688,"Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",obuolys,яблоко
+banana,Bananai,Бананы,fruit,plant,g,120,,,no,173944,"Bananas, raw",bananas,банан
+pear,Kriaušės,Груши,fruit,plant,g,180,,,no,169118,"Pears, raw",kriaušė,груша
+orange,Apelsinai,Апельсины,fruit,plant,g,180,,,no,169097,"Oranges, raw, all commercial varieties",apelsinas,апельсин
+mandarin,Mandarinai,Мандарины,fruit,plant,g,80,,,no,169105,"Tangerines, (mandarin oranges), raw",mandarinas,мандарин
+kiwi,Kiviai,Киви,fruit,plant,g,75,,,no,168153,"Kiwifruit, green, raw",kivis,киви
+grapes,Vynuogės,Виноград,fruit,plant,g,,,,no,174683,"Grapes, red or green (European type, such as Thompson seedless), raw",vynuogių,виноград
+frozen_blueberries,Šaldytos mėlynės,Черника замороженная,frozen,plant,g,,,,no,173950,"Blueberries, frozen, unsweetened (Includes foods for USDA's Food Distribution Program)",mėlynės,черника
+frozen_strawberries,Šaldytos braškės,Клубника замороженная,frozen,plant,g,,,,no,168173,"Strawberries, frozen, unsweetened (Includes foods for USDA's Food Distribution Program)",braškės,клубника
+raisins,Razinos,Изюм,dried_fruit,plant,g,,,,yes,168165,"Raisins, dark, seedless (Includes foods for USDA's Food Distribution Program)",razinų,изюм
+prunes,Džiovintos slyvos,Чернослив,dried_fruit,plant,g,,,,yes,168162,"Plums, dried (prunes), uncooked",slyvos džiovintos,чернослив
+buckwheat,Grikiai,Гречка,grains,plant,g,,,,yes,170685,"Buckwheat groats, roasted, dry",grikių kruopos;grikai,гречневая крупа;греча
+oats,Avižiniai dribsniai,Овсяные хлопья,grains,plant,g,,,gluten,yes,173904,"Cereals, oats, regular and quick, not fortified, dry",avižos;dribsniai,овсянка;геркулес
+rice,Baltieji ryžiai,Белый рис,grains,plant,g,,,,yes,169756,"Rice, white, long-grain, regular, raw, unenriched",ryžiai,рис
+brown_rice,Rudieji ryžiai,Бурый рис,grains,plant,g,,,,yes,169703,"Rice, brown, long-grain, raw (Includes foods for USDA's Food Distribution Program)",rudi ryžiai,коричневый рис
+pasta,Makaronai,Макароны,grains,plant,g,,,gluten,yes,168927,"Pasta, dry, unenriched",spagečiai;makaronų,паста;спагетти
+wholewheat_pasta,Pilno grūdo makaronai,Макароны цельнозерновые,grains,plant,g,,,gluten,yes,169738,"Pasta, whole-wheat, dry (Includes foods for USDA's Food Distribution Program)",viso grūdo makaronai,цельнозерновая паста
+pearl_barley,Perlinės kruopos,Перловка,grains,plant,g,,,gluten,yes,170284,"Barley, pearled, raw",perlinių kruopų,перловая крупа
+millet,Soros,Пшено,grains,plant,g,,,,yes,169702,"Millet, raw",sorų kruopos,пшённая крупа
+bulgur,Bulguras,Булгур,grains,plant,g,,,gluten,yes,170688,"Bulgur, dry",bulguro,булгур
+couscous,Kuskusas,Кускус,grains,plant,g,,,gluten,yes,169699,"Couscous, dry",kuskuso,кускус
+semolina,Manų kruopos,Манка,grains,plant,g,,,gluten,yes,173916,"Cereals, farina, unenriched, dry",manai,манная крупа
+flour,Kvietiniai miltai,Пшеничная мука,grains,plant,g,,,gluten,yes,169761,"Wheat flour, white, all-purpose, unenriched",miltai,мука
+quinoa,Bolivinės balandos,Киноа,grains,plant,g,,,,yes,168874,"Quinoa, uncooked",kinva;kinoja,квиноа
+red_lentils,Raudonieji lęšiai,Красная чечевица,legumes,plant,g,,,,yes,174284,"Lentils, pink or red, raw",lęšiai,чечевица
+green_lentils,Žalieji lęšiai,Зелёная чечевица,legumes,plant,g,,,,yes,172420,"Lentils, raw",rudieji lęšiai,чечевица зелёная
+chickpeas,Avinžirniai,Нут,legumes,plant,g,,,,yes,173756,"Chickpeas (garbanzo beans, bengal gram), mature seeds, raw",avinžirnių,нут сухой
+canned_chickpeas,Konservuoti avinžirniai,Нут консервированный,canned,plant,g,,,,yes,173801,"Chickpeas (garbanzo beans, bengal gram), mature seeds, canned, drained, rinsed in tap water",avinžirniai skardinėje,нут в банке
+canned_red_beans,Konservuotos raudonosios pupelės,Красная фасоль консервированная,canned,plant,g,,,,yes,174285,"Beans, kidney, red, mature seeds, canned, drained solids",raudonos pupelės,красная фасоль;фасоль
+canned_white_beans,Konservuotos baltosios pupelės,Белая фасоль консервированная,canned,plant,g,,,,yes,175204,"Beans, white, mature seeds, canned",baltos pupelės,белая фасоль
+split_peas,Skaldyti žirniai,Колотый горох,legumes,plant,g,,,,yes,172428,"Peas, green, split, mature seeds, raw",žirniai,горох
+rye_bread,Ruginė duona,Ржаной хлеб,bakery,plant,g,30,,gluten,yes,172684,"Bread, rye",duona;juoda duona,чёрный хлеб;хлеб ржаной
+wholegrain_bread,Pilno grūdo duona,Цельнозерновой хлеб,bakery,plant,g,30,,gluten,yes,172688,"Bread, whole-wheat, commercially prepared",grūdėta duona,хлеб цельнозерновой
+white_bread,Batonas,Батон,bakery,plant,g,25,,gluten,yes,174924,"Bread, white, commercially prepared (includes soft bread crumbs)",balta duona,белый хлеб
+tortilla,Kvietinės tortilijos,Пшеничные тортильи,bakery,plant,g,60,,gluten,yes,175037,"Tortillas, ready-to-bake or -fry, flour, refrigerated",tortilijos;lavašas,тортилья;лаваш
+chicken_breast,Vištienos krūtinėlė,Куриное филе,meat,meat,g,,,,no,171077,"Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw",vištienos filė;vištiena,куриная грудка;курица
+chicken_thigh,Vištienos šlaunelių mėsa,Филе куриного бедра,meat,meat,g,,,,no,173627,"Chicken, broilers or fryers, dark meat, thigh, meat only, raw",šlaunelės be kaulų;vištienos šlaunelės,куриные бёдра;бедро
+chicken_drumstick,Vištienos blauzdelės,Куриные голени,meat,meat,g,110,,,no,172373,"Chicken, broilers or fryers, drumstick, meat and skin, raw",blauzdelės,голень;куриные ножки
+chicken_liver,Vištienos kepenėlės,Куриная печень,meat,meat,g,,,,no,171060,"Chicken, liver, all classes, raw",kepenėlės,печень;печёнка
+turkey_mince,Kalakutienos faršas,Фарш из индейки,meat,meat,g,,,,no,172850,"Turkey, ground, 93% lean, 7% fat, raw",kalakutiena malta,индейка фарш
+beef_mince,Jautienos faršas,Говяжий фарш,meat,meat,g,,,,no,171796,"Beef, ground, 85% lean meat / 15% fat, raw (Includes foods for USDA's Food Distribution Program)",malta jautiena,фарш говяжий
+pork_mince,Kiaulienos faršas,Свиной фарш,meat,meat,g,,,,no,167902,"Pork, fresh, ground, raw",malta kiauliena,фарш свиной
+pork_shoulder,Kiaulienos sprandinė,Свиная шейка,meat,meat,g,,,,no,167849,"Pork, fresh, shoulder, (Boston butt), blade (steaks), separable lean and fat, raw",sprandinė;kiauliena,шейка;свинина
+pork_loin,Kiaulienos nugarinė,Свиная корейка,meat,meat,g,,,,no,168230,"Pork, fresh, loin, whole, separable lean only, raw",nugarinė,корейка;свиная вырезка
+beef_stew,Jautiena troškinimui,Говядина для тушения,meat,meat,g,,,,no,174051,"Beef, chuck, arm pot roast, separable lean only, trimmed to 1/8"" fat, all grades, raw",jautiena,говядина
+frankfurters,Dešrelės,Сосиски,meat,meat,g,50,,gluten;milk;soy;mustard;celery,yes,172949,"Frankfurter, beef, pork, and turkey, fat free",dešrelių,сосиска
+ham,Virtas kumpis,Ветчина,meat,meat,g,,,gluten;milk;soy,yes,173864,"Ham, sliced, regular (approximately 11% fat)",kumpis,ветчина нарезка
+bacon,Šoninė,Бекон,meat,meat,g,,,gluten;milk;soy,yes,168277,"Pork, cured, bacon, unprepared",rūkyta šoninė,грудинка
+salmon,Lašiša,Лосось,fish,fish,g,,,fish,no,175167,"Fish, salmon, Atlantic, farmed, raw",lašišos filė,сёмга;лосось филе
+cod,Menkė,Треска,fish,fish,g,,,fish,no,171955,"Fish, cod, Atlantic, raw",menkės filė,треска филе
+herring,Silkė,Сельдь,fish,fish,g,,,fish,no,175116,"Fish, herring, Atlantic, raw",silkės filė,селёдка
+pickled_herring,Marinuota silkė,Маринованная сельдь,fish,fish,g,,,fish;mustard;sulphites,yes,175118,"Fish, herring, Atlantic, pickled",silkė marinuota,селёдка маринованная
+mackerel,Skumbrė,Скумбрия,fish,fish,g,,,fish,no,175119,"Fish, mackerel, Atlantic, raw",skumbrės,скумбрия
+tuna_canned,Konservuotas tunas,Тунец консервированный,canned,fish,g,,,fish,yes,173709,"Fish, tuna, light, canned in water, drained solids (Includes foods for USDA's Food Distribution Program)",tunas savo sultyse;tunas,тунец
+tilapia,Tilapija,Тилапия,fish,fish,g,,,fish,no,175176,"Fish, tilapia, raw",tilapijos filė,тилапия
+shrimp,Krevetės,Креветки,fish,seafood,g,,,crustaceans,no,175179,"Crustaceans, shrimp, raw",krevečių,креветка
+milk,Pienas,Молоко,dairy,dairy,ml,,1.03,milk;lactose,no,171267,"Milk, reduced fat, fluid, 2% milkfat, with added vitamin A and vitamin D",pieno,молоко
+kefir,Kefyras,Кефир,dairy,dairy,ml,,1.03,milk;lactose,yes,170904,"Kefir, lowfat, plain, LIFEWAY",kefyro,кефирчик
+cottage_cheese_low,Liesa varškė,Нежирный творог,dairy,dairy,g,,,milk;lactose,yes,173417,"Cheese, cottage, lowfat, 1% milkfat",varškė,творог
+cottage_cheese,Riebi varškė,Жирный творог,dairy,dairy,g,,,milk;lactose,yes,172179,"Cheese, cottage, creamed, large or small curd",varškė 9%,творог 9%
+sour_cream,Grietinė,Сметана,dairy,dairy,g,,,milk;lactose,yes,171257,"Cream, sour, cultured",grietinės,сметанка
+yogurt,Natūralus jogurtas,Натуральный йогурт,dairy,dairy,g,,,milk;lactose,yes,171284,"Yogurt, plain, whole milk",jogurtas,йогурт
+greek_yogurt,Graikiškas jogurtas,Греческий йогурт,dairy,dairy,g,,,milk;lactose,yes,171304,"Yogurt, Greek, plain, whole milk",graikiško jogurto,греческий
+hard_cheese,Fermentinis sūris,Твёрдый сыр,dairy,dairy,g,,,milk,yes,171241,"Cheese, gouda",sūris;gouda,сыр;гауда
+mozzarella,Mocarela,Моцарелла,dairy,dairy,g,,,milk;lactose,yes,170845,"Cheese, mozzarella, whole milk",mocarelos,моцарелла
+feta,Fetos sūris,Сыр фета,dairy,dairy,g,,,milk;lactose,yes,173420,"Cheese, feta",feta,брынза
+parmesan,Parmezanas,Пармезан,dairy,dairy,g,,,milk,yes,170848,"Cheese, parmesan, hard",parmezano,пармезан
+butter,Sviestas,Сливочное масло,dairy,dairy,g,,,milk;lactose,no,173410,"Butter, salted",sviesto,масло сливочное
+cream,Grietinėlė,Сливки,dairy,dairy,ml,,1.0,milk;lactose,yes,170859,"Cream, fluid, heavy whipping",grietinėlės,сливки 30%
+egg,Kiaušiniai,Яйца,eggs,egg,pcs,55,,eggs,no,171287,"Egg, whole, raw, fresh",kiaušinis,яйцо
+sunflower_oil,Saulėgrąžų aliejus,Подсолнечное масло,oils,plant,ml,,0.92,,no,171025,"Oil, sunflower, linoleic, (approx. 65%)",aliejus,масло растительное
+olive_oil,Alyvuogių aliejus,Оливковое масло,oils,plant,ml,,0.91,,no,171413,"Oil, olive, salad or cooking",alyvuogių,оливковое
+rapeseed_oil,Rapsų aliejus,Рапсовое масло,oils,plant,ml,,0.92,,no,172336,"Oil, canola",rapsų,рапсовое
+walnuts,Graikiniai riešutai,Грецкие орехи,nuts_seeds,plant,g,,,nuts,yes,170187,"Nuts, walnuts, english",riešutai,грецкий орех
+almonds,Migdolai,Миндаль,nuts_seeds,plant,g,,,nuts,yes,170567,"Nuts, almonds",migdolų,миндаль
+hazelnuts,Lazdyno riešutai,Фундук,nuts_seeds,plant,g,,,nuts,yes,170581,"Nuts, hazelnuts or filberts",lazdynų riešutai,лесной орех
+peanuts,Žemės riešutai,Арахис,nuts_seeds,plant,g,,,peanuts,yes,172430,"Peanuts, all types, raw",arachis,арахис
+peanut_butter,Žemės riešutų sviestas,Арахисовая паста,nuts_seeds,plant,g,,,peanuts,yes,172470,"Peanut butter, smooth style, without salt",riešutų sviestas,арахисовое масло
+sunflower_seeds,Saulėgrąžos,Семечки подсолнечника,nuts_seeds,plant,g,,,,yes,170562,"Seeds, sunflower seed kernels, dried",lukštentos saulėgrąžos,семечки
+pumpkin_seeds,Moliūgų sėklos,Тыквенные семечки,nuts_seeds,plant,g,,,,yes,170556,"Seeds, pumpkin and squash seed kernels, dried",moliūgų sėklų,тыквенные семена
+flaxseed,Linų sėmenys,Семена льна,nuts_seeds,plant,g,,,,yes,169414,"Seeds, flaxseed",sėmenys,лён
+sesame,Sezamo sėklos,Кунжут,nuts_seeds,plant,g,,,sesame,yes,170150,"Seeds, sesame seeds, whole, dried",sezamas,кунжут
+chia,Ispaninio šalavijo sėklos,Семена чиа,nuts_seeds,plant,g,,,,yes,170554,"Seeds, chia seeds, dried",čija;chia,чиа
+salt,Druska,Соль,seasoning,plant,g,,,,no,173468,"Salt, table",valgomoji druska,соль
+sugar,Cukrus,Сахар,baking,plant,g,,,,no,169655,"Sugars, granulated",cukraus,сахарок
+honey,Medus,Мёд,baking,honey,g,,,,no,169640,Honey,medaus,мед
+mustard,Garstyčios,Горчица,condiments,plant,g,,,mustard,yes,172234,"Mustard, prepared, yellow",garstyčių,горчичка
+mayonnaise,Majonezas,Майонез,condiments,egg,g,,,eggs;mustard,yes,171009,"Salad dressing, mayonnaise, regular",majonezo,майонезик
+ketchup,Kečupas,Кетчуп,condiments,plant,g,,,,yes,168556,Catsup,pomidorų padažas,кетчуп
+soy_sauce,Sojų padažas,Соевый соус,condiments,plant,ml,,1.1,soy;gluten,yes,174277,Soy sauce made from soy and wheat (shoyu),sojos padažas,соевый
+vinegar,Actas,Уксус,condiments,plant,ml,,1.0,sulphites,yes,172237,"Vinegar, distilled",stalo actas,уксус столовый
+apple_vinegar,Obuolių actas,Яблочный уксус,condiments,plant,ml,,1.0,sulphites,yes,173469,"Vinegar, cider",obuolių,уксус яблочный
+black_pepper,Malti juodieji pipirai,Чёрный перец молотый,spices,plant,g,,,,yes,170931,"Spices, pepper, black",pipirai,перец чёрный
+paprika_powder,Malta paprika,Паприка молотая,spices,plant,g,,,,yes,171329,"Spices, paprika",paprikos prieskonis,паприка
+caraway,Kmynai,Тмин,spices,plant,g,,,,yes,170918,"Spices, caraway seed",kmynų,тмин
+bay_leaf,Lauro lapai,Лавровый лист,spices,plant,g,0.2,,,yes,170917,"Spices, bay leaf",lauro lapas,лаврушка
+turmeric,Ciberžolė,Куркума,spices,plant,g,,,,yes,172231,"Spices, turmeric, ground",kurkuma,куркума
+curry,Kario prieskoniai,Карри,spices,plant,g,,,,yes,170924,"Spices, curry powder",karis,карри
+cinnamon,Cinamonas,Корица,spices,plant,g,,,,yes,171320,"Spices, cinnamon, ground",cinamono,корица
+oregano,Raudonėlis,Орегано,spices,plant,g,,,,yes,171328,"Spices, oregano, dried",raudonėlio,душица
+basil_dried,Džiovintas bazilikas,Базилик сушёный,spices,plant,g,,,,yes,171317,"Spices, basil, dried",bazilikas,базилик
+cocoa,Kakava,Какао,baking,plant,g,,,,yes,169593,"Cocoa, dry powder, unsweetened",kakavos milteliai,какао-порошок
+yeast,Sausos mielės,Сухие дрожжи,baking,plant,g,,,,yes,175043,"Leavening agents, yeast, baker's, active dry",mielės,дрожжи
+baking_powder,Kepimo milteliai,Разрыхлитель,baking,plant,g,,,,yes,172803,"Leavening agents, baking powder, double-acting, sodium aluminum sulfate",kepimo,разрыхлитель теста
+starch,Kukurūzų krakmolas,Кукурузный крахмал,baking,plant,g,,,,yes,169698,Cornstarch,krakmolas,крахмал
+coconut_milk,Kokosų pienas,Кокосовое молоко,canned,plant,ml,,1.0,,yes,170173,"Nuts, coconut milk, canned (liquid expressed from grated meat and water)",kokosų,кокосовое
+tofu,Tofu,Тофу,legumes,plant,g,,,soy,yes,172448,"Tofu, firm, prepared with calcium sulfate and magnesium chloride (nigari)",sojų sūris,тофу
+jam,Uogienė,Варенье,baking,plant,g,,,,yes,169641,Jams and preserves,džemas,джем
+dark_chocolate,Juodasis šokoladas,Тёмный шоколад,baking,plant,g,,,milk;soy,yes,170273,"Chocolate, dark, 70-85% cacao solids",šokoladas,шоколад горький

@@ -13,6 +13,7 @@ erDiagram
   store_products ||--o{ price_history : "price over time"
   store_products ||--o{ price_anomalies : "flagged"
   ingredients ||--o{ ingredient_synonyms : "also called"
+  ingredients ||--o{ ingredient_nutrition : "per 100 g by source"
   ingredients ||--o{ ingredient_store_matches : "matched to"
   store_products ||--o{ ingredient_store_matches : "matches"
   recipes ||--o{ recipe_ingredients : contains
@@ -103,18 +104,26 @@ erDiagram
     text slug PK
     jsonb name "lt, ru"
     text category
-    text default_unit
-    numeric piece_g "1 svogūnas ≈ 100 g"
-    numeric density
+    text origin "plant | dairy | egg | fish | seafood | meat | honey"
+    text default_unit "g | ml | pcs"
+    numeric piece_g "1 svogūnas ≈ 110 g"
+    numeric density "g/ml"
     text_array allergens "14 EU + lactose"
-    text_array diet_tags
-    numeric kcal_100g
-    numeric protein_100g
-    numeric fat_100g
-    numeric carbs_100g
-    numeric fiber_100g
-    text usda_fdc_id
-    text availability_level "both_stores | missing"
+    bool composition_varies "depends on product → unknown for allergy"
+    int usda_fdc_id
+    text availability_level "both_stores | missing | unverified"
+    bool is_active
+  }
+  ingredient_nutrition {
+    bigint id PK
+    text ingredient_slug FK
+    text source "usda:<id> | label:<store>:<product>"
+    numeric kcal
+    numeric protein
+    numeric fat
+    numeric carbs
+    numeric fiber
+    timestamptz checked_at
   }
   ingredient_synonyms {
     bigint id PK
@@ -271,7 +280,7 @@ erDiagram
 
 | Таблицы | Чтение | Запись |
 |---|---|---|
-| `stores`, `ingredients`, `ingredient_synonyms`, `recipes` (только `auto_checked`/`reviewed`), `recipe_ingredients`, `demo_personas`, демо `meal_plans`/`baskets` | все | только service role / admin |
+| `stores`, `ingredients`, `ingredient_nutrition`, `ingredient_synonyms`, представление `ingredient_facts`, `recipes` (только `auto_checked`/`reviewed`), `recipe_ingredients`, `demo_personas`, демо `meal_plans`/`baskets` | все | только service role / admin |
 | `store_products`, `price_history` | все (цены публичные) | только service role / admin |
 | `profiles`, `questionnaires`, `household_members`, `meal_plans`, `plan_meals`, `baskets`, `basket_lines`, `favorites`, `pantry_leftovers` | владелец (`auth.uid()`) | владелец |
 | `subscriptions`, `payment_events` | владелец читает свою подписку | только Stripe-вебхук (service role) |
@@ -281,5 +290,6 @@ erDiagram
 - `store_products.checked_at` и `source` — NOT NULL; в корзину берутся строки с `checked_at > now() - 14 days` и без открытой аномалии.
 - `basket_lines` копирует `source` и `checked_at` товара на момент расчёта.
 - Рецепт со статусом `auto_checked`/`reviewed` ссылается только на ингредиенты `availability_level = both_stores`.
-- КБЖУ, аллергены, диеты и цена порции — только вычисляемые (представление `recipe_facts`), вручную не хранятся.
+- КБЖУ ингредиента — представление `ingredient_facts`: среднее по этикеткам, иначе USDA; у каждого значения источник. Диеты выводятся из `origin` + аллергенов в коде.
+- КБЖУ, аллергены, диеты и цена порции рецепта — только вычисляемые (представление `recipe_facts`), вручную не хранятся.
 - `questionnaires` нельзя создать без `profiles.health_consent_at`.

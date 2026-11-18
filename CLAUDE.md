@@ -43,6 +43,9 @@ npm run db:test        # pgTAP: RLS и ограничения (DATABASE_URL)
 npm run db:local       # временный Postgres 16 + pgTAP: миграции + тесты RLS (так же в CI)
 npm run db:migrate     # применить миграции (SUPABASE_DB_URL; в main — GitHub Actions)
 npm run screenshots -- <папка> [url]  # скриншоты 360/1440, светлая и тёмная
+npm run ingredients:check     # CSV каталога + USDA: схема, дубли, калории ≈ БЖУ
+npm run ingredients:import    # каталог → БД (идемпотентно; в CI после миграций)
+npm run usda:extract          # пересобрать data/seed/usda_sr_legacy.json из USDA SR Legacy
 npm run ingredients:verify
 npm run recipes:generate -- --count 100 --meal dinner --diet vegetarian
 npm run recipes:check
