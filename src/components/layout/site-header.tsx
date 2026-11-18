@@ -1,4 +1,5 @@
 import { useTranslations } from 'next-intl';
+import { AccountLink } from '@/components/auth/account-link';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { LanguageSwitcher } from './language-switcher';
@@ -35,6 +36,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-1">
           <LanguageSwitcher className="hidden md:flex" />
           <ThemeToggle />
+          <AccountLink />
           <Button asChild size="sm" className="hidden md:inline-flex">
             <Link href={START_HREF}>{t('nav.start')}</Link>
           </Button>

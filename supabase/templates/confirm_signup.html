@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="lt">
+  <body style="margin: 0; background: #faf5ec; font-family: Inter, Arial, sans-serif; color: #22201c">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="center" style="padding: 32px 16px">
+          <table
+            role="presentation"
+            width="100%"
+            style="max-width: 520px; background: #ffffff; border-radius: 20px; padding: 32px"
+          >
+            <tr>
+              <td style="font-family: Georgia, serif; font-size: 22px; font-weight: 600">Lėkštė</td>
+            </tr>
+            <tr>
+              <td style="padding-top: 20px; font-size: 20px; font-weight: 600">Patvirtinkite el. paštą</td>
+            </tr>
+            <tr>
+              <td style="padding-top: 8px; font-size: 15px; line-height: 1.5; color: #6b645b">
+                Paspauskite mygtuką — paskyra bus aktyvuota, o jūsų norma ir atsakymai išsaugoti.
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 24px 0">
+                <a
+                  href="{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=signup"
+                  style="
+                    display: inline-block;
+                    background: #c13f22;
+                    color: #ffffff;
+                    text-decoration: none;
+                    font-weight: 600;
+                    padding: 14px 24px;
+                    border-radius: 999px;
+                  "
+                  >Patvirtinti el. paštą</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td style="font-size: 13px; line-height: 1.5; color: #6b645b">
+                Подтвердите e-mail: нажмите кнопку выше.<br /><br />Nuoroda veikia bet kuriame įrenginyje ir galioja 1
+                valandą. Jei to neprašėte — tiesiog ignoruokite šį laišką.
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -7,6 +7,7 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { LanguageSwitcher } from '@/components/layout/language-switcher';
 import { Button } from '@/components/ui/button';
 import type { PickerItem } from '@/lib/ingredients/picker';
+import { saveQuestionnaire } from '@/lib/auth/actions';
 import { answers, type Draft } from '@/lib/questionnaire/schema';
 import { STEPS, firstIncomplete, stepComplete, withDefaults } from '@/lib/questionnaire/steps';
 import { clearDraft, loadDraft, saveDraft } from '@/lib/questionnaire/storage';
@@ -58,6 +59,13 @@ export function Wizard({ items }: { items: readonly PickerItem[] }) {
   const final = answers.safeParse(withDefaults(draft));
   const showResult = step >= STEPS.length && final.success;
   const finalOk = final.success;
+
+  // signed in: the finished questionnaire also goes to the account (guests: the action answers "not signed in")
+  const finalData = final.success ? final.data : null;
+  useEffect(() => {
+    if (showResult && finalData) void saveQuestionnaire(finalData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- save once per reaching the result
+  }, [showResult]);
 
   // a broken or outdated draft past the last screen: go back to the first unanswered question
   useEffect(() => {

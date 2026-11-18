@@ -53,7 +53,8 @@ for (const file of files) {
       if (line.includes('i18n-ignore') || line.trim().startsWith('//') || line.trim().startsWith('*')) return;
       // text right after a JSX opening/closing tag, up to the next tag or {expression}
       for (const m of line.matchAll(/<\/?[A-Za-z][\w.]*(?:\s[^<>]*)?>([^<>{}]+)(?=[<{]|$)/g))
-        if (LETTER.test(m[1]!)) problems.push(`${file}:${i + 1}: JSX text "${m[1]!.trim()}"`);
+        // "useState<string | null>(null)" and "t(x as Parameters<typeof t>[0])" are TypeScript generics, not JSX
+        if (LETTER.test(m[1]!) && !/^[([]/.test(m[1]!)) problems.push(`${file}:${i + 1}: JSX text "${m[1]!.trim()}"`);
       for (const m of line.matchAll(/\b(aria-label|title|alt|placeholder)="([^"]+)"/g))
         if (LETTER.test(m[2]!)) problems.push(`${file}:${i + 1}: ${m[1]}="${m[2]}"`);
     });

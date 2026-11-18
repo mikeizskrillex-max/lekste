@@ -3,6 +3,7 @@
 import { Info, Stethoscope } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { Link } from '@/i18n/navigation';
 import { formatEur, formatNumber } from '@/lib/i18n/format';
 import { needsDoctor } from '@/lib/nutrition/safety';
 import { householdTargets, totals, type PersonTarget } from '@/lib/nutrition/targets';
@@ -108,6 +109,9 @@ export function NormResult({
         <p id="build-soon" className="text-muted max-w-md text-sm">
           {t('result.buildSoon')}
         </p>
+        <Button asChild variant="secondary" size="lg">
+          <Link href="/registracija">{t('result.saveToAccount')}</Link>
+        </Button>
         <Button variant="ghost" onClick={onEdit}>
           {t('result.edit')}
         </Button>
