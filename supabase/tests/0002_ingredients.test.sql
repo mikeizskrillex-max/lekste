@@ -6,9 +6,12 @@ select plan(28);
 -- catalogue is loaded and complete
 select ok((select count(*) from public.ingredients where is_active) >= 120, 'at least 120 active ingredients');
 select is((select count(*)::int from public.ingredients i
-           where not exists (select 1 from public.ingredient_nutrition n where n.ingredient_slug = i.slug and n.source like 'usda:%')),
-          0, 'every ingredient has a USDA nutrition row');
-select is((select count(*)::int from public.ingredient_facts where kcal_100g is null), 0, 'every ingredient has kcal in ingredient_facts');
+           where i.usda_fdc_id is not null
+             and not exists (select 1 from public.ingredient_nutrition n where n.ingredient_slug = i.slug and n.source = 'usda:' || i.usda_fdc_id)),
+          0, 'every ingredient with a USDA id has that USDA nutrition row');
+select is((select count(*)::int from public.ingredient_facts f join public.ingredients i using (slug)
+           where f.kcal_100g is null and i.usda_fdc_id is not null), 0,
+          'only ingredients waiting for labels have no kcal');
 select is((select count(*)::int from public.ingredients i
            where not exists (select 1 from public.ingredient_synonyms s where s.ingredient_slug = i.slug and s.locale = 'ru')),
           0, 'every ingredient has a Russian name');

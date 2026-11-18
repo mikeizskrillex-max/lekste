@@ -12,6 +12,7 @@ const usda = usdaSubset.parse(JSON.parse(readFileSync('data/seed/usda_sr_legacy.
 const errors = problems.map((p) => `line ${p.line} (${p.slug}): ${p.message}`);
 
 for (const row of rows) {
+  if (!row.usda_fdc_id) continue; // waits for product labels
   const food = usda.foods[row.usda_fdc_id];
   if (!food) {
     errors.push(`${row.slug}: USDA ${row.usda_fdc_id} missing — run npm run usda:extract`);
@@ -34,6 +35,8 @@ if (errors.length) {
 }
 const withAllergens = rows.filter((r) => r.allergens.length).length;
 const varies = rows.filter((r) => r.composition_varies).length;
+const awaiting = rows.filter((r) => !r.usda_fdc_id).map((r) => r.slug);
 console.log(
-  `ingredients:check — ${rows.length} ingredients OK (${withAllergens} with allergens, ${varies} "composition depends on product")`,
+  `ingredients:check — ${rows.length} ingredients OK (${withAllergens} with allergens, ${varies} "composition depends on product")` +
+    (awaiting.length ? `; nutrition waits for labels: ${awaiting.join(', ')}` : ''),
 );

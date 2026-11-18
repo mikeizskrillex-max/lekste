@@ -10,11 +10,27 @@
       "carbs": 9.32,
       "fiber": 2.8
     },
+    "167811": {
+      "description": "Pork, fresh, backfat, raw",
+      "kcal": 812,
+      "protein": 2.92,
+      "fat": 88.69,
+      "carbs": 0,
+      "fiber": 0
+    },
     "167849": {
       "description": "Pork, fresh, shoulder, (Boston butt), blade (steaks), separable lean and fat, raw",
       "kcal": 186,
       "protein": 17.42,
       "fat": 12.36,
+      "carbs": 0,
+      "fiber": 0
+    },
+    "167853": {
+      "description": "Pork, fresh, spareribs, separable lean and fat, raw",
+      "kcal": 277,
+      "protein": 15.47,
+      "fat": 23.4,
       "carbs": 0,
       "fiber": 0
     },
@@ -58,6 +74,14 @@
       "carbs": 9.13,
       "fiber": 2.1
     },
+    "168209": {
+      "description": "Raspberries, frozen, red, unsweetened",
+      "kcal": 56,
+      "protein": 1.15,
+      "fat": 0.81,
+      "carbs": 12.55,
+      "fiber": 4.3
+    },
     "168230": {
       "description": "Pork, fresh, loin, whole, separable lean only, raw",
       "kcal": 143,
@@ -81,6 +105,14 @@
       "fat": 0.11,
       "carbs": 3.63,
       "fiber": 0.5
+    },
+    "168422": {
+      "description": "Mushrooms, Chanterelle, raw",
+      "kcal": 32,
+      "protein": 1.49,
+      "fat": 0.53,
+      "carbs": 6.86,
+      "fiber": 3.8
     },
     "168448": {
       "description": "Pumpkin, raw",
@@ -169,6 +201,14 @@
       "fat": 0.17,
       "carbs": 9.56,
       "fiber": 2.8
+    },
+    "169146": {
+      "description": "Beets, cooked, boiled, drained",
+      "kcal": 44,
+      "protein": 1.68,
+      "fat": 0.18,
+      "carbs": 9.96,
+      "fiber": 2
     },
     "169214": {
       "description": "Corn, sweet, yellow, canned, whole kernel, drained solids",
@@ -794,6 +834,14 @@
       "carbs": 8.53,
       "fiber": 6.7
     },
+    "171722": {
+      "description": "Cranberries, raw",
+      "kcal": 46,
+      "protein": 0.46,
+      "fat": 0.13,
+      "carbs": 11.97,
+      "fiber": 3.6
+    },
     "171796": {
       "description": "Beef, ground, 85% lean meat / 15% fat, raw (Includes foods for USDA's Food Distribution Program)",
       "kcal": 215,
@@ -816,6 +864,14 @@
       "protein": 11.12,
       "fat": 4.3,
       "carbs": 3.38,
+      "fiber": 0
+    },
+    "172225": {
+      "description": "Milk, buttermilk, fluid, whole",
+      "kcal": 62,
+      "protein": 3.21,
+      "fat": 3.31,
+      "carbs": 4.88,
       "fiber": 0
     },
     "172231": {
@@ -986,6 +1042,14 @@
       "carbs": 0.93,
       "fiber": 0
     },
+    "173472": {
+      "description": "Horseradish, prepared",
+      "kcal": 48,
+      "protein": 1.18,
+      "fat": 0.69,
+      "carbs": 11.29,
+      "fiber": 3.3
+    },
     "173627": {
       "description": "Chicken, broilers or fryers, dark meat, thigh, meat only, raw",
       "kcal": 121,
@@ -1057,6 +1121,14 @@
       "fat": 0.64,
       "carbs": 12.17,
       "fiber": 2.7
+    },
+    "173963": {
+      "description": "Currants, european black, raw",
+      "kcal": 63,
+      "protein": 1.4,
+      "fat": 0.41,
+      "carbs": 15.38,
+      "fiber": null
     },
     "174051": {
       "description": "Beef, chuck, arm pot roast, separable lean only, trimmed to 1/8\" fat, all grades, raw",

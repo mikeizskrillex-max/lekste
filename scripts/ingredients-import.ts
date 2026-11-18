@@ -29,8 +29,8 @@ await client.connect();
 try {
   await client.query('begin');
   for (const r of rows) {
-    const food = usda.foods[r.usda_fdc_id];
-    if (!food) throw new Error(`${r.slug}: USDA ${r.usda_fdc_id} missing`);
+    const food = r.usda_fdc_id ? usda.foods[r.usda_fdc_id] : undefined;
+    if (r.usda_fdc_id && !food) throw new Error(`${r.slug}: USDA ${r.usda_fdc_id} missing`);
     await client.query(
       `insert into public.ingredients
          (slug, name, category, origin, default_unit, piece_g, density, allergens, composition_varies, usda_fdc_id, is_active)
@@ -50,7 +50,7 @@ try {
         r.density_g_ml,
         r.allergens,
         r.composition_varies,
-        Number(r.usda_fdc_id),
+        r.usda_fdc_id ? Number(r.usda_fdc_id) : null,
       ],
     );
     // Synonyms = both names + listed synonyms. Replaced as a whole so removed synonyms disappear.
@@ -68,11 +68,13 @@ try {
         [r.slug, locale, term],
       );
     }
-    const source = `usda:${r.usda_fdc_id}`;
+    // no USDA record → no USDA row; nutrition comes only from product labels (phase 4)
+    const source = food ? `usda:${r.usda_fdc_id}` : '';
     await client.query(
       `delete from public.ingredient_nutrition where ingredient_slug = $1 and source like 'usda:%' and source <> $2`,
       [r.slug, source],
     );
+    if (!food) continue;
     await client.query(
       `insert into public.ingredient_nutrition (ingredient_slug, source, kcal, protein, fat, carbs, fiber)
        values ($1, $2, $3, $4, $5, $6, $7)

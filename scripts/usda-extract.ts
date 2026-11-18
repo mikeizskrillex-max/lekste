@@ -29,7 +29,7 @@ const dir = join(work, readdirSync(work).find((d) => d.startsWith('FoodData_Cent
 
 const { rows, problems } = parseCatalogue(readFileSync('data/seed/ingredients_lt.csv', 'utf8'));
 if (problems.length) throw new Error(`fix ingredients_lt.csv first (npm run ingredients:check)`);
-const wanted = new Set(rows.map((r) => r.usda_fdc_id));
+const wanted = new Set(rows.map((r) => r.usda_fdc_id).filter(Boolean));
 
 const descriptions = new Map(
   parseCsv(readFileSync(join(dir, 'food.csv'), 'utf8')).map((f) => [f.fdc_id, f.description]),

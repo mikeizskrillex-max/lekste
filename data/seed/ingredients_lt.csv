@@ -148,3 +148,16 @@ coconut_milk,Kokosų pienas,Кокосовое молоко,canned,plant,ml,,1.0
 tofu,Tofu,Тофу,legumes,plant,g,,,soy,yes,172448,"Tofu, firm, prepared with calcium sulfate and magnesium chloride (nigari)",sojų sūris,тофу
 jam,Uogienė,Варенье,baking,plant,g,,,,yes,169641,Jams and preserves,džemas,джем
 dark_chocolate,Juodasis šokoladas,Тёмный шоколад,baking,plant,g,,,milk;soy,yes,170273,"Chocolate, dark, 70-85% cacao solids",šokoladas,шоколад горький
+lasiniai,Lašiniai,Сало,meat,meat,g,,,,yes,167811,"Pork, fresh, backfat, raw",sūdyti lašiniai;lašinukai,сало солёное;шпик
+pork_ribs,Kiaulienos šonkauliai,Свиные рёбрышки,meat,meat,g,,,,no,167853,"Pork, fresh, spareribs, separable lean and fat, raw",šonkauliai,рёбра свиные
+cooked_beetroot,Virti burokėliai,Варёная свёкла,vegetables,plant,g,150,,,no,169146,"Beets, cooked, boiled, drained",virti burokai;vakuumuoti burokėliai,свекла варёная
+chanterelles,Voveraitės,Лисички,vegetables,plant,g,,,,no,168422,"Mushrooms, Chanterelle, raw",voveraičių,лисичка
+cranberries,Spanguolės,Клюква,fruit,plant,g,,,,no,171722,"Cranberries, raw",spanguolių,клюковка
+frozen_raspberries,Šaldytos avietės,Малина замороженная,frozen,plant,g,,,,no,168209,"Raspberries, frozen, red, unsweetened",avietės,малина
+blackcurrants,Šaldyti juodieji serbentai,Чёрная смородина замороженная,frozen,plant,g,,,,no,173963,"Currants, european black, raw",juodieji serbentai;serbentai,смородина
+horseradish,Krienai,Хрен,condiments,plant,g,,,,yes,173472,"Horseradish, prepared",tarkuoti krienai,хрен тёртый
+rugpienis,Rūgpienis,Простокваша,dairy,dairy,ml,,1.03,milk;lactose,yes,172225,"Milk, buttermilk, fluid, whole",rūgusis pienas,кислое молоко
+kastinys,Kastinys,Кастинис,dairy,dairy,g,,,milk;lactose,yes,,,kastinio,кастинис сметанное масло
+curd_snack,Varškės sūrelis,Глазированный сырок,dairy,dairy,pcs,40,,milk;lactose,yes,,,glaistytas sūrelis;sūrelis,сырок
+farmer_cheese,Varškės sūris,Творожный сыр,dairy,dairy,g,,,milk;lactose,yes,,,baltas sūris;naminis sūris,литовский творожный сыр
+potato_starch,Bulvių krakmolas,Картофельный крахмал,baking,plant,g,,,,yes,,,bulvių krakmolo,крахмал картофельный

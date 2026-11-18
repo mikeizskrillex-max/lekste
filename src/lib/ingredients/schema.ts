@@ -55,8 +55,9 @@ export const ingredientCsvRow = z
     density_g_ml: optionalNumber.refine((d) => d === null || d < 3, 'density must be under 3 g/ml'),
     allergens: splitList.pipe(z.array(z.enum(ALLERGENS))),
     composition_varies: z.enum(['yes', 'no']).transform((v) => v === 'yes'),
-    usda_fdc_id: z.string().regex(/^\d{4,7}$/),
-    usda_description: z.string().min(3),
+    // empty = no fitting USDA record: nutrition waits for product labels (phase 4)
+    usda_fdc_id: z.string().regex(/^(\d{4,7})?$/),
+    usda_description: z.string(),
     synonyms_lt: termList,
     synonyms_ru: termList,
   })
@@ -66,6 +67,9 @@ export const ingredientCsvRow = z
     }
     if (row.unit === 'ml' && row.density_g_ml === null) {
       ctx.addIssue({ code: 'custom', message: 'unit "ml" needs density_g_ml' });
+    }
+    if ((row.usda_fdc_id === '') !== (row.usda_description === '')) {
+      ctx.addIssue({ code: 'custom', message: 'usda_fdc_id and usda_description go together' });
     }
     if (row.allergens.includes('lactose') && !row.allergens.includes('milk')) {
       ctx.addIssue({ code: 'custom', message: 'lactose without milk' });

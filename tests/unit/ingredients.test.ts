@@ -67,7 +67,7 @@ describe('ingredient catalogue (data/seed)', () => {
   });
 
   it('every ingredient has USDA values whose energy matches the macros', () => {
-    for (const r of rows) {
+    for (const r of rows.filter((x) => x.usda_fdc_id)) {
       const food = usda.foods[r.usda_fdc_id];
       expect(food, r.slug).toBeDefined();
       if (food && !ENERGY_CHECK_EXEMPT[r.slug]) expect(energyCheck(food).ok, r.slug).toBe(true);
