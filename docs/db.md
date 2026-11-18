@@ -51,18 +51,23 @@ erDiagram
     text url
     text title "as in store"
     text brand
+    text category_path
     numeric pack_size
     text pack_unit "g | ml | pcs"
-    numeric price "EUR incl. PVM"
-    numeric unit_price "per kg / l"
-    numeric promo_price
+    bool sold_by_weight
+    numeric sale_step_kg "Rimi bananas: 1.6"
+    numeric price "without a card, EUR incl. PVM"
+    numeric regular_price "before a promo for everyone"
+    numeric card_price "Ačiū / Mano Rimi"
     date promo_from
     date promo_to
-    bool promo_loyalty
+    numeric unit_price "per kg / l / pcs"
     bool in_stock
+    text ingredients_text "label"
+    jsonb nutrients "label kcal, protein, fat, carbs"
     timestamptz checked_at "NOT NULL"
     text source "NOT NULL: scraper:barbora | csv:<file>"
-    jsonb allergens_declared "from product label, null = unknown"
+    timestamptz missing_since
   }
   price_history {
     bigint id PK
@@ -135,9 +140,9 @@ erDiagram
     bigint id PK
     text ingredient_slug FK
     uuid product_id FK
-    int priority
-    numeric match_confidence
-    bool verified_by_admin
+    numeric confidence "0-1"
+    text status "auto | needs_review | confirmed | rejected"
+    text reason "name, shelf, kcal_ok, kcal_mismatch, ..."
   }
   recipes {
     uuid id PK
@@ -281,13 +286,14 @@ erDiagram
 | Таблицы | Чтение | Запись |
 |---|---|---|
 | `stores`, `ingredients`, `ingredient_nutrition`, `ingredient_synonyms`, представление `ingredient_facts`, `recipes` (только `auto_checked`/`reviewed`), `recipe_ingredients`, `demo_personas`, демо `meal_plans`/`baskets` | все | только service role / admin |
-| `store_products`, `price_history` | все (цены публичные) | только service role / admin |
+| `store_products`, `price_history`, `ingredient_store_matches`, представление `basket_prices` | все (цены публичные) | только service role / admin |
 | `profiles`, `questionnaires`, `household_members`, `meal_plans`, `plan_meals`, `baskets`, `basket_lines`, `favorites`, `pantry_leftovers` | владелец (`auth.uid()`) | владелец |
 | `subscriptions`, `payment_events` | владелец читает свою подписку | только Stripe-вебхук (service role) |
-| `price_anomalies`, `scrape_runs`, `csv_imports`, `ingredient_store_matches`, `ai_requests`, `events`, `admin_audit` | admin | service role / admin |
+| `price_anomalies`, `scrape_runs`, `csv_imports`, `ai_requests`, `events`, `admin_audit` | admin | service role / admin |
 
 ## Инварианты (проверяются CHECK-ограничениями и тестами)
-- `store_products.checked_at` и `source` — NOT NULL; в корзину берутся строки с `checked_at > now() - 14 days` и без открытой аномалии.
+- `store_products.checked_at` и `source` — NOT NULL; корзина читает только представление `basket_prices`: `checked_at > now() - 14 days`, в наличии, сопоставление `auto`/`confirmed`, без открытой аномалии.
+- Цена по карте не выше цены без карты (CHECK).
 - `basket_lines` копирует `source` и `checked_at` товара на момент расчёта.
 - Рецепт со статусом `auto_checked`/`reviewed` ссылается только на ингредиенты `availability_level = both_stores`.
 - КБЖУ ингредиента — представление `ingredient_facts`: среднее по этикеткам, иначе USDA; у каждого значения источник. Диеты выводятся из `origin` + аллергенов в коде. Ингредиент без КБЖУ (нет записи USDA и ещё нет этикеток) в рецепты не попадает.

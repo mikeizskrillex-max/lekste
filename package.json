@@ -22,7 +22,9 @@
     "db:local": "bash scripts/db-local.sh",
     "ingredients:check": "tsx scripts/ingredients-check.ts",
     "ingredients:import": "tsx scripts/ingredients-import.ts",
-    "usda:extract": "tsx scripts/usda-extract.ts"
+    "usda:extract": "tsx scripts/usda-extract.ts",
+    "prices:scrape": "tsx scripts/prices-scrape.ts",
+    "prices:import-csv": "tsx scripts/prices-import-csv.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "7.0.7",

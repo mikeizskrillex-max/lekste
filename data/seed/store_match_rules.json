@@ -1,0 +1,1886 @@
+{
+  "_note": "Как найти товары магазина для ингредиента. include: хотя бы одна строка, где ВСЕ основы слов есть в названии товара (без диакритики); '=' — точное слово. exclude: товар не подходит, если есть любая основа (или все основы строки). globalExclude — для всех ингредиентов.",
+  "globalExclude": [
+    "kudik",
+    "kosel",
+    "tyrel",
+    "sunim",
+    "sunu",
+    "kacem",
+    "kaciu",
+    "sampun",
+    "muil",
+    "dezodor",
+    "kosmet",
+    "indaplov",
+    "skalb",
+    "valikl",
+    "zvak",
+    "dovan",
+    "rinkin",
+    "prieskoniu misin",
+    "nuo men",
+    "knyg",
+    "zaisl",
+    "katem",
+    "kat",
+    "=lele",
+    "marmaluz",
+    "gyvun",
+    "skanest",
+    "putes",
+    "puokst",
+    "vazon gel",
+    "=gele"
+  ],
+  "rules": {
+    "carrot": {
+      "include": ["mork"],
+      "exclude": ["sult", "salot", "korej", "traskuc", "tyrel", "sriub", "kimc"]
+    },
+    "onion": {
+      "include": ["svogun"],
+      "exclude": [
+        "raudon",
+        "laisk",
+        "zali",
+        "marinuot",
+        "kepint",
+        "traskuc",
+        "dziovint",
+        "milt",
+        "granul",
+        "pasta",
+        "padaz",
+        "ziedai"
+      ]
+    },
+    "red_onion": {
+      "include": ["raudon svogun", "rausv svogun"],
+      "exclude": ["marinuot", "kepint", "traskuc", "dziovint"]
+    },
+    "garlic": {
+      "include": ["cesnak"],
+      "exclude": [
+        "milt",
+        "granul",
+        "dziovint",
+        "pasta",
+        "padaz",
+        "duon",
+        "traskuc",
+        "marinuot",
+        "sviest",
+        "malt",
+        "prieskon"
+      ]
+    },
+    "potato": {
+      "include": ["bulv"],
+      "exclude": [
+        "traskuc",
+        "saldz",
+        "batat",
+        "koldun",
+        "cepelin",
+        "fri",
+        "blyn",
+        "salot",
+        "milt",
+        "krakmol",
+        "kukul",
+        "sviest",
+        "kosel",
+        "sriub",
+        "dribsn",
+        "kepint",
+        "virt",
+        "traskut",
+        "tark",
+        "vedar",
+        "pyrag",
+        "kos",
+        "bulvyt",
+        "cips",
+        "kepsn",
+        "kotlet",
+        "prieskon",
+        "grustuv",
+        "skustuk",
+        "tesl",
+        "kroket",
+        "dziuv",
+        "kepsnel"
+      ]
+    },
+    "sweet_potato": {
+      "include": ["batat", "saldz bulv"],
+      "exclude": ["traskuc", "fri", "tyrel"]
+    },
+    "cabbage": {
+      "include": ["baltagu kopust", "=kopustai", "=kopustu"],
+      "exclude": [
+        "raudongu",
+        "raudon",
+        "ziedin",
+        "raugint",
+        "kinisk",
+        "briusel",
+        "pekin",
+        "brokol",
+        "salot",
+        "kaliaropi",
+        "troskint",
+        "balandel",
+        "sult",
+        "kinin",
+        "kimch"
+      ]
+    },
+    "red_cabbage": {
+      "include": ["raudongu kopust", "raudon kopust"],
+      "exclude": ["raugint", "troskint", "salot", "marinuot", "kimch", "daig", "pjaust"]
+    },
+    "cauliflower": {
+      "include": ["ziedin kopust"],
+      "exclude": ["mis", "sriub", "tyrel", "ryz", "salot"]
+    },
+    "broccoli": {
+      "include": ["brokol"],
+      "exclude": ["mis", "sriub", "tyrel", "salot", "daig"]
+    },
+    "beetroot": {
+      "include": ["burok", "runkel"],
+      "exclude": [
+        "virt",
+        "sult",
+        "salot",
+        "marinuot",
+        "dziovint",
+        "traskuc",
+        "sriub",
+        "cukr",
+        "lap",
+        "milt",
+        "tyrel",
+        "karpac",
+        "korejiet",
+        "trauktin",
+        "misrain"
+      ]
+    },
+    "cooked_beetroot": {
+      "include": ["virt burok", "burok virt"],
+      "exclude": ["salot", "sult", "marinuot"]
+    },
+    "cucumber": {
+      "include": ["agurk"],
+      "exclude": [
+        "marinuot",
+        "raugint",
+        "konserv",
+        "sult",
+        "salot",
+        "sud",
+        "pjaust",
+        "jur",
+        "kimc",
+        "majonez",
+        "azijiet"
+      ]
+    },
+    "tomato": {
+      "include": ["pomidor"],
+      "exclude": [
+        "vysnin",
+        "cherry",
+        "padaz",
+        "sult",
+        "konserv",
+        "past",
+        "dziov",
+        "kecup",
+        "trint",
+        "pjaust",
+        "salot",
+        "sriub",
+        "traskuc",
+        "savo",
+        "lupt",
+        "gabaliuk",
+        "smulkint"
+      ]
+    },
+    "cherry_tomato": {
+      "include": ["vysnin pomidor", "cherry pomidor", "=cherry"],
+      "exclude": ["dziov", "padaz", "konserv", "marinuot", "saldain", "pergal"]
+    },
+    "red_pepper": {
+      "include": ["raudon paprik", "paprik raudon"],
+      "exclude": [
+        "malt",
+        "dziov",
+        "marinuot",
+        "konserv",
+        "past",
+        "padaz",
+        "traskuc",
+        "kepint",
+        "prieskon",
+        "aitr",
+        "chalap"
+      ]
+    },
+    "green_pepper": {
+      "include": ["zali paprik", "zalios paprik", "paprik zali"],
+      "exclude": ["malt", "dziov", "marinuot", "konserv", "past", "padaz", "traskuc", "aitr", "chalap"]
+    },
+    "zucchini": {
+      "include": ["cukinij"],
+      "exclude": ["traskuc", "sriub", "ikr", "blyn"]
+    },
+    "eggplant": {
+      "include": ["baklazan"],
+      "exclude": ["ikr", "kepint", "past", "konserv", "padaz", "makaron"]
+    },
+    "pumpkin": {
+      "include": ["moliug"],
+      "exclude": ["sekl", "aliej", "sult", "tyrel", "sriub", "bandel", "pyrag", "kosel", "cukat"]
+    },
+    "celery": {
+      "include": ["salier stieb", "stiebin salier", "salier lap"],
+      "exclude": ["sult", "sakn"]
+    },
+    "leek": {
+      "include": ["=porai", "=poras", "=poru"],
+      "exclude": ["sriub", "daig", "bambuk"]
+    },
+    "spinach": {
+      "include": ["spinat"],
+      "exclude": ["sriub", "padaz", "pyrag", "koldun", "traskuc", "lakst", "makaron", "tortil", "burek", "paplot"]
+    },
+    "lettuce": {
+      "include": [
+        "salot lapin",
+        "lapin salot",
+        "romanin salot",
+        "salot misin",
+        "salotu misin",
+        "=gegutines",
+        "salot lap"
+      ],
+      "exclude": [
+        "padaz",
+        "uzpil",
+        "vistien",
+        "kumpi",
+        "tun",
+        "jur",
+        "krevet",
+        "sur",
+        "kiausin",
+        "makaron",
+        "bulv",
+        "burok",
+        "mork",
+        "kopust",
+        "cezar"
+      ]
+    },
+    "iceberg": {
+      "include": ["ledin salot", "iceberg"],
+      "exclude": ["padaz", "vistien", "kumpi"]
+    },
+    "mushroom": {
+      "include": ["pievagryb", "sampinjon"],
+      "exclude": [
+        "marinuot",
+        "konserv",
+        "sriub",
+        "padaz",
+        "dziov",
+        "kepint",
+        "pyrag",
+        "koldun",
+        "past",
+        "suktin",
+        "rollin"
+      ]
+    },
+    "radish": {
+      "include": ["ridik"],
+      "exclude": ["juod", "daikon", "lap"]
+    },
+    "dill": {
+      "include": ["krap"],
+      "exclude": ["sekl", "dziov", "agurk", "padaz", "sviest", "traskuc", "marinuot", "sur"]
+    },
+    "parsley": {
+      "include": ["petrazol"],
+      "exclude": ["sakn", "dziov", "malt"]
+    },
+    "spring_onion": {
+      "include": ["svogun laisk", "laiskin svogun", "zali svogun", "zalieji svogun"],
+      "exclude": ["traskuc", "sur", "grietin", "padaz"]
+    },
+    "ginger": {
+      "include": ["imbier"],
+      "exclude": [
+        "sult",
+        "arbat",
+        "marinuot",
+        "malt",
+        "dziov",
+        "sausain",
+        "gerim",
+        "saldain",
+        "sirup",
+        "sokolad",
+        "shot",
+        "sauc",
+        "imbierin",
+        "kuciuk",
+        "cukruot",
+        "dzem",
+        "tyre"
+      ]
+    },
+    "avocado": {
+      "include": ["avokad"],
+      "exclude": ["aliej", "past", "padaz", "guakamol", "sokolad", "salot"]
+    },
+    "lemon": {
+      "include": ["citrin"],
+      "exclude": [
+        "sult",
+        "rugst",
+        "arbat",
+        "gerim",
+        "pyrag",
+        "krem",
+        "limonad",
+        "melis",
+        "aliej",
+        "vanden",
+        "saldain",
+        "sirup",
+        "ledai",
+        "sausain",
+        "zol",
+        "sokolad",
+        "pipir",
+        "jogurt",
+        "tort",
+        "keks",
+        "zel",
+        "citrinzol",
+        "citrinpipir"
+      ]
+    },
+    "frozen_peas": {
+      "include": ["saldyt zirnel", "zaliej zirnel", "zirnel saldyt", "zali zirnel"],
+      "exclude": ["konserv", "mis", "traskuc", "sriub", "makaron"]
+    },
+    "frozen_green_beans": {
+      "include": ["sparagin pupel"],
+      "exclude": ["konserv", "mis", "marinuot", "salot"]
+    },
+    "frozen_veg_mix": {
+      "include": ["darzov misin", "darzoviu misin", "meksik misin", "darzov mis"],
+      "exclude": [
+        "sriub",
+        "traskuc",
+        "sult",
+        "konserv",
+        "marinuot",
+        "salot",
+        "bulgur",
+        "coleslaw",
+        "milt",
+        "prieskon",
+        "blyn"
+      ]
+    },
+    "canned_corn": {
+      "include": ["kukuruz", "sald kukuruz"],
+      "exclude": [
+        "traskuc",
+        "dribsn",
+        "milt",
+        "spraged",
+        "lazdel",
+        "krakmol",
+        "kruop",
+        "aliej",
+        "sirup",
+        "burbuol",
+        "pagal",
+        "sausain",
+        "sriub",
+        "gerim",
+        "tortil",
+        "pop",
+        "ziedel",
+        "spragin",
+        "lazd"
+      ]
+    },
+    "sauerkraut": {
+      "include": ["raugint kopust"],
+      "exclude": ["salot", "troskint", "sult", "sriub", "koldun"]
+    },
+    "pickles": {
+      "include": ["marinuot agurk", "raugint agurk", "konserv agurk", "agurk marinuot", "agurkel", "sud agurk"],
+      "exclude": ["salot", "sult", "padaz"]
+    },
+    "tomato_paste": {
+      "include": ["pomidor past", "pomidoru past"],
+      "exclude": ["padaz"]
+    },
+    "canned_tomatoes": {
+      "include": [
+        "pjaust pomidor",
+        "pomidor pjaust",
+        "trint pomidor",
+        "pomidor savo sult",
+        "konserv pomidor",
+        "pomidor savo"
+      ],
+      "exclude": ["padaz", "sriub", "dziov", "kecup", "past"]
+    },
+    "apple": {
+      "include": ["obuol"],
+      "exclude": [
+        "sult",
+        "gerim",
+        "dziov",
+        "traskuc",
+        "pyrag",
+        "tyrel",
+        "sidr",
+        "uogien",
+        "dzem",
+        "pastil",
+        "sausain",
+        "ledai",
+        "kosel",
+        "jogurt",
+        "desert",
+        "arbat",
+        "act",
+        "sirup",
+        "sokolad",
+        "nektar",
+        "kokteil",
+        "glaist",
+        "zel",
+        "marmelad",
+        "limonad",
+        "keks",
+        "batonel",
+        "guminuk",
+        "kremas",
+        "tort",
+        "musl",
+        "granol",
+        "dribsn",
+        "kriaus",
+        "=vynas",
+        "=vyno",
+        "kos",
+        "sur",
+        "bandel",
+        "uzkand",
+        "ziev",
+        "pipir",
+        "tesl",
+        "pyn"
+      ]
+    },
+    "banana": {
+      "include": ["banan"],
+      "exclude": [
+        "sult",
+        "gerim",
+        "dziov",
+        "traskuc",
+        "pyrag",
+        "tyrel",
+        "sidr",
+        "uogien",
+        "dzem",
+        "pastil",
+        "sausain",
+        "ledai",
+        "kosel",
+        "jogurt",
+        "desert",
+        "arbat",
+        "act",
+        "sirup",
+        "sokolad",
+        "nektar",
+        "kokteil",
+        "glaist",
+        "zel",
+        "marmelad",
+        "limonad",
+        "keks",
+        "batonel",
+        "guminuk",
+        "kremas",
+        "tort",
+        "musl",
+        "granol",
+        "dribsn",
+        "=vynas",
+        "=vyno",
+        "kos",
+        "sur",
+        "bandel",
+        "uzkand",
+        "ziev",
+        "pipir",
+        "tesl",
+        "pyn"
+      ]
+    },
+    "pear": {
+      "include": ["kriaus"],
+      "exclude": [
+        "sult",
+        "gerim",
+        "dziov",
+        "traskuc",
+        "pyrag",
+        "tyrel",
+        "sidr",
+        "uogien",
+        "dzem",
+        "pastil",
+        "sausain",
+        "ledai",
+        "kosel",
+        "jogurt",
+        "desert",
+        "arbat",
+        "act",
+        "sirup",
+        "sokolad",
+        "nektar",
+        "kokteil",
+        "glaist",
+        "zel",
+        "marmelad",
+        "limonad",
+        "keks",
+        "batonel",
+        "guminuk",
+        "kremas",
+        "tort",
+        "musl",
+        "granol",
+        "dribsn",
+        "=vynas",
+        "=vyno",
+        "kos",
+        "sur",
+        "bandel",
+        "uzkand",
+        "ziev",
+        "pipir",
+        "tesl",
+        "pyn"
+      ]
+    },
+    "orange": {
+      "include": ["apelsin"],
+      "exclude": [
+        "sult",
+        "gerim",
+        "dziov",
+        "traskuc",
+        "pyrag",
+        "tyrel",
+        "sidr",
+        "uogien",
+        "dzem",
+        "pastil",
+        "sausain",
+        "ledai",
+        "kosel",
+        "jogurt",
+        "desert",
+        "arbat",
+        "act",
+        "sirup",
+        "sokolad",
+        "nektar",
+        "kokteil",
+        "glaist",
+        "zel",
+        "marmelad",
+        "limonad",
+        "keks",
+        "batonel",
+        "guminuk",
+        "kremas",
+        "tort",
+        "musl",
+        "granol",
+        "dribsn",
+        "=vynas",
+        "=vyno",
+        "kos",
+        "sur",
+        "bandel",
+        "uzkand",
+        "ziev",
+        "pipir",
+        "tesl",
+        "pyn"
+      ]
+    },
+    "mandarin": {
+      "include": ["mandarin", "klementin"],
+      "exclude": [
+        "sult",
+        "gerim",
+        "dziov",
+        "traskuc",
+        "pyrag",
+        "tyrel",
+        "sidr",
+        "uogien",
+        "dzem",
+        "pastil",
+        "sausain",
+        "ledai",
+        "kosel",
+        "jogurt",
+        "desert",
+        "arbat",
+        "act",
+        "sirup",
+        "sokolad",
+        "nektar",
+        "kokteil",
+        "glaist",
+        "zel",
+        "marmelad",
+        "limonad",
+        "keks",
+        "batonel",
+        "guminuk",
+        "kremas",
+        "tort",
+        "musl",
+        "granol",
+        "dribsn",
+        "konserv",
+        "=vynas",
+        "=vyno",
+        "kos",
+        "sur",
+        "bandel",
+        "uzkand",
+        "ziev",
+        "pipir",
+        "tesl",
+        "pyn"
+      ]
+    },
+    "kiwi": {
+      "include": ["=kiviai", "=kivis", "=kiviu", "kiv gold", "kiv zal"],
+      "exclude": [
+        "sult",
+        "gerim",
+        "dziov",
+        "traskuc",
+        "pyrag",
+        "tyrel",
+        "sidr",
+        "uogien",
+        "dzem",
+        "pastil",
+        "sausain",
+        "ledai",
+        "kosel",
+        "jogurt",
+        "desert",
+        "arbat",
+        "act",
+        "sirup",
+        "sokolad",
+        "nektar",
+        "kokteil",
+        "glaist",
+        "zel",
+        "marmelad",
+        "limonad",
+        "keks",
+        "batonel",
+        "guminuk",
+        "kremas",
+        "tort",
+        "musl",
+        "granol",
+        "dribsn",
+        "=vynas",
+        "=vyno",
+        "kos",
+        "sur",
+        "bandel",
+        "uzkand",
+        "ziev",
+        "pipir",
+        "tesl",
+        "pyn"
+      ]
+    },
+    "grapes": {
+      "include": ["vynuog"],
+      "exclude": [
+        "sult",
+        "gerim",
+        "dziov",
+        "traskuc",
+        "pyrag",
+        "tyrel",
+        "sidr",
+        "uogien",
+        "dzem",
+        "pastil",
+        "sausain",
+        "ledai",
+        "kosel",
+        "jogurt",
+        "desert",
+        "arbat",
+        "act",
+        "sirup",
+        "sokolad",
+        "nektar",
+        "kokteil",
+        "glaist",
+        "zel",
+        "marmelad",
+        "limonad",
+        "keks",
+        "batonel",
+        "guminuk",
+        "kremas",
+        "tort",
+        "musl",
+        "granol",
+        "dribsn",
+        "lap",
+        "razin",
+        "=vynas",
+        "=vyno",
+        "kos",
+        "sur",
+        "bandel",
+        "uzkand",
+        "ziev",
+        "pipir",
+        "tesl",
+        "pyn"
+      ]
+    },
+    "frozen_blueberries": {
+      "include": ["saldyt melyn", "melyn saldyt"],
+      "exclude": ["sult", "uogien", "dzem", "jogurt", "ledai", "koldun"]
+    },
+    "frozen_strawberries": {
+      "include": ["saldyt brask", "brask saldyt"],
+      "exclude": ["sult", "uogien", "dzem", "jogurt", "ledai"]
+    },
+    "raisins": {
+      "include": ["razin"],
+      "exclude": [
+        "sokolad",
+        "sausain",
+        "bandel",
+        "glaist",
+        "musl",
+        "granol",
+        "pyrag",
+        "keks",
+        "batonel",
+        "riesut mis",
+        "mis"
+      ]
+    },
+    "prunes": {
+      "include": ["dziovint slyv", "slyv dziovint", "=slyvos dziovintos"],
+      "exclude": ["sokolad", "glaist", "sult", "dzem", "uogien"]
+    },
+    "buckwheat": {
+      "include": ["grik"],
+      "exclude": [
+        "milt",
+        "dribsn",
+        "traskuc",
+        "duon",
+        "sausain",
+        "medus",
+        "arbat",
+        "trapuc",
+        "plotkel",
+        "kos",
+        "sriub",
+        "makaron",
+        "lakst",
+        "gerim"
+      ]
+    },
+    "oats": {
+      "include": ["avizin dribsn", "avizu dribsn"],
+      "exclude": [
+        "sausain",
+        "batonel",
+        "kos",
+        "granol",
+        "musl",
+        "gerim",
+        "pien",
+        "sokolad",
+        "traskuc",
+        "trapuc",
+        "plotkel"
+      ]
+    },
+    "rice": {
+      "include": ["ryz"],
+      "exclude": [
+        "rud",
+        "laukin",
+        "juod",
+        "raudon",
+        "traskuc",
+        "dribsn",
+        "duon",
+        "milt",
+        "gerim",
+        "pien",
+        "plotkel",
+        "sausain",
+        "kos",
+        "mis",
+        "patiekal",
+        "trapuc",
+        "lakst",
+        "makaron",
+        "popier",
+        "act",
+        "vyn",
+        "sirup",
+        "sriub",
+        "krakmol",
+        "pud",
+        "desert",
+        "virt",
+        "maisel",
+        "integrual",
+        "nesmulkint"
+      ]
+    },
+    "brown_rice": {
+      "include": ["rud ryz", "ryz rud", "integrual ryz", "nesmulkint ryz"],
+      "exclude": ["traskuc", "plotkel", "trapuc", "gerim", "pien", "mis"]
+    },
+    "pasta": {
+      "include": [
+        "makaron",
+        "spaget",
+        "=penne",
+        "fusil",
+        "farfal",
+        "kaspinel",
+        "rigaton",
+        "tagliatel",
+        "sraigtel",
+        "ragel"
+      ],
+      "exclude": [
+        "pilno",
+        "viso",
+        "pilnagrud",
+        "glitim",
+        "ryz",
+        "lesi",
+        "avinzir",
+        "greit",
+        "sriub",
+        "lakst",
+        "kosel",
+        "sur",
+        "padaz",
+        "kiausin",
+        "udon",
+        "grikin",
+        "ramen",
+        "soba"
+      ]
+    },
+    "wholewheat_pasta": {
+      "include": [
+        "pilno grud makaron",
+        "viso grud makaron",
+        "pilno grud spaget",
+        "viso grud spaget",
+        "pilnagrud makaron",
+        "pilno grud penne",
+        "pilno grud fusil",
+        "pilno grud"
+      ],
+      "exclude": [
+        "duon",
+        "milt",
+        "dribsn",
+        "sausain",
+        "traskuc",
+        "batonel",
+        "kruop",
+        "trapuc",
+        "plotkel",
+        "lavas",
+        "tortil",
+        "kos",
+        "bandel",
+        "ryz",
+        "garstyc",
+        "skrebuc"
+      ]
+    },
+    "pearl_barley": {
+      "include": ["perlin kruop"],
+      "exclude": ["kos", "sriub"]
+    },
+    "millet": {
+      "include": ["=soros", "=soru", "sorų"],
+      "exclude": ["dribsn", "kos", "milt", "lazdel"]
+    },
+    "bulgur": {
+      "include": ["bulgur"],
+      "exclude": ["salot", "kos", "mis"]
+    },
+    "couscous": {
+      "include": ["kuskus"],
+      "exclude": ["salot", "mis", "sur", "cederi"]
+    },
+    "semolina": {
+      "include": ["man kruop", "manu kruop"],
+      "exclude": ["kos", "desert", "pud"]
+    },
+    "flour": {
+      "include": ["kvietin milt"],
+      "exclude": ["pilno", "viso", "grud", "spelt", "glitim", "mis", "blyn", "pyrag", "duon", "picos", "sausain"]
+    },
+    "quinoa": {
+      "include": ["bolivin baland", "kinv", "quinoa", "kinoj"],
+      "exclude": ["traskuc", "trapuc", "mis", "dribsn", "batonel", "salot"]
+    },
+    "red_lentils": {
+      "include": ["raudon les", "raudonieji les"],
+      "exclude": ["sriub", "makaron", "traskuc", "traskut"]
+    },
+    "green_lentils": {
+      "include": ["zali les", "zalieji les", "rud les", "ruduosius les", "=lesiai"],
+      "exclude": ["raudon", "sriub", "makaron", "traskuc", "konserv", "virt", "daig"]
+    },
+    "chickpeas": {
+      "include": ["avinzir"],
+      "exclude": [
+        "konserv",
+        "virt",
+        "savo",
+        "skardin",
+        "traskuc",
+        "humus",
+        "milt",
+        "past",
+        "makaron",
+        "padaz",
+        "snek",
+        "uztepel",
+        "vapeur"
+      ]
+    },
+    "canned_chickpeas": {
+      "include": ["avinzir konserv", "konserv avinzir", "virt avinzir", "avinzir savo", "avinzir vanden"],
+      "exclude": ["humus", "padaz", "traskuc"]
+    },
+    "canned_red_beans": {
+      "include": ["raudon pupel"],
+      "exclude": ["dziov", "saus", "padaz", "pomidor", "sriub", "milt"]
+    },
+    "canned_white_beans": {
+      "include": ["balt pupel"],
+      "exclude": ["padaz", "pomidor", "dziov", "saus", "sriub", "milt"]
+    },
+    "split_peas": {
+      "include": ["skald zirn", "zirn skald", "geltonieji zirn"],
+      "exclude": ["sriub", "milt", "traskuc"]
+    },
+    "rye_bread": {
+      "include": ["rugin duon", "juod duon", "plikyt duon"],
+      "exclude": ["traskuc", "trapuc", "sausain", "skrebut", "krekeri", "milt", "gira", "sumustin", "bandel"]
+    },
+    "wholegrain_bread": {
+      "include": ["pilno grud duon", "viso grud duon", "grudet duon", "pilnagrud duon", "sekl duon"],
+      "exclude": ["traskuc", "trapuc", "sausain", "skrebut", "krekeri", "sumustin"]
+    },
+    "white_bread": {
+      "include": ["=batonas", "balt duon", "kvietin duon", "skrebutin duon"],
+      "exclude": ["traskuc", "sausain", "dziuvesel", "dzi", "glitim"]
+    },
+    "tortilla": {
+      "include": ["tortil", "lavas"],
+      "exclude": ["traskuc", "padaz", "kukuruz", "sumustin", "vyniot"]
+    },
+    "chicken_breast": {
+      "include": [
+        "vistien krutinel",
+        "visciuk krutinel",
+        "vistu krutinel",
+        "broiler krutinel",
+        "visciuku krutinel",
+        "krutinel file"
+      ],
+      "exclude": [
+        "rukyt",
+        "virt",
+        "kepint",
+        "marinuot",
+        "pjausnel",
+        "kotlet",
+        "desr",
+        "salot",
+        "sumustin",
+        "grill",
+        "griliu",
+        "kepsn",
+        "vytint",
+        "sald",
+        "farš",
+        "fars",
+        "malt",
+        "kulinar",
+        "pane",
+        "nuggets",
+        "kalakut",
+        "zarij",
+        "kept",
+        "vyniot",
+        "ruk",
+        "karst"
+      ]
+    },
+    "chicken_thigh": {
+      "include": [
+        "slaunel mes",
+        "slaunel file",
+        "slauneliu file",
+        "be kaul slaunel",
+        "slaunel be kaul",
+        "slaunel be odos"
+      ],
+      "exclude": [
+        "rukyt",
+        "kepint",
+        "marinuot",
+        "grill",
+        "griliu",
+        "kalakut",
+        "virt",
+        "antien",
+        "iesmel",
+        "zarij",
+        "kept"
+      ]
+    },
+    "chicken_drumstick": {
+      "include": ["blauzdel"],
+      "exclude": ["rukyt", "kepint", "marinuot", "kalakut", "grill", "griliu", "virt", "kiaul", "zarij", "kept"]
+    },
+    "chicken_liver": {
+      "include": ["vist kepenel", "visciuk kepenel", "vistien kepenel", "vistu kepenel"],
+      "exclude": ["pastet", "kiaul", "jaut", "kalakut", "desr", "tepi", "kapotin", "vyniot", "kept"]
+    },
+    "turkey_mince": {
+      "include": ["kalakut fars", "malt kalakut"],
+      "exclude": ["kotlet", "kepint", "desr"]
+    },
+    "beef_mince": {
+      "include": ["jaut fars", "malt jaut", "jautien fars"],
+      "exclude": ["kiaul", "mis", "kotlet", "kepint"]
+    },
+    "pork_mince": {
+      "include": ["kiaul fars", "malt kiaul", "kiaulien fars"],
+      "exclude": ["jaut", "mis", "kotlet", "kepint"]
+    },
+    "pork_shoulder": {
+      "include": ["kiaul sprand", "sprandin"],
+      "exclude": ["rukyt", "virt", "kepint", "marinuot", "saslyk", "jaut", "vytint", "kepsn"]
+    },
+    "pork_loin": {
+      "include": ["kiaul nugarin", "kiaulien nugarin"],
+      "exclude": ["rukyt", "virt", "jaut", "kepint", "vytint", "marinuot"]
+    },
+    "pork_ribs": {
+      "include": ["kiaul sonkaul", "kiaulien sonkaul", "=sonkauliai"],
+      "exclude": ["rukyt", "virt", "kepint", "marinuot", "jaut", "grill", "griliu"]
+    },
+    "beef_stew": {
+      "include": [
+        "jaut troskinim",
+        "jautien troskinim",
+        "jaut gabal",
+        "jautien gabal",
+        "jaut kubel",
+        "jautien kubel",
+        "jaut guliasa",
+        "jautien guliasa",
+        "jaut mentel",
+        "jautien mentel"
+      ],
+      "exclude": ["konserv", "rukyt", "vytint", "kepint", "sriub", "troskinta", "troskinys"]
+    },
+    "frankfurters": {
+      "include": ["desrel"],
+      "exclude": [
+        "kumpel",
+        "kepint",
+        "konserv",
+        "sur",
+        "traskuc",
+        "vistien desrel",
+        "zirn",
+        "bandel",
+        "kopust",
+        "soj",
+        "salot",
+        "vytint",
+        "augalin",
+        "vegan",
+        "kabanos"
+      ]
+    },
+    "ham": {
+      "include": ["virt kump", "kump griezinel", "kumpis pjaust", "kump pjaust", "=kumpis"],
+      "exclude": [
+        "rukyt",
+        "vytint",
+        "kiaul kump",
+        "sur",
+        "salot",
+        "sumustin",
+        "pic",
+        "desr",
+        "kalakut",
+        "jaut",
+        "prosciut",
+        "serrano",
+        "vyt",
+        "kapot"
+      ]
+    },
+    "bacon": {
+      "include": ["sonin"],
+      "exclude": ["sriub", "traskuc", "virt", "pupel"]
+    },
+    "salmon": {
+      "include": ["lasis"],
+      "exclude": [
+        "rukyt",
+        "sud",
+        "konserv",
+        "pastet",
+        "sumustin",
+        "salot",
+        "marinuot",
+        "kepint",
+        "pane",
+        "kotlet",
+        "lazdel",
+        "padaz",
+        "sriub",
+        "aliej",
+        "savo",
+        "pomidor",
+        "vytint",
+        "upetak",
+        "ikr",
+        "uztepel",
+        "alyvuog",
+        "pirstel",
+        "malt"
+      ]
+    },
+    "cod": {
+      "include": ["menk"],
+      "exclude": [
+        "rukyt",
+        "sud",
+        "konserv",
+        "pastet",
+        "sumustin",
+        "salot",
+        "marinuot",
+        "kepint",
+        "pane",
+        "kotlet",
+        "lazdel",
+        "padaz",
+        "sriub",
+        "aliej",
+        "savo",
+        "pomidor",
+        "vytint",
+        "kepenel",
+        "ikr",
+        "pirstel",
+        "krem",
+        "malt"
+      ]
+    },
+    "herring": {
+      "include": ["=silke", "=silkes", "silk file"],
+      "exclude": [
+        "rukyt",
+        "sud",
+        "konserv",
+        "pastet",
+        "sumustin",
+        "salot",
+        "marinuot",
+        "kepint",
+        "pane",
+        "kotlet",
+        "lazdel",
+        "padaz",
+        "sriub",
+        "aliej",
+        "savo",
+        "pomidor",
+        "vytint",
+        "kailin",
+        "pataln"
+      ]
+    },
+    "pickled_herring": {
+      "include": ["marinuot silk", "silk marinuot", "silk aliej", "silkes file aliej", "silk file aliej"],
+      "exclude": ["salot", "kailin", "sviez", "saldyt"]
+    },
+    "mackerel": {
+      "include": ["skumbr"],
+      "exclude": [
+        "rukyt",
+        "sud",
+        "konserv",
+        "pastet",
+        "sumustin",
+        "salot",
+        "marinuot",
+        "kepint",
+        "pane",
+        "kotlet",
+        "lazdel",
+        "padaz",
+        "sriub",
+        "aliej",
+        "savo",
+        "pomidor",
+        "vytint"
+      ]
+    },
+    "tuna_canned": {
+      "include": ["tun savo sult", "tun gabal", "tunas savo", "tuno file", "=tunas", "=tuno", "=tunu"],
+      "exclude": ["salot", "pastet", "sumustin", "padaz", "pomidor", "kepsn", "sviez", "saldyt"]
+    },
+    "tilapia": {
+      "include": ["tilapij"],
+      "exclude": ["pane", "kepint", "padaz"]
+    },
+    "shrimp": {
+      "include": ["krevet"],
+      "exclude": ["traskuc", "salot", "padaz", "sriub", "koktel", "pane", "tempur", "sumustin", "marinuot"]
+    },
+    "milk": {
+      "include": ["=pienas", "=pieno"],
+      "exclude": [
+        "kokos",
+        "soj",
+        "aviz",
+        "migdol",
+        "ryz",
+        "sokolad",
+        "kondensuot",
+        "sutirst",
+        "milt",
+        "rugus",
+        "kakav",
+        "kava",
+        "gerim",
+        "sausain",
+        "kokteil",
+        "kos",
+        "desert",
+        "sur",
+        "ledai",
+        "glaist",
+        "milkshake",
+        "miltel",
+        "saus",
+        "laktoz"
+      ]
+    },
+    "kefir": {
+      "include": ["kefyr"],
+      "exclude": ["saltibarsc", "vaisi", "brask", "melyn", "banan", "gerim", "sokolad", "grik"]
+    },
+    "cottage_cheese_low": {
+      "include": ["lies varsk", "varsk lies", "varsk 0"],
+      "exclude": ["surel", "desert", "glaist", "sald", "krem", "apkep", "blyn", "vaisi", "sokolad", "sur "]
+    },
+    "cottage_cheese": {
+      "include": [
+        "varsk 9",
+        "varsk 5",
+        "riebi varsk",
+        "varsk riebi",
+        "pusriebe varsk",
+        "varsk pusrieb",
+        "grudet varsk",
+        "=varske"
+      ],
+      "exclude": [
+        "surel",
+        "desert",
+        "glaist",
+        "sald",
+        "krem",
+        "apkep",
+        "blyn",
+        "lies",
+        "vaisi",
+        "sokolad",
+        "sur",
+        "sur "
+      ]
+    },
+    "sour_cream": {
+      "include": ["grietin"],
+      "exclude": ["grietinel", "padaz", "uzpil", "sviest", "sur", "traskuc", "svogun", "cesnak", "krap"]
+    },
+    "yogurt": {
+      "include": ["natural jogurt", "jogurt natural", "nesaldint jogurt", "jogurt nesaldint"],
+      "exclude": ["graik", "vaisi", "brask", "gerim", "geriam", "sokolad", "melyn", "banan", "musl", "kokos"]
+    },
+    "greek_yogurt": {
+      "include": ["graik jogurt", "graikisk jogurt", "graikisko stil jogurt"],
+      "exclude": ["vaisi", "brask", "medaus", "melyn", "sokolad", "musl", "granol"]
+    },
+    "hard_cheese": {
+      "include": ["fermentin sur", "kietas sur", "gouda", "dzugas", "dziugas", "=edam", "tilzit", "=suris"],
+      "exclude": [
+        "lydyt",
+        "tep",
+        "surel",
+        "grietin",
+        "varsk",
+        "traskuc",
+        "lazdel",
+        "sumustin",
+        "mocarel",
+        "fet",
+        "parmez",
+        "sviest",
+        "rukyt",
+        "pic",
+        "padaz"
+      ]
+    },
+    "mozzarella": {
+      "include": ["mocarel", "mozzarel"],
+      "exclude": ["pic", "padaz", "lazdel", "traskuc", "sumustin"]
+    },
+    "feta": {
+      "include": ["=feta", "=fetos"],
+      "exclude": ["salot", "pic", "padaz"]
+    },
+    "parmesan": {
+      "include": ["parmez", "parmigian", "grana padan"],
+      "exclude": ["padaz", "traskuc", "pic"]
+    },
+    "butter": {
+      "include": ["sviest"],
+      "exclude": [
+        "zemes riesut",
+        "riesut",
+        "kakav",
+        "augal",
+        "mis",
+        "sumustin",
+        "kepim",
+        "padaz",
+        "cesnak",
+        "zolel",
+        "traskuc",
+        "sausain",
+        "margarin",
+        "tepi",
+        "lazdyn",
+        "migdol",
+        "sokolad",
+        "karamel",
+        "krem",
+        "bandel",
+        "tesl"
+      ]
+    },
+    "cream": {
+      "include": ["grietinel"],
+      "exclude": [
+        "sutrint",
+        "purskiam",
+        "augal",
+        "kav",
+        "kokos",
+        "padaz",
+        "ledai",
+        "krem",
+        "desert",
+        "sur",
+        "soj",
+        "aviz",
+        "rugst",
+        "rugusi"
+      ]
+    },
+    "egg": {
+      "include": ["kiausin"],
+      "exclude": [
+        "sokolad",
+        "makaron",
+        "lakst",
+        "salot",
+        "virt",
+        "milt",
+        "majonez",
+        "putpel",
+        "kinder",
+        "staigmen",
+        "dazai",
+        "dazy",
+        "plak",
+        "sumustin"
+      ]
+    },
+    "sunflower_oil": {
+      "include": ["saulegraz aliej"],
+      "exclude": ["majonez", "padaz"]
+    },
+    "olive_oil": {
+      "include": ["alyvuog aliej"],
+      "exclude": ["majonez", "padaz", "alyvuog vyn"]
+    },
+    "rapeseed_oil": {
+      "include": ["raps aliej"],
+      "exclude": ["majonez", "padaz"]
+    },
+    "walnuts": {
+      "include": ["graikin riesut"],
+      "exclude": [
+        "sokolad",
+        "sausain",
+        "batonel",
+        "mis",
+        "gerim",
+        "pien",
+        "milt",
+        "aliej",
+        "sviest",
+        "past",
+        "krem",
+        "tepi",
+        "glaist",
+        "saldain",
+        "traskuc",
+        "granol",
+        "musl",
+        "halv"
+      ]
+    },
+    "almonds": {
+      "include": ["migdol"],
+      "exclude": [
+        "sokolad",
+        "sausain",
+        "batonel",
+        "mis",
+        "gerim",
+        "pien",
+        "milt",
+        "aliej",
+        "sviest",
+        "past",
+        "krem",
+        "tepi",
+        "glaist",
+        "saldain",
+        "traskuc",
+        "granol",
+        "musl",
+        "halv",
+        "dribsn",
+        "lazdel"
+      ]
+    },
+    "hazelnuts": {
+      "include": ["lazdyn riesut", "lazdyno"],
+      "exclude": [
+        "sokolad",
+        "sausain",
+        "batonel",
+        "mis",
+        "gerim",
+        "pien",
+        "milt",
+        "aliej",
+        "sviest",
+        "past",
+        "krem",
+        "tepi",
+        "glaist",
+        "saldain",
+        "traskuc",
+        "granol",
+        "musl",
+        "halv"
+      ]
+    },
+    "peanuts": {
+      "include": ["zemes riesut", "arachis"],
+      "exclude": [
+        "sokolad",
+        "sausain",
+        "batonel",
+        "mis",
+        "gerim",
+        "pien",
+        "milt",
+        "aliej",
+        "sviest",
+        "past",
+        "krem",
+        "tepi",
+        "glaist",
+        "saldain",
+        "traskuc",
+        "granol",
+        "musl",
+        "halv"
+      ]
+    },
+    "peanut_butter": {
+      "include": ["zemes riesut sviest", "zemes riesut past", "arachis sviest", "arachis past", "riesut sviest"],
+      "exclude": ["sokolad", "sausain", "batonel", "traskuc", "saldain", "tartalet", "karamel"]
+    },
+    "sunflower_seeds": {
+      "include": ["saulegraz"],
+      "exclude": ["aliej", "halv", "duon", "batonel", "sausain", "traskuc", "pauks", "lesal", "gel", "puokst", "daig"]
+    },
+    "pumpkin_seeds": {
+      "include": ["moliug sekl"],
+      "exclude": ["aliej", "duon", "batonel", "sausain", "traskuc", "milt"]
+    },
+    "flaxseed": {
+      "include": ["linu semen", "semen", "linu sekl"],
+      "exclude": ["aliej", "milt", "duon", "traskuc", "trapuc"]
+    },
+    "sesame": {
+      "include": ["sezam"],
+      "exclude": ["aliej", "past", "batonel", "halv", "duon", "traskuc", "sausain", "trapuc", "bandel", "tahin"]
+    },
+    "chia": {
+      "include": ["chia", "ispan salavij", "cia sekl"],
+      "exclude": ["gerim", "pud", "batonel", "jogurt", "desert", "duon"]
+    },
+    "salt": {
+      "include": ["drusk"],
+      "exclude": [
+        "indaplov",
+        "vonios",
+        "kelio",
+        "jur drusk vonio",
+        "traskuc",
+        "sud",
+        "riesut",
+        "pistacij",
+        "karamel",
+        "spragesi",
+        "duon",
+        "valikl",
+        "specialios"
+      ]
+    },
+    "sugar": {
+      "include": ["cukr"],
+      "exclude": [
+        "pudr",
+        "vanilin",
+        "cinamon",
+        "sirup",
+        "be cukr",
+        "saldikl",
+        "ledinuk",
+        "vat",
+        "nendr",
+        "rud",
+        "maz cukr",
+        "sumazint",
+        "cukr nepridet",
+        "glaist",
+        "sald",
+        "gerim"
+      ]
+    },
+    "honey": {
+      "include": ["=medus", "=medaus"],
+      "exclude": [
+        "sausain",
+        "garstyc",
+        "arbat",
+        "batonel",
+        "pyrag",
+        "dribsn",
+        "sviest",
+        "gerim",
+        "saldain",
+        "musl",
+        "granol",
+        "jogurt",
+        "pien"
+      ]
+    },
+    "mustard": {
+      "include": ["garstyc"],
+      "exclude": ["sekl", "milt", "aliej", "pupel", "lap", "majonez", "padaz med", "kepint"]
+    },
+    "mayonnaise": {
+      "include": ["majonez"],
+      "exclude": ["padaz cesnak", "cesnak", "krevet", "salot"]
+    },
+    "ketchup": {
+      "include": ["kecup"],
+      "exclude": ["traskuc"]
+    },
+    "soy_sauce": {
+      "include": ["soj padaz", "sojos padaz"],
+      "exclude": ["marinat", "lakst", "makaron"]
+    },
+    "vinegar": {
+      "include": ["=actas", "=acto", "stalo act", "spirit act"],
+      "exclude": ["obuol", "vyn", "balzam", "ryz", "sult", "agurk", "marinuot", "valikl", "valym"]
+    },
+    "apple_vinegar": {
+      "include": ["obuol act", "obuoliu act"],
+      "exclude": ["sult", "gerim"]
+    },
+    "black_pepper": {
+      "include": ["juod pipir", "pipir juod"],
+      "exclude": ["traskuc", "desr", "sur", "padaz", "mis", "sokolad"]
+    },
+    "paprika_powder": {
+      "include": ["malt paprik", "paprik malt", "saldi paprik", "rukyt paprik"],
+      "exclude": ["traskuc", "desr", "padaz", "marinuot", "sviez"]
+    },
+    "caraway": {
+      "include": ["kmyn"],
+      "exclude": ["duon", "sur", "sausain", "traskuc", "desr", "aliej"]
+    },
+    "bay_leaf": {
+      "include": ["laur lap"],
+      "exclude": []
+    },
+    "turmeric": {
+      "include": ["ciberzol", "kurkum"],
+      "exclude": ["arbat", "gerim", "shot", "kaps", "latte"]
+    },
+    "curry": {
+      "include": ["=kari", "=kario", "karis", "curry"],
+      "exclude": ["padaz", "past", "pic", "traskuc", "sriub", "dresing", "majonez", "kecup", "lakst"]
+    },
+    "cinnamon": {
+      "include": ["cinamon"],
+      "exclude": [
+        "sausain",
+        "bandel",
+        "dribsn",
+        "arbat",
+        "cukr",
+        "saldain",
+        "musl",
+        "granol",
+        "jogurt",
+        "gerim",
+        "kos",
+        "pyrag"
+      ]
+    },
+    "oregano": {
+      "include": ["raudonel", "oregan"],
+      "exclude": ["traskuc", "padaz", "aliej", "arbat"]
+    },
+    "basil_dried": {
+      "include": ["bazilik"],
+      "exclude": ["sviez", "vazon", "pesto", "padaz", "aliej", "traskuc", "arbat", "sekl", "augal"]
+    },
+    "cocoa": {
+      "include": ["kakav"],
+      "exclude": [
+        "gerim",
+        "sviest",
+        "sokolad",
+        "pien",
+        "krem",
+        "tepi",
+        "batonel",
+        "sausain",
+        "dribsn",
+        "pupel",
+        "saldain",
+        "glaist",
+        "jogurt",
+        "desert",
+        "kos",
+        "musl",
+        "granol",
+        "pyrag",
+        "plotkel",
+        "traskuc"
+      ]
+    },
+    "yeast": {
+      "include": ["saus miel", "miel saus", "greit miel", "greit veik miel", "=mieles"],
+      "exclude": ["sampun", "kauk", "dribsn", "ekstrakt", "tabletes", "vitamin"]
+    },
+    "baking_powder": {
+      "include": ["kepim milt"],
+      "exclude": []
+    },
+    "starch": {
+      "include": ["kukuruz krakmol"],
+      "exclude": []
+    },
+    "coconut_milk": {
+      "include": ["kokos pien"],
+      "exclude": ["gerim", "sokolad", "sausain", "kremas", "ledai", "jogurt", "desert", "kava", "milt", "drozl"]
+    },
+    "tofu": {
+      "include": ["tofu"],
+      "exclude": ["desr", "pastet"]
+    },
+    "jam": {
+      "include": ["uogien", "dzem"],
+      "exclude": ["sausain", "pyrag", "bandel", "saldain", "jogurt", "varsk", "blyn", "keks", "kos", "sumustin", "zel"]
+    },
+    "dark_chocolate": {
+      "include": [
+        "juod sokolad",
+        "juodasis sokolad",
+        "kart sokolad",
+        "sokolad 70",
+        "sokolad 72",
+        "sokolad 85",
+        "sokolad 90",
+        "sokolad 99"
+      ],
+      "exclude": [
+        "glaist",
+        "saldain",
+        "sausain",
+        "batonel",
+        "pien",
+        "lasel",
+        "gabal",
+        "sokolad gerim",
+        "kakav",
+        "dribsn",
+        "musl",
+        "riesut",
+        "ledai",
+        "jogurt",
+        "pyrag",
+        "keks",
+        "tort",
+        "bandel",
+        "granol",
+        "sokoladin"
+      ]
+    },
+    "lasiniai": {
+      "include": ["lasin"],
+      "exclude": ["traskuc", "spirgai", "sprageln", "sumustin", "duon", "tep"]
+    },
+    "chanterelles": {
+      "include": ["voverait"],
+      "exclude": ["sriub", "padaz", "konserv", "marinuot", "pyrag", "koldun"]
+    },
+    "cranberries": {
+      "include": ["spanguol"],
+      "exclude": [
+        "sult",
+        "dziov",
+        "gerim",
+        "uogien",
+        "sirup",
+        "jogurt",
+        "arbat",
+        "sausain",
+        "granol",
+        "musl",
+        "sokolad",
+        "glaist",
+        "saldain",
+        "nektar",
+        "morsas"
+      ]
+    },
+    "frozen_raspberries": {
+      "include": ["saldyt aviet", "aviet saldyt"],
+      "exclude": ["sult", "uogien", "jogurt", "ledai"]
+    },
+    "blackcurrants": {
+      "include": ["juod serbent", "serbent juod", "juodieji serbent"],
+      "exclude": ["sult", "uogien", "gerim", "sirup", "arbat", "dzem", "jogurt", "ledai", "nektar", "sausain"]
+    },
+    "horseradish": {
+      "include": ["krien"],
+      "exclude": ["sur", "majonez", "desr", "traskuc"]
+    },
+    "rugpienis": {
+      "include": ["rugpien"],
+      "exclude": ["sur"]
+    },
+    "kastinys": {
+      "include": ["kastin"],
+      "exclude": []
+    },
+    "curd_snack": {
+      "include": ["varskes surel", "glaist surel", "=surelis", "=sureliai", "glaistyt varsk surel"],
+      "exclude": ["lydyt", "tep", "rukyt"]
+    },
+    "farmer_cheese": {
+      "include": ["varskes sur", "varsk sur"],
+      "exclude": ["surel", "desert", "glaist", "tep", "krem", "lydyt"]
+    },
+    "potato_starch": {
+      "include": ["bulv krakmol"],
+      "exclude": []
+    }
+  }
+}

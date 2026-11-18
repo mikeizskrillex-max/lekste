@@ -49,7 +49,8 @@ npm run usda:extract          # пересобрать data/seed/usda_sr_legacy.
 npm run ingredients:verify
 npm run recipes:generate -- --count 100 --meal dinner --diet vegetarian
 npm run recipes:check
-npm run prices:scrape -- --store barbora|rimi
+npm run prices:scrape -- --store barbora|rimi [--limit N] [--dry-run]   # локально: NODE_USE_ENV_PROXY=1
+npm run prices:import-csv -- <file.csv> [--apply] | --rollback <id>
 ```
 (Команды появляются по мере фаз; если команды ещё нет — создать её в той фазе, где она нужна.)
 

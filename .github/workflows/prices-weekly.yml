@@ -1,0 +1,48 @@
+name: Weekly prices
+
+# Mondays 01:40 UTC = 03:40 in Vilnius in winter (04:40 in summer). Can also be started by hand.
+on:
+  schedule:
+    - cron: '40 1 * * 1'
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Only the first N ingredients (0 = all)'
+        default: '0'
+
+concurrency:
+  group: prices-weekly
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    name: Prices — ${{ matrix.store }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        store: [barbora, rimi]
+    env:
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      NEXT_PUBLIC_SITE_URL: https://finoraai.solutions
+      PRICE_BOT_CONTACT: ${{ vars.PRICE_BOT_CONTACT }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - name: Collect prices (1 page every 2 s)
+        run: |
+          if [ -z "$SUPABASE_DB_URL" ]; then
+            echo "::warning::SUPABASE_DB_URL is not set — dry run, nothing is written"
+            DRY=--dry-run
+          fi
+          npm run prices:scrape -- --store ${{ matrix.store }} --limit "${{ inputs.limit || '0' }}" --report price-report $DRY
+      - name: Report (matches to check, review queue)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: price-report-${{ matrix.store }}
+          path: price-report/
+          retention-days: 30
