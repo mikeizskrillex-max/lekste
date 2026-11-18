@@ -33,13 +33,13 @@ try {
     if (r.usda_fdc_id && !food) throw new Error(`${r.slug}: USDA ${r.usda_fdc_id} missing`);
     await client.query(
       `insert into public.ingredients
-         (slug, name, category, origin, default_unit, piece_g, density, allergens, composition_varies, usda_fdc_id, is_active)
-       values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, true)
+         (slug, name, category, origin, default_unit, piece_g, density, allergens, composition_varies, usda_fdc_id, tags, is_active)
+       values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, true)
        on conflict (slug) do update set
          name = excluded.name, category = excluded.category, origin = excluded.origin,
          default_unit = excluded.default_unit, piece_g = excluded.piece_g, density = excluded.density,
          allergens = excluded.allergens, composition_varies = excluded.composition_varies,
-         usda_fdc_id = excluded.usda_fdc_id, is_active = true`,
+         usda_fdc_id = excluded.usda_fdc_id, tags = excluded.tags, is_active = true`,
       [
         r.slug,
         { lt: r.name_lt, ru: r.name_ru },
@@ -51,6 +51,7 @@ try {
         r.allergens,
         r.composition_varies,
         r.usda_fdc_id ? Number(r.usda_fdc_id) : null,
+        r.tags,
       ],
     );
     // Synonyms = both names + listed synonyms. Replaced as a whole so removed synonyms disappear.

@@ -26,6 +26,9 @@ export const CATEGORIES = [
 ] as const;
 export type Category = (typeof CATEGORIES)[number];
 
+/** Extra facts used by diet filters. Same list as the CHECK constraint in 0003. */
+export const INGREDIENT_TAGS = ['pork'] as const;
+
 export const UNITS = ['g', 'ml', 'pcs'] as const;
 
 /** "a;b; c" → ["a", "b", "c"] */
@@ -55,6 +58,7 @@ export const ingredientCsvRow = z
     density_g_ml: optionalNumber.refine((d) => d === null || d < 3, 'density must be under 3 g/ml'),
     allergens: splitList.pipe(z.array(z.enum(ALLERGENS))),
     composition_varies: z.enum(['yes', 'no']).transform((v) => v === 'yes'),
+    tags: splitList.pipe(z.array(z.enum(INGREDIENT_TAGS))),
     // empty = no fitting USDA record: nutrition waits for product labels (phase 4)
     usda_fdc_id: z.string().regex(/^(\d{4,7})?$/),
     usda_description: z.string(),

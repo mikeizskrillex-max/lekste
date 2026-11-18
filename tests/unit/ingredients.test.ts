@@ -38,10 +38,11 @@ describe('searchNorm', () => {
 
 describe('diets', () => {
   it('derives diets from origin and allergens', () => {
-    expect(dietsOf({ origin: 'plant', allergens: [] })).toEqual(['pescatarian', 'vegetarian', 'vegan']);
-    expect(dietsOf({ origin: 'dairy', allergens: ['milk'] })).toEqual(['pescatarian', 'vegetarian']);
-    expect(dietsOf({ origin: 'fish', allergens: ['fish'] })).toEqual(['pescatarian']);
-    expect(dietsOf({ origin: 'meat', allergens: [] })).toEqual([]);
+    expect(dietsOf({ origin: 'plant', allergens: [] })).toEqual(['pescatarian', 'vegetarian', 'no_pork', 'vegan']);
+    expect(dietsOf({ origin: 'dairy', allergens: ['milk'] })).toEqual(['pescatarian', 'vegetarian', 'no_pork']);
+    expect(dietsOf({ origin: 'fish', allergens: ['fish'] })).toEqual(['pescatarian', 'no_pork']);
+    expect(dietsOf({ origin: 'meat', allergens: [] })).toEqual(['no_pork']);
+    expect(dietsOf({ origin: 'meat', allergens: [], tags: ['pork'] })).toEqual([]);
   });
   it('a plant product with milk is not vegan', () => {
     expect(fitsDiet({ origin: 'plant', allergens: ['milk', 'soy'] }, 'vegan')).toBe(false);

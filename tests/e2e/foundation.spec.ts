@@ -16,10 +16,10 @@ test('language switch keeps the page: /pradeti ↔ /ru/pradeti', async ({ page }
   await page.getByRole('link', { name: /^ru/i }).first().click();
   await expect(page).toHaveURL(/\/ru\/pradeti$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Анкета');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Какая у вас цель?');
   await page.getByRole('link', { name: /^lt/i }).first().click();
   await expect(page).toHaveURL(/\/pradeti$/);
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Anketa');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Koks jūsų tikslas?');
 });
 
 test('a Russian browser is sent to /ru on the first visit', async ({ browser }) => {

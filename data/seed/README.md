@@ -12,3 +12,4 @@
 - `demo_personas.json` — демо-семьи для главной.
 
 Проверка: `npm run ingredients:check`. Загрузка в базу: `npm run ingredients:import` (идемпотентно).
+- `tags` (колонка CSV) — через `;`: `pork` — продукт из свинины (для «без свинины»).

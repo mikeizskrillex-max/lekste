@@ -1,7 +1,7 @@
 -- pgTAP: ingredient catalogue (0002). Expects the catalogue loaded by `npm run ingredients:import`.
 begin;
 set local search_path = public, extensions;
-select plan(28);
+select plan(30);
 
 -- catalogue is loaded and complete
 select ok((select count(*) from public.ingredients where is_active) >= 120, 'at least 120 active ingredients');
@@ -17,6 +17,10 @@ select is((select count(*)::int from public.ingredients i
           0, 'every ingredient has a Russian name');
 select is((select count(*)::int from public.ingredients where availability_level = 'both_stores'), 0,
           'nothing is both_stores before phase 5 verifies it');
+
+select is((select array_agg(slug order by slug) from public.ingredient_facts where 'pork' = any (tags)),
+  array['bacon','frankfurters','ham','lasiniai','pork_loin','pork_mince','pork_ribs','pork_shoulder'], 'pork products are tagged');
+select throws_ok($$ update public.ingredients set tags = '{beef}' where slug = 'carrot' $$, '23514', null, 'only known tags');
 
 -- normalisation
 select is(public.search_norm('  VIŠTIENOS   Krūtinėlė '), 'vistienos krutinele', 'search_norm drops diacritics and case');
