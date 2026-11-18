@@ -23,6 +23,7 @@ jobs:
       - run: npm test
       - run: npm run i18n:check
       - run: npm run ingredients:check
+      - run: npm run availability:check
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e -- --trace off

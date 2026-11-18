@@ -46,3 +46,40 @@ jobs:
           name: price-report-${{ matrix.store }}
           path: price-report/
           retention-days: 30
+
+  availability:
+    name: Ingredient availability (both stores)
+    needs: scrape
+    if: always()
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    env:
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - name: Recompute availability and save the snapshot
+        run: |
+          if [ -z "$SUPABASE_DB_URL" ]; then
+            echo "::warning::SUPABASE_DB_URL is not set — availability not checked"
+            exit 0
+          fi
+          npm run ingredients:verify -- --report availability-report
+          if ! git diff --quiet data/availability.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/availability.json
+            git commit -m "chore(prices): availability snapshot $(date -u +%F)"
+            git push
+          fi
+      - name: Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: availability-report
+          path: availability-report/
+          if-no-files-found: ignore
+          retention-days: 30

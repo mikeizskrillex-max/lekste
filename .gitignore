@@ -15,3 +15,4 @@ supabase/.temp/
 
 # price collection reports
 price-report/
+availability-report/

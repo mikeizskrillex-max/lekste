@@ -46,7 +46,8 @@ npm run screenshots -- <папка> [url]  # скриншоты 360/1440, све
 npm run ingredients:check     # CSV каталога + USDA: схема, дубли, калории ≈ БЖУ
 npm run ingredients:import    # каталог → БД (идемпотентно; в CI после миграций)
 npm run usda:extract          # пересобрать data/seed/usda_sr_legacy.json из USDA SR Legacy
-npm run ingredients:verify
+npm run ingredients:verify    # both_stores / missing в БД + data/availability.json (после сбора цен)
+npm run availability:check    # CI: ни один рецепт не использует ингредиент не из both_stores (по снимку)
 npm run recipes:generate -- --count 100 --meal dinner --diet vegetarian
 npm run recipes:check
 npm run prices:scrape -- --store barbora|rimi [--limit N] [--dry-run]   # локально: NODE_USE_ENV_PROXY=1

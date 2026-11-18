@@ -24,7 +24,9 @@
     "ingredients:import": "tsx scripts/ingredients-import.ts",
     "usda:extract": "tsx scripts/usda-extract.ts",
     "prices:scrape": "tsx scripts/prices-scrape.ts",
-    "prices:import-csv": "tsx scripts/prices-import-csv.ts"
+    "prices:import-csv": "tsx scripts/prices-import-csv.ts",
+    "ingredients:verify": "tsx scripts/ingredients-verify.ts",
+    "availability:check": "tsx scripts/availability-check.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "7.0.7",
