@@ -26,9 +26,13 @@
     "prices:scrape": "tsx scripts/prices-scrape.ts",
     "prices:import-csv": "tsx scripts/prices-import-csv.ts",
     "ingredients:verify": "tsx scripts/ingredients-verify.ts",
-    "availability:check": "tsx scripts/availability-check.ts"
+    "availability:check": "tsx scripts/availability-check.ts",
+    "recipes:generate": "tsx scripts/recipes-generate.ts",
+    "recipes:check": "tsx scripts/recipes-check.ts",
+    "recipes:import": "tsx scripts/recipes-import.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "1.4.0",
     "@hookform/resolvers": "7.0.7",
     "@radix-ui/react-slot": "1.5.0",
     "@radix-ui/react-tooltip": "1.4.1",

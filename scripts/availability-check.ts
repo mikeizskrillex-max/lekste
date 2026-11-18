@@ -14,11 +14,15 @@ if (unknown.length) {
   console.error(`availability:check — snapshot names ingredients that are not in the catalogue: ${unknown.join(', ')}`);
   process.exit(1);
 }
-const recipeFile = z.array(z.object({ slug: z.string(), ingredients: z.array(z.object({ slug: z.string() })) }));
+// drafts and rejected recipes never reach menus; only auto_checked / reviewed must be in both stores
+const recipeFile = z.array(
+  z.object({ slug: z.string(), status: z.string(), ingredients: z.array(z.object({ slug: z.string() })) }),
+);
 const recipes: RecipeRef[] = existsSync('data/recipes')
   ? readdirSync('data/recipes')
       .filter((f) => f.endsWith('.json'))
       .flatMap((f) => recipeFile.parse(JSON.parse(readFileSync(`data/recipes/${f}`, 'utf8'))))
+      .filter((r) => r.status === 'auto_checked' || r.status === 'reviewed')
       .map((r) => ({ slug: r.slug, ingredients: r.ingredients.map((x) => x.slug) }))
   : [];
 const bad = unavailableRecipes(recipes, snap);

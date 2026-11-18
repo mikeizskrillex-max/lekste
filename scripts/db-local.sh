@@ -16,4 +16,5 @@ SUPABASE_DB_URL="$DATABASE_URL" npx tsx scripts/db-migrate.ts
 SUPABASE_DB_URL="$DATABASE_URL" npx tsx scripts/db-migrate.ts   # second run must be a no-op
 SUPABASE_DB_URL="$DATABASE_URL" npx tsx scripts/ingredients-import.ts
 SUPABASE_DB_URL="$DATABASE_URL" npx tsx scripts/ingredients-import.ts   # idempotent
+SUPABASE_DB_URL="$DATABASE_URL" npx tsx scripts/recipes-import.ts
 npx tsx scripts/db-test.ts
